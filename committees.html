@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Committees - Oakridge MUN XVI</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { zoom: 1.1; }
+
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-18px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    :root {
+      --navy: #003057;
+      --teal: #30CDD7;
+      --teal-dark: #1E96A5;
+      --teal-light: #B4EBF5;
+      --red: #FF3750;
+      --white: #FAF5ED;
+      --yellow: #FFCB00;
+      --gold: #E1AA28;
+      --peach: #F0B4A0;
+    }
+
+    html, body {
+      min-height: 100%;
+      font-family: 'Montserrat', sans-serif;
+      background: var(--white);
+      color: var(--navy);
+      overflow-x: hidden;
+    }
+
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 22px 48px;
+      animation: fadeDown .6s cubic-bezier(0.4,0,0.2,1) both;
+    }
+
+    .nav-logo {
+      font-size: 1rem;
+      font-weight: 800;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--navy);
+      text-decoration: none;
+    }
+
+    .nav-logo span { color: var(--teal-dark); }
+
+    .nav-links {
+      display: flex;
+      gap: 36px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: .72rem;
+      font-weight: 600;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: rgba(0,48,87,.5);
+      text-decoration: none;
+      transition: color .2s;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active { color: var(--navy); }
+
+    .nav-cta {
+      background: var(--navy);
+      color: var(--white);
+      font-family: 'Montserrat', sans-serif;
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      border: none;
+      border-radius: 4px;
+      padding: 10px 22px;
+      cursor: pointer;
+      transition: opacity .2s;
+    }
+
+    .nav-cta:hover { opacity: .75; }
+
+    .mobile-nav {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 99;
+      background: var(--white);
+      padding: 80px 24px 32px;
+      box-shadow: 0 8px 32px rgba(0,0,0,.1);
+      flex-direction: column;
+      gap: 0;
+      transform: translateY(-100%);
+      transition: transform .35s cubic-bezier(0.4,0,0.2,1);
+    }
+
+    .mobile-nav.open { transform: translateY(0); }
+
+    .mobile-nav a {
+      font-size: .9rem;
+      font-weight: 600;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--navy);
+      text-decoration: none;
+      padding: 16px 0;
+      border-bottom: 1px solid rgba(0,48,87,.08);
+      transition: color .2s;
+    }
+
+    .mobile-nav a:last-child { border-bottom: none; }
+    .mobile-nav a:hover { color: var(--teal-dark); }
+
+    .menu-btn {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      width: 36px;
+      height: 36px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+      border-radius: 6px;
+      transition: background .2s;
+    }
+
+    .menu-btn:hover { background: rgba(0,48,87,.06); }
+
+    .menu-btn span {
+      display: block;
+      width: 100%;
+      height: 2px;
+      background: var(--navy);
+      border-radius: 2px;
+      transition: transform .3s ease, opacity .3s ease;
+      transform-origin: center;
+    }
+
+    .menu-btn.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .menu-btn.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .menu-btn.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    main {
+      min-height: 100vh;
+      padding: 142px 28px 112px;
+    }
+
+    .work-shell {
+      width: min(100%, 1200px);
+      margin: 0 auto;
+    }
+
+    .filters-row {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 30px;
+      color: rgba(0,48,87,.64);
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .filter-pill {
+      height: 38px;
+      min-width: 144px;
+      border: 1px solid rgba(0,48,87,.22);
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 0 16px;
+      color: rgba(0,48,87,.42);
+      background: rgba(250,245,237,.68);
+    }
+
+    .filter-pill svg {
+      width: 13px;
+      height: 13px;
+      stroke: currentColor;
+      stroke-width: 2;
+      fill: none;
+    }
+
+    .committee-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 118px 96px;
+      align-items: start;
+    }
+
+    .committee-card {
+      text-align: center;
+      color: var(--navy);
+      text-decoration: none;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity .55s ease, transform .55s ease;
+      perspective: 900px;
+    }
+
+    .committee-card.revealed {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .committee-visual {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 1;
+      border-radius: 24px;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 18% 16%, rgba(250,245,237,.76), transparent 0 12%, transparent 13%),
+        linear-gradient(135deg, var(--tile-a), var(--tile-b));
+      box-shadow: 0 18px 46px rgba(0,48,87,.09);
+      transform: translate3d(0,0,0) rotate(0deg) scale(1);
+      transform-origin: 50% 60%;
+      transition:
+        transform .6s cubic-bezier(.16,1,.3,1),
+        box-shadow .6s cubic-bezier(.16,1,.3,1),
+        filter .6s cubic-bezier(.16,1,.3,1);
+    }
+
+    .committee-card:hover .committee-visual {
+      transform: translate3d(0,-13px,0) rotate(-1.8deg) scale(1.055);
+      box-shadow: 0 32px 70px rgba(0,48,87,.18);
+      filter: saturate(1.08);
+    }
+
+    .committee-visual::before {
+      content: '';
+      position: absolute;
+      inset: 18px;
+      border: 1px solid rgba(0,48,87,.18);
+      border-radius: 18px;
+      transform: rotate(-5deg) scale(1);
+      transition: transform .6s cubic-bezier(.16,1,.3,1), border-color .6s cubic-bezier(.16,1,.3,1);
+    }
+
+    .committee-visual::after {
+      content: '';
+      position: absolute;
+      right: -32%;
+      bottom: -34%;
+      width: 82%;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      border: 26px solid rgba(250,245,237,.36);
+      transition: transform .6s cubic-bezier(.16,1,.3,1);
+    }
+
+    .committee-card:hover .committee-visual::before {
+      transform: rotate(1deg) scale(.94);
+      border-color: rgba(0,48,87,.28);
+    }
+
+    .committee-card:hover .committee-visual::after {
+      transform: translate3d(-18px,-20px,0) scale(1.1);
+    }
+
+    .tile-logo {
+      position: absolute;
+      right: 16px;
+      top: 16px;
+      width: 34px;
+      height: 34px;
+      object-fit: contain;
+      opacity: .26;
+      transition: transform .6s cubic-bezier(.16,1,.3,1), opacity .6s cubic-bezier(.16,1,.3,1);
+    }
+
+    .committee-card:hover .tile-logo {
+      transform: rotate(10deg) scale(1.1);
+      opacity: .4;
+    }
+
+    .status {
+      position: absolute;
+      top: 18px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: .56rem;
+      font-weight: 800;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: rgba(0,48,87,.52);
+    }
+
+    .committee-code {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 22px;
+      font-size: clamp(2.4rem, 4.2vw, 4.6rem);
+      font-weight: 900;
+      line-height: .9;
+      letter-spacing: -.08em;
+      color: var(--navy);
+      text-shadow: 0 1px 0 rgba(250,245,237,.28);
+      transition: transform .6s cubic-bezier(.16,1,.3,1);
+    }
+
+    .committee-code.long {
+      font-size: clamp(1.55rem, 2.7vw, 3rem);
+      letter-spacing: -.06em;
+    }
+
+    .committee-card:hover .committee-code {
+      transform: translateY(-4px) scale(1.03);
+    }
+
+    .committee-ring {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 58%;
+      aspect-ratio: 1;
+      border: 1px dashed rgba(0,48,87,.26);
+      border-radius: 50%;
+      transform: translate(-50%, -50%) rotate(12deg);
+      transition: transform .65s cubic-bezier(.16,1,.3,1), border-color .65s cubic-bezier(.16,1,.3,1);
+    }
+
+    .committee-card:hover .committee-ring {
+      transform: translate(-50%, -50%) rotate(70deg) scale(1.08);
+      border-color: rgba(0,48,87,.4);
+    }
+
+    .committee-title {
+      margin-top: 15px;
+      font-size: 1rem;
+      line-height: 1.22;
+      font-weight: 600;
+      letter-spacing: -.04em;
+      color: rgba(0,48,87,.76);
+      transition: color .35s ease, transform .35s ease;
+    }
+
+    .committee-subtitle {
+      margin-top: 6px;
+      font-size: .7rem;
+      line-height: 1.4;
+      font-weight: 500;
+      color: rgba(0,48,87,.42);
+      transition: color .35s ease, transform .35s ease;
+    }
+
+    .committee-card:hover .committee-title {
+      color: var(--navy);
+      transform: translateY(-2px);
+    }
+
+    .committee-card:hover .committee-subtitle {
+      color: rgba(0,48,87,.58);
+      transform: translateY(-2px);
+    }
+
+    footer {
+      background: var(--navy);
+      padding: 64px 56px 0;
+      border-radius: 28px 28px 0 0;
+    }
+
+    .footer-top {
+      display: grid;
+      grid-template-columns: 320px 1px 1fr 1fr 1fr;
+      gap: 0 48px;
+      padding-bottom: 56px;
+    }
+
+    .footer-divider {
+      background: rgba(250,245,237,.12);
+      width: 1px;
+      align-self: stretch;
+    }
+
+    .footer-brand {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      padding-right: 16px;
+    }
+
+    .footer-logo {
+      width: 72px;
+      height: 72px;
+      object-fit: contain;
+      filter: brightness(0) invert(1);
+      opacity: .9;
+    }
+
+    .footer-chapter {
+      font-size: .78rem;
+      font-weight: 700;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--white);
+    }
+
+    .footer-desc {
+      font-size: .82rem;
+      font-weight: 400;
+      line-height: 1.75;
+      color: rgba(250,245,237,.5);
+    }
+
+    .footer-col h4 {
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 20px;
+    }
+
+    .footer-col ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .footer-col ul li a {
+      font-size: .85rem;
+      font-weight: 600;
+      color: var(--white);
+      text-decoration: none;
+      transition: color .2s;
+    }
+
+    .footer-col ul li a:hover { color: var(--teal); }
+
+    .footer-contact-item,
+    .footer-detail-item { margin-bottom: 18px; }
+
+    .footer-contact-item p,
+    .footer-detail-item p {
+      font-size: .85rem;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: 4px;
+    }
+
+    .footer-contact-item a {
+      font-size: .82rem;
+      font-weight: 400;
+      color: var(--teal);
+      text-decoration: none;
+      transition: opacity .2s;
+    }
+
+    .footer-contact-item a:hover { opacity: .75; }
+
+    .footer-contact-item span,
+    .footer-detail-item span {
+      font-size: .82rem;
+      color: rgba(250,245,237,.5);
+      line-height: 1.6;
+      display: block;
+    }
+
+    .footer-social {
+      display: flex;
+      gap: 14px;
+      margin-top: 6px;
+    }
+
+    .footer-social a {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      border: 1px solid rgba(250,245,237,.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(250,245,237,.6);
+      text-decoration: none;
+      transition: border-color .2s, color .2s;
+    }
+
+    .footer-social a:hover { border-color: var(--teal); color: var(--teal); }
+    .footer-social svg { width: 15px; height: 15px; fill: currentColor; }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(250,245,237,.1);
+      padding: 22px 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .footer-bottom p {
+      font-size: .72rem;
+      font-weight: 500;
+      color: rgba(250,245,237,.35);
+      letter-spacing: .03em;
+    }
+
+    .footer-bottom a {
+      color: var(--teal);
+      text-decoration: none;
+    }
+
+    @media (max-width: 980px) {
+      .committee-grid { gap: 76px 42px; }
+    }
+
+    @media (max-width: 768px) {
+      html { zoom: 1; }
+      nav { padding: 16px 20px; }
+      .nav-links { display: none; }
+      .menu-btn { display: flex; }
+      .mobile-nav { display: flex; }
+      .nav-logo { font-size: .88rem; }
+      .nav-cta { padding: 9px 16px; font-size: .65rem; }
+
+      main { padding: 104px 20px 72px; }
+      .filters-row { margin-bottom: 28px; }
+      .committee-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 48px 18px;
+      }
+      .committee-visual { border-radius: 18px; }
+      .committee-title { font-size: .92rem; }
+      .committee-subtitle { font-size: .64rem; }
+
+      footer {
+        padding: 48px 20px 0;
+        border-radius: 18px 18px 0 0;
+      }
+      .footer-top {
+        grid-template-columns: 1fr;
+        gap: 36px 0;
+      }
+      .footer-divider { display: none; }
+      .footer-brand { padding-right: 0; }
+      .footer-bottom {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+        padding: 20px 0;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .committee-grid {
+        grid-template-columns: 1fr;
+        gap: 44px;
+        max-width: 310px;
+        margin: 0 auto;
+      }
+      .committee-visual { border-radius: 20px; }
+      .filters-row { flex-wrap: wrap; }
+    }
+  </style>
+</head>
+<body>
+  <div class="mobile-nav" id="mobileNav">
+    <a href="index.html">About</a>
+    <a href="committees.html">Committees</a>
+    <a href="secretariat.html">Secretariat</a>
+    <a href="index.html#schedule">Schedule</a>
+  </div>
+
+  <nav>
+    <a class="nav-logo" href="index.html">Oakridge <span>MUN</span></a>
+    <ul class="nav-links">
+      <li><a href="index.html">About</a></li>
+      <li><a href="committees.html" class="active">Committees</a></li>
+      <li><a href="secretariat.html">Secretariat</a></li>
+      <li><a href="index.html#schedule">Schedule</a></li>
+    </ul>
+    <div style="display:flex;align-items:center;gap:12px;">
+      <button class="menu-btn" id="menuBtn" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+      <button class="nav-cta">Register Now</button>
+    </div>
+  </nav>
+
+  <main>
+    <div class="work-shell">
+      <div class="filters-row">
+        <span>Filters:</span>
+        <span class="filter-pill">By council
+          <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 6l4 4 4-4"/></svg>
+        </span>
+      </div>
+
+      <section class="committee-grid" aria-label="Oakridge MUN committees">
+        <a class="committee-card" href="committee.html?committee=disec" style="--tile-a:var(--teal);--tile-b:var(--teal-light);"><div class="committee-visual"><img class="tile-logo" src="logo.png" alt="" /><span class="status">Committee</span><span class="committee-ring"></span><strong class="committee-code">DI</strong></div><h2 class="committee-title">DISEC</h2><p class="committee-subtitle">Disarmament and security</p></a>
+        <a class="committee-card" href="committee.html?committee=unsc" style="--tile-a:var(--navy);--tile-b:var(--teal-dark);"><div class="committee-visual"><img class="tile-logo" src="logo.png" alt="" /><span class="status">Council</span><span class="committee-ring"></span><strong class="committee-code">UN</strong></div><h2 class="committee-title">UNSC</h2><p class="committee-subtitle">Security council</p></a>
+        <a class="committee-card" href="committee.html?committee=unhrc" style="--tile-a:var(--teal-light);--tile-b:var(--white);"><div class="committee-visual"><img class="tile-logo" src="logo.png" alt="" /><span class="status">Committee</span><span class="committee-ring"></span><strong class="committee-code">HR</strong></div><h2 class="committee-title">UNHRC</h2><p class="committee-subtitle">Human rights council</p></a>
+        <a class="committee-card" href="committee.html?committee=jcc-1" style="--tile-a:var(--red);--tile-b:var(--peach);"><div class="committee-visual"><img class="tile-logo" src="logo.png" alt="" /><span class="status">Crisis</span><span class="committee-ring"></span><strong class="committee-code">J1</strong></div><h2 class="committee-title">JCC-1</h2><p class="committee-subtitle">Joint crisis cabinet</p></a>
+        <a class="committee-card" href="committee.html?committee=jcc-2" style="--tile-a:var(--peach);--tile-b:var(--gold);"><div class="committee-visual"><img class="tile-logo" src="logo.png" alt="" /><span class="status">Crisis</span><span class="committee-ring"></span><strong class="committee-code">J2</strong></div><h2 class="committee-title">JCC-2</h2><p class="committee-subtitle">Joint crisis cabinet</p></a>
+        <a class="committee-card" href="committee.html?committee=hcc" style="--tile-a:var(--gold);--tile-b:var(--yellow);"><div class="committee-visual"><img class="tile-logo" src="logo.png" alt="" /><span class="status">Cabinet</span><span class="committee-ring"></span><strong class="committee-code">HC</strong></div><h2 class="committee-title">HCC</h2><p class="committee-subtitle">Historic crisis committee</p></a>
+        <a class="committee-card" href="committee.html?committee=lok-sabha" style="--tile-a:var(--yellow);--tile-b:var(--teal-light);"><div class="committee-visual"><img class="tile-logo" src="logo.png" alt="" /><span class="status">Assembly</span><span class="committee-ring"></span><strong class="committee-code long">LS</strong></div><h2 class="committee-title">LOK SABHA</h2><p class="committee-subtitle">Indian parliament</p></a>
+        <a class="committee-card" href="committee.html?committee=armageddon" style="--tile-a:var(--teal-dark);--tile-b:var(--navy);"><div class="committee-visual"><img class="tile-logo" src="logo.png" alt="" /><span class="status">Crisis</span><span class="committee-ring"></span><strong class="committee-code long">AR</strong></div><h2 class="committee-title">ARMAGEDDON</h2><p class="committee-subtitle">High-stakes crisis room</p></a>
+        <a class="committee-card" href="committee.html?committee=oic" style="--tile-a:var(--teal);--tile-b:var(--yellow);"><div class="committee-visual"><img class="tile-logo" src="logo.png" alt="" /><span class="status">Council</span><span class="committee-ring"></span><strong class="committee-code">OI</strong></div><h2 class="committee-title">OIC</h2><p class="committee-subtitle">Islamic cooperation</p></a>
+        <a class="committee-card" href="committee.html?committee=un-women" style="--tile-a:var(--teal-light);--tile-b:var(--peach);"><div class="committee-visual"><img class="tile-logo" src="logo.png" alt="" /><span class="status">Committee</span><span class="committee-ring"></span><strong class="committee-code">UW</strong></div><h2 class="committee-title">UN WOMEN</h2><p class="committee-subtitle">Gender equality forum</p></a>
+        <a class="committee-card" href="committee.html?committee=copuos" style="--tile-a:var(--red);--tile-b:var(--teal);"><div class="committee-visual"><img class="tile-logo" src="logo.png" alt="" /><span class="status">Committee</span><span class="committee-ring"></span><strong class="committee-code">CO</strong></div><h2 class="committee-title">COPUOS</h2><p class="committee-subtitle">Outer space affairs</p></a>
+        <a class="committee-card" href="committee.html?committee=us-senate" style="--tile-a:var(--peach);--tile-b:var(--white);"><div class="committee-visual"><img class="tile-logo" src="logo.png" alt="" /><span class="status">Senate</span><span class="committee-ring"></span><strong class="committee-code">US</strong></div><h2 class="committee-title">US SENATE</h2><p class="committee-subtitle">Legislative chamber</p></a>
+        <a class="committee-card" href="committee.html?committee=bilderberg" style="--tile-a:var(--gold);--tile-b:var(--navy);"><div class="committee-visual"><img class="tile-logo" src="logo.png" alt="" /><span class="status">Forum</span><span class="committee-ring"></span><strong class="committee-code">BI</strong></div><h2 class="committee-title">BILDERBERG</h2><p class="committee-subtitle">Global strategy table</p></a>
+        <a class="committee-card" href="committee.html?committee=ecofin" style="--tile-a:var(--yellow);--tile-b:var(--gold);"><div class="committee-visual"><img class="tile-logo" src="logo.png" alt="" /><span class="status">Committee</span><span class="committee-ring"></span><strong class="committee-code">EC</strong></div><h2 class="committee-title">ECOFIN</h2><p class="committee-subtitle">Economic and financial</p></a>
+        <a class="committee-card" href="committee.html?committee=icj-irmct-ccpcj" style="--tile-a:var(--teal-dark);--tile-b:var(--peach);"><div class="committee-visual"><img class="tile-logo" src="logo.png" alt="" /><span class="status">Legal</span><span class="committee-ring"></span><strong class="committee-code long">ICJ</strong></div><h2 class="committee-title">ICJ / IRMCT / CCPCJ</h2><p class="committee-subtitle">Courts and justice</p></a>
+        <a class="committee-card" href="committee.html?committee=fifa" style="--tile-a:var(--teal);--tile-b:var(--white);"><div class="committee-visual"><img class="tile-logo" src="logo.png" alt="" /><span class="status">Federation</span><span class="committee-ring"></span><strong class="committee-code">FI</strong></div><h2 class="committee-title">FIFA</h2><p class="committee-subtitle">Global football governance</p></a>
+        <a class="committee-card" href="committee.html?committee=who" style="--tile-a:var(--teal-light);--tile-b:var(--teal);"><div class="committee-visual"><img class="tile-logo" src="logo.png" alt="" /><span class="status">Agency</span><span class="committee-ring"></span><strong class="committee-code">WH</strong></div><h2 class="committee-title">WHO</h2><p class="committee-subtitle">World health organization</p></a>
+        <a class="committee-card" href="committee.html?committee=unga-sochum" style="--tile-a:var(--yellow);--tile-b:var(--white);"><div class="committee-visual"><img class="tile-logo" src="logo.png" alt="" /><span class="status">Assembly</span><span class="committee-ring"></span><strong class="committee-code long">UG</strong></div><h2 class="committee-title">UNGA - SOCHUM</h2><p class="committee-subtitle">Social and humanitarian</p></a>
+        <a class="committee-card" href="committee.html?committee=tsppm" style="--tile-a:var(--red);--tile-b:var(--yellow);"><div class="committee-visual"><img class="tile-logo" src="logo.png" alt="" /><span class="status">Press</span><span class="committee-ring"></span><strong class="committee-code">TS</strong></div><h2 class="committee-title">TSPPM</h2><p class="committee-subtitle">Media and reportage</p></a>
+        <a class="committee-card" href="committee.html?committee=ip" style="--tile-a:var(--peach);--tile-b:var(--teal-light);"><div class="committee-visual"><img class="tile-logo" src="logo.png" alt="" /><span class="status">Press</span><span class="committee-ring"></span><strong class="committee-code">IP</strong></div><h2 class="committee-title">IP</h2><p class="committee-subtitle">International press</p></a>
+      </section>
+    </div>
+  </main>
+
+  <footer>
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img src="logo.png" alt="Oakridge MUN Logo" class="footer-logo" />
+        <p class="footer-chapter">Chapter XVI</p>
+        <p class="footer-desc">Oakridge Model United Nations brings together passionate delegates from across the high schools of India for three days of diplomatic excellence.</p>
+      </div>
+      <div class="footer-divider"></div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="index.html">About</a></li>
+          <li><a href="index.html#schedule">Schedule</a></li>
+          <li><a href="secretariat.html">Secretariat</a></li>
+          <li><a href="committees.html">Explore Committees</a></li>
+          <li><a href="#">International Press</a></li>
+          <li><a href="#">Allocations</a></li>
+          <li><a href="index.html">FAQs</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact Us</h4>
+        <div class="footer-contact-item">
+          <p>Secretary-General</p>
+          <a href="mailto:mun@oakridge.in">mun@oakridge.in</a>
+        </div>
+        <div class="footer-contact-item">
+          <p>Secretary-General</p>
+          <a href="mailto:shrey_vajpayee@oakridge.in">shrey_vajpayee@oakridge.in</a>
+        </div>
+        <div class="footer-contact-item">
+          <p>Location</p>
+          <span>Oakridge International School<br>Hyderabad, India</span>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Event Details</h4>
+        <div class="footer-detail-item">
+          <p>Dates</p>
+          <span>24th July - 26th July, 2026</span>
+        </div>
+        <div class="footer-detail-item">
+          <p>Theme</p>
+          <span>"Create. Debate. Innovate."</span>
+        </div>
+        <div class="footer-detail-item">
+          <p>Connect With Us</p>
+          <div class="footer-social">
+            <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>
+            <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+            <a href="mailto:mun@oakridge.in" aria-label="Email"><svg viewBox="0 0 24 24"><path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 0 1 0 19.366V5.457c0-2.023 2.309-3.178 3.927-1.964L5.455 4.64 12 9.548l6.545-4.91 1.528-1.145C21.69 2.28 24 3.434 24 5.457z"/></svg></a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Oakridge International School. All rights reserved.</p>
+      <p>Website designed and developed by <a href="#">Srijai Kodali</a></p>
+    </div>
+  </footer>
+
+  <script>
+    const menuBtn = document.getElementById('menuBtn');
+    const mobileNav = document.getElementById('mobileNav');
+
+    menuBtn.addEventListener('click', () => {
+      const isOpen = mobileNav.classList.toggle('open');
+      menuBtn.classList.toggle('open', isOpen);
+      document.body.style.overflow = isOpen ? 'hidden' : '';
+    });
+
+    mobileNav.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => {
+        mobileNav.classList.remove('open');
+        menuBtn.classList.remove('open');
+        document.body.style.overflow = '';
+      });
+    });
+
+    const cards = document.querySelectorAll('.committee-card');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        const index = [...cards].indexOf(entry.target);
+        setTimeout(() => entry.target.classList.add('revealed'), index * 55);
+        observer.unobserve(entry.target);
+      });
+    }, { threshold: 0.08 });
+
+    cards.forEach(card => observer.observe(card));
+  </script>
+</body>
+</html>

@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Committee - Oakridge MUN XVI</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { zoom: 1.1; }
+    @keyframes fadeDown { from { opacity: 0; transform: translateY(-18px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: translateY(0); } }
+
+    :root {
+      --navy: #003057;
+      --teal: #30CDD7;
+      --teal-dark: #1E96A5;
+      --teal-light: #B4EBF5;
+      --red: #FF3750;
+      --white: #FAF5ED;
+      --yellow: #FFCB00;
+      --gold: #E1AA28;
+      --peach: #F0B4A0;
+    }
+
+    html, body {
+      min-height: 100%;
+      font-family: 'Montserrat', sans-serif;
+      background: var(--white);
+      color: var(--navy);
+      overflow-x: hidden;
+    }
+
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 22px 48px;
+      animation: fadeDown .6s cubic-bezier(0.4,0,0.2,1) both;
+    }
+
+    .nav-logo {
+      font-size: 1rem;
+      font-weight: 800;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--navy);
+      text-decoration: none;
+    }
+
+    .nav-logo span { color: var(--teal-dark); }
+    .nav-links { display: flex; gap: 36px; list-style: none; }
+    .nav-links a {
+      font-size: .72rem;
+      font-weight: 600;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: rgba(0,48,87,.5);
+      text-decoration: none;
+      transition: color .2s;
+    }
+    .nav-links a:hover, .nav-links a.active { color: var(--navy); }
+    .nav-cta {
+      background: var(--navy);
+      color: var(--white);
+      font-family: 'Montserrat', sans-serif;
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      border: none;
+      border-radius: 4px;
+      padding: 10px 22px;
+      cursor: pointer;
+      transition: opacity .2s;
+    }
+    .nav-cta:hover { opacity: .75; }
+
+    .mobile-nav {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 99;
+      background: var(--white);
+      padding: 80px 24px 32px;
+      box-shadow: 0 8px 32px rgba(0,0,0,.1);
+      flex-direction: column;
+      gap: 0;
+      transform: translateY(-100%);
+      transition: transform .35s cubic-bezier(0.4,0,0.2,1);
+    }
+    .mobile-nav.open { transform: translateY(0); }
+    .mobile-nav a {
+      font-size: .9rem;
+      font-weight: 600;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--navy);
+      text-decoration: none;
+      padding: 16px 0;
+      border-bottom: 1px solid rgba(0,48,87,.08);
+      transition: color .2s;
+    }
+    .mobile-nav a:last-child { border-bottom: none; }
+    .mobile-nav a:hover { color: var(--teal-dark); }
+    .menu-btn {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      width: 36px;
+      height: 36px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+      border-radius: 6px;
+      transition: background .2s;
+    }
+    .menu-btn:hover { background: rgba(0,48,87,.06); }
+    .menu-btn span {
+      display: block;
+      width: 100%;
+      height: 2px;
+      background: var(--navy);
+      border-radius: 2px;
+      transition: transform .3s ease, opacity .3s ease;
+      transform-origin: center;
+    }
+    .menu-btn.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .menu-btn.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .menu-btn.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    .hero {
+      min-height: 100vh;
+      padding: 128px 56px 72px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 420px;
+      align-items: end;
+      gap: 64px;
+      background: var(--white);
+    }
+
+    .hero-copy { animation: fadeUp .7s cubic-bezier(0.4,0,0.2,1) .12s both; }
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 56px;
+      color: rgba(0,48,87,.56);
+      text-decoration: none;
+      font-size: .7rem;
+      font-weight: 800;
+      letter-spacing: .13em;
+      text-transform: uppercase;
+    }
+    .back-link:hover { color: var(--teal-dark); }
+    .committee-kicker {
+      font-size: .72rem;
+      font-weight: 800;
+      letter-spacing: .24em;
+      text-transform: uppercase;
+      color: var(--teal-dark);
+      margin-bottom: 22px;
+    }
+    .committee-title {
+      font-size: clamp(4.6rem, 13vw, 12rem);
+      line-height: .78;
+      font-weight: 900;
+      letter-spacing: -.1em;
+      color: var(--navy);
+      max-width: 840px;
+    }
+    .committee-subtitle {
+      max-width: 640px;
+      margin-top: 34px;
+      font-size: 1.06rem;
+      line-height: 1.75;
+      font-weight: 500;
+      color: rgba(0,48,87,.66);
+    }
+    .hero-panel {
+      position: relative;
+      min-height: 500px;
+      border-radius: 24px;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 18% 18%, rgba(250,245,237,.75), transparent 0 11%, transparent 12%),
+        linear-gradient(135deg, var(--tile-a), var(--tile-b));
+      box-shadow: 0 34px 80px rgba(0,48,87,.16);
+      animation: fadeUp .7s cubic-bezier(0.4,0,0.2,1) .22s both;
+    }
+    .hero-panel::before {
+      content: '';
+      position: absolute;
+      inset: 28px;
+      border: 1px solid rgba(0,48,87,.2);
+      border-radius: 20px;
+      transform: rotate(-5deg);
+    }
+    .hero-panel::after {
+      content: '';
+      position: absolute;
+      right: -34%;
+      bottom: -34%;
+      width: 85%;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      border: 42px solid rgba(250,245,237,.34);
+    }
+    .panel-code {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 42px;
+      font-size: clamp(4rem, 8vw, 7rem);
+      font-weight: 900;
+      letter-spacing: -.08em;
+      color: var(--navy);
+      z-index: 1;
+    }
+    .panel-label {
+      position: absolute;
+      top: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1;
+      font-size: .68rem;
+      font-weight: 900;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: rgba(0,48,87,.52);
+    }
+    .panel-logo {
+      position: absolute;
+      right: 28px;
+      top: 28px;
+      width: 48px;
+      height: 48px;
+      object-fit: contain;
+      opacity: .28;
+      z-index: 1;
+    }
+
+    .content {
+      background: var(--navy);
+      color: var(--white);
+      border-radius: 28px 28px 0 0;
+      padding: 90px 56px 108px;
+    }
+    .content-inner {
+      width: min(100%, 1180px);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.05fr .95fr;
+      gap: 26px;
+    }
+    .info-card {
+      border: 1px solid rgba(250,245,237,.12);
+      border-radius: 18px;
+      padding: 32px;
+      background: rgba(250,245,237,.045);
+    }
+    .info-card.wide { grid-column: 1 / -1; }
+    .section-label {
+      font-size: .68rem;
+      font-weight: 800;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 20px;
+    }
+    .info-card h2 {
+      font-size: clamp(1.7rem, 3vw, 2.6rem);
+      line-height: 1.05;
+      letter-spacing: -.05em;
+      margin-bottom: 22px;
+    }
+    .info-card p {
+      font-size: .92rem;
+      line-height: 1.82;
+      color: rgba(250,245,237,.68);
+    }
+    .agenda-list,
+    .resource-list {
+      list-style: none;
+      display: grid;
+      gap: 14px;
+    }
+    .agenda-list li,
+    .resource-list a {
+      display: block;
+      border-radius: 12px;
+      padding: 16px 18px;
+      background: rgba(250,245,237,.06);
+      color: rgba(250,245,237,.78);
+      text-decoration: none;
+      font-size: .9rem;
+      line-height: 1.55;
+      border: 1px solid rgba(250,245,237,.08);
+    }
+    .resource-list a:hover { border-color: rgba(48,205,215,.36); color: var(--teal-light); }
+    .eb-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    .eb-card {
+      border-radius: 18px;
+      overflow: hidden;
+      background: rgba(250,245,237,.06);
+      border: 1px solid rgba(250,245,237,.1);
+    }
+    .eb-photo {
+      aspect-ratio: 4 / 3;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background:
+        radial-gradient(circle at 68% 28%, rgba(255,203,0,.38), transparent 0 18%, transparent 19%),
+        linear-gradient(135deg, var(--teal), var(--teal-dark));
+      color: var(--navy);
+      font-size: 2.9rem;
+      font-weight: 900;
+      letter-spacing: -.08em;
+    }
+    .eb-body { padding: 20px; }
+    .eb-name {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--white);
+      margin-bottom: 6px;
+    }
+    .eb-role {
+      font-size: .68rem;
+      font-weight: 800;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 14px;
+    }
+    .eb-desc {
+      font-size: .8rem;
+      line-height: 1.7;
+      color: rgba(250,245,237,.58);
+    }
+
+    footer {
+      background: var(--navy);
+      padding: 0 56px 0;
+    }
+    .footer-bottom {
+      border-top: 1px solid rgba(250,245,237,.1);
+      padding: 22px 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: rgba(250,245,237,.35);
+      font-size: .72rem;
+      font-weight: 500;
+      letter-spacing: .03em;
+    }
+    .footer-bottom a { color: var(--teal); text-decoration: none; }
+
+    @media (max-width: 980px) {
+      .hero { grid-template-columns: 1fr; padding-top: 120px; }
+      .hero-panel { min-height: 360px; }
+      .content-inner { grid-template-columns: 1fr; }
+      .eb-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 768px) {
+      html { zoom: 1; }
+      nav { padding: 16px 20px; }
+      .nav-links { display: none; }
+      .menu-btn { display: flex; }
+      .mobile-nav { display: flex; }
+      .nav-logo { font-size: .88rem; }
+      .nav-cta { padding: 9px 16px; font-size: .65rem; }
+      .hero { padding: 104px 20px 56px; gap: 36px; }
+      .back-link { margin-bottom: 42px; }
+      .committee-title { font-size: clamp(4rem, 24vw, 7rem); }
+      .committee-subtitle { font-size: .92rem; }
+      .hero-panel { min-height: 300px; border-radius: 20px; }
+      .content { padding: 64px 20px 80px; border-radius: 18px 18px 0 0; }
+      .info-card { padding: 24px; border-radius: 16px; }
+      footer { padding: 0 20px; }
+      .footer-bottom { flex-direction: column; align-items: flex-start; gap: 8px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="mobile-nav" id="mobileNav">
+    <a href="index.html">About</a>
+    <a href="committees.html">Committees</a>
+    <a href="secretariat.html">Secretariat</a>
+    <a href="index.html#schedule">Schedule</a>
+  </div>
+
+  <nav>
+    <a class="nav-logo" href="index.html">Oakridge <span>MUN</span></a>
+    <ul class="nav-links">
+      <li><a href="index.html">About</a></li>
+      <li><a href="committees.html" class="active">Committees</a></li>
+      <li><a href="secretariat.html">Secretariat</a></li>
+      <li><a href="index.html#schedule">Schedule</a></li>
+    </ul>
+    <div style="display:flex;align-items:center;gap:12px;">
+      <button class="menu-btn" id="menuBtn" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+      <button class="nav-cta">Register Now</button>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-copy">
+      <a class="back-link" href="committees.html">Back to committees</a>
+      <p class="committee-kicker" id="committeeType">Committee</p>
+      <h1 class="committee-title" id="committeeTitle">DISEC</h1>
+      <p class="committee-subtitle" id="committeeSubtitle"></p>
+    </div>
+    <div class="hero-panel" id="heroPanel">
+      <img class="panel-logo" src="logo.png" alt="" />
+      <span class="panel-label" id="panelLabel">Committee</span>
+      <strong class="panel-code" id="panelCode">DI</strong>
+    </div>
+  </section>
+
+  <main class="content">
+    <div class="content-inner">
+      <section class="info-card">
+        <p class="section-label">Overview</p>
+        <h2 id="overviewTitle">Committee overview</h2>
+        <p id="overviewText"></p>
+      </section>
+      <section class="info-card">
+        <p class="section-label">Agenda</p>
+        <h2>What delegates will debate</h2>
+        <ul class="agenda-list" id="agendaList"></ul>
+      </section>
+      <section class="info-card">
+        <p class="section-label">Resources</p>
+        <h2>Preparation materials</h2>
+        <div class="resource-list" id="resourceList"></div>
+      </section>
+      <section class="info-card wide">
+        <p class="section-label">Executive Board</p>
+        <h2>Meet the EB</h2>
+        <div class="eb-grid" id="ebGrid"></div>
+      </section>
+    </div>
+  </main>
+
+  <footer>
+    <div class="footer-bottom">
+      <p>© 2026 Oakridge International School. All rights reserved.</p>
+      <p>Website designed and developed by <a href="#">Srijai Kodali</a></p>
+    </div>
+  </footer>
+
+  <script>
+    const committees = {
+      'disec': ['DISEC', 'DI', 'Committee', 'Disarmament and security', 'DISEC asks delegates to negotiate the balance between national defence, arms control, and international peace. Expect technical policy, principled blocs, and careful drafting.', ['Regulating autonomous weapons and emerging military technology', 'Strengthening compliance with international disarmament frameworks'], ['Background guide', 'Rules of procedure', 'Research starter pack']],
+      'unsc': ['UNSC', 'UN', 'Council', 'Security council', 'The UNSC is built for urgent diplomacy. Delegates respond to live threats, draft binding action, and defend national interests under pressure.', ['Responding to escalating regional conflict and civilian protection', 'Reforming peacekeeping mandates in fragile states'], ['Security Council primer', 'Resolution writing guide', 'Crisis update archive']],
+      'unhrc': ['UNHRC', 'HR', 'Committee', 'Human rights council', 'UNHRC centers human dignity, accountability, and protection. The committee rewards strong legal grounding and persuasive moral clarity.', ['Protecting refugees and internally displaced communities', 'Addressing digital surveillance and civil liberties'], ['Human rights instruments', 'Country policy worksheet', 'Case law brief']],
+      'jcc-1': ['JCC-1', 'J1', 'Crisis', 'Joint crisis cabinet', 'JCC-1 is a fast-moving crisis cabinet where strategy, directives, and negotiation collide in real time.', ['Cabinet response to a shared geopolitical emergency', 'Managing intelligence, alliances, and public legitimacy'], ['Crisis guide', 'Directive template', 'Cabinet brief']],
+      'jcc-2': ['JCC-2', 'J2', 'Crisis', 'Joint crisis cabinet', 'JCC-2 runs opposite the first cabinet, creating a competitive crisis environment shaped by bold choices and quick adaptation.', ['Counter-cabinet strategy in a connected crisis simulation', 'Negotiating power, resources, and long-term settlement'], ['Crisis guide', 'Portfolio dossier', 'Communique template']],
+      'hcc': ['HCC', 'HC', 'Cabinet', 'Historic crisis committee', 'HCC reopens a decisive historical moment and gives delegates the power to redirect events through policy and crisis action.', ['Reconstructing a historical turning point through cabinet decisions', 'Balancing domestic pressure, diplomacy, and military realities'], ['Historical dossier', 'Crisis mechanics guide', 'Position brief format']],
+      'lok-sabha': ['LOK SABHA', 'LS', 'Assembly', 'Indian parliament', 'Lok Sabha brings parliamentary procedure, coalition-building, and national policy debate to the floor.', ['Debating a landmark domestic policy bill', 'Managing federal interests, party positions, and public accountability'], ['Parliamentary procedure', 'Bill drafting guide', 'Party brief']],
+      'armageddon': ['ARMAGEDDON', 'AR', 'Crisis', 'High-stakes crisis room', 'Armageddon is designed for delegates who like pressure. Every choice has consequences, and survival depends on coordination.', ['Navigating existential risk and institutional collapse', 'Building emergency protocols under extreme uncertainty'], ['Crisis handbook', 'Scenario primer', 'Directive examples']],
+      'oic': ['OIC', 'OI', 'Council', 'Islamic cooperation', 'OIC focuses on diplomacy across the Islamic world, asking delegates to balance sovereignty, solidarity, and regional stability.', ['Strengthening cooperation during humanitarian and security crises', 'Protecting cultural heritage and minority rights'], ['OIC charter notes', 'Bloc research guide', 'Draft resolution template']],
+      'un-women': ['UN WOMEN', 'UW', 'Committee', 'Gender equality forum', 'UN Women challenges delegates to convert rights-based commitments into practical protection, funding, and implementation.', ['Combating gender-based violence in conflict and displacement', 'Improving political and economic participation for women'], ['Gender policy toolkit', 'CEDAW overview', 'Program design brief']],
+      'copuos': ['COPUOS', 'CO', 'Committee', 'Outer space affairs', 'COPUOS takes debate beyond Earth, covering security, sustainability, and access in the new space age.', ['Preventing weaponisation and debris escalation in outer space', 'Creating equitable frameworks for commercial space activity'], ['Space law primer', 'Treaty summary', 'Technical glossary']],
+      'us-senate': ['US SENATE', 'US', 'Senate', 'Legislative chamber', 'The US Senate rewards legislative strategy, party discipline, and sharp negotiation across a divided chamber.', ['Drafting and negotiating a major federal bill', 'Balancing committee hearings, amendments, and floor debate'], ['Senate procedure guide', 'Bill format', 'Party position notes']],
+      'bilderberg': ['BILDERBERG', 'BI', 'Forum', 'Global strategy table', 'Bilderberg is a closed-door forum for elite negotiation, long-range strategy, and discreet influence.', ['Managing global economic and security coordination outside formal institutions', 'Negotiating influence, secrecy, and public accountability'], ['Forum brief', 'Stakeholder map', 'Communique guide']],
+      'ecofin': ['ECOFIN', 'EC', 'Committee', 'Economic and financial', 'ECOFIN places delegates at the center of financial systems, development policy, and global economic cooperation.', ['Debt sustainability and development financing', 'Regulating digital currencies and cross-border financial risk'], ['Economic indicators sheet', 'Finance glossary', 'Draft resolution guide']],
+      'icj-irmct-ccpcj': ['ICJ / IRMCT / CCPCJ', 'ICJ', 'Legal', 'Courts and justice', 'This legal committee is built for delegates who enjoy precedent, argument, and procedural precision.', ['Adjudicating responsibility under international law', 'Strengthening accountability for transnational and post-conflict crimes'], ['Legal procedure guide', 'Case bundle', 'Memorial format']],
+      'fifa': ['FIFA', 'FI', 'Federation', 'Global football governance', 'FIFA blends sport, politics, ethics, and global governance into a committee about power on and off the pitch.', ['Reforming tournament hosting, transparency, and corruption controls', 'Protecting player welfare and fair competition'], ['Governance brief', 'Stakeholder dossier', 'Policy proposal format']],
+      'who': ['WHO', 'WH', 'Agency', 'World health organization', 'WHO is for delegates ready to work through public health coordination, equity, and emergency response.', ['Global pandemic preparedness and vaccine equity', 'Combating misinformation during health emergencies'], ['Public health primer', 'Emergency framework', 'Data interpretation sheet']],
+      'unga-sochum': ['UNGA - SOCHUM', 'UG', 'Assembly', 'Social and humanitarian', 'SOCHUM focuses on social development and humanitarian protection, with broad debate and coalition-building.', ['Protecting vulnerable populations in humanitarian crises', 'Addressing education, migration, and social inequality'], ['SOCHUM guide', 'Humanitarian law notes', 'Resolution starter pack']],
+      'tsppm': ['TSPPM', 'TS', 'Press', 'Media and reportage', 'TSPPM gives delegates the press room: reporting, framing, interviewing, and shaping the story of the conference.', ['Live reporting across committees and crisis updates', 'Media ethics, editorial framing, and misinformation response'], ['Press handbook', 'Article format', 'Interview checklist']],
+      'ip': ['IP', 'IP', 'Press', 'International press', 'International Press turns the conference into a newsroom, where observation and analysis become public record.', ['Committee coverage, delegate interviews, and crisis bulletins', 'Editorial standards and evidence-based reporting'], ['Press guide', 'Photography brief', 'Publication template']]
+    };
+
+    const palette = ['var(--teal)', 'var(--teal-light)', 'var(--navy)', 'var(--teal-dark)', 'var(--red)', 'var(--peach)', 'var(--gold)', 'var(--yellow)'];
+    const params = new URLSearchParams(window.location.search);
+    const key = params.get('committee') || 'disec';
+    const data = committees[key] || committees.disec;
+    const [name, code, type, subtitle, overview, agenda, resources] = data;
+    const colorIndex = Object.keys(committees).indexOf(key);
+
+    document.title = `${name} - Oakridge MUN XVI`;
+    document.getElementById('committeeType').textContent = type;
+    document.getElementById('committeeTitle').textContent = name;
+    document.getElementById('committeeSubtitle').textContent = subtitle;
+    document.getElementById('panelLabel').textContent = type;
+    document.getElementById('panelCode').textContent = code;
+    document.getElementById('overviewTitle').textContent = `${name} overview`;
+    document.getElementById('overviewText').textContent = overview;
+    document.getElementById('heroPanel').style.setProperty('--tile-a', palette[colorIndex % palette.length]);
+    document.getElementById('heroPanel').style.setProperty('--tile-b', palette[(colorIndex + 2) % palette.length]);
+
+    document.getElementById('agendaList').innerHTML = agenda.map(item => `<li>${item}</li>`).join('');
+    document.getElementById('resourceList').innerHTML = resources.map(item => `<a href="#">${item}</a>`).join('');
+    document.getElementById('ebGrid').innerHTML = ['Chairperson', 'Vice Chairperson', 'Rapporteur'].map((role, index) => {
+      const initials = role.split(' ').map(word => word[0]).join('');
+      return `<article class="eb-card"><div class="eb-photo">${initials}</div><div class="eb-body"><h3 class="eb-name">To be announced</h3><p class="eb-role">${role}</p><p class="eb-desc">This executive board member will guide debate, evaluate delegate performance, and help maintain a focused committee experience.</p></div></article>`;
+    }).join('');
+
+    const menuBtn = document.getElementById('menuBtn');
+    const mobileNav = document.getElementById('mobileNav');
+    menuBtn.addEventListener('click', () => {
+      const isOpen = mobileNav.classList.toggle('open');
+      menuBtn.classList.toggle('open', isOpen);
+      document.body.style.overflow = isOpen ? 'hidden' : '';
+    });
+    mobileNav.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => {
+        mobileNav.classList.remove('open');
+        menuBtn.classList.remove('open');
+        document.body.style.overflow = '';
+      });
+    });
+  </script>
+</body>
+</html>
