@@ -37,7 +37,9 @@
       --teal-light: #B4EBF5;
       --red:        #FF3750;
       --white:      #FAF5ED;
-      --gold:       #BC9A6E;
+      --yellow:     #FFCB00;
+      --gold:       #E1AA28;
+      --peach:      #F0B4A0;
     }
 
     html, body {
@@ -124,7 +126,7 @@
       height: calc(100vh - 104px);
       border-radius: 22px;
       overflow: hidden;
-      background: #010e1e;
+      background: var(--navy);
       margin-top: 80px;
       animation: scaleIn .8s cubic-bezier(0.4,0,0.2,1) .15s both;
     }
@@ -143,7 +145,7 @@
     .video-card .placeholder-bg {
       position: absolute;
       inset: 0;
-      background: #01243d;
+      background: var(--navy);
     }
 
     /* Dark scrim at bottom so text is always readable */
@@ -332,7 +334,7 @@
       aspect-ratio: 3/4;
       border-radius: 4px;
       overflow: hidden;
-      background: #e8e2d9;
+      background: var(--white);
     }
 
     .sg-photo-wrap img {
@@ -350,7 +352,7 @@
       align-items: center;
       justify-content: center;
       gap: 16px;
-      background: #e4ddd3;
+      background: var(--teal-light);
     }
 
     .sg-photo-placeholder svg { width: 80px; height: 80px; }
@@ -394,7 +396,7 @@
       font-size: .88rem;
       font-weight: 400;
       line-height: 1.75;
-      color: #2a2a2a;
+      color: rgba(0,48,87,.82);
     }
 
     /* Signature */
@@ -782,11 +784,11 @@
     }
 
     /* Type colours */
-    .tl-event.type-committee { background: rgba(48,205,215,.08);  --dot-color: #30CDD7; }
-    .tl-event.type-ceremony  { background: rgba(188,154,110,.12); --dot-color: #BC9A6E; }
+    .tl-event.type-committee { background: rgba(48,205,215,.08);  --dot-color: var(--teal); }
+    .tl-event.type-ceremony  { background: rgba(225,170,40,.12); --dot-color: var(--gold); }
     .tl-event.type-break     { background: rgba(250,245,237,.04); --dot-color: rgba(250,245,237,.2); }
-    .tl-event.type-social    { background: rgba(30,150,165,.12);  --dot-color: #1E96A5; }
-    .tl-event.type-meal      { background: rgba(188,154,110,.07); --dot-color: rgba(188,154,110,.45); }
+    .tl-event.type-social    { background: rgba(30,150,165,.12);  --dot-color: var(--teal-dark); }
+    .tl-event.type-meal      { background: rgba(225,170,40,.07); --dot-color: rgba(225,170,40,.45); }
     .tl-event.type-dispersal { background: transparent;           --dot-color: rgba(250,245,237,.12); }
 
     /* Left accent bar */
@@ -814,9 +816,9 @@
     }
 
     .type-committee .tl-tag { color: var(--teal);      background: rgba(48,205,215,.12); }
-    .type-ceremony  .tl-tag { color: var(--gold);      background: rgba(188,154,110,.15); }
+    .type-ceremony  .tl-tag { color: var(--gold);      background: rgba(225,170,40,.15); }
     .type-social    .tl-tag { color: var(--teal-dark); background: rgba(30,150,165,.18); }
-    .type-meal      .tl-tag { color: var(--gold);      background: rgba(188,154,110,.1); }
+    .type-meal      .tl-tag { color: var(--gold);      background: rgba(225,170,40,.1); }
 
     .tl-name {
       font-size: 1rem;
@@ -828,6 +830,150 @@
     .type-break    .tl-name,
     .type-dispersal .tl-name { color: rgba(250,245,237,.38); font-weight: 400; font-size: .9rem; }
     .type-meal     .tl-name  { color: rgba(250,245,237,.65); font-weight: 500; }
+
+    /* ── COMMITTEES CAROUSEL SECTION ── */
+    .ctrl-chains-section {
+      min-height: 100vh;
+      background: var(--white);
+      color: var(--navy);
+      font-family: 'Montserrat', sans-serif;
+      position: relative;
+      z-index: 4;
+    }
+
+    .ctrl-chains-sticky {
+      position: relative;
+      min-height: 100vh;
+      overflow: hidden;
+      display: flex;
+      border-radius: 0;
+    }
+
+    .ctrl-copy {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      height: 100vh;
+      width: 46%;
+      padding-left: 70px;
+      padding-right: 44px;
+      text-align: left;
+    }
+
+    .ctrl-kicker {
+      font-size: .72rem;
+      font-weight: 800;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--teal-dark);
+      margin-bottom: 42px;
+    }
+
+    .ctrl-title {
+      font-size: 62px;
+      font-weight: 500;
+      line-height: 62px;
+      letter-spacing: -.06em;
+      color: var(--navy);
+      margin-bottom: 0;
+    }
+
+    .ctrl-subtitle {
+      max-width: 332px;
+      font-size: 19px;
+      line-height: 27px;
+      font-weight: 500;
+      color: rgba(0,48,87,.68);
+      letter-spacing: -.04em;
+      margin-top: 23px;
+      margin-bottom: 0;
+    }
+
+    .committees-explore {
+      min-width: 220px;
+      height: 62px;
+      border-radius: 999px;
+      border: 0;
+      background: var(--navy);
+      color: var(--white);
+      font-family: 'Montserrat', sans-serif;
+      font-size: .82rem;
+      font-weight: 800;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      cursor: default;
+      margin-top: 47px;
+    }
+
+    .ctrl-chain-stage {
+      position: relative;
+      height: 100vh;
+      width: 54%;
+      overflow: hidden;
+      padding-left: 0;
+      padding-right: 0;
+    }
+
+    .ctrl-chain-list {
+      align-items: flex-start;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      justify-content: center;
+      overflow: hidden;
+      position: relative;
+      width: 100%;
+    }
+
+    .ctrl-chain {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: -35px;
+      position: absolute;
+      top: 50%;
+      transform: translate3d(0, var(--wheel-y, 0px), 0);
+      opacity: var(--wheel-opacity, 1);
+      will-change: transform, opacity;
+    }
+
+    .ctrl-chain-icon {
+      align-items: center;
+      display: flex;
+      justify-content: center;
+      width: 62px;
+      height: 62px;
+      border-radius: 50%;
+      border: 2px solid var(--navy);
+      font-size: 19px;
+      font-weight: 600;
+      font-style: italic;
+      color: var(--navy);
+      background: var(--chain-color, var(--teal-light));
+      flex: none;
+    }
+
+    .ctrl-chain-initial {
+      font-size: 18px;
+      font-weight: 900;
+      letter-spacing: .02em;
+      line-height: 1;
+    }
+
+    .ctrl-chain-name {
+      max-width: 44vw;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-size: 68px;
+      font-weight: 500;
+      line-height: 1.3;
+      letter-spacing: -.065em;
+      color: var(--navy);
+      white-space: nowrap;
+    }
 
     /* ── FAQ SECTION ── */
     .faq-section {
@@ -865,7 +1011,7 @@
 
     /* Each accordion card */
     .faq-item {
-      background: #EEEAE3;
+      background: var(--white);
       border: 1px solid rgba(0,48,87,.12);
       border-radius: 16px;
       overflow: hidden;
@@ -1173,6 +1319,76 @@
       .tl-event::before { display: none; }
       .tl-name { font-size: .8rem; }
       .tl-tag { font-size: .52rem; padding: 3px 8px; white-space: nowrap; flex-shrink: 0; }
+
+      .ctrl-chains-section {
+        min-height: 100vh;
+      }
+
+      .ctrl-chains-sticky {
+        min-height: 100vh;
+        display: block;
+        padding: 0 20px;
+        border-radius: 0;
+      }
+
+      .ctrl-copy {
+        width: 100%;
+        height: auto;
+        padding: 80px 0 0;
+      }
+
+      .ctrl-kicker {
+        margin-bottom: 48px;
+      }
+
+      .ctrl-title {
+        font-size: 54px;
+        line-height: 56px;
+        letter-spacing: -.07em;
+      }
+
+      .ctrl-subtitle {
+        font-size: 18px;
+        line-height: 24px;
+        margin-top: 28px;
+      }
+
+      .committees-explore {
+        min-width: 190px;
+        height: 54px;
+        font-size: .72rem;
+        margin-top: 28px;
+      }
+
+      .ctrl-chain-stage {
+        width: 100%;
+        height: 350px;
+        min-height: 0;
+        margin-top: 28px;
+        padding: 0;
+      }
+
+      .ctrl-chain-list {
+        width: 100%;
+      }
+
+      .ctrl-chain {
+        gap: 8px;
+        margin-top: -28px;
+      }
+
+      .ctrl-chain-icon {
+        width: 52px;
+        height: 52px;
+      }
+
+      .ctrl-chain-name {
+        max-width: calc(100vw - 88px);
+        font-size: 48px;
+        line-height: 52px;
+        letter-spacing: -.055em;
+      }
+
     }
   </style>
 </head>
@@ -1362,6 +1578,44 @@
         </div>
       </div>
 
+    </div>
+  </section>
+
+  <!-- COMMITTEES CAROUSEL -->
+  <section class="ctrl-chains-section" aria-label="Committees at a glance">
+    <div class="ctrl-chains-sticky">
+      <div class="ctrl-copy">
+        <p class="ctrl-kicker">Oakridge MUN · Chapter XVI</p>
+
+        <h2 class="ctrl-title">Committees<br>at a glance.</h2>
+        <p class="ctrl-subtitle">Explore crisis cabinets, legal forums, national assemblies, and global councils built for sharp debate.</p>
+        <button class="committees-explore" type="button">Explore Committees</button>
+      </div>
+
+      <div class="ctrl-chain-stage">
+        <div class="ctrl-chain-list">
+          <div class="ctrl-chain"><span class="ctrl-chain-icon" style="--chain-color:var(--teal);"><span class="ctrl-chain-initial">DI</span></span><span class="ctrl-chain-name">DISEC</span></div>
+          <div class="ctrl-chain"><span class="ctrl-chain-icon" style="--chain-color:var(--navy); color:var(--white);"><span class="ctrl-chain-initial">UN</span></span><span class="ctrl-chain-name">UNSC</span></div>
+          <div class="ctrl-chain"><span class="ctrl-chain-icon" style="--chain-color:var(--teal-light);"><span class="ctrl-chain-initial">HR</span></span><span class="ctrl-chain-name">UNHRC</span></div>
+          <div class="ctrl-chain"><span class="ctrl-chain-icon" style="--chain-color:var(--red);"><span class="ctrl-chain-initial">J1</span></span><span class="ctrl-chain-name">JCC-1</span></div>
+          <div class="ctrl-chain"><span class="ctrl-chain-icon" style="--chain-color:var(--peach);"><span class="ctrl-chain-initial">J2</span></span><span class="ctrl-chain-name">JCC-2</span></div>
+          <div class="ctrl-chain"><span class="ctrl-chain-icon" style="--chain-color:var(--gold);"><span class="ctrl-chain-initial">HC</span></span><span class="ctrl-chain-name">HCC</span></div>
+          <div class="ctrl-chain"><span class="ctrl-chain-icon" style="--chain-color:var(--yellow);"><span class="ctrl-chain-initial">LS</span></span><span class="ctrl-chain-name">LOK SABHA</span></div>
+          <div class="ctrl-chain"><span class="ctrl-chain-icon" style="--chain-color:var(--teal-dark); color:var(--white);"><span class="ctrl-chain-initial">AR</span></span><span class="ctrl-chain-name">ARMAGEDDON</span></div>
+          <div class="ctrl-chain"><span class="ctrl-chain-icon" style="--chain-color:var(--teal);"><span class="ctrl-chain-initial">OI</span></span><span class="ctrl-chain-name">OIC</span></div>
+          <div class="ctrl-chain"><span class="ctrl-chain-icon" style="--chain-color:var(--teal-light);"><span class="ctrl-chain-initial">UW</span></span><span class="ctrl-chain-name">UN WOMEN</span></div>
+          <div class="ctrl-chain"><span class="ctrl-chain-icon" style="--chain-color:var(--red);"><span class="ctrl-chain-initial">CO</span></span><span class="ctrl-chain-name">COPUOS</span></div>
+          <div class="ctrl-chain"><span class="ctrl-chain-icon" style="--chain-color:var(--peach);"><span class="ctrl-chain-initial">US</span></span><span class="ctrl-chain-name">US SENATE</span></div>
+          <div class="ctrl-chain"><span class="ctrl-chain-icon" style="--chain-color:var(--gold);"><span class="ctrl-chain-initial">BI</span></span><span class="ctrl-chain-name">BILDERBERG</span></div>
+          <div class="ctrl-chain"><span class="ctrl-chain-icon" style="--chain-color:var(--yellow);"><span class="ctrl-chain-initial">EC</span></span><span class="ctrl-chain-name">ECOFIN</span></div>
+          <div class="ctrl-chain"><span class="ctrl-chain-icon" style="--chain-color:var(--teal-dark); color:var(--white);"><span class="ctrl-chain-initial">IC</span></span><span class="ctrl-chain-name">ICJ / IRMCT / CCPCJ</span></div>
+          <div class="ctrl-chain"><span class="ctrl-chain-icon" style="--chain-color:var(--teal);"><span class="ctrl-chain-initial">FI</span></span><span class="ctrl-chain-name">FIFA</span></div>
+          <div class="ctrl-chain"><span class="ctrl-chain-icon" style="--chain-color:var(--teal-light);"><span class="ctrl-chain-initial">WH</span></span><span class="ctrl-chain-name">WHO</span></div>
+          <div class="ctrl-chain"><span class="ctrl-chain-icon" style="--chain-color:var(--yellow);"><span class="ctrl-chain-initial">UG</span></span><span class="ctrl-chain-name">UNGA - SOCHUM</span></div>
+          <div class="ctrl-chain"><span class="ctrl-chain-icon" style="--chain-color:var(--red);"><span class="ctrl-chain-initial">TS</span></span><span class="ctrl-chain-name">TSPPM</span></div>
+          <div class="ctrl-chain"><span class="ctrl-chain-icon" style="--chain-color:var(--peach);"><span class="ctrl-chain-initial">IP</span></span><span class="ctrl-chain-name">IP</span></div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -1670,6 +1924,36 @@
         revealItems(firstPanel);
       });
     });
+
+    // ── COMMITTEE CAROUSEL ──
+    const ctrlChains = document.querySelectorAll('.ctrl-chain');
+
+    function updateCommitteeCarousel(time = 0) {
+      if (!ctrlChains.length) return;
+
+      const isMobile = window.matchMedia('(max-width: 768px)').matches;
+      const count = ctrlChains.length;
+      const spacing = isMobile ? 58 : 86;
+      const centerOffset = isMobile ? 18 : 51;
+      const active = (time / 1800) % count;
+
+      ctrlChains.forEach((chain, index) => {
+        let diff = index - active;
+        if (diff > count / 2) diff -= count;
+        if (diff < -count / 2) diff += count;
+
+        const y = centerOffset + diff * spacing;
+        const fade = Math.max(0, Math.abs(y) - (isMobile ? 170 : 230));
+        const opacity = Math.max(.14, 1 - fade / (isMobile ? 130 : 190));
+
+        chain.style.setProperty('--wheel-y', y + 'px');
+        chain.style.setProperty('--wheel-opacity', opacity.toFixed(3));
+      });
+
+      requestAnimationFrame(updateCommitteeCarousel);
+    }
+
+    requestAnimationFrame(updateCommitteeCarousel);
 
     // ── MOBILE MENU ──
     const menuBtn = document.getElementById('menuBtn');
