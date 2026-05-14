@@ -148,6 +148,13 @@
       background: var(--navy);
     }
 
+    /* Light navy overlay over the video */
+    .video-card .navy-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0,48,87,.45);
+    }
+
     /* Dark scrim at bottom so text is always readable */
     .video-card .scrim {
       position: absolute;
@@ -1432,6 +1439,9 @@
       <video id="heroVideo" autoplay muted loop playsinline>
         <source src="hero.mp4" type="video/mp4" />
       </video>
+
+      <!-- Navy overlay -->
+      <div class="navy-overlay"></div>
 
       <!-- Bottom scrim for text legibility -->
       <div class="scrim"></div>
