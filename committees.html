@@ -35,8 +35,8 @@
     html, body {
       min-height: 100%;
       font-family: 'Montserrat', sans-serif;
-      background: var(--white);
-      color: var(--navy);
+      background: var(--navy);
+      color: var(--white);
       overflow-x: hidden;
     }
 
@@ -48,6 +48,8 @@
       align-items: center;
       justify-content: space-between;
       padding: 22px 48px;
+      background: var(--white);
+      border-bottom: 1px solid rgba(0,48,87,.1);
       animation: fadeDown .6s cubic-bezier(0.4,0,0.2,1) both;
     }
 
@@ -170,38 +172,106 @@
       margin: 0 auto;
     }
 
-    .filters-row {
+    .filters-bar {
       display: flex;
       align-items: center;
-      gap: 15px;
-      margin-bottom: 30px;
-      color: rgba(0,48,87,.64);
-      font-size: .72rem;
+      gap: 16px;
+      margin-bottom: 36px;
+      flex-wrap: wrap;
+    }
+
+    .filter-label {
+      font-size: .68rem;
       font-weight: 700;
-      letter-spacing: .08em;
+      letter-spacing: .12em;
       text-transform: uppercase;
+      color: rgba(250,245,237,.4);
+      flex-shrink: 0;
     }
 
-    .filter-pill {
-      height: 38px;
-      min-width: 144px;
-      border: 1px solid rgba(0,48,87,.22);
+    .filter-tags {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      flex: 1;
+    }
+
+    .filter-tag {
+      font-family: 'Montserrat', sans-serif;
+      font-size: .65rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: rgba(250,245,237,.65);
+      background: #003d6e;
+      border: 1px solid #1a5a90;
       border-radius: 999px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 18px;
-      padding: 0 16px;
-      color: rgba(0,48,87,.42);
-      background: rgba(250,245,237,.68);
+      padding: 7px 16px;
+      cursor: pointer;
+      transition: background .2s, color .2s, border-color .2s;
     }
 
-    .filter-pill svg {
-      width: 13px;
-      height: 13px;
-      stroke: currentColor;
+    .filter-tag:hover {
+      background: #004a85;
+      color: var(--white);
+      border-color: #2a7ab8;
+    }
+
+    .filter-tag.active {
+      background: var(--teal);
+      color: var(--navy);
+      border-color: var(--teal);
+    }
+
+    .search-wrap {
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    .search-wrap svg {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 14px;
+      height: 14px;
+      stroke: rgba(250,245,237,.4);
       stroke-width: 2;
       fill: none;
+      pointer-events: none;
+    }
+
+    .search-input {
+      font-family: 'Montserrat', sans-serif;
+      font-size: .72rem;
+      font-weight: 500;
+      letter-spacing: .03em;
+      color: var(--white);
+      background: #003d6e;
+      border: 1px solid #1a5a90;
+      border-radius: 999px;
+      padding: 8px 18px 8px 36px;
+      width: 220px;
+      outline: none;
+      transition: border-color .2s, background .2s;
+    }
+
+    .search-input::placeholder { color: rgba(250,245,237,.35); }
+
+    .search-input:focus {
+      border-color: var(--teal);
+      background: #004a85;
+    }
+
+    .empty-state {
+      display: none;
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 80px 0;
+      color: rgba(250,245,237,.3);
+      font-size: .9rem;
+      font-weight: 600;
+      letter-spacing: .04em;
     }
 
     .committee-grid {
@@ -213,7 +283,7 @@
 
     .committee-card {
       text-align: center;
-      color: var(--navy);
+      color: var(--white);
       text-decoration: none;
       opacity: 0;
       transform: translateY(30px);
@@ -357,7 +427,7 @@
       line-height: 1.22;
       font-weight: 600;
       letter-spacing: -.04em;
-      color: rgba(0,48,87,.76);
+      color: rgba(250,245,237,.88);
       transition: color .35s ease, transform .35s ease;
     }
 
@@ -366,24 +436,24 @@
       font-size: .7rem;
       line-height: 1.4;
       font-weight: 500;
-      color: rgba(0,48,87,.42);
+      color: rgba(250,245,237,.45);
       transition: color .35s ease, transform .35s ease;
     }
 
     .committee-card:hover .committee-title {
-      color: var(--navy);
+      color: var(--white);
       transform: translateY(-2px);
     }
 
     .committee-card:hover .committee-subtitle {
-      color: rgba(0,48,87,.58);
+      color: rgba(250,245,237,.65);
       transform: translateY(-2px);
     }
 
     footer {
       background: var(--navy);
       padding: 64px 56px 0;
-      border-radius: 28px 28px 0 0;
+      border-top: 1px solid rgba(250,245,237,.1);
     }
 
     .footer-top {
@@ -605,34 +675,45 @@
 
   <main>
     <div class="work-shell">
-      <div class="filters-row">
-        <span>Filters:</span>
-        <span class="filter-pill">By council
-          <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 6l4 4 4-4"/></svg>
-        </span>
+      <div class="filters-bar">
+        <span class="filter-label">Filter:</span>
+        <div class="filter-tags">
+          <button class="filter-tag active" data-filter="all">All</button>
+          <button class="filter-tag" data-filter="committee">Committee</button>
+          <button class="filter-tag" data-filter="council">Council</button>
+          <button class="filter-tag" data-filter="crisis">Crisis</button>
+          <button class="filter-tag" data-filter="assembly">Assembly</button>
+          <button class="filter-tag" data-filter="press">Press</button>
+          <button class="filter-tag" data-filter="special">Special</button>
+        </div>
+        <div class="search-wrap">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="22" y2="22"/></svg>
+          <input class="search-input" type="search" placeholder="Search committees…" id="committeeSearch" autocomplete="off" />
+        </div>
       </div>
 
       <section class="committee-grid" aria-label="Oakridge MUN committees">
-        <a class="committee-card" href="committee.html?committee=disec" style="--tile-a:var(--teal);--tile-b:var(--teal-light);"><div class="committee-visual"><img class="tile-logo" src="logo.png" alt="" /><span class="status">Committee</span><span class="committee-ring"></span><strong class="committee-code">DI</strong></div><h2 class="committee-title">DISEC</h2><p class="committee-subtitle">Disarmament and security</p></a>
-        <a class="committee-card" href="committee.html?committee=unsc" style="--tile-a:var(--navy);--tile-b:var(--teal-dark);"><div class="committee-visual"><img class="tile-logo" src="logo.png" alt="" /><span class="status">Council</span><span class="committee-ring"></span><strong class="committee-code">UN</strong></div><h2 class="committee-title">UNSC</h2><p class="committee-subtitle">Security council</p></a>
-        <a class="committee-card" href="committee.html?committee=unhrc" style="--tile-a:var(--teal-light);--tile-b:var(--white);"><div class="committee-visual"><img class="tile-logo" src="logo.png" alt="" /><span class="status">Committee</span><span class="committee-ring"></span><strong class="committee-code">HR</strong></div><h2 class="committee-title">UNHRC</h2><p class="committee-subtitle">Human rights council</p></a>
-        <a class="committee-card" href="committee.html?committee=jcc-1" style="--tile-a:var(--red);--tile-b:var(--peach);"><div class="committee-visual"><img class="tile-logo" src="logo.png" alt="" /><span class="status">Crisis</span><span class="committee-ring"></span><strong class="committee-code">J1</strong></div><h2 class="committee-title">JCC-1</h2><p class="committee-subtitle">Joint crisis cabinet</p></a>
-        <a class="committee-card" href="committee.html?committee=jcc-2" style="--tile-a:var(--peach);--tile-b:var(--gold);"><div class="committee-visual"><img class="tile-logo" src="logo.png" alt="" /><span class="status">Crisis</span><span class="committee-ring"></span><strong class="committee-code">J2</strong></div><h2 class="committee-title">JCC-2</h2><p class="committee-subtitle">Joint crisis cabinet</p></a>
-        <a class="committee-card" href="committee.html?committee=hcc" style="--tile-a:var(--gold);--tile-b:var(--yellow);"><div class="committee-visual"><img class="tile-logo" src="logo.png" alt="" /><span class="status">Cabinet</span><span class="committee-ring"></span><strong class="committee-code">HC</strong></div><h2 class="committee-title">HCC</h2><p class="committee-subtitle">Historic crisis committee</p></a>
-        <a class="committee-card" href="committee.html?committee=lok-sabha" style="--tile-a:var(--yellow);--tile-b:var(--teal-light);"><div class="committee-visual"><img class="tile-logo" src="logo.png" alt="" /><span class="status">Assembly</span><span class="committee-ring"></span><strong class="committee-code long">LS</strong></div><h2 class="committee-title">LOK SABHA</h2><p class="committee-subtitle">Indian parliament</p></a>
-        <a class="committee-card" href="committee.html?committee=armageddon" style="--tile-a:var(--teal-dark);--tile-b:var(--navy);"><div class="committee-visual"><img class="tile-logo" src="logo.png" alt="" /><span class="status">Crisis</span><span class="committee-ring"></span><strong class="committee-code long">AR</strong></div><h2 class="committee-title">ARMAGEDDON</h2><p class="committee-subtitle">High-stakes crisis room</p></a>
-        <a class="committee-card" href="committee.html?committee=oic" style="--tile-a:var(--teal);--tile-b:var(--yellow);"><div class="committee-visual"><img class="tile-logo" src="logo.png" alt="" /><span class="status">Council</span><span class="committee-ring"></span><strong class="committee-code">OI</strong></div><h2 class="committee-title">OIC</h2><p class="committee-subtitle">Islamic cooperation</p></a>
-        <a class="committee-card" href="committee.html?committee=un-women" style="--tile-a:var(--teal-light);--tile-b:var(--peach);"><div class="committee-visual"><img class="tile-logo" src="logo.png" alt="" /><span class="status">Committee</span><span class="committee-ring"></span><strong class="committee-code">UW</strong></div><h2 class="committee-title">UN WOMEN</h2><p class="committee-subtitle">Gender equality forum</p></a>
-        <a class="committee-card" href="committee.html?committee=copuos" style="--tile-a:var(--red);--tile-b:var(--teal);"><div class="committee-visual"><img class="tile-logo" src="logo.png" alt="" /><span class="status">Committee</span><span class="committee-ring"></span><strong class="committee-code">CO</strong></div><h2 class="committee-title">COPUOS</h2><p class="committee-subtitle">Outer space affairs</p></a>
-        <a class="committee-card" href="committee.html?committee=us-senate" style="--tile-a:var(--peach);--tile-b:var(--white);"><div class="committee-visual"><img class="tile-logo" src="logo.png" alt="" /><span class="status">Senate</span><span class="committee-ring"></span><strong class="committee-code">US</strong></div><h2 class="committee-title">US SENATE</h2><p class="committee-subtitle">Legislative chamber</p></a>
-        <a class="committee-card" href="committee.html?committee=bilderberg" style="--tile-a:var(--gold);--tile-b:var(--navy);"><div class="committee-visual"><img class="tile-logo" src="logo.png" alt="" /><span class="status">Forum</span><span class="committee-ring"></span><strong class="committee-code">BI</strong></div><h2 class="committee-title">BILDERBERG</h2><p class="committee-subtitle">Global strategy table</p></a>
-        <a class="committee-card" href="committee.html?committee=ecofin" style="--tile-a:var(--yellow);--tile-b:var(--gold);"><div class="committee-visual"><img class="tile-logo" src="logo.png" alt="" /><span class="status">Committee</span><span class="committee-ring"></span><strong class="committee-code">EC</strong></div><h2 class="committee-title">ECOFIN</h2><p class="committee-subtitle">Economic and financial</p></a>
-        <a class="committee-card" href="committee.html?committee=icj-irmct-ccpcj" style="--tile-a:var(--teal-dark);--tile-b:var(--peach);"><div class="committee-visual"><img class="tile-logo" src="logo.png" alt="" /><span class="status">Legal</span><span class="committee-ring"></span><strong class="committee-code long">ICJ</strong></div><h2 class="committee-title">ICJ / IRMCT / CCPCJ</h2><p class="committee-subtitle">Courts and justice</p></a>
-        <a class="committee-card" href="committee.html?committee=fifa" style="--tile-a:var(--teal);--tile-b:var(--white);"><div class="committee-visual"><img class="tile-logo" src="logo.png" alt="" /><span class="status">Federation</span><span class="committee-ring"></span><strong class="committee-code">FI</strong></div><h2 class="committee-title">FIFA</h2><p class="committee-subtitle">Global football governance</p></a>
-        <a class="committee-card" href="committee.html?committee=who" style="--tile-a:var(--teal-light);--tile-b:var(--teal);"><div class="committee-visual"><img class="tile-logo" src="logo.png" alt="" /><span class="status">Agency</span><span class="committee-ring"></span><strong class="committee-code">WH</strong></div><h2 class="committee-title">WHO</h2><p class="committee-subtitle">World health organization</p></a>
-        <a class="committee-card" href="committee.html?committee=unga-sochum" style="--tile-a:var(--yellow);--tile-b:var(--white);"><div class="committee-visual"><img class="tile-logo" src="logo.png" alt="" /><span class="status">Assembly</span><span class="committee-ring"></span><strong class="committee-code long">UG</strong></div><h2 class="committee-title">UNGA - SOCHUM</h2><p class="committee-subtitle">Social and humanitarian</p></a>
-        <a class="committee-card" href="committee.html?committee=tsppm" style="--tile-a:var(--red);--tile-b:var(--yellow);"><div class="committee-visual"><img class="tile-logo" src="logo.png" alt="" /><span class="status">Press</span><span class="committee-ring"></span><strong class="committee-code">TS</strong></div><h2 class="committee-title">TSPPM</h2><p class="committee-subtitle">Media and reportage</p></a>
-        <a class="committee-card" href="committee.html?committee=ip" style="--tile-a:var(--peach);--tile-b:var(--teal-light);"><div class="committee-visual"><img class="tile-logo" src="logo.png" alt="" /><span class="status">Press</span><span class="committee-ring"></span><strong class="committee-code">IP</strong></div><h2 class="committee-title">IP</h2><p class="committee-subtitle">International press</p></a>
+        <a class="committee-card" href="committee.html?committee=disec" data-type="committee" data-name="DISEC Disarmament and security" style="--tile-a:var(--teal);--tile-b:var(--teal-light);"><div class="committee-visual"><img class="tile-logo" src="logo.png" alt="" /><span class="status">Committee</span><span class="committee-ring"></span><strong class="committee-code">DI</strong></div><h2 class="committee-title">DISEC</h2><p class="committee-subtitle">Disarmament and security</p></a>
+        <a class="committee-card" href="committee.html?committee=unsc" data-type="council" data-name="UNSC Security council" style="--tile-a:var(--navy);--tile-b:var(--teal-dark);"><div class="committee-visual"><img class="tile-logo" src="logo.png" alt="" /><span class="status">Council</span><span class="committee-ring"></span><strong class="committee-code">UN</strong></div><h2 class="committee-title">UNSC</h2><p class="committee-subtitle">Security council</p></a>
+        <a class="committee-card" href="committee.html?committee=unhrc" data-type="committee" data-name="UNHRC Human rights council" style="--tile-a:var(--teal-light);--tile-b:var(--white);"><div class="committee-visual"><img class="tile-logo" src="logo.png" alt="" /><span class="status">Committee</span><span class="committee-ring"></span><strong class="committee-code">HR</strong></div><h2 class="committee-title">UNHRC</h2><p class="committee-subtitle">Human rights council</p></a>
+        <a class="committee-card" href="committee.html?committee=jcc-1" data-type="crisis" data-name="JCC-1 Joint crisis cabinet" style="--tile-a:var(--red);--tile-b:var(--teal-dark);"><div class="committee-visual"><img class="tile-logo" src="logo.png" alt="" /><span class="status">Crisis</span><span class="committee-ring"></span><strong class="committee-code">J1</strong></div><h2 class="committee-title">JCC-1</h2><p class="committee-subtitle">Joint crisis cabinet</p></a>
+        <a class="committee-card" href="committee.html?committee=jcc-2" data-type="crisis" data-name="JCC-2 Joint crisis cabinet" style="--tile-a:var(--teal-dark);--tile-b:var(--red);"><div class="committee-visual"><img class="tile-logo" src="logo.png" alt="" /><span class="status">Crisis</span><span class="committee-ring"></span><strong class="committee-code">J2</strong></div><h2 class="committee-title">JCC-2</h2><p class="committee-subtitle">Joint crisis cabinet</p></a>
+        <a class="committee-card" href="committee.html?committee=hcc" data-type="crisis" data-name="HCC Historic crisis committee" style="--tile-a:var(--teal);--tile-b:var(--teal-dark);"><div class="committee-visual"><img class="tile-logo" src="logo.png" alt="" /><span class="status">Cabinet</span><span class="committee-ring"></span><strong class="committee-code">HC</strong></div><h2 class="committee-title">HCC</h2><p class="committee-subtitle">Historic crisis committee</p></a>
+        <a class="committee-card" href="committee.html?committee=lok-sabha" data-type="assembly" data-name="LOK SABHA Indian parliament" style="--tile-a:var(--teal-light);--tile-b:var(--teal);"><div class="committee-visual"><img class="tile-logo" src="logo.png" alt="" /><span class="status">Assembly</span><span class="committee-ring"></span><strong class="committee-code long">LS</strong></div><h2 class="committee-title">LOK SABHA</h2><p class="committee-subtitle">Indian parliament</p></a>
+        <a class="committee-card" href="committee.html?committee=armageddon" data-type="crisis" data-name="ARMAGEDDON High-stakes crisis room" style="--tile-a:var(--teal-dark);--tile-b:var(--navy);"><div class="committee-visual"><img class="tile-logo" src="logo.png" alt="" /><span class="status">Crisis</span><span class="committee-ring"></span><strong class="committee-code long">AR</strong></div><h2 class="committee-title">ARMAGEDDON</h2><p class="committee-subtitle">High-stakes crisis room</p></a>
+        <a class="committee-card" href="committee.html?committee=oic" data-type="council" data-name="OIC Islamic cooperation" style="--tile-a:var(--teal);--tile-b:var(--teal-dark);"><div class="committee-visual"><img class="tile-logo" src="logo.png" alt="" /><span class="status">Council</span><span class="committee-ring"></span><strong class="committee-code">OI</strong></div><h2 class="committee-title">OIC</h2><p class="committee-subtitle">Islamic cooperation</p></a>
+        <a class="committee-card" href="committee.html?committee=un-women" data-type="committee" data-name="UN WOMEN Gender equality forum" style="--tile-a:var(--teal-light);--tile-b:var(--teal-dark);"><div class="committee-visual"><img class="tile-logo" src="logo.png" alt="" /><span class="status">Committee</span><span class="committee-ring"></span><strong class="committee-code">UW</strong></div><h2 class="committee-title">UN WOMEN</h2><p class="committee-subtitle">Gender equality forum</p></a>
+        <a class="committee-card" href="committee.html?committee=copuos" data-type="committee" data-name="COPUOS Outer space affairs" style="--tile-a:var(--red);--tile-b:var(--teal);"><div class="committee-visual"><img class="tile-logo" src="logo.png" alt="" /><span class="status">Committee</span><span class="committee-ring"></span><strong class="committee-code">CO</strong></div><h2 class="committee-title">COPUOS</h2><p class="committee-subtitle">Outer space affairs</p></a>
+        <a class="committee-card" href="committee.html?committee=us-senate" data-type="assembly" data-name="US SENATE Legislative chamber" style="--tile-a:var(--teal-dark);--tile-b:var(--teal-light);"><div class="committee-visual"><img class="tile-logo" src="logo.png" alt="" /><span class="status">Senate</span><span class="committee-ring"></span><strong class="committee-code">US</strong></div><h2 class="committee-title">US SENATE</h2><p class="committee-subtitle">Legislative chamber</p></a>
+        <a class="committee-card" href="committee.html?committee=bilderberg" data-type="special" data-name="BILDERBERG Global strategy table" style="--tile-a:var(--teal);--tile-b:var(--navy);"><div class="committee-visual"><img class="tile-logo" src="logo.png" alt="" /><span class="status">Forum</span><span class="committee-ring"></span><strong class="committee-code">BI</strong></div><h2 class="committee-title">BILDERBERG</h2><p class="committee-subtitle">Global strategy table</p></a>
+        <a class="committee-card" href="committee.html?committee=ecofin" data-type="committee" data-name="ECOFIN Economic and financial" style="--tile-a:var(--teal-light);--tile-b:var(--teal);"><div class="committee-visual"><img class="tile-logo" src="logo.png" alt="" /><span class="status">Committee</span><span class="committee-ring"></span><strong class="committee-code">EC</strong></div><h2 class="committee-title">ECOFIN</h2><p class="committee-subtitle">Economic and financial</p></a>
+        <a class="committee-card" href="committee.html?committee=icj-irmct-ccpcj" data-type="special" data-name="ICJ IRMCT CCPCJ Courts and justice" style="--tile-a:var(--teal-dark);--tile-b:var(--teal);"><div class="committee-visual"><img class="tile-logo" src="logo.png" alt="" /><span class="status">Legal</span><span class="committee-ring"></span><strong class="committee-code long">ICJ</strong></div><h2 class="committee-title">ICJ / IRMCT / CCPCJ</h2><p class="committee-subtitle">Courts and justice</p></a>
+        <a class="committee-card" href="committee.html?committee=fifa" data-type="special" data-name="FIFA Global football governance" style="--tile-a:var(--teal);--tile-b:var(--teal-light);"><div class="committee-visual"><img class="tile-logo" src="logo.png" alt="" /><span class="status">Federation</span><span class="committee-ring"></span><strong class="committee-code">FI</strong></div><h2 class="committee-title">FIFA</h2><p class="committee-subtitle">Global football governance</p></a>
+        <a class="committee-card" href="committee.html?committee=who" data-type="special" data-name="WHO World health organization" style="--tile-a:var(--teal-light);--tile-b:var(--teal);"><div class="committee-visual"><img class="tile-logo" src="logo.png" alt="" /><span class="status">Agency</span><span class="committee-ring"></span><strong class="committee-code">WH</strong></div><h2 class="committee-title">WHO</h2><p class="committee-subtitle">World health organization</p></a>
+        <a class="committee-card" href="committee.html?committee=unga-sochum" data-type="assembly" data-name="UNGA SOCHUM Social and humanitarian" style="--tile-a:var(--teal);--tile-b:var(--teal-dark);"><div class="committee-visual"><img class="tile-logo" src="logo.png" alt="" /><span class="status">Assembly</span><span class="committee-ring"></span><strong class="committee-code long">UG</strong></div><h2 class="committee-title">UNGA - SOCHUM</h2><p class="committee-subtitle">Social and humanitarian</p></a>
+        <a class="committee-card" href="committee.html?committee=tsppm" data-type="press" data-name="TSPPM Media and reportage" style="--tile-a:var(--red);--tile-b:var(--teal-dark);"><div class="committee-visual"><img class="tile-logo" src="logo.png" alt="" /><span class="status">Press</span><span class="committee-ring"></span><strong class="committee-code">TS</strong></div><h2 class="committee-title">TSPPM</h2><p class="committee-subtitle">Media and reportage</p></a>
+        <a class="committee-card" href="committee.html?committee=ip" data-type="press" data-name="IP International press" style="--tile-a:var(--teal-light);--tile-b:var(--teal);"><div class="committee-visual"><img class="tile-logo" src="logo.png" alt="" /><span class="status">Press</span><span class="committee-ring"></span><strong class="committee-code">IP</strong></div><h2 class="committee-title">IP</h2><p class="committee-subtitle">International press</p></a>
+        <div class="empty-state" id="emptyState">No committees match your search.</div>
       </section>
     </div>
   </main>
@@ -699,15 +780,14 @@
   </footer>
 
   <script>
+    // Mobile nav
     const menuBtn = document.getElementById('menuBtn');
     const mobileNav = document.getElementById('mobileNav');
-
     menuBtn.addEventListener('click', () => {
       const isOpen = mobileNav.classList.toggle('open');
       menuBtn.classList.toggle('open', isOpen);
       document.body.style.overflow = isOpen ? 'hidden' : '';
     });
-
     mobileNav.querySelectorAll('a').forEach(a => {
       a.addEventListener('click', () => {
         mobileNav.classList.remove('open');
@@ -716,7 +796,45 @@
       });
     });
 
+    // Filter + search
     const cards = document.querySelectorAll('.committee-card');
+    const emptyState = document.getElementById('emptyState');
+    let activeFilter = 'all';
+    let searchQuery = '';
+
+    function applyFilters() {
+      let visible = 0;
+      cards.forEach((card, i) => {
+        const type = card.dataset.type;
+        const name = card.dataset.name.toLowerCase();
+        const matchesFilter = activeFilter === 'all' || type === activeFilter;
+        const matchesSearch = name.includes(searchQuery);
+        const show = matchesFilter && matchesSearch;
+        card.style.display = show ? '' : 'none';
+        if (show) {
+          card.classList.remove('revealed');
+          setTimeout(() => card.classList.add('revealed'), visible * 55);
+          visible++;
+        }
+      });
+      emptyState.style.display = visible === 0 ? 'block' : 'none';
+    }
+
+    document.querySelectorAll('.filter-tag').forEach(tag => {
+      tag.addEventListener('click', () => {
+        document.querySelectorAll('.filter-tag').forEach(t => t.classList.remove('active'));
+        tag.classList.add('active');
+        activeFilter = tag.dataset.filter;
+        applyFilters();
+      });
+    });
+
+    document.getElementById('committeeSearch').addEventListener('input', e => {
+      searchQuery = e.target.value.toLowerCase().trim();
+      applyFilters();
+    });
+
+    // Initial scroll reveal
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (!entry.isIntersecting) return;
@@ -725,7 +843,6 @@
         observer.unobserve(entry.target);
       });
     }, { threshold: 0.08 });
-
     cards.forEach(card => observer.observe(card));
   </script>
 </body>
