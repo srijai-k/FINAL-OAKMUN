@@ -10,6 +10,26 @@
 
     html { zoom: 1.1; }
 
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    @keyframes scaleIn {
+      from { opacity: 0; transform: scale(.97); }
+      to   { opacity: 1; transform: scale(1); }
+    }
+
     :root {
       --navy:       #003057;
       --teal:       #30CDD7;
@@ -37,6 +57,7 @@
       align-items: center;
       justify-content: space-between;
       padding: 22px 48px;
+      animation: fadeDown .6s cubic-bezier(0.4,0,0.2,1) both;
     }
 
     .nav-logo {
@@ -105,6 +126,7 @@
       overflow: hidden;
       background: #010e1e;
       margin-top: 80px;
+      animation: scaleIn .8s cubic-bezier(0.4,0,0.2,1) .15s both;
     }
 
     /* The actual video fills the card */
@@ -154,6 +176,7 @@
       text-transform: uppercase;
       color: var(--gold);
       margin-bottom: 14px;
+      animation: fadeUp .6s cubic-bezier(0.4,0,0.2,1) .4s both;
     }
 
     .card-title {
@@ -163,6 +186,7 @@
       letter-spacing: -.02em;
       color: var(--white);
       margin-bottom: 10px;
+      animation: fadeUp .7s cubic-bezier(0.4,0,0.2,1) .52s both;
     }
 
     .card-chapter {
@@ -172,6 +196,7 @@
       text-transform: uppercase;
       color: var(--teal);
       margin-bottom: 28px;
+      animation: fadeUp .7s cubic-bezier(0.4,0,0.2,1) .62s both;
     }
 
     .card-dates {
@@ -184,6 +209,7 @@
       text-transform: uppercase;
       color: rgba(250,245,237,.55);
       margin-bottom: 40px;
+      animation: fadeUp .7s cubic-bezier(0.4,0,0.2,1) .72s both;
     }
 
     .card-dates .sep { opacity: .3; }
@@ -193,6 +219,7 @@
       display: flex;
       gap: 12px;
       align-items: flex-end;
+      animation: fadeUp .7s cubic-bezier(0.4,0,0.2,1) .84s both;
     }
 
     .cd-unit {
