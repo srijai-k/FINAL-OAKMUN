@@ -2304,11 +2304,8 @@
         raf = requestAnimationFrame(animate);
       }
 
-      const stage = document.querySelector('.ctrl-chain-stage');
-      if (stage) {
+      if (document.querySelector('.ctrl-chain-stage')) {
         animate();
-        stage.addEventListener('mouseenter', () => cancelAnimationFrame(raf));
-        stage.addEventListener('mouseleave', () => { raf = requestAnimationFrame(animate); });
       }
     })();
   </script>
