@@ -4,30 +4,48 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Oakridge MUN — Chapter XVI</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,700&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    html { zoom: 1.1; }
+    html { zoom: 1.1; scroll-behavior: smooth; }
 
     @keyframes fadeDown {
-      from { opacity: 0; transform: translateY(-18px); }
+      from { opacity: 0; transform: translateY(-20px); }
       to   { opacity: 1; transform: translateY(0); }
     }
-
     @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(28px); }
+      from { opacity: 0; transform: translateY(32px); }
       to   { opacity: 1; transform: translateY(0); }
     }
-
     @keyframes fadeIn {
       from { opacity: 0; }
       to   { opacity: 1; }
     }
-
     @keyframes scaleIn {
-      from { opacity: 0; transform: scale(.97); }
+      from { opacity: 0; transform: scale(.96); }
       to   { opacity: 1; transform: scale(1); }
+    }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+    @keyframes pulse-ring {
+      0%   { transform: translate(-50%,-50%) scale(1);   opacity: .35; }
+      100% { transform: translate(-50%,-50%) scale(1.18); opacity: 0; }
+    }
+    @keyframes scrollBounce {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(6px); }
+    }
+    @keyframes gradientShift {
+      0%   { background-position: 0% 50%; }
+      50%  { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    @keyframes countFlip {
+      from { transform: translateY(-4px); opacity: 0; }
+      to   { transform: translateY(0);    opacity: 1; }
     }
 
     :root {
@@ -50,26 +68,37 @@
       overflow-x: hidden;
     }
 
-    /* ── NAV ── */
+    /* ═══════════════════════════════════════
+       NAV
+    ═══════════════════════════════════════ */
     nav {
       position: fixed;
       top: 0; left: 0; right: 0;
-      z-index: 100;
+      z-index: 200;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 22px 48px;
-      animation: fadeDown .6s cubic-bezier(0.4,0,0.2,1) both;
+      padding: 24px 48px;
+      background: linear-gradient(to bottom, rgba(0,10,20,.72) 0%, rgba(0,10,20,.3) 70%, transparent 100%);
+      transition: background .4s ease, backdrop-filter .4s ease, padding .3s ease, box-shadow .4s ease;
+      animation: fadeDown .7s cubic-bezier(0.4,0,0.2,1) both;
+    }
+    nav.scrolled {
+      background: rgba(0,30,57,.82);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      padding: 16px 48px;
+      box-shadow: 0 1px 0 rgba(48,205,215,.12);
     }
 
     .nav-logo {
       font-size: 1rem;
       font-weight: 800;
-      letter-spacing: .14em;
+      letter-spacing: .16em;
       text-transform: uppercase;
       color: var(--white);
+      text-decoration: none;
     }
-
     .nav-logo span { color: var(--teal); }
 
     .nav-links {
@@ -77,17 +106,15 @@
       gap: 36px;
       list-style: none;
     }
-
     .nav-links a {
       font-size: .72rem;
       font-weight: 600;
-      letter-spacing: .1em;
+      letter-spacing: .12em;
       text-transform: uppercase;
       color: rgba(250,245,237,.5);
       text-decoration: none;
       transition: color .2s;
     }
-
     .nav-links a:hover { color: var(--teal); }
 
     .nav-cta {
@@ -95,44 +122,29 @@
       color: var(--navy);
       font-family: 'Montserrat', sans-serif;
       font-size: .72rem;
-      font-weight: 700;
+      font-weight: 800;
       letter-spacing: .12em;
       text-transform: uppercase;
       border: none;
-      border-radius: 4px;
-      padding: 10px 22px;
+      border-radius: 6px;
+      padding: 11px 24px;
       cursor: pointer;
-      transition: opacity .2s;
+      transition: background .2s, transform .15s;
     }
+    .nav-cta:hover { background: var(--teal-light); transform: translateY(-1px); }
 
-    .nav-cta:hover { opacity: .75; }
-
-    /* ── HERO ── */
+    /* ═══════════════════════════════════════
+       HERO
+    ═══════════════════════════════════════ */
     .hero {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-end;
-      padding: 0 56px 48px;
-      background: var(--navy);
-    }
-
-    /* ── VIDEO CARD ── */
-    .video-card {
       position: relative;
       width: 100%;
-      max-width: 1320px;
-      height: calc(100vh - 104px);
-      border-radius: 22px;
+      height: 100vh;
       overflow: hidden;
       background: var(--navy);
-      margin-top: 80px;
-      animation: scaleIn .8s cubic-bezier(0.4,0,0.2,1) .15s both;
     }
 
-    /* The actual video fills the card */
-    .video-card video {
+    .hero video {
       position: absolute;
       inset: 0;
       width: 100%;
@@ -141,216 +153,508 @@
       display: block;
     }
 
-    /* Placeholder gradient shown before video is added */
-    .video-card .placeholder-bg {
+    .hero-overlay {
       position: absolute;
       inset: 0;
-      background: var(--navy);
+      background:
+        linear-gradient(to bottom, rgba(0,10,30,.6) 0%, rgba(0,20,45,.35) 40%, rgba(0,10,20,.92) 100%),
+        linear-gradient(110deg, rgba(0,30,60,.55) 0%, transparent 55%);
     }
 
-    /* Light navy overlay over the video */
-    .video-card .navy-overlay {
+    /* Ambient glow — left-leaning */
+    .hero-glow {
+      position: absolute;
+      top: 48%;
+      left: 28%;
+      transform: translate(-50%, -50%);
+      width: 800px;
+      height: 800px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(48,205,215,.13) 0%, transparent 65%);
+      pointer-events: none;
+      animation: fadeIn 2s ease both;
+    }
+
+    /* XVI — giant background watermark */
+    .hero-roman {
+      position: absolute;
+      right: -0.08em;
+      top: 50%;
+      transform: translateY(-52%);
+      font-size: clamp(14rem, 32vw, 30rem);
+      font-weight: 900;
+      letter-spacing: -.06em;
+      line-height: 1;
+      color: var(--teal);
+      opacity: .045;
+      pointer-events: none;
+      user-select: none;
+      z-index: 2;
+      animation: fadeIn 1.8s ease .4s both;
+    }
+
+    /* Inner layout: flex column, full fill */
+    .hero-inner {
       position: absolute;
       inset: 0;
-      background: rgba(0,48,87,.65);
-    }
-
-    /* Dark scrim at bottom so text is always readable */
-    .video-card .scrim {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(
-        to top,
-        rgba(0,0,0,.72) 0%,
-        rgba(0,0,0,.28) 40%,
-        rgba(0,0,0,0)   70%
-      );
-    }
-
-    /* Text sits on top of everything inside the card */
-    .card-content {
-      position: absolute;
-      bottom: 52px;
-      left: 56px;
-      right: 56px;
       display: flex;
       flex-direction: column;
-      gap: 0;
+      justify-content: space-between;
+      padding: 0 56px 52px;
+      z-index: 10;
     }
 
-    .card-eyebrow {
-      font-size: .68rem;
-      font-weight: 700;
-      letter-spacing: .28em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 14px;
-      animation: fadeUp .6s cubic-bezier(0.4,0,0.2,1) .4s both;
+    /* Top bar */
+    .hero-topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 110px;
+      animation: fadeDown .6s cubic-bezier(0.4,0,0.2,1) .3s both;
     }
-
-    .card-title {
-      font-size: clamp(3rem, 6.5vw, 6rem);
-      font-weight: 700;
-      line-height: 1;
-      letter-spacing: -.02em;
-      color: var(--white);
-      margin-bottom: 10px;
-      animation: fadeUp .7s cubic-bezier(0.4,0,0.2,1) .52s both;
-    }
-
-    .card-chapter {
-      font-size: clamp(.9rem, 1.8vw, 1.3rem);
-      font-weight: 500;
-      letter-spacing: .4em;
-      text-transform: uppercase;
-      color: var(--teal);
-      margin-bottom: 28px;
-      animation: fadeUp .7s cubic-bezier(0.4,0,0.2,1) .62s both;
-    }
-
-    .card-dates {
+    .hero-chapter-tag {
       display: flex;
       align-items: center;
       gap: 12px;
-      font-size: .75rem;
-      font-weight: 600;
+      font-size: .62rem;
+      font-weight: 800;
+      letter-spacing: .32em;
+      text-transform: uppercase;
+      color: var(--teal);
+    }
+    .hero-chapter-tag::before {
+      content: '';
+      display: block;
+      width: 28px; height: 1px;
+      background: var(--teal);
+      opacity: .7;
+    }
+    .hero-loc-tag {
+      font-size: .58rem;
+      font-weight: 700;
       letter-spacing: .2em;
       text-transform: uppercase;
-      color: rgba(250,245,237,.55);
-      margin-bottom: 40px;
-      animation: fadeUp .7s cubic-bezier(0.4,0,0.2,1) .72s both;
+      color: rgba(250,245,237,.28);
     }
 
-    .card-dates .sep { opacity: .3; }
+    /* Stacked headline — left-aligned */
+    .hero-headline {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 16px 0;
+      gap: 6px;
+      max-width: 68%;
+    }
+    .hero-word-main {
+      font-size: clamp(4.2rem, 13vw, 12.5rem);
+      font-weight: 900;
+      line-height: .88;
+      letter-spacing: -.05em;
+      color: var(--white);
+      animation: fadeUp .85s cubic-bezier(0.4,0,0.2,1) .48s both;
+    }
+    .hero-word-sub {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      animation: fadeUp .85s cubic-bezier(0.4,0,0.2,1) .62s both;
+    }
+    .hero-word-accent {
+      font-size: clamp(1.8rem, 5.2vw, 5rem);
+      font-weight: 900;
+      letter-spacing: -.03em;
+      color: var(--teal);
+      line-height: 1;
+    }
+    .hero-word-rule {
+      flex-shrink: 0;
+      width: 3px;
+      height: clamp(1.8rem, 4.5vw, 4.5rem);
+      background: rgba(48,205,215,.45);
+      border-radius: 2px;
+    }
+    .hero-word-light {
+      font-size: clamp(1.2rem, 3.4vw, 3.4rem);
+      font-weight: 300;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      color: rgba(250,245,237,.42);
+      line-height: 1;
+    }
 
-    /* ── COUNTDOWN inside card ── */
-    .countdown {
+    /* Bottom row: info left, countdown right */
+    .hero-bottom {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 48px;
+    }
+    .hero-bottom-left {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      animation: fadeUp .7s cubic-bezier(0.4,0,0.2,1) .78s both;
+    }
+    .hero-tagline {
+      font-size: clamp(.8rem, 1.2vw, .98rem);
+      font-weight: 500;
+      font-style: italic;
+      color: rgba(250,245,237,.48);
+      letter-spacing: .05em;
+    }
+    .hero-dates {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-size: .7rem;
+      font-weight: 700;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: rgba(250,245,237,.88);
+    }
+    .hero-dates .dot {
+      width: 3px; height: 3px;
+      border-radius: 50%;
+      background: var(--teal);
+      opacity: .7;
+    }
+    .hero-ctas {
       display: flex;
       gap: 12px;
-      align-items: flex-end;
-      animation: fadeUp .7s cubic-bezier(0.4,0,0.2,1) .84s both;
+      align-items: center;
     }
 
+    .hero-btn-primary {
+      font-family: 'Montserrat', sans-serif;
+      font-size: .8rem;
+      font-weight: 800;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--navy);
+      background: var(--white);
+      border: none;
+      border-radius: 8px;
+      padding: 15px 34px;
+      cursor: pointer;
+      transition: transform .2s, box-shadow .2s, background .2s;
+      box-shadow: 0 4px 24px rgba(0,0,0,.35);
+    }
+    .hero-btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(0,0,0,.45);
+      background: #fff;
+    }
+    .hero-btn-ghost {
+      font-family: 'Montserrat', sans-serif;
+      font-size: .8rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: rgba(250,245,237,.75);
+      background: transparent;
+      border: 1px solid rgba(250,245,237,.18);
+      border-radius: 8px;
+      padding: 15px 30px;
+      cursor: pointer;
+      transition: border-color .2s, color .2s, transform .2s;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .hero-btn-ghost:hover {
+      border-color: var(--teal);
+      color: var(--teal);
+      transform: translateY(-2px);
+    }
+
+    /* Countdown */
+    .hero-bottom-right {
+      flex-shrink: 0;
+      animation: fadeUp .7s cubic-bezier(0.4,0,0.2,1) .92s both;
+    }
+    .countdown {
+      display: flex;
+      gap: 8px;
+      align-items: flex-end;
+    }
     .cd-unit {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 5px;
+      gap: 8px;
     }
-
     .cd-value {
-      font-size: clamp(2.4rem, 5vw, 4.2rem);
+      font-size: clamp(1.8rem, 3vw, 2.8rem);
       font-weight: 800;
       line-height: 1;
       color: var(--white);
-      min-width: 100px;
+      min-width: 78px;
       text-align: center;
-      background: rgba(0,0,0,.35);
-      border: 1px solid rgba(250,245,237,.12);
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(48,205,215,.22);
       border-radius: 10px;
-      padding: 18px 12px 14px;
-      letter-spacing: -.01em;
-      backdrop-filter: blur(6px);
+      padding: 15px 10px 12px;
+      backdrop-filter: blur(12px);
+      letter-spacing: -.02em;
+      box-shadow: inset 0 1px 0 rgba(48,205,215,.12), 0 4px 24px rgba(0,0,0,.3);
+      animation: countFlip .2s ease;
     }
-
     .cd-label {
-      font-size: .65rem;
+      font-size: .5rem;
       font-weight: 700;
-      letter-spacing: .18em;
+      letter-spacing: .2em;
       text-transform: uppercase;
       color: var(--teal);
     }
-
     .cd-sep {
-      font-size: 2.8rem;
+      font-size: 2rem;
       font-weight: 300;
-      color: rgba(250,245,237,.25);
-      padding-bottom: 28px;
+      color: rgba(250,245,237,.2);
+      padding-bottom: 26px;
+      align-self: flex-end;
     }
 
-    /* Register pill at top-right of card */
-    .card-register {
+    /* scroll indicator */
+    .scroll-indicator {
       position: absolute;
-      top: 28px;
-      right: 28px;
-      background: var(--teal);
-      color: var(--navy);
-      font-family: 'Montserrat', sans-serif;
-      font-size: .72rem;
-      font-weight: 700;
-      letter-spacing: .12em;
-      text-transform: uppercase;
-      border: none;
-      border-radius: 4px;
-      padding: 10px 22px;
-      cursor: pointer;
-      transition: opacity .2s;
-    }
-
-    .card-register:hover { opacity: .85; }
-
-    /* Placeholder play icon */
-    .placeholder-icon {
-      position: absolute;
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
+      bottom: 36px;
+      left: 56px;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 14px;
-      pointer-events: none;
+      gap: 8px;
+      opacity: 0;
+      animation: fadeIn 1s ease 1.8s forwards;
     }
-
-    .play-ring {
-      width: 80px; height: 80px;
-      border-radius: 50%;
-      border: 2px solid rgba(250,245,237,.2);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .play-ring svg { width: 30px; height: 30px; fill: rgba(250,245,237,.3); margin-left: 4px; }
-
-    .placeholder-icon p {
-      font-size: .65rem;
-      font-weight: 600;
-      letter-spacing: .2em;
+    .scroll-indicator span {
+      font-size: .5rem;
+      font-weight: 700;
+      letter-spacing: .28em;
       text-transform: uppercase;
       color: rgba(250,245,237,.25);
     }
+    .scroll-indicator-line {
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(to bottom, rgba(48,205,215,.5), transparent);
+      animation: scrollBounce 1.6s ease-in-out infinite;
+    }
 
-    /* ── LETTER FROM SG ── */
+    /* ═══════════════════════════════════════
+       MARQUEE TICKER
+    ═══════════════════════════════════════ */
+    .marquee-section {
+      background: var(--teal);
+      overflow: hidden;
+      padding: 14px 0;
+    }
+    .marquee-track {
+      display: flex;
+      white-space: nowrap;
+      animation: marquee 22s linear infinite;
+    }
+    .marquee-content {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      flex-shrink: 0;
+    }
+    .marquee-item {
+      font-size: .72rem;
+      font-weight: 800;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--navy);
+      padding: 0 28px;
+    }
+    .marquee-dot {
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--navy);
+      opacity: .4;
+      flex-shrink: 0;
+    }
+
+    /* ═══════════════════════════════════════
+       STATS — 2×2 CARD GRID
+    ═══════════════════════════════════════ */
+    .stats-section {
+      background: #000e1a;
+      padding: 80px 56px;
+    }
+    .stats-grid {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: auto auto;
+      gap: 16px;
+    }
+    .stat-card {
+      border-radius: 20px;
+      padding: 48px 44px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 260px;
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity .55s ease, transform .55s ease;
+    }
+    .stat-card.revealed { opacity: 1; transform: translateY(0); }
+
+    .stat-card-label {
+      font-size: .6rem;
+      font-weight: 800;
+      letter-spacing: .3em;
+      text-transform: uppercase;
+    }
+    .stat-card-num {
+      font-size: clamp(4.5rem, 10vw, 9rem);
+      font-weight: 900;
+      line-height: .88;
+      letter-spacing: -.05em;
+    }
+    .stat-card-num em { font-style: normal; }
+    .stat-card-foot {
+      font-size: .82rem;
+      font-weight: 500;
+      line-height: 1.65;
+      max-width: 340px;
+    }
+
+    /* Card: Delegates */
+    .card-delegates {
+      background: rgba(48,205,215,.06);
+      border: 1px solid rgba(48,205,215,.16);
+    }
+    .card-delegates::after {
+      content: '';
+      position: absolute;
+      bottom: -20%; right: -10%;
+      width: 360px; height: 360px;
+      background: radial-gradient(circle, rgba(48,205,215,.13) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .card-delegates .stat-card-label { color: var(--teal); }
+    .card-delegates .stat-card-num   { color: var(--white); }
+    .card-delegates .stat-card-num em { color: var(--teal); }
+    .card-delegates .stat-card-foot  { color: rgba(250,245,237,.38); }
+
+    /* Card: Committees — inverted teal */
+    .card-committees {
+      background: var(--teal);
+    }
+    .card-committees::after {
+      content: '';
+      position: absolute;
+      top: -30%; right: -15%;
+      width: 320px; height: 320px;
+      background: radial-gradient(circle, rgba(255,255,255,.22) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .card-committees .stat-card-label { color: rgba(0,48,87,.6); }
+    .card-committees .stat-card-num   { color: var(--navy); }
+    .card-committees .stat-card-foot  { color: rgba(0,48,87,.52); }
+
+    /* Card: Days */
+    .card-days {
+      background: rgba(255,255,255,.03);
+      border: 1px solid rgba(250,245,237,.09);
+    }
+    .card-days::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, transparent, rgba(48,205,215,.45), transparent);
+    }
+    .card-days .stat-card-label { color: rgba(250,245,237,.4); }
+    .card-days .stat-card-num   { color: var(--white); }
+    .card-days .stat-card-foot  { color: rgba(250,245,237,.35); }
+
+    /* Card: Edition */
+    .card-edition {
+      background: linear-gradient(140deg, rgba(30,150,165,.1) 0%, rgba(0,48,87,.25) 100%);
+      border: 1px solid rgba(48,205,215,.12);
+    }
+    .card-edition::before {
+      content: 'XVI';
+      position: absolute;
+      right: -2%; top: 50%;
+      transform: translateY(-50%);
+      font-size: 22vw;
+      font-weight: 900;
+      letter-spacing: -.08em;
+      color: rgba(48,205,215,.05);
+      line-height: 1;
+      pointer-events: none;
+      user-select: none;
+    }
+    .card-edition .stat-card-label { color: var(--teal); }
+    .card-edition .stat-card-num   { color: var(--white); }
+    .card-edition .stat-card-num em { color: var(--teal); }
+    .card-edition .stat-card-foot  { color: rgba(250,245,237,.35); }
+
+    /* ═══════════════════════════════════════
+       SG LETTER
+    ═══════════════════════════════════════ */
     .sg-section {
       background: var(--navy);
-      padding: 100px 56px;
+      padding: 100px 56px 120px;
+      position: relative;
+      overflow: hidden;
+    }
+    /* subtle bg text */
+    .sg-section::before {
+      content: 'XVI';
+      position: absolute;
+      right: -40px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 28vw;
+      font-weight: 900;
+      letter-spacing: -.06em;
+      color: rgba(250,245,237,.015);
+      pointer-events: none;
+      line-height: 1;
     }
 
     .sg-inner {
       max-width: 1100px;
       margin: 0 auto;
       display: grid;
-      grid-template-columns: 420px 1fr;
+      grid-template-columns: 380px 1fr;
       gap: 80px;
       align-items: start;
+      position: relative;
+      z-index: 1;
     }
 
-    /* Photo column */
     .sg-photo-wrap {
       width: 100%;
       aspect-ratio: 3/4;
-      border-radius: 4px;
+      border-radius: 16px;
       overflow: hidden;
-      background: var(--white);
+      position: relative;
     }
-
+    .sg-photo-wrap::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 16px;
+      border: 1px solid rgba(48,205,215,.2);
+      pointer-events: none;
+    }
     .sg-photo-wrap img {
       width: 100%;
       height: 100%;
       object-fit: cover;
       display: block;
     }
-
     .sg-photo-placeholder {
       width: 100%;
       height: 100%;
@@ -359,460 +663,322 @@
       align-items: center;
       justify-content: center;
       gap: 16px;
-      background: rgba(48,205,215,.1);
-      border: 1px solid rgba(48,205,215,.2);
-      border-radius: 4px;
+      background: rgba(48,205,215,.06);
     }
-
     .sg-photo-placeholder svg { width: 80px; height: 80px; }
-
     .sg-photo-placeholder p {
       font-size: .7rem;
       font-weight: 600;
-      letter-spacing: .12em;
+      letter-spacing: .14em;
       text-transform: uppercase;
-      color: rgba(250,245,237,.35);
+      color: rgba(250,245,237,.3);
       text-align: center;
       line-height: 1.6;
     }
 
-    /* Letter column */
     .sg-kicker {
-      font-size: .75rem;
-      font-weight: 700;
-      letter-spacing: .25em;
+      font-size: .65rem;
+      font-weight: 800;
+      letter-spacing: .3em;
       text-transform: uppercase;
       color: var(--teal);
-      margin-bottom: 14px;
+      margin-bottom: 16px;
     }
-
     .sg-heading {
-      font-size: clamp(2rem, 3.2vw, 3rem);
+      font-size: clamp(2rem, 3vw, 2.8rem);
       font-weight: 700;
       line-height: 1.15;
       color: var(--white);
-      margin-bottom: 28px;
+      margin-bottom: 32px;
     }
-
     .sg-body {
       display: flex;
       flex-direction: column;
-      gap: 14px;
-      margin-bottom: 36px;
+      gap: 16px;
+      margin-bottom: 40px;
     }
-
     .sg-body p {
-      font-size: 1.05rem;
+      font-size: 1.02rem;
       font-weight: 400;
-      line-height: 1.8;
-      color: rgba(250,245,237,.72);
+      line-height: 1.82;
+      color: rgba(250,245,237,.68);
     }
-
-    /* Signature */
-    .sg-signature {
-      margin-bottom: 28px;
+    .sg-body p:first-child {
+      font-size: 1.12rem;
+      color: rgba(250,245,237,.82);
     }
-
+    .sg-signature { margin-bottom: 32px; }
     .sg-sig-line {
-      width: 110px;
-      height: 1px;
-      background: rgba(250,245,237,.2);
-      margin-bottom: 14px;
+      width: 80px;
+      height: 2px;
+      background: linear-gradient(to right, var(--teal), transparent);
+      margin-bottom: 16px;
     }
-
     .sg-sig-name {
-      font-size: .88rem;
-      font-weight: 600;
+      font-size: .92rem;
+      font-weight: 700;
       color: var(--white);
-      margin-bottom: 3px;
+      margin-bottom: 4px;
     }
-
     .sg-sig-title {
       font-size: .75rem;
       font-weight: 400;
-      color: rgba(250,245,237,.55);
+      color: rgba(250,245,237,.45);
       letter-spacing: .04em;
     }
-
     .sg-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
       font-size: .75rem;
-      font-weight: 700;
-      letter-spacing: .08em;
+      font-weight: 800;
+      letter-spacing: .1em;
+      text-transform: uppercase;
       color: var(--teal);
       text-decoration: none;
-      transition: color .2s;
+      transition: gap .2s, color .2s;
     }
+    .sg-link:hover { gap: 12px; color: var(--teal-light); }
 
-    .sg-link:hover { color: var(--teal-light); }
-
-    /* ══════════════════════════════
-       MOBILE RESPONSIVE
-    ══════════════════════════════ */
-    /* ── HAMBURGER ── */
-    .menu-btn {
-      display: none;
-      flex-direction: column;
-      justify-content: center;
-      gap: 5px;
-      width: 36px;
-      height: 36px;
-      background: none;
-      border: none;
-      cursor: pointer;
-      padding: 4px;
-      border-radius: 6px;
-      transition: background .2s;
-    }
-    .menu-btn:hover { background: rgba(250,245,237,.08); }
-    .menu-btn span {
-      display: block;
-      width: 100%;
-      height: 2px;
-      background: var(--white);
-      border-radius: 2px;
-      transition: transform .3s ease, opacity .3s ease;
-      transform-origin: center;
-    }
-    .menu-btn.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-    .menu-btn.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
-    .menu-btn.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-
-    /* Mobile nav drawer */
-    .mobile-nav {
-      display: none;
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 99;
-      background: var(--navy);
-      padding: 80px 24px 32px;
-      box-shadow: 0 8px 32px rgba(0,0,0,.3);
-      flex-direction: column;
-      gap: 0;
-      transform: translateY(-100%);
-      transition: transform .35s cubic-bezier(0.4,0,0.2,1);
-    }
-    .mobile-nav.open {
-      transform: translateY(0);
-    }
-    .mobile-nav a {
-      font-size: .9rem;
-      font-weight: 600;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-      color: var(--white);
-      text-decoration: none;
-      padding: 16px 0;
-      border-bottom: 1px solid rgba(250,245,237,.1);
-      transition: color .2s;
-    }
-    .mobile-nav a:last-child { border-bottom: none; }
-    .mobile-nav a:hover { color: var(--teal); }
-
-    @media (max-width: 768px) {
-      html { zoom: 1; }
-
-      /* NAV */
-      nav { padding: 16px 20px; }
-      .nav-links { display: none; }
-      .menu-btn { display: flex; }
-      .mobile-nav { display: flex; }
-      .nav-logo { font-size: .88rem; }
-      .nav-cta { padding: 9px 16px; font-size: .65rem; }
-
-      /* HERO */
-      .hero { padding: 0 12px 20px; }
-      .video-card {
-        height: 88vh;
-        border-radius: 16px;
-        margin-top: 68px;
-      }
-      .card-content { left: 20px; right: 20px; bottom: 24px; }
-      .card-title { font-size: clamp(2rem, 10vw, 3.2rem); margin-bottom: 6px; }
-      .card-chapter { font-size: .85rem; letter-spacing: .2em; margin-bottom: 16px; }
-      .card-eyebrow { font-size: .55rem; margin-bottom: 10px; }
-      .card-dates { font-size: .6rem; gap: 6px; margin-bottom: 20px; }
-      .countdown { gap: 6px; }
-      .cd-value { font-size: 1.6rem; min-width: 64px; padding: 12px 6px 10px; border-radius: 8px; }
-      .cd-label { font-size: .52rem; }
-      .cd-sep { font-size: 1.6rem; padding-bottom: 20px; }
-
-      /* SG LETTER */
-      .sg-section { padding: 60px 20px; border-radius: 18px 18px 0 0; }
-      .sg-inner {
-        grid-template-columns: 1fr;
-        gap: 36px;
-      }
-      .sg-photo-wrap { aspect-ratio: 4/3; max-width: 100%; }
-      .sg-heading { font-size: 1.9rem; }
-      .sg-body p { font-size: .96rem; }
-
-      /* SCHEDULE */
-      .schedule-section { padding: 60px 20px 60px; border-radius: 18px 18px 0 0; }
-      .schedule-header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 20px;
-        margin-bottom: 32px;
-      }
-      .schedule-title { font-size: 1.8rem; }
-      .day-tabs { width: 100%; }
-      .day-tab { padding: 10px 10px; font-size: .62rem; flex: 1; text-align: center; }
-
-      /* Stack timeline vertically: time label above, card full-width */
-      .timeline::before { display: none; }
-      .tl-item {
-        grid-template-columns: 1fr;
-        gap: 0;
-        margin-bottom: 10px;
-      }
-      .tl-time {
-        justify-content: flex-start;
-        padding: 0 0 5px 4px;
-        font-size: .6rem;
-        color: rgba(250,245,237,.4);
-        white-space: normal;
-      }
-      .tl-event {
-        margin-left: 0;
-        margin-top: 0;
-        margin-bottom: 0;
-        padding: 12px 14px;
-        border-radius: 8px;
-        gap: 10px;
-      }
-      .tl-event::before { display: none; }
-      .tl-name { font-size: .85rem; }
-      .tl-tag { font-size: .55rem; padding: 3px 8px; }
-
-      /* FAQ */
-      .faq-section { padding: 60px 20px 80px; }
-      .faq-heading { font-size: clamp(2.8rem, 15vw, 5rem); margin-bottom: 32px; }
-      .faq-question { padding: 18px 18px; gap: 16px; }
-      .faq-q-text { font-size: .88rem; }
-      .faq-a-text { padding: 0 18px 18px; font-size: .82rem; }
-      .faq-toggle { width: 30px; height: 30px; flex-shrink: 0; }
-
-      /* FOOTER */
-      footer { padding: 48px 20px 0; border-radius: 18px 18px 0 0; }
-      .footer-top {
-        grid-template-columns: 1fr;
-        gap: 36px 0;
-      }
-      .footer-divider { display: none; }
-      .footer-brand { padding-right: 0; }
-      .footer-bottom {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 8px;
-        padding: 20px 0;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .video-card { height: 92vh; border-radius: 14px; }
-      .card-title { font-size: 2rem; }
-      .cd-value { font-size: 1.3rem; min-width: 52px; }
-      .day-tabs { flex-wrap: wrap; gap: 6px; }
-    }
-
-    /* ── SCHEDULE ── */
+    /* ═══════════════════════════════════════
+       SCHEDULE
+    ═══════════════════════════════════════ */
     .schedule-section {
-      background: var(--navy);
+      background: #001a2e;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
-      padding: 80px 56px 80px;
+      padding: 80px 56px 100px;
       position: relative;
       z-index: 5;
       box-sizing: border-box;
-      border-radius: 28px 28px 0 0;
+    }
+    .schedule-section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 0%, rgba(48,205,215,.08) 0%, transparent 60%);
+      pointer-events: none;
     }
 
     .schedule-header {
       max-width: 1200px;
       width: 100%;
-      margin: 0 auto 48px;
+      margin: 0 auto 20px;
       display: flex;
       align-items: flex-end;
       justify-content: space-between;
       gap: 24px;
+      position: relative;
+      z-index: 1;
     }
-
     .schedule-kicker {
-      font-size: .68rem;
-      font-weight: 700;
-      letter-spacing: .28em;
+      font-size: .65rem;
+      font-weight: 800;
+      letter-spacing: .3em;
       text-transform: uppercase;
-      color: var(--gold);
+      color: var(--teal);
       margin-bottom: 12px;
     }
-
     .schedule-title {
-      font-size: clamp(2.2rem, 3.5vw, 3.2rem);
-      font-weight: 700;
+      font-size: clamp(2.4rem, 4vw, 3.6rem);
+      font-weight: 800;
       color: var(--white);
-      line-height: 1.1;
+      line-height: 1.05;
+      letter-spacing: -.03em;
     }
 
-    /* Day tabs */
+    /* Color legend */
+    .schedule-legend {
+      max-width: 1200px;
+      width: 100%;
+      margin: 0 auto 36px;
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      position: relative;
+      z-index: 1;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: .62rem;
+      font-weight: 600;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: rgba(250,245,237,.45);
+    }
+    .legend-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .legend-dot.d-committee { background: var(--teal); }
+    .legend-dot.d-ceremony  { background: var(--gold); }
+    .legend-dot.d-social    { background: var(--teal-dark); }
+    .legend-dot.d-meal      { background: rgba(188,154,110,.7); }
+    .legend-dot.d-break     { background: rgba(250,245,237,.25); }
+
     .day-tabs {
       display: flex;
       gap: 6px;
-      background: rgba(250,245,237,.06);
+      background: rgba(250,245,237,.04);
       border: 1px solid rgba(250,245,237,.1);
-      border-radius: 12px;
+      border-radius: 14px;
       padding: 5px;
       flex-shrink: 0;
     }
-
     .day-tab {
       font-family: 'Montserrat', sans-serif;
-      font-size: .75rem;
+      font-size: .72rem;
       font-weight: 700;
       letter-spacing: .08em;
       text-transform: uppercase;
-      color: rgba(250,245,237,.4);
+      color: rgba(250,245,237,.45);
       background: transparent;
       border: none;
-      border-radius: 8px;
-      padding: 12px 26px;
+      border-radius: 10px;
+      padding: 12px 28px;
       cursor: pointer;
-      transition: background .25s, color .25s;
+      transition: background .25s, color .25s, box-shadow .25s;
       white-space: nowrap;
     }
-
     .day-tab.active {
       background: var(--teal);
       color: var(--navy);
+      box-shadow: 0 0 16px rgba(48,205,215,.4);
     }
 
-    /* Timeline panels */
     .timeline-panels {
       max-width: 1200px;
       width: 100%;
       margin: 0 auto;
       flex: 1;
       position: relative;
+      z-index: 1;
     }
-
     .timeline-panel {
       display: none;
       opacity: 0;
       transform: translateY(16px);
       transition: opacity .35s ease, transform .35s ease;
     }
-
     .timeline-panel.active { display: flex; flex-direction: column; }
+    .timeline-panel.visible { opacity: 1; transform: translateY(0); }
 
-    .timeline-panel.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* Vertical line */
     .timeline {
       position: relative;
       display: flex;
       flex-direction: column;
-      flex: 1;
+      gap: 6px;
     }
-
     .timeline::before {
       content: '';
       position: absolute;
-      left: 180px;
-      top: 0;
-      bottom: 0;
+      left: 200px;
+      top: 0; bottom: 0;
       width: 1px;
-      background: rgba(48,205,215,.15);
+      background: linear-gradient(to bottom, transparent, rgba(48,205,215,.25) 8%, rgba(48,205,215,.25) 92%, transparent);
     }
 
-    /* Each row */
     .tl-item {
       display: grid;
-      grid-template-columns: 180px 1fr;
-      align-items: stretch;
+      grid-template-columns: 200px 1fr;
+      align-items: center;
       opacity: 0;
-      transform: translateX(-16px);
+      transform: translateX(-12px);
       transition: opacity .4s ease, transform .4s ease;
-      flex: 1;
     }
+    .tl-item.revealed { opacity: 1; transform: translateX(0); }
 
-    .tl-item.revealed {
-      opacity: 1;
-      transform: translateX(0);
-    }
-
-    /* Time column */
     .tl-time {
       display: flex;
-      align-items: center;
-      justify-content: flex-end;
+      flex-direction: column;
+      align-items: flex-end;
+      justify-content: center;
+      gap: 3px;
+      padding-right: 36px;
+      padding-top: 6px;
+      padding-bottom: 6px;
+    }
+    .tl-time-range {
       font-size: .82rem;
-      font-weight: 600;
-      letter-spacing: .03em;
-      color: rgba(250,245,237,.35);
-      padding-right: 32px;
+      font-weight: 700;
+      letter-spacing: .02em;
+      color: rgba(250,245,237,.75);
       white-space: nowrap;
     }
+    .tl-dur {
+      font-size: .6rem;
+      font-weight: 600;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: rgba(250,245,237,.3);
+    }
 
-    /* Event card */
     .tl-event {
       position: relative;
       margin-left: 40px;
-      margin-top: 5px;
-      margin-bottom: 5px;
-      padding: 18px 26px;
+      padding: 16px 24px;
       border-radius: 12px;
       display: flex;
       align-items: center;
-      gap: 16px;
+      gap: 14px;
       border: 1px solid transparent;
-      transition: border-color .2s, transform .2s;
+      transition: border-color .2s, transform .2s, box-shadow .2s;
       cursor: default;
     }
+    .tl-event:hover { border-color: rgba(250,245,237,.12); transform: translateX(5px); }
 
-    .tl-event:hover {
-      border-color: rgba(250,245,237,.1);
-      transform: translateX(4px);
-    }
-
-    /* dot on the line */
     .tl-event::before {
       content: '';
       position: absolute;
-      left: -45px;
-      top: 50%;
+      left: -45px; top: 50%;
       transform: translateY(-50%);
-      width: 9px;
-      height: 9px;
+      width: 9px; height: 9px;
       border-radius: 50%;
       background: var(--dot-color, rgba(48,205,215,.4));
-      border: 2px solid var(--navy);
-      box-shadow: 0 0 0 1px var(--dot-color, rgba(48,205,215,.4));
+      border: 2px solid #001a2e;
+      box-shadow: 0 0 0 1px var(--dot-color, rgba(48,205,215,.4)), 0 0 8px var(--dot-color, transparent);
     }
 
-    /* Type colours */
-    .tl-event.type-committee { background: rgba(48,205,215,.08);  --dot-color: var(--teal); }
-    .tl-event.type-ceremony  { background: rgba(225,170,40,.12); --dot-color: var(--gold); }
-    .tl-event.type-break     { background: rgba(250,245,237,.04); --dot-color: rgba(250,245,237,.2); }
-    .tl-event.type-social    { background: rgba(30,150,165,.12);  --dot-color: var(--teal-dark); }
-    .tl-event.type-meal      { background: rgba(225,170,40,.07); --dot-color: rgba(225,170,40,.45); }
-    .tl-event.type-dispersal { background: transparent;           --dot-color: rgba(250,245,237,.12); }
+    .tl-event.type-committee { background: rgba(48,205,215,.08);  border-color: rgba(48,205,215,.1); --dot-color: var(--teal); }
+    .tl-event.type-ceremony  { background: rgba(188,154,110,.1);  border-color: rgba(188,154,110,.12); --dot-color: var(--gold); }
+    .tl-event.type-break     { background: rgba(250,245,237,.03); --dot-color: rgba(250,245,237,.2); }
+    .tl-event.type-social    { background: rgba(30,150,165,.12);  border-color: rgba(30,150,165,.15); --dot-color: var(--teal-dark); }
+    .tl-event.type-meal      { background: rgba(188,154,110,.07); border-color: rgba(188,154,110,.1); --dot-color: rgba(188,154,110,.6); }
+    .tl-event.type-dispersal { background: transparent; --dot-color: rgba(250,245,237,.12); }
 
-    /* Left accent bar */
     .tl-event::after {
       content: '';
       position: absolute;
-      left: 0; top: 20%; bottom: 20%;
+      left: 0; top: 16%; bottom: 16%;
       width: 3px;
       border-radius: 2px;
       background: var(--dot-color, transparent);
       opacity: .6;
     }
 
+    .tl-event-body {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      flex: 1;
+    }
+    .tl-name {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--white);
+      letter-spacing: .005em;
+      line-height: 1.2;
+    }
+    .type-break .tl-name,
+    .type-dispersal .tl-name { color: rgba(250,245,237,.38); font-weight: 500; font-size: .88rem; }
+    .type-meal .tl-name { color: rgba(250,245,237,.75); font-weight: 600; }
+
     .tl-tag {
-      font-size: .6rem;
+      font-size: .57rem;
       font-weight: 700;
       letter-spacing: .14em;
       text-transform: uppercase;
@@ -820,44 +986,31 @@
       padding: 4px 10px;
       white-space: nowrap;
       flex-shrink: 0;
-      color: rgba(250,245,237,.35);
+      align-self: flex-start;
+      color: rgba(250,245,237,.32);
       background: rgba(250,245,237,.05);
     }
+    .type-committee .tl-tag { color: var(--teal);       background: rgba(48,205,215,.12); }
+    .type-ceremony  .tl-tag { color: var(--gold);       background: rgba(188,154,110,.15); }
+    .type-social    .tl-tag { color: #4ab8c5;           background: rgba(30,150,165,.18); }
+    .type-meal      .tl-tag { color: var(--gold);       background: rgba(188,154,110,.1); }
 
-    .type-committee .tl-tag { color: var(--teal);      background: rgba(48,205,215,.12); }
-    .type-ceremony  .tl-tag { color: var(--gold);      background: rgba(225,170,40,.15); }
-    .type-social    .tl-tag { color: var(--teal-dark); background: rgba(30,150,165,.18); }
-    .type-meal      .tl-tag { color: var(--gold);      background: rgba(225,170,40,.1); }
-
-    .tl-name {
-      font-size: 1rem;
-      font-weight: 600;
-      color: var(--white);
-      letter-spacing: .01em;
-    }
-
-    .type-break    .tl-name,
-    .type-dispersal .tl-name { color: rgba(250,245,237,.38); font-weight: 400; font-size: .9rem; }
-    .type-meal     .tl-name  { color: rgba(250,245,237,.65); font-weight: 500; }
-
-    /* ── COMMITTEES CAROUSEL SECTION ── */
+    /* ═══════════════════════════════════════
+       COMMITTEES
+    ═══════════════════════════════════════ */
     .ctrl-chains-section {
       min-height: 100vh;
       background: var(--navy);
       color: var(--white);
-      font-family: 'Montserrat', sans-serif;
       position: relative;
       z-index: 4;
     }
-
     .ctrl-chains-sticky {
       position: relative;
       min-height: 100vh;
       overflow: hidden;
       display: flex;
-      border-radius: 0;
     }
-
     .ctrl-copy {
       position: relative;
       z-index: 2;
@@ -869,52 +1022,52 @@
       width: 46%;
       padding-left: 70px;
       padding-right: 44px;
-      text-align: left;
     }
-
     .ctrl-kicker {
-      font-size: .72rem;
+      font-size: .65rem;
       font-weight: 800;
-      letter-spacing: .22em;
+      letter-spacing: .28em;
       text-transform: uppercase;
       color: var(--teal);
       margin-bottom: 42px;
     }
-
     .ctrl-title {
       font-size: 62px;
-      font-weight: 500;
-      line-height: 62px;
-      letter-spacing: -.06em;
+      font-weight: 800;
+      line-height: 1;
+      letter-spacing: -.05em;
       color: var(--white);
       margin-bottom: 0;
     }
-
     .ctrl-subtitle {
       max-width: 332px;
-      font-size: 19px;
-      line-height: 27px;
-      font-weight: 500;
-      color: rgba(250,245,237,.65);
-      letter-spacing: -.04em;
+      font-size: 1.05rem;
+      line-height: 1.65;
+      font-weight: 400;
+      color: rgba(250,245,237,.55);
+      letter-spacing: -.01em;
       margin-top: 23px;
-      margin-bottom: 0;
     }
-
     .committees-explore {
-      min-width: 220px;
-      height: 62px;
-      border-radius: 999px;
+      min-width: 200px;
+      height: 56px;
+      border-radius: 8px;
       border: 0;
       background: var(--teal);
       color: var(--navy);
       font-family: 'Montserrat', sans-serif;
-      font-size: .82rem;
+      font-size: .78rem;
       font-weight: 800;
       letter-spacing: .1em;
       text-transform: uppercase;
-      cursor: default;
-      margin-top: 47px;
+      cursor: pointer;
+      margin-top: 40px;
+      transition: transform .2s, box-shadow .2s;
+      box-shadow: 0 0 24px rgba(48,205,215,.3);
+    }
+    .committees-explore:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 40px rgba(48,205,215,.45);
     }
 
     .ctrl-chain-stage {
@@ -922,10 +1075,7 @@
       height: 100vh;
       width: 54%;
       overflow: hidden;
-      padding-left: 0;
-      padding-right: 0;
     }
-
     .ctrl-chain-list {
       align-items: flex-start;
       display: flex;
@@ -936,11 +1086,10 @@
       position: relative;
       width: 100%;
     }
-
     .ctrl-chain {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 14px;
       margin-top: -35px;
       position: absolute;
       top: 50%;
@@ -948,97 +1097,99 @@
       opacity: var(--wheel-opacity, 1);
       will-change: transform, opacity;
     }
-
     .ctrl-chain-icon {
       align-items: center;
       display: flex;
       justify-content: center;
-      width: 62px;
-      height: 62px;
+      width: 62px; height: 62px;
       border-radius: 50%;
-      border: 2px solid rgba(250,245,237,.2);
-      font-size: 19px;
-      font-weight: 600;
-      font-style: italic;
+      border: 2px solid rgba(250,245,237,.15);
+      font-size: 15px;
+      font-weight: 900;
       color: var(--navy);
       background: var(--chain-color, var(--teal-light));
       flex: none;
     }
-
     .ctrl-chain-initial {
-      font-size: 18px;
+      font-size: 15px;
       font-weight: 900;
       letter-spacing: .02em;
       line-height: 1;
     }
-
     .ctrl-chain-name {
       max-width: 44vw;
       overflow: hidden;
       text-overflow: ellipsis;
       font-size: 68px;
-      font-weight: 500;
+      font-weight: 800;
       line-height: 1.3;
       letter-spacing: -.065em;
       color: var(--white);
       white-space: nowrap;
     }
 
-    /* ── FAQ SECTION ── */
+    /* ═══════════════════════════════════════
+       FAQ
+    ═══════════════════════════════════════ */
     .faq-section {
       background: var(--navy);
       padding: 100px 56px 120px;
+      position: relative;
+      overflow: hidden;
+    }
+    .faq-section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 100%, rgba(48,205,215,.05) 0%, transparent 60%);
+      pointer-events: none;
     }
 
-    .faq-inner {
-      max-width: 100%;
-      margin: 0 auto;
-    }
+    .faq-inner { max-width: 900px; margin: 0 auto; position: relative; z-index: 1; }
 
     .faq-heading {
       font-size: clamp(4rem, 9vw, 8rem);
-      font-weight: 800;
+      font-weight: 900;
       color: var(--white);
       line-height: 1;
-      letter-spacing: -.03em;
-      margin-bottom: 56px;
+      letter-spacing: -.04em;
+      margin-bottom: 16px;
       opacity: 0;
       transform: translateY(30px);
       transition: opacity .6s ease, transform .6s ease;
     }
+    .faq-heading.revealed { opacity: 1; transform: translateY(0); animation: heading-glow 3s ease-in-out .4s both; }
 
-    .faq-heading.revealed {
-      opacity: 1;
-      transform: translateY(0);
+    .faq-sub {
+      font-size: .85rem;
+      font-weight: 500;
+      color: rgba(250,245,237,.4);
+      letter-spacing: .06em;
+      margin-bottom: 56px;
+      opacity: 0;
+      transition: opacity .6s ease .15s;
     }
+    .faq-sub.revealed { opacity: 1; }
 
     .faq-list {
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 10px;
     }
 
-    /* Each accordion card */
     .faq-item {
-      background: rgba(250,245,237,.04);
-      border: 1px solid rgba(250,245,237,.1);
+      background: rgba(255,255,255,.03);
+      border: 1px solid rgba(250,245,237,.08);
       border-radius: 16px;
       overflow: hidden;
       opacity: 0;
       transform: translateY(20px);
-      transition: opacity .5s ease, transform .5s ease, border-color .2s;
+      transition: opacity .5s ease, transform .5s ease, border-color .25s, background .25s;
     }
+    .faq-item.revealed { opacity: 1; transform: translateY(0); }
+    .faq-item:hover { background: rgba(48,205,215,.04); border-color: rgba(48,205,215,.15); }
+    .faq-item.open { border-color: rgba(48,205,215,.3); background: rgba(48,205,215,.05); }
 
-    .faq-item.revealed {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .faq-item.open {
-      border-color: rgba(250,245,237,.22);
-    }
-
-    /* Question row */
     .faq-question {
       display: flex;
       align-items: center;
@@ -1048,22 +1199,16 @@
       cursor: pointer;
       user-select: none;
     }
-
     .faq-q-text {
       font-size: 1rem;
       font-weight: 600;
       color: var(--white);
       line-height: 1.4;
     }
-
-    .faq-toggle svg line { stroke: var(--white); }
-
-    /* +/- toggle button */
     .faq-toggle {
-      width: 36px;
-      height: 36px;
+      width: 36px; height: 36px;
       border-radius: 50%;
-      border: 1.5px solid rgba(250,245,237,.25);
+      border: 1.5px solid rgba(250,245,237,.15);
       background: transparent;
       display: flex;
       align-items: center;
@@ -1072,347 +1217,434 @@
       cursor: pointer;
       transition: background .25s, border-color .25s;
     }
-
-    .faq-item.open .faq-toggle {
-      background: var(--teal);
-      border-color: var(--teal);
-    }
-
-    .faq-toggle svg {
-      width: 14px;
-      height: 14px;
-      stroke: var(--white);
-      stroke-width: 2;
-      transition: stroke .25s, transform .35s ease;
-    }
-
-    .faq-item.open .faq-toggle svg {
-      stroke: var(--white);
-    }
-
-    /* The horizontal bar that disappears when open (+ → −) */
-    .faq-toggle .h-bar {
-      transition: transform .35s ease, opacity .25s ease;
-    }
-
-    .faq-item.open .faq-toggle .h-bar {
-      transform: rotate(90deg);
-      opacity: 0;
-    }
-
-    /* Answer body */
+    .faq-item.open .faq-toggle { background: var(--teal); border-color: var(--teal); }
+    .faq-toggle svg { width: 14px; height: 14px; stroke: rgba(250,245,237,.6); stroke-width: 2; transition: stroke .25s; }
+    .faq-item.open .faq-toggle svg { stroke: var(--navy); }
+    .faq-toggle .h-bar { transition: transform .35s ease, opacity .25s ease; }
+    .faq-item.open .faq-toggle .h-bar { transform: rotate(90deg); opacity: 0; }
     .faq-answer {
       max-height: 0;
       overflow: hidden;
-      transition: max-height .45s cubic-bezier(0.4, 0, 0.2, 1),
-                  padding .35s ease;
+      transition: max-height .45s cubic-bezier(0.4,0,0.2,1);
     }
-
-    .faq-item.open .faq-answer {
-      max-height: 400px;
-    }
-
+    .faq-item.open .faq-answer { max-height: 400px; }
     .faq-a-text {
       padding: 0 28px 24px;
-      font-size: .88rem;
+      font-size: .9rem;
       font-weight: 400;
-      line-height: 1.75;
-      color: rgba(250,245,237,.65);
+      line-height: 1.78;
+      color: rgba(250,245,237,.6);
     }
 
-    /* ── FOOTER ── */
+    /* ═══════════════════════════════════════
+       FOOTER
+    ═══════════════════════════════════════ */
     footer {
-      background: var(--navy);
-      padding: 64px 56px 0;
-      border-radius: 28px 28px 0 0;
+      background: #001223;
+      padding: 72px 56px 0;
+      position: relative;
+      overflow: hidden;
+    }
+    footer::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(to right, transparent, rgba(48,205,215,.3), transparent);
     }
 
     .footer-top {
       display: grid;
-      grid-template-columns: 320px 1px 1fr 1fr 1fr;
+      grid-template-columns: 300px 1px 1fr 1fr 1fr;
       gap: 0 48px;
-      padding-bottom: 56px;
+      padding-bottom: 64px;
     }
+    .footer-divider { background: rgba(250,245,237,.08); width: 1px; align-self: stretch; }
+    .footer-brand { display: flex; flex-direction: column; gap: 20px; padding-right: 16px; }
+    .footer-logo { width: 64px; height: 64px; object-fit: contain; filter: brightness(0) invert(1); opacity: .85; }
+    .footer-chapter { font-size: .72rem; font-weight: 800; letter-spacing: .2em; text-transform: uppercase; color: var(--white); }
+    .footer-desc { font-size: .82rem; line-height: 1.75; color: rgba(250,245,237,.4); }
 
-    /* Vertical divider */
-    .footer-divider {
-      background: rgba(250,245,237,.12);
-      width: 1px;
-      align-self: stretch;
-    }
-
-    /* Left brand column */
-    .footer-brand {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-      padding-right: 16px;
-    }
-
-    .footer-logo {
-      width: 72px;
-      height: 72px;
-      object-fit: contain;
-      filter: brightness(0) invert(1);
-      opacity: .9;
-    }
-
-    .footer-chapter {
-      font-size: .78rem;
-      font-weight: 700;
-      letter-spacing: .15em;
-      text-transform: uppercase;
-      color: var(--white);
-    }
-
-    .footer-desc {
-      font-size: .82rem;
-      font-weight: 400;
-      line-height: 1.75;
-      color: rgba(250,245,237,.5);
-    }
-
-    /* Link columns */
-    .footer-col h4 {
-      font-size: .72rem;
-      font-weight: 700;
-      letter-spacing: .15em;
-      text-transform: uppercase;
-      color: var(--teal);
-      margin-bottom: 20px;
-    }
-
-    .footer-col ul {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .footer-col ul li a {
-      font-size: .85rem;
-      font-weight: 600;
-      color: var(--white);
-      text-decoration: none;
-      transition: color .2s;
-    }
-
+    .footer-col h4 { font-size: .65rem; font-weight: 800; letter-spacing: .2em; text-transform: uppercase; color: var(--teal); margin-bottom: 20px; }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+    .footer-col ul li a { font-size: .85rem; font-weight: 500; color: rgba(250,245,237,.55); text-decoration: none; transition: color .2s; }
     .footer-col ul li a:hover { color: var(--teal); }
 
-    /* Contact column */
-    .footer-contact-item {
-      margin-bottom: 18px;
-    }
-
-    .footer-contact-item p {
-      font-size: .85rem;
-      font-weight: 600;
-      color: var(--white);
-      margin-bottom: 4px;
-    }
-
-    .footer-contact-item a {
-      font-size: .82rem;
-      font-weight: 400;
-      color: var(--teal);
-      text-decoration: none;
-      transition: opacity .2s;
-    }
-
+    .footer-contact-item { margin-bottom: 18px; }
+    .footer-contact-item p { font-size: .78rem; font-weight: 700; color: var(--white); margin-bottom: 4px; letter-spacing: .04em; }
+    .footer-contact-item a { font-size: .82rem; color: var(--teal); text-decoration: none; transition: opacity .2s; }
     .footer-contact-item a:hover { opacity: .75; }
+    .footer-contact-item span { font-size: .82rem; color: rgba(250,245,237,.4); line-height: 1.6; display: block; }
 
-    .footer-contact-item span {
-      font-size: .82rem;
-      color: rgba(250,245,237,.5);
-      line-height: 1.6;
-      display: block;
-    }
+    .footer-detail-item { margin-bottom: 18px; }
+    .footer-detail-item p { font-size: .78rem; font-weight: 700; color: var(--white); margin-bottom: 4px; letter-spacing: .04em; }
+    .footer-detail-item span { font-size: .82rem; color: rgba(250,245,237,.4); font-style: italic; }
 
-    /* Event details column */
-    .footer-detail-item {
-      margin-bottom: 18px;
-    }
-
-    .footer-detail-item p {
-      font-size: .85rem;
-      font-weight: 600;
-      color: var(--white);
-      margin-bottom: 4px;
-    }
-
-    .footer-detail-item span {
-      font-size: .82rem;
-      color: rgba(250,245,237,.5);
-      font-style: italic;
-    }
-
-    /* Social icons */
-    .footer-social {
-      display: flex;
-      gap: 14px;
-      margin-top: 6px;
-    }
-
+    .footer-social { display: flex; gap: 12px; margin-top: 6px; }
     .footer-social a {
-      width: 34px;
-      height: 34px;
+      width: 36px; height: 36px;
       border-radius: 50%;
-      border: 1px solid rgba(250,245,237,.2);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: rgba(250,245,237,.6);
+      border: 1px solid rgba(250,245,237,.12);
+      display: flex; align-items: center; justify-content: center;
+      color: rgba(250,245,237,.4);
       text-decoration: none;
-      transition: border-color .2s, color .2s;
+      transition: border-color .2s, color .2s, background .2s;
     }
+    .footer-social a:hover { border-color: var(--teal); color: var(--teal); background: rgba(48,205,215,.08); }
+    .footer-social svg { width: 15px; height: 15px; fill: currentColor; }
 
-    .footer-social a:hover {
-      border-color: var(--teal);
-      color: var(--teal);
-    }
-
-    .footer-social svg {
-      width: 15px;
-      height: 15px;
-      fill: currentColor;
-    }
-
-    /* Bottom bar */
     .footer-bottom {
-      border-top: 1px solid rgba(250,245,237,.1);
-      padding: 22px 0;
+      border-top: 1px solid rgba(250,245,237,.06);
+      padding: 24px 0;
       display: flex;
       align-items: center;
       justify-content: space-between;
     }
+    .footer-bottom p { font-size: .7rem; font-weight: 500; color: rgba(250,245,237,.25); letter-spacing: .04em; }
+    .footer-bottom a { color: var(--teal); text-decoration: none; }
 
-    .footer-bottom p {
-      font-size: .72rem;
-      font-weight: 500;
-      color: rgba(250,245,237,.35);
-      letter-spacing: .03em;
+    /* ═══════════════════════════════════════
+       HAMBURGER / MOBILE NAV
+    ═══════════════════════════════════════ */
+    .menu-btn {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      width: 36px; height: 36px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+      border-radius: 6px;
     }
+    .menu-btn span {
+      display: block;
+      width: 100%; height: 2px;
+      background: var(--white);
+      border-radius: 2px;
+      transition: transform .3s ease, opacity .3s ease;
+      transform-origin: center;
+    }
+    .menu-btn.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .menu-btn.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .menu-btn.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
-    .footer-bottom a {
-      color: var(--teal);
+    .mobile-nav {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 199;
+      background: rgba(0,20,40,.97);
+      backdrop-filter: blur(20px);
+      padding: 84px 24px 36px;
+      flex-direction: column;
+      transform: translateY(-100%);
+      transition: transform .35s cubic-bezier(0.4,0,0.2,1);
+      border-bottom: 1px solid rgba(48,205,215,.15);
+    }
+    .mobile-nav.open { transform: translateY(0); }
+    .mobile-nav a {
+      font-size: .88rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: rgba(250,245,237,.75);
       text-decoration: none;
+      padding: 18px 0;
+      border-bottom: 1px solid rgba(250,245,237,.07);
+      transition: color .2s;
+    }
+    .mobile-nav a:last-child { border-bottom: none; }
+    .mobile-nav a:hover { color: var(--teal); }
+
+    /* ═══════════════════════════════════════
+       MOBILE RESPONSIVE
+    ═══════════════════════════════════════ */
+    @media (max-width: 768px) {
+      html { zoom: 1; }
+
+      nav { padding: 18px 20px; }
+      nav.scrolled { padding: 14px 20px; }
+      .nav-links { display: none; }
+      .menu-btn { display: flex; }
+      .mobile-nav { display: flex; }
+      .nav-cta { padding: 9px 16px; font-size: .65rem; }
+
+      .hero-roman { font-size: clamp(10rem, 55vw, 18rem); right: -0.05em; top: auto; bottom: -0.1em; transform: none; opacity: .022; }
+      .hero-inner { padding: 0 20px 36px; }
+      .hero-topbar { padding-top: 90px; }
+      .hero-loc-tag { display: none; }
+      .hero-headline { max-width: 100%; gap: 4px; }
+      .hero-word-main { font-size: clamp(3rem, 16vw, 5.5rem); }
+      .hero-word-accent { font-size: clamp(1.4rem, 8.5vw, 3rem); }
+      .hero-word-rule { height: clamp(1.4rem, 7.5vw, 2.8rem); }
+      .hero-word-light { font-size: clamp(1rem, 5.5vw, 2rem); }
+      .hero-bottom { flex-direction: column; align-items: flex-start; gap: 24px; }
+      .hero-bottom-right { order: -1; }
+      .countdown { gap: 6px; }
+      .cd-value { font-size: 1.45rem; min-width: 60px; padding: 12px 8px 10px; border-radius: 8px; }
+      .cd-label { font-size: .44rem; }
+      .cd-sep { font-size: 1.3rem; padding-bottom: 20px; }
+      .hero-ctas { flex-direction: column; gap: 10px; width: 100%; }
+      .hero-btn-primary, .hero-btn-ghost { width: 100%; text-align: center; padding: 14px 24px; }
+      .scroll-indicator { left: 20px; }
+
+      .stats-section { padding: 48px 16px; }
+      .stats-grid { grid-template-columns: 1fr; gap: 12px; }
+      .stat-card { min-height: 200px; padding: 32px 28px; }
+      .stat-card-num { font-size: clamp(3.5rem, 18vw, 6rem); }
+      .card-edition::before { font-size: 50vw; }
+
+      .sg-section { padding: 72px 20px 80px; }
+      .sg-inner { grid-template-columns: 1fr; gap: 36px; }
+      .sg-photo-wrap { aspect-ratio: 4/3; }
+      .sg-heading { font-size: 1.8rem; }
+      .sg-body p { font-size: .95rem; }
+
+      .schedule-section { padding: 60px 20px 80px; }
+      .schedule-header { flex-direction: column; align-items: flex-start; gap: 20px; margin-bottom: 16px; }
+      .schedule-title { font-size: 2rem; }
+      .schedule-legend { gap: 14px; margin-bottom: 24px; }
+      .day-tabs { width: 100%; }
+      .day-tab { padding: 10px 8px; font-size: .6rem; flex: 1; text-align: center; }
+
+      .faq-section { padding: 72px 20px 80px; }
+      .faq-heading { font-size: clamp(3rem, 16vw, 5rem); }
+      .faq-question { padding: 18px; }
+      .faq-q-text { font-size: .88rem; }
+      .faq-a-text { padding: 0 18px 20px; font-size: .84rem; }
+
+      footer { padding: 48px 20px 0; }
+      .footer-top { grid-template-columns: 1fr; gap: 36px 0; }
+      .footer-divider { display: none; }
+      .footer-bottom { flex-direction: column; gap: 8px; padding: 20px 0; }
+
+      .ctrl-chains-section { display: none; }
     }
 
-    /* Schedule mobile overrides — must be last to beat base styles */
+    /* ═══════════════════════════════════════
+       SCROLL PROGRESS BAR
+    ═══════════════════════════════════════ */
+    #scroll-progress {
+      position: fixed; top: 0; left: 0; height: 3px;
+      background: linear-gradient(90deg, var(--teal), var(--teal-light), var(--teal));
+      background-size: 200% 100%;
+      z-index: 9999; width: 0%;
+      box-shadow: 0 0 12px rgba(48,205,215,.7);
+      animation: gradientShift 2s linear infinite;
+      transition: width .08s linear;
+    }
+
+    /* ═══════════════════════════════════════
+       SECOND (REVERSED) MARQUEE
+    ═══════════════════════════════════════ */
+    .marquee-section-rev {
+      background: #001a2e;
+      overflow: hidden;
+      padding: 12px 0;
+      border-top: 1px solid rgba(48,205,215,.1);
+    }
+    .marquee-track-rev {
+      display: flex;
+      white-space: nowrap;
+      animation: marquee-rev 30s linear infinite;
+    }
+    @keyframes marquee-rev {
+      from { transform: translateX(-50%); }
+      to   { transform: translateX(0); }
+    }
+    .marquee-section-rev .marquee-item { color: rgba(250,245,237,.35); }
+    .marquee-section-rev .marquee-dot  { background: rgba(250,245,237,.15); }
+
+    /* ═══════════════════════════════════════
+       STATS AMBIENT GLOW
+    ═══════════════════════════════════════ */
+    .stats-section { position: relative; }
+    .stats-section::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 110%, rgba(48,205,215,.07) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    /* ═══════════════════════════════════════
+       SG PHOTO ANIMATED GLOW
+    ═══════════════════════════════════════ */
+    @keyframes photo-glow {
+      0%, 100% { box-shadow: 0 0 24px rgba(48,205,215,.15), 0 0 0px rgba(48,205,215,.05); }
+      50%       { box-shadow: 0 0 60px rgba(48,205,215,.35), 0 0 120px rgba(48,205,215,.1); }
+    }
+    .sg-photo-wrap { animation: photo-glow 4s ease-in-out infinite; }
+
+    /* ═══════════════════════════════════════
+       FAQ HEADING GLOW ON REVEAL
+    ═══════════════════════════════════════ */
+    @keyframes heading-glow {
+      0%, 100% { text-shadow: 0 0 0px rgba(48,205,215,0); }
+      50%       { text-shadow: 0 0 60px rgba(48,205,215,.4), 0 0 120px rgba(48,205,215,.15); }
+    }
+    .faq-heading.revealed { animation: heading-glow 3s ease-in-out .3s both; }
+
+    /* ═══════════════════════════════════════
+       ENHANCED TIMELINE HOVER
+    ═══════════════════════════════════════ */
+    .tl-event.type-committee:hover {
+      box-shadow: inset 0 0 0 1px rgba(48,205,215,.3), 0 0 24px rgba(48,205,215,.08);
+    }
+    .tl-event:hover .tl-name { color: var(--teal-light); }
+
+    /* ═══════════════════════════════════════
+       PRE-FOOTER CTA BANNER
+    ═══════════════════════════════════════ */
+    .cta-banner {
+      background: linear-gradient(160deg, #001122 0%, #002244 50%, #001122 100%);
+      position: relative; overflow: hidden;
+      padding: 120px 56px;
+      text-align: center;
+    }
+    .cta-banner::before {
+      content: '';
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 900px; height: 900px;
+      background: radial-gradient(circle, rgba(48,205,215,.14) 0%, transparent 60%);
+      pointer-events: none;
+      animation: pulse-ring 4s ease-out infinite;
+    }
+    .cta-banner::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(to right, transparent, rgba(48,205,215,.4), transparent);
+    }
+    .cta-banner-eyebrow {
+      font-size: .65rem; font-weight: 800; letter-spacing: .35em;
+      text-transform: uppercase; color: var(--teal); margin-bottom: 24px;
+      position: relative; z-index: 1;
+    }
+    .cta-banner-title {
+      font-size: clamp(3rem, 8vw, 6.5rem);
+      font-weight: 900; line-height: .95; letter-spacing: -.04em;
+      color: var(--white); margin-bottom: 28px;
+      text-shadow: 0 0 80px rgba(48,205,215,.25);
+      position: relative; z-index: 1;
+    }
+    .cta-banner-title em { font-style: normal; color: var(--teal); }
+    .cta-banner-sub {
+      font-size: 1.05rem; font-weight: 400; color: rgba(250,245,237,.5);
+      max-width: 500px; margin: 0 auto 52px; line-height: 1.75;
+      position: relative; z-index: 1;
+    }
+    @keyframes pulse-btn {
+      0%, 100% { box-shadow: 0 0 48px rgba(48,205,215,.45), 0 8px 32px rgba(0,0,0,.3); }
+      50%       { box-shadow: 0 0 90px rgba(48,205,215,.75), 0 8px 32px rgba(0,0,0,.4); }
+    }
+    .cta-banner-btn {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1rem; font-weight: 800; letter-spacing: .12em;
+      text-transform: uppercase; color: var(--navy);
+      background: var(--teal); border: none;
+      border-radius: 12px; padding: 22px 60px; cursor: pointer;
+      animation: pulse-btn 2.5s ease-in-out infinite;
+      transition: transform .2s, background .2s;
+      position: relative; z-index: 1;
+    }
+    .cta-banner-btn:hover { transform: translateY(-4px) scale(1.03); background: #3de0eb; }
+
+    /* Schedule mobile stacking — must be last */
     @media (max-width: 768px) {
+      .cta-banner { padding: 80px 20px; }
+      .cta-banner-title { font-size: clamp(2.4rem, 13vw, 4rem); }
+      .cta-banner-btn { padding: 18px 40px; font-size: .88rem; }
+    }
+
+    @media (max-width: 768px) {
+      .timeline { gap: 8px; }
       .timeline::before { display: none; }
       .tl-item {
-        display: block;
-        margin-bottom: 10px;
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 0;
         opacity: 1;
         transform: none;
+        background: rgba(250,245,237,.025);
+        border-radius: 14px;
+        overflow: hidden;
+        border: 1px solid rgba(250,245,237,.06);
       }
       .tl-item.revealed { opacity: 1; transform: none; }
+
+      /* Time bar at top of each card */
       .tl-time {
-        display: block;
-        text-align: left;
-        padding: 0 0 5px 4px;
-        font-size: .6rem;
-        color: rgba(250,245,237,.45);
-        white-space: normal;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px 16px 8px;
+        background: rgba(0,0,0,.15);
+        border-bottom: 1px solid rgba(250,245,237,.06);
+        gap: 8px;
       }
+      .tl-time-range {
+        font-size: .8rem;
+        font-weight: 700;
+        color: rgba(250,245,237,.9);
+      }
+      .tl-dur {
+        font-size: .6rem;
+        color: rgba(250,245,237,.38);
+        letter-spacing: .08em;
+      }
+
+      /* Event body */
       .tl-event {
         margin-left: 0;
-        margin-top: 0;
-        margin-bottom: 0;
-        padding: 12px 14px;
-        border-radius: 8px;
-        gap: 10px;
+        padding: 14px 16px;
+        border-radius: 0;
+        border: none !important;
+        gap: 12px;
         width: 100%;
+        box-sizing: border-box;
       }
       .tl-event::before { display: none; }
-      .tl-name { font-size: .8rem; }
-      .tl-tag { font-size: .52rem; padding: 3px 8px; white-space: nowrap; flex-shrink: 0; }
-
-      .ctrl-chains-section {
-        min-height: 100vh;
-      }
-
-      .ctrl-chains-sticky {
-        min-height: 100vh;
-        display: block;
-        padding: 0 20px;
-        border-radius: 0;
-      }
-
-      .ctrl-copy {
-        width: 100%;
+      .tl-event::after {
+        top: 0; bottom: 0;
+        left: 0;
         height: auto;
-        padding: 80px 0 0;
+        width: 3px;
+        border-radius: 0;
+        opacity: .7;
       }
+      .tl-name { font-size: .92rem; }
+      .tl-tag { font-size: .55rem; padding: 3px 9px; }
 
-      .ctrl-kicker {
-        margin-bottom: 48px;
-      }
-
-      .ctrl-title {
-        font-size: 54px;
-        line-height: 56px;
-        letter-spacing: -.07em;
-      }
-
-      .ctrl-subtitle {
-        font-size: 18px;
-        line-height: 24px;
-        margin-top: 28px;
-      }
-
-      .committees-explore {
-        min-width: 190px;
-        height: 54px;
-        font-size: .72rem;
-        margin-top: 28px;
-      }
-
-      .ctrl-chain-stage {
-        width: 100%;
-        height: 350px;
-        min-height: 0;
-        margin-top: 28px;
-        padding: 0;
-      }
-
-      .ctrl-chain-list {
-        width: 100%;
-      }
-
-      .ctrl-chain {
-        gap: 8px;
-        margin-top: -28px;
-      }
-
-      .ctrl-chain-icon {
-        width: 52px;
-        height: 52px;
-      }
-
-      .ctrl-chain-name {
-        max-width: calc(100vw - 88px);
-        font-size: 48px;
-        line-height: 52px;
-        letter-spacing: -.055em;
-      }
-
+      /* Type-specific card tweaks on mobile */
+      .tl-item:has(.type-committee) { border-color: rgba(48,205,215,.12); }
+      .tl-item:has(.type-ceremony)  { border-color: rgba(188,154,110,.12); }
+      .tl-item:has(.type-social)    { border-color: rgba(30,150,165,.15); }
+      .tl-item:has(.type-meal)      { border-color: rgba(188,154,110,.1); }
     }
   </style>
 </head>
 <body>
 
+  <!-- Scroll progress -->
+  <div id="scroll-progress"></div>
+
   <!-- Mobile nav drawer -->
   <div class="mobile-nav" id="mobileNav">
     <a href="#">About</a>
-    <a href="committees.html">Committees</a>
+    <a href="#">Committees</a>
     <a href="secretariat.html">Secretariat</a>
     <a href="#schedule" id="mobileScheduleLink">Schedule</a>
   </div>
 
   <!-- NAV -->
-  <nav>
+  <nav id="navbar">
     <div class="nav-logo">Oakridge <span>MUN</span></div>
     <ul class="nav-links">
       <li><a href="#">About</a></li>
@@ -1428,82 +1660,228 @@
     </div>
   </nav>
 
-  <!-- HERO -->
+  <!-- ═══ HERO ═══ -->
   <section class="hero">
-    <div class="video-card">
+    <video id="heroVideo" autoplay muted loop playsinline>
+      <source src="hero.mp4" type="video/mp4" />
+    </video>
+    <div class="hero-overlay"></div>
+    <div class="hero-glow"></div>
 
-      <!-- Placeholder background (remove once video is added) -->
-      <div class="placeholder-bg" id="placeholderBg"></div>
+    <!-- XVI watermark -->
+    <div class="hero-roman" aria-hidden="true">XVI</div>
 
-      <!-- Your video goes here -->
-      <video id="heroVideo" autoplay muted loop playsinline>
-        <source src="hero.mp4" type="video/mp4" />
-      </video>
+    <div class="hero-inner">
 
-      <!-- Navy overlay -->
-      <div class="navy-overlay"></div>
+      <!-- Top bar -->
+      <div class="hero-topbar">
+        <span class="hero-chapter-tag">Chapter XVI · 2026</span>
+        <span class="hero-loc-tag">Oakridge International School · Hyderabad</span>
+      </div>
 
-      <!-- Bottom scrim for text legibility -->
-      <div class="scrim"></div>
+      <!-- Stacked headline -->
+      <div class="hero-headline">
+        <h1 class="hero-word-main">OAKRIDGE</h1>
+        <div class="hero-word-sub">
+          <span class="hero-word-accent">MODEL</span>
+          <div class="hero-word-rule"></div>
+          <span class="hero-word-light">United Nations</span>
+        </div>
+      </div>
 
-
-
-      <!-- Text overlay -->
-      <div class="card-content">
-        <p class="card-eyebrow">Oakridge International School · Hyderabad</p>
-        <h1 class="card-title">Oakridge MUN</h1>
-        <p class="card-chapter">Chapter XVI</p>
-        <div class="card-dates">
-          <span>24th July</span>
-          <span class="sep">|</span>
-          <span>25th July</span>
-          <span class="sep">|</span>
-          <span>26th July</span>
+      <!-- Bottom: info + countdown -->
+      <div class="hero-bottom">
+        <div class="hero-bottom-left">
+          <p class="hero-tagline">"Create. Debate. Innovate."</p>
+          <div class="hero-dates">
+            <span>24th July</span><span class="dot"></span>
+            <span>25th July</span><span class="dot"></span>
+            <span>26th July 2026</span>
+          </div>
+          <div class="hero-ctas">
+            <button class="hero-btn-primary">Register Now &nbsp;→</button>
+            <a href="committees.html" class="hero-btn-ghost">Explore Committees</a>
+          </div>
         </div>
 
-        <!-- Countdown -->
-        <div class="countdown">
-          <div class="cd-unit">
-            <div class="cd-value" id="cd-days">00</div>
-            <div class="cd-label">Days</div>
-          </div>
-          <div class="cd-sep">:</div>
-          <div class="cd-unit">
-            <div class="cd-value" id="cd-hours">00</div>
-            <div class="cd-label">Hours</div>
-          </div>
-          <div class="cd-sep">:</div>
-          <div class="cd-unit">
-            <div class="cd-value" id="cd-mins">00</div>
-            <div class="cd-label">Mins</div>
-          </div>
-          <div class="cd-sep">:</div>
-          <div class="cd-unit">
-            <div class="cd-value" id="cd-secs">00</div>
-            <div class="cd-label">Secs</div>
+        <div class="hero-bottom-right">
+          <div class="countdown">
+            <div class="cd-unit">
+              <div class="cd-value" id="cd-days">00</div>
+              <div class="cd-label">Days</div>
+            </div>
+            <div class="cd-sep">:</div>
+            <div class="cd-unit">
+              <div class="cd-value" id="cd-hours">00</div>
+              <div class="cd-label">Hours</div>
+            </div>
+            <div class="cd-sep">:</div>
+            <div class="cd-unit">
+              <div class="cd-value" id="cd-mins">00</div>
+              <div class="cd-label">Mins</div>
+            </div>
+            <div class="cd-sep">:</div>
+            <div class="cd-unit">
+              <div class="cd-value" id="cd-secs">00</div>
+              <div class="cd-label">Secs</div>
+            </div>
           </div>
         </div>
       </div>
 
     </div>
+
+    <div class="scroll-indicator">
+      <span>Scroll</span>
+      <div class="scroll-indicator-line"></div>
+    </div>
   </section>
 
-  <!-- LETTER FROM SG -->
+  <!-- ═══ MARQUEE ═══ -->
+  <div class="marquee-section" aria-hidden="true">
+    <div class="marquee-track">
+      <div class="marquee-content">
+        <span class="marquee-item">DISEC</span><span class="marquee-dot"></span>
+        <span class="marquee-item">UNSC</span><span class="marquee-dot"></span>
+        <span class="marquee-item">UNHRC</span><span class="marquee-dot"></span>
+        <span class="marquee-item">JCC-1</span><span class="marquee-dot"></span>
+        <span class="marquee-item">JCC-2</span><span class="marquee-dot"></span>
+        <span class="marquee-item">HCC</span><span class="marquee-dot"></span>
+        <span class="marquee-item">LOK SABHA</span><span class="marquee-dot"></span>
+        <span class="marquee-item">ARMAGEDDON</span><span class="marquee-dot"></span>
+        <span class="marquee-item">OIC</span><span class="marquee-dot"></span>
+        <span class="marquee-item">UN WOMEN</span><span class="marquee-dot"></span>
+        <span class="marquee-item">COPUOS</span><span class="marquee-dot"></span>
+        <span class="marquee-item">US SENATE</span><span class="marquee-dot"></span>
+        <span class="marquee-item">BILDERBERG</span><span class="marquee-dot"></span>
+        <span class="marquee-item">ECOFIN</span><span class="marquee-dot"></span>
+        <span class="marquee-item">ICJ</span><span class="marquee-dot"></span>
+        <span class="marquee-item">FIFA</span><span class="marquee-dot"></span>
+        <span class="marquee-item">WHO</span><span class="marquee-dot"></span>
+        <span class="marquee-item">UNGA-SOCHUM</span><span class="marquee-dot"></span>
+        <span class="marquee-item">TSPPM</span><span class="marquee-dot"></span>
+        <span class="marquee-item">IP</span><span class="marquee-dot"></span>
+      </div>
+      <!-- duplicate for seamless loop -->
+      <div class="marquee-content" aria-hidden="true">
+        <span class="marquee-item">DISEC</span><span class="marquee-dot"></span>
+        <span class="marquee-item">UNSC</span><span class="marquee-dot"></span>
+        <span class="marquee-item">UNHRC</span><span class="marquee-dot"></span>
+        <span class="marquee-item">JCC-1</span><span class="marquee-dot"></span>
+        <span class="marquee-item">JCC-2</span><span class="marquee-dot"></span>
+        <span class="marquee-item">HCC</span><span class="marquee-dot"></span>
+        <span class="marquee-item">LOK SABHA</span><span class="marquee-dot"></span>
+        <span class="marquee-item">ARMAGEDDON</span><span class="marquee-dot"></span>
+        <span class="marquee-item">OIC</span><span class="marquee-dot"></span>
+        <span class="marquee-item">UN WOMEN</span><span class="marquee-dot"></span>
+        <span class="marquee-item">COPUOS</span><span class="marquee-dot"></span>
+        <span class="marquee-item">US SENATE</span><span class="marquee-dot"></span>
+        <span class="marquee-item">BILDERBERG</span><span class="marquee-dot"></span>
+        <span class="marquee-item">ECOFIN</span><span class="marquee-dot"></span>
+        <span class="marquee-item">ICJ</span><span class="marquee-dot"></span>
+        <span class="marquee-item">FIFA</span><span class="marquee-dot"></span>
+        <span class="marquee-item">WHO</span><span class="marquee-dot"></span>
+        <span class="marquee-item">UNGA-SOCHUM</span><span class="marquee-dot"></span>
+        <span class="marquee-item">TSPPM</span><span class="marquee-dot"></span>
+        <span class="marquee-item">IP</span><span class="marquee-dot"></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ MARQUEE REVERSED ═══ -->
+  <div class="marquee-section-rev" aria-hidden="true">
+    <div class="marquee-track-rev">
+      <div class="marquee-content">
+        <span class="marquee-item">BILDERBERG</span><span class="marquee-dot"></span>
+        <span class="marquee-item">ICJ / IRMCT</span><span class="marquee-dot"></span>
+        <span class="marquee-item">ARMAGEDDON</span><span class="marquee-dot"></span>
+        <span class="marquee-item">COPUOS</span><span class="marquee-dot"></span>
+        <span class="marquee-item">LOK SABHA</span><span class="marquee-dot"></span>
+        <span class="marquee-item">HCC</span><span class="marquee-dot"></span>
+        <span class="marquee-item">ECOFIN</span><span class="marquee-dot"></span>
+        <span class="marquee-item">OIC</span><span class="marquee-dot"></span>
+        <span class="marquee-item">TSPPM</span><span class="marquee-dot"></span>
+        <span class="marquee-item">US SENATE</span><span class="marquee-dot"></span>
+        <span class="marquee-item">UN WOMEN</span><span class="marquee-dot"></span>
+        <span class="marquee-item">UNGA-SOCHUM</span><span class="marquee-dot"></span>
+        <span class="marquee-item">FIFA</span><span class="marquee-dot"></span>
+        <span class="marquee-item">WHO</span><span class="marquee-dot"></span>
+        <span class="marquee-item">JCC-1</span><span class="marquee-dot"></span>
+        <span class="marquee-item">JCC-2</span><span class="marquee-dot"></span>
+        <span class="marquee-item">IP</span><span class="marquee-dot"></span>
+        <span class="marquee-item">DISEC</span><span class="marquee-dot"></span>
+        <span class="marquee-item">UNSC</span><span class="marquee-dot"></span>
+        <span class="marquee-item">UNHRC</span><span class="marquee-dot"></span>
+      </div>
+      <div class="marquee-content" aria-hidden="true">
+        <span class="marquee-item">BILDERBERG</span><span class="marquee-dot"></span>
+        <span class="marquee-item">ICJ / IRMCT</span><span class="marquee-dot"></span>
+        <span class="marquee-item">ARMAGEDDON</span><span class="marquee-dot"></span>
+        <span class="marquee-item">COPUOS</span><span class="marquee-dot"></span>
+        <span class="marquee-item">LOK SABHA</span><span class="marquee-dot"></span>
+        <span class="marquee-item">HCC</span><span class="marquee-dot"></span>
+        <span class="marquee-item">ECOFIN</span><span class="marquee-dot"></span>
+        <span class="marquee-item">OIC</span><span class="marquee-dot"></span>
+        <span class="marquee-item">TSPPM</span><span class="marquee-dot"></span>
+        <span class="marquee-item">US SENATE</span><span class="marquee-dot"></span>
+        <span class="marquee-item">UN WOMEN</span><span class="marquee-dot"></span>
+        <span class="marquee-item">UNGA-SOCHUM</span><span class="marquee-dot"></span>
+        <span class="marquee-item">FIFA</span><span class="marquee-dot"></span>
+        <span class="marquee-item">WHO</span><span class="marquee-dot"></span>
+        <span class="marquee-item">JCC-1</span><span class="marquee-dot"></span>
+        <span class="marquee-item">JCC-2</span><span class="marquee-dot"></span>
+        <span class="marquee-item">IP</span><span class="marquee-dot"></span>
+        <span class="marquee-item">DISEC</span><span class="marquee-dot"></span>
+        <span class="marquee-item">UNSC</span><span class="marquee-dot"></span>
+        <span class="marquee-item">UNHRC</span><span class="marquee-dot"></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ STATS ═══ -->
+  <section class="stats-section">
+    <div class="stats-grid">
+
+      <div class="stat-card card-delegates">
+        <span class="stat-card-label">Who's Coming</span>
+        <div class="stat-card-num">500<em>+</em></div>
+        <p class="stat-card-foot">Delegates. One floor. Zero silence. The sharpest minds from across India — ready to argue, persuade, and lead.</p>
+      </div>
+
+      <div class="stat-card card-committees">
+        <span class="stat-card-label">The Arenas</span>
+        <div class="stat-card-num">20</div>
+        <p class="stat-card-foot">Crisis cabinets. Legal tribunals. National assemblies. Every issue. No escape. Pick your battlefield.</p>
+      </div>
+
+      <div class="stat-card card-days">
+        <span class="stat-card-label">The Countdown</span>
+        <div class="stat-card-num">3</div>
+        <p class="stat-card-foot">72 hours to debate, draft, and decide. Three days to prove you belong at the table.</p>
+      </div>
+
+      <div class="stat-card card-edition">
+        <span class="stat-card-label">The Legacy</span>
+        <div class="stat-card-num"><em>XVI</em></div>
+        <p class="stat-card-foot">16 chapters. 16 years of leaders built in this room. Your chapter starts 24 July 2026.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══ SG LETTER ═══ -->
   <section class="sg-section">
     <div class="sg-inner">
 
-      <!-- LEFT: Photo -->
       <div class="sg-photo-col">
         <div class="sg-photo-wrap">
-          <!-- Replace with actual SG photo: <img src="sg-photo.jpg" alt="Secretary-General" /> -->
           <div class="sg-photo-placeholder">
-            <svg viewBox="0 0 80 80" fill="none"><circle cx="40" cy="30" r="16" fill="rgba(0,48,87,.15)"/><ellipse cx="40" cy="68" rx="26" ry="16" fill="rgba(0,48,87,.1)"/></svg>
+            <svg viewBox="0 0 80 80" fill="none"><circle cx="40" cy="30" r="16" fill="rgba(48,205,215,.15)"/><ellipse cx="40" cy="68" rx="26" ry="16" fill="rgba(48,205,215,.08)"/></svg>
             <p>Secretary-General<br>Photo</p>
           </div>
         </div>
       </div>
 
-      <!-- RIGHT: Letter -->
       <div class="sg-letter-col">
         <p class="sg-kicker">Oakridge MUN · Chapter XVI</p>
         <h2 class="sg-heading">A Letter from the<br>Secretary-General</h2>
@@ -1512,7 +1890,6 @@
           <p>It is with immense pride and excitement that I welcome you to Oakridge Model United Nations, Chapter XVI. This conference represents not just a gathering of young minds, but a celebration of diplomacy, dialogue, and the enduring belief that thoughtful conversation can change the world.</p>
           <p>Over the three days of 24th, 25th, and 26th July, delegates from across the country will come together to debate some of the most pressing issues of our time. Each committee has been carefully curated to challenge you intellectually and push the boundaries of your perspective.</p>
           <p>MUN has always been more than a competition. It is a space where you learn to listen as much as you speak, to find common ground where little seems to exist, and to lead with empathy. I encourage every delegate to embrace that spirit fully — walk in with your positions, but leave room to be moved.</p>
-          <p>We have worked tirelessly to ensure this edition of Oakridge MUN is the finest yet. I look forward to seeing the debates unfold, the resolutions take shape, and most importantly, the friendships form.</p>
           <p>Welcome to Chapter XVI.</p>
         </div>
 
@@ -1522,13 +1899,13 @@
           <p class="sg-sig-title">Secretary-General, Oakridge MUN</p>
         </div>
 
-        <a class="sg-link" href="#">↓ Meet the Secretariat</a>
+        <a class="sg-link" href="secretariat.html">Meet the Secretariat &nbsp;→</a>
       </div>
 
     </div>
   </section>
 
-  <!-- SCHEDULE -->
+  <!-- ═══ SCHEDULE ═══ -->
   <section class="schedule-section" id="schedule">
     <div class="schedule-header">
       <div>
@@ -1542,56 +1919,61 @@
       </div>
     </div>
 
+    <!-- Color legend -->
+    <div class="schedule-legend">
+      <span class="legend-item"><span class="legend-dot d-committee"></span>Committee</span>
+      <span class="legend-item"><span class="legend-dot d-ceremony"></span>Ceremony</span>
+      <span class="legend-item"><span class="legend-dot d-social"></span>Social / Networking</span>
+      <span class="legend-item"><span class="legend-dot d-meal"></span>Meal</span>
+      <span class="legend-item"><span class="legend-dot d-break"></span>Break / End</span>
+    </div>
+
     <div class="timeline-panels">
 
-      <!-- DAY 1 -->
       <div class="timeline-panel active" id="day-1">
         <div class="timeline">
-          <div class="tl-item"><div class="tl-time">8:00 – 9:00</div><div class="tl-event type-ceremony"><span class="tl-tag">Arrival</span><span class="tl-name">Registrations</span></div></div>
-          <div class="tl-item"><div class="tl-time">9:00 – 10:30</div><div class="tl-event type-ceremony"><span class="tl-tag">Ceremony</span><span class="tl-name">Opening Ceremony</span></div></div>
-          <div class="tl-item"><div class="tl-time">10:30 – 11:00</div><div class="tl-event type-break"><span class="tl-tag">Break</span><span class="tl-name">Break 1</span></div></div>
-          <div class="tl-item"><div class="tl-time">11:00 – 1:30</div><div class="tl-event type-committee"><span class="tl-tag">Committee</span><span class="tl-name">Committee Session 1</span></div></div>
-          <div class="tl-item"><div class="tl-time">1:30 – 2:00</div><div class="tl-event type-meal"><span class="tl-tag">Meal</span><span class="tl-name">Lunch</span></div></div>
-          <div class="tl-item"><div class="tl-time">2:00 – 4:30</div><div class="tl-event type-committee"><span class="tl-tag">Committee</span><span class="tl-name">Committee Session 2</span></div></div>
-          <div class="tl-item"><div class="tl-time">4:30 – 5:30</div><div class="tl-event type-social"><span class="tl-tag">Networking</span><span class="tl-name">Networking Hour</span></div></div>
-          <div class="tl-item"><div class="tl-time">5:30 Onwards</div><div class="tl-event type-dispersal"><span class="tl-tag">End</span><span class="tl-name">Dispersal</span></div></div>
+          <div class="tl-item"><div class="tl-time"><span class="tl-time-range">8:00 – 9:00</span><span class="tl-dur">1 hr</span></div><div class="tl-event type-ceremony"><div class="tl-event-body"><span class="tl-name">Registration</span><span class="tl-tag">Arrival</span></div></div></div>
+          <div class="tl-item"><div class="tl-time"><span class="tl-time-range">9:00 – 10:30</span><span class="tl-dur">1.5 hrs</span></div><div class="tl-event type-ceremony"><div class="tl-event-body"><span class="tl-name">Opening Ceremony</span><span class="tl-tag">Ceremony</span></div></div></div>
+          <div class="tl-item"><div class="tl-time"><span class="tl-time-range">10:30 – 11:00</span><span class="tl-dur">30 min</span></div><div class="tl-event type-break"><div class="tl-event-body"><span class="tl-name">Break</span><span class="tl-tag">Rest</span></div></div></div>
+          <div class="tl-item"><div class="tl-time"><span class="tl-time-range">11:00 – 1:30</span><span class="tl-dur">2.5 hrs</span></div><div class="tl-event type-committee"><div class="tl-event-body"><span class="tl-name">Committee Session 1</span><span class="tl-tag">Committee</span></div></div></div>
+          <div class="tl-item"><div class="tl-time"><span class="tl-time-range">1:30 – 2:00</span><span class="tl-dur">30 min</span></div><div class="tl-event type-meal"><div class="tl-event-body"><span class="tl-name">Lunch</span><span class="tl-tag">Meal</span></div></div></div>
+          <div class="tl-item"><div class="tl-time"><span class="tl-time-range">2:00 – 4:30</span><span class="tl-dur">2.5 hrs</span></div><div class="tl-event type-committee"><div class="tl-event-body"><span class="tl-name">Committee Session 2</span><span class="tl-tag">Committee</span></div></div></div>
+          <div class="tl-item"><div class="tl-time"><span class="tl-time-range">4:30 – 5:30</span><span class="tl-dur">1 hr</span></div><div class="tl-event type-social"><div class="tl-event-body"><span class="tl-name">Networking Hour</span><span class="tl-tag">Networking</span></div></div></div>
+          <div class="tl-item"><div class="tl-time"><span class="tl-time-range">5:30 onwards</span><span class="tl-dur"></span></div><div class="tl-event type-dispersal"><div class="tl-event-body"><span class="tl-name">Dispersal</span><span class="tl-tag">End of Day</span></div></div></div>
         </div>
       </div>
 
-      <!-- DAY 2 -->
       <div class="timeline-panel" id="day-2">
         <div class="timeline">
-          <div class="tl-item"><div class="tl-time">8:30 – 10:30</div><div class="tl-event type-committee"><span class="tl-tag">Committee</span><span class="tl-name">Committee Session 3</span></div></div>
-          <div class="tl-item"><div class="tl-time">10:30 – 10:45</div><div class="tl-event type-break"><span class="tl-tag">Break</span><span class="tl-name">Break</span></div></div>
-          <div class="tl-item"><div class="tl-time">10:45 – 1:30</div><div class="tl-event type-committee"><span class="tl-tag">Committee</span><span class="tl-name">Committee Session 4</span></div></div>
-          <div class="tl-item"><div class="tl-time">1:30 – 2:00</div><div class="tl-event type-meal"><span class="tl-tag">Meal</span><span class="tl-name">Lunch</span></div></div>
-          <div class="tl-item"><div class="tl-time">2:00 – 5:00</div><div class="tl-event type-committee"><span class="tl-tag">Committee</span><span class="tl-name">Committee Session 5</span></div></div>
-          <div class="tl-item"><div class="tl-time">5:00 – 6:30</div><div class="tl-event type-social"><span class="tl-tag">Social</span><span class="tl-name">Social Evening</span></div></div>
-          <div class="tl-item"><div class="tl-time">6:30 – 7:30</div><div class="tl-event type-meal"><span class="tl-tag">Meal</span><span class="tl-name">Dinner</span></div></div>
-          <div class="tl-item"><div class="tl-time">7:30 Onwards</div><div class="tl-event type-dispersal"><span class="tl-tag">End</span><span class="tl-name">Dispersal</span></div></div>
+          <div class="tl-item"><div class="tl-time"><span class="tl-time-range">8:30 – 10:30</span><span class="tl-dur">2 hrs</span></div><div class="tl-event type-committee"><div class="tl-event-body"><span class="tl-name">Committee Session 3</span><span class="tl-tag">Committee</span></div></div></div>
+          <div class="tl-item"><div class="tl-time"><span class="tl-time-range">10:30 – 10:45</span><span class="tl-dur">15 min</span></div><div class="tl-event type-break"><div class="tl-event-body"><span class="tl-name">Break</span><span class="tl-tag">Rest</span></div></div></div>
+          <div class="tl-item"><div class="tl-time"><span class="tl-time-range">10:45 – 1:30</span><span class="tl-dur">2 hrs 45 min</span></div><div class="tl-event type-committee"><div class="tl-event-body"><span class="tl-name">Committee Session 4</span><span class="tl-tag">Committee</span></div></div></div>
+          <div class="tl-item"><div class="tl-time"><span class="tl-time-range">1:30 – 2:00</span><span class="tl-dur">30 min</span></div><div class="tl-event type-meal"><div class="tl-event-body"><span class="tl-name">Lunch</span><span class="tl-tag">Meal</span></div></div></div>
+          <div class="tl-item"><div class="tl-time"><span class="tl-time-range">2:00 – 5:00</span><span class="tl-dur">3 hrs</span></div><div class="tl-event type-committee"><div class="tl-event-body"><span class="tl-name">Committee Session 5</span><span class="tl-tag">Committee</span></div></div></div>
+          <div class="tl-item"><div class="tl-time"><span class="tl-time-range">5:00 – 6:30</span><span class="tl-dur">1.5 hrs</span></div><div class="tl-event type-social"><div class="tl-event-body"><span class="tl-name">Social Evening</span><span class="tl-tag">Social</span></div></div></div>
+          <div class="tl-item"><div class="tl-time"><span class="tl-time-range">6:30 – 7:30</span><span class="tl-dur">1 hr</span></div><div class="tl-event type-meal"><div class="tl-event-body"><span class="tl-name">Dinner</span><span class="tl-tag">Meal</span></div></div></div>
+          <div class="tl-item"><div class="tl-time"><span class="tl-time-range">7:30 onwards</span><span class="tl-dur"></span></div><div class="tl-event type-dispersal"><div class="tl-event-body"><span class="tl-name">Dispersal</span><span class="tl-tag">End of Day</span></div></div></div>
         </div>
       </div>
 
-      <!-- DAY 3 -->
       <div class="timeline-panel" id="day-3">
         <div class="timeline">
-          <div class="tl-item"><div class="tl-time">8:30 – 10:30</div><div class="tl-event type-committee"><span class="tl-tag">Committee</span><span class="tl-name">Committee Session 6</span></div></div>
-          <div class="tl-item"><div class="tl-time">10:30 – 1:30</div><div class="tl-event type-committee"><span class="tl-tag">Committee</span><span class="tl-name">Committee Session 7</span></div></div>
-          <div class="tl-item"><div class="tl-time">1:30 – 2:00</div><div class="tl-event type-meal"><span class="tl-tag">Meal</span><span class="tl-name">Lunch</span></div></div>
-          <div class="tl-item"><div class="tl-time">2:00 – 3:30</div><div class="tl-event type-ceremony"><span class="tl-tag">Ceremony</span><span class="tl-name">Closing Ceremony</span></div></div>
-          <div class="tl-item"><div class="tl-time">3:30 Onwards</div><div class="tl-event type-dispersal"><span class="tl-tag">End</span><span class="tl-name">Dispersal</span></div></div>
+          <div class="tl-item"><div class="tl-time"><span class="tl-time-range">8:30 – 10:30</span><span class="tl-dur">2 hrs</span></div><div class="tl-event type-committee"><div class="tl-event-body"><span class="tl-name">Committee Session 6</span><span class="tl-tag">Committee</span></div></div></div>
+          <div class="tl-item"><div class="tl-time"><span class="tl-time-range">10:30 – 1:30</span><span class="tl-dur">3 hrs</span></div><div class="tl-event type-committee"><div class="tl-event-body"><span class="tl-name">Committee Session 7</span><span class="tl-tag">Committee</span></div></div></div>
+          <div class="tl-item"><div class="tl-time"><span class="tl-time-range">1:30 – 2:00</span><span class="tl-dur">30 min</span></div><div class="tl-event type-meal"><div class="tl-event-body"><span class="tl-name">Lunch</span><span class="tl-tag">Meal</span></div></div></div>
+          <div class="tl-item"><div class="tl-time"><span class="tl-time-range">2:00 – 3:30</span><span class="tl-dur">1.5 hrs</span></div><div class="tl-event type-ceremony"><div class="tl-event-body"><span class="tl-name">Closing Ceremony</span><span class="tl-tag">Ceremony</span></div></div></div>
+          <div class="tl-item"><div class="tl-time"><span class="tl-time-range">3:30 onwards</span><span class="tl-dur"></span></div><div class="tl-event type-dispersal"><div class="tl-event-body"><span class="tl-name">Dispersal</span><span class="tl-tag">End of Day</span></div></div></div>
         </div>
       </div>
 
     </div>
   </section>
 
-  <!-- COMMITTEES CAROUSEL -->
+  <!-- ═══ COMMITTEES ═══ -->
   <section class="ctrl-chains-section" aria-label="Committees at a glance">
     <div class="ctrl-chains-sticky">
       <div class="ctrl-copy">
         <p class="ctrl-kicker">Oakridge MUN · Chapter XVI</p>
-
         <h2 class="ctrl-title">Committees<br>at a glance.</h2>
         <p class="ctrl-subtitle">Explore crisis cabinets, legal forums, national assemblies, and global councils built for sharp debate.</p>
         <button class="committees-explore" type="button" onclick="window.location.href='committees.html'">Explore Committees</button>
@@ -1600,16 +1982,16 @@
       <div class="ctrl-chain-stage">
         <div class="ctrl-chain-list">
           <div class="ctrl-chain"><span class="ctrl-chain-icon" style="--chain-color:var(--teal);"><span class="ctrl-chain-initial">DI</span></span><span class="ctrl-chain-name">DISEC</span></div>
-          <div class="ctrl-chain"><span class="ctrl-chain-icon" style="--chain-color:var(--navy); color:var(--white);"><span class="ctrl-chain-initial">UN</span></span><span class="ctrl-chain-name">UNSC</span></div>
+          <div class="ctrl-chain"><span class="ctrl-chain-icon" style="--chain-color:var(--teal-light);"><span class="ctrl-chain-initial">UN</span></span><span class="ctrl-chain-name">UNSC</span></div>
           <div class="ctrl-chain"><span class="ctrl-chain-icon" style="--chain-color:var(--teal-light);"><span class="ctrl-chain-initial">HR</span></span><span class="ctrl-chain-name">UNHRC</span></div>
-          <div class="ctrl-chain"><span class="ctrl-chain-icon" style="--chain-color:var(--red);"><span class="ctrl-chain-initial">J1</span></span><span class="ctrl-chain-name">JCC-1</span></div>
+          <div class="ctrl-chain"><span class="ctrl-chain-icon" style="--chain-color:var(--red); color:var(--white);"><span class="ctrl-chain-initial">J1</span></span><span class="ctrl-chain-name">JCC-1</span></div>
           <div class="ctrl-chain"><span class="ctrl-chain-icon" style="--chain-color:var(--peach);"><span class="ctrl-chain-initial">J2</span></span><span class="ctrl-chain-name">JCC-2</span></div>
           <div class="ctrl-chain"><span class="ctrl-chain-icon" style="--chain-color:var(--gold);"><span class="ctrl-chain-initial">HC</span></span><span class="ctrl-chain-name">HCC</span></div>
           <div class="ctrl-chain"><span class="ctrl-chain-icon" style="--chain-color:var(--yellow);"><span class="ctrl-chain-initial">LS</span></span><span class="ctrl-chain-name">LOK SABHA</span></div>
           <div class="ctrl-chain"><span class="ctrl-chain-icon" style="--chain-color:var(--teal-dark); color:var(--white);"><span class="ctrl-chain-initial">AR</span></span><span class="ctrl-chain-name">ARMAGEDDON</span></div>
           <div class="ctrl-chain"><span class="ctrl-chain-icon" style="--chain-color:var(--teal);"><span class="ctrl-chain-initial">OI</span></span><span class="ctrl-chain-name">OIC</span></div>
           <div class="ctrl-chain"><span class="ctrl-chain-icon" style="--chain-color:var(--teal-light);"><span class="ctrl-chain-initial">UW</span></span><span class="ctrl-chain-name">UN WOMEN</span></div>
-          <div class="ctrl-chain"><span class="ctrl-chain-icon" style="--chain-color:var(--red);"><span class="ctrl-chain-initial">CO</span></span><span class="ctrl-chain-name">COPUOS</span></div>
+          <div class="ctrl-chain"><span class="ctrl-chain-icon" style="--chain-color:var(--red); color:var(--white);"><span class="ctrl-chain-initial">CO</span></span><span class="ctrl-chain-name">COPUOS</span></div>
           <div class="ctrl-chain"><span class="ctrl-chain-icon" style="--chain-color:var(--peach);"><span class="ctrl-chain-initial">US</span></span><span class="ctrl-chain-name">US SENATE</span></div>
           <div class="ctrl-chain"><span class="ctrl-chain-icon" style="--chain-color:var(--gold);"><span class="ctrl-chain-initial">BI</span></span><span class="ctrl-chain-name">BILDERBERG</span></div>
           <div class="ctrl-chain"><span class="ctrl-chain-icon" style="--chain-color:var(--yellow);"><span class="ctrl-chain-initial">EC</span></span><span class="ctrl-chain-name">ECOFIN</span></div>
@@ -1617,135 +1999,72 @@
           <div class="ctrl-chain"><span class="ctrl-chain-icon" style="--chain-color:var(--teal);"><span class="ctrl-chain-initial">FI</span></span><span class="ctrl-chain-name">FIFA</span></div>
           <div class="ctrl-chain"><span class="ctrl-chain-icon" style="--chain-color:var(--teal-light);"><span class="ctrl-chain-initial">WH</span></span><span class="ctrl-chain-name">WHO</span></div>
           <div class="ctrl-chain"><span class="ctrl-chain-icon" style="--chain-color:var(--yellow);"><span class="ctrl-chain-initial">UG</span></span><span class="ctrl-chain-name">UNGA - SOCHUM</span></div>
-          <div class="ctrl-chain"><span class="ctrl-chain-icon" style="--chain-color:var(--red);"><span class="ctrl-chain-initial">TS</span></span><span class="ctrl-chain-name">TSPPM</span></div>
+          <div class="ctrl-chain"><span class="ctrl-chain-icon" style="--chain-color:var(--red); color:var(--white);"><span class="ctrl-chain-initial">TS</span></span><span class="ctrl-chain-name">TSPPM</span></div>
           <div class="ctrl-chain"><span class="ctrl-chain-icon" style="--chain-color:var(--peach);"><span class="ctrl-chain-initial">IP</span></span><span class="ctrl-chain-name">IP</span></div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- FAQ -->
+  <!-- ═══ FAQ ═══ -->
   <section class="faq-section">
     <div class="faq-inner">
-
       <h2 class="faq-heading" id="faqHeading">FAQ</h2>
+      <p class="faq-sub" id="faqSub">Everything you need to know about Chapter XVI</p>
 
       <div class="faq-list">
 
         <div class="faq-item">
-          <div class="faq-question">
-            <span class="faq-q-text">What is Oakridge MUN?</span>
-            <div class="faq-toggle">
-              <svg viewBox="0 0 14 14" fill="none">
-                <line class="h-bar" x1="2" y1="7" x2="12" y2="7"/>
-                <line x1="7" y1="2" x2="7" y2="12"/>
-              </svg>
-            </div>
-          </div>
-          <div class="faq-answer">
-            <p class="faq-a-text">Oakridge Model United Nations (MUN) is an annual student-led conference hosted by Oakridge International School, Bengaluru. Delegates simulate United Nations committees, debate real-world issues, and collaborate to draft resolutions — developing skills in diplomacy, public speaking, and critical thinking.</p>
-          </div>
+          <div class="faq-question"><span class="faq-q-text">What is Oakridge MUN?</span><div class="faq-toggle"><svg viewBox="0 0 14 14" fill="none"><line class="h-bar" x1="2" y1="7" x2="12" y2="7"/><line x1="7" y1="2" x2="7" y2="12"/></svg></div></div>
+          <div class="faq-answer"><p class="faq-a-text">Oakridge Model United Nations (MUN) is an annual student-led conference hosted by Oakridge International School, Hyderabad. Delegates simulate United Nations committees, debate real-world issues, and collaborate to draft resolutions — developing skills in diplomacy, public speaking, and critical thinking.</p></div>
         </div>
 
         <div class="faq-item">
-          <div class="faq-question">
-            <span class="faq-q-text">Who can participate in Oakridge MUN Chapter XVI?</span>
-            <div class="faq-toggle">
-              <svg viewBox="0 0 14 14" fill="none">
-                <line class="h-bar" x1="2" y1="7" x2="12" y2="7"/>
-                <line x1="7" y1="2" x2="7" y2="12"/>
-              </svg>
-            </div>
-          </div>
-          <div class="faq-answer">
-            <p class="faq-a-text">Oakridge MUN is open to students from Grade 6 through Grade 12 from any school. Whether you are a first-time delegate or a seasoned MUNner, there is a committee suited to your experience level. Delegates must register through their school or as an independent participant.</p>
-          </div>
+          <div class="faq-question"><span class="faq-q-text">Who can participate in Oakridge MUN Chapter XVI?</span><div class="faq-toggle"><svg viewBox="0 0 14 14" fill="none"><line class="h-bar" x1="2" y1="7" x2="12" y2="7"/><line x1="7" y1="2" x2="7" y2="12"/></svg></div></div>
+          <div class="faq-answer"><p class="faq-a-text">Oakridge MUN is open to students from Grade 6 through Grade 12 from any school. Whether you are a first-time delegate or a seasoned MUNner, there is a committee suited to your experience level. Delegates must register through their school or as an independent participant.</p></div>
         </div>
 
         <div class="faq-item">
-          <div class="faq-question">
-            <span class="faq-q-text">How do I register for the conference?</span>
-            <div class="faq-toggle">
-              <svg viewBox="0 0 14 14" fill="none">
-                <line class="h-bar" x1="2" y1="7" x2="12" y2="7"/>
-                <line x1="7" y1="2" x2="7" y2="12"/>
-              </svg>
-            </div>
-          </div>
-          <div class="faq-answer">
-            <p class="faq-a-text">Registration is done through the official Oakridge MUN portal. Click "Register Now" at the top of this page, fill in your details, select your preferred committee, and submit your country preference. Confirmation emails with further instructions will be sent within 3–5 working days.</p>
-          </div>
+          <div class="faq-question"><span class="faq-q-text">How do I register for the conference?</span><div class="faq-toggle"><svg viewBox="0 0 14 14" fill="none"><line class="h-bar" x1="2" y1="7" x2="12" y2="7"/><line x1="7" y1="2" x2="7" y2="12"/></svg></div></div>
+          <div class="faq-answer"><p class="faq-a-text">Registration is done through the official Oakridge MUN portal. Click "Register Now" at the top of this page, fill in your details, select your preferred committee, and submit your country preference. Confirmation emails with further instructions will be sent within 3–5 working days.</p></div>
         </div>
 
         <div class="faq-item">
-          <div class="faq-question">
-            <span class="faq-q-text">What should I prepare before the conference?</span>
-            <div class="faq-toggle">
-              <svg viewBox="0 0 14 14" fill="none">
-                <line class="h-bar" x1="2" y1="7" x2="12" y2="7"/>
-                <line x1="7" y1="2" x2="7" y2="12"/>
-              </svg>
-            </div>
-          </div>
-          <div class="faq-answer">
-            <p class="faq-a-text">Each delegate is expected to research their assigned country's position on the committee's agenda topics and prepare an opening position paper. Study Guides will be shared by the Secretariat ahead of the conference. Delegates should also familiarise themselves with Rules of Procedure.</p>
-          </div>
+          <div class="faq-question"><span class="faq-q-text">What should I prepare before the conference?</span><div class="faq-toggle"><svg viewBox="0 0 14 14" fill="none"><line class="h-bar" x1="2" y1="7" x2="12" y2="7"/><line x1="7" y1="2" x2="7" y2="12"/></svg></div></div>
+          <div class="faq-answer"><p class="faq-a-text">Each delegate is expected to research their assigned country's position on the committee's agenda topics and prepare an opening position paper. Study Guides will be shared by the Secretariat ahead of the conference. Delegates should also familiarise themselves with Rules of Procedure.</p></div>
         </div>
 
         <div class="faq-item">
-          <div class="faq-question">
-            <span class="faq-q-text">What is the dress code?</span>
-            <div class="faq-toggle">
-              <svg viewBox="0 0 14 14" fill="none">
-                <line class="h-bar" x1="2" y1="7" x2="12" y2="7"/>
-                <line x1="7" y1="2" x2="7" y2="12"/>
-              </svg>
-            </div>
-          </div>
-          <div class="faq-answer">
-            <p class="faq-a-text">Western business formals are required for all three days of the conference. This means formal trousers, blazers, ties, or formal dresses/suits for delegates. Smart-casual is acceptable for the Social Evening on Day 2. Please ensure your attire is neat and presentable at all times.</p>
-          </div>
+          <div class="faq-question"><span class="faq-q-text">What is the dress code?</span><div class="faq-toggle"><svg viewBox="0 0 14 14" fill="none"><line class="h-bar" x1="2" y1="7" x2="12" y2="7"/><line x1="7" y1="2" x2="7" y2="12"/></svg></div></div>
+          <div class="faq-answer"><p class="faq-a-text">Western business formals are required for all three days of the conference. This means formal trousers, blazers, ties, or formal dresses/suits for delegates. Smart-casual is acceptable for the Social Evening on Day 2. Please ensure your attire is neat and presentable at all times.</p></div>
         </div>
 
         <div class="faq-item">
-          <div class="faq-question">
-            <span class="faq-q-text">How are awards decided?</span>
-            <div class="faq-toggle">
-              <svg viewBox="0 0 14 14" fill="none">
-                <line class="h-bar" x1="2" y1="7" x2="12" y2="7"/>
-                <line x1="7" y1="2" x2="7" y2="12"/>
-              </svg>
-            </div>
-          </div>
-          <div class="faq-answer">
-            <p class="faq-a-text">Awards are evaluated by the Executive Board of each committee based on delegate performance across all sessions. Criteria include quality of speeches, contribution to debate, diplomacy, resolution drafting, and knowledge of subject matter. Awards include Best Delegate, Outstanding Delegate, Verbal Mention, and Best Position Paper.</p>
-          </div>
+          <div class="faq-question"><span class="faq-q-text">How are awards decided?</span><div class="faq-toggle"><svg viewBox="0 0 14 14" fill="none"><line class="h-bar" x1="2" y1="7" x2="12" y2="7"/><line x1="7" y1="2" x2="7" y2="12"/></svg></div></div>
+          <div class="faq-answer"><p class="faq-a-text">Awards are evaluated by the Executive Board of each committee based on delegate performance across all sessions. Criteria include quality of speeches, contribution to debate, diplomacy, resolution drafting, and knowledge of subject matter. Awards include Best Delegate, Outstanding Delegate, Verbal Mention, and Best Position Paper.</p></div>
         </div>
 
         <div class="faq-item">
-          <div class="faq-question">
-            <span class="faq-q-text">Is accommodation provided for outstation delegates?</span>
-            <div class="faq-toggle">
-              <svg viewBox="0 0 14 14" fill="none">
-                <line class="h-bar" x1="2" y1="7" x2="12" y2="7"/>
-                <line x1="7" y1="2" x2="7" y2="12"/>
-              </svg>
-            </div>
-          </div>
-          <div class="faq-answer">
-            <p class="faq-a-text">Oakridge MUN does not arrange accommodation directly, but we maintain a list of recommended hotels near the venue for outstation delegates and their families. Please reach out to the Secretariat via the contact form and we will share details to assist with your stay in Bengaluru.</p>
-          </div>
+          <div class="faq-question"><span class="faq-q-text">Is accommodation provided for outstation delegates?</span><div class="faq-toggle"><svg viewBox="0 0 14 14" fill="none"><line class="h-bar" x1="2" y1="7" x2="12" y2="7"/><line x1="7" y1="2" x2="7" y2="12"/></svg></div></div>
+          <div class="faq-answer"><p class="faq-a-text">Oakridge MUN does not arrange accommodation directly, but we maintain a list of recommended hotels near the venue for outstation delegates and their families. Please reach out to the Secretariat via the contact form and we will share details to assist with your stay in Hyderabad.</p></div>
         </div>
 
       </div>
     </div>
   </section>
 
-  <!-- FOOTER -->
+  <!-- ═══ PRE-FOOTER CTA ═══ -->
+  <div class="cta-banner">
+    <p class="cta-banner-eyebrow">Registration Open · Chapter XVI</p>
+    <h2 class="cta-banner-title">Ready to<br><em>Delegate?</em></h2>
+    <p class="cta-banner-sub">Join 500+ delegates from across India for three days of debate, diplomacy, and discovery.</p>
+    <button class="cta-banner-btn">Register Now &nbsp;→</button>
+  </div>
+
+  <!-- ═══ FOOTER ═══ -->
   <footer>
     <div class="footer-top">
 
-      <!-- Brand -->
       <div class="footer-brand">
         <img src="logo.png" alt="Oakridge MUN Logo" class="footer-logo" />
         <p class="footer-chapter">Chapter XVI</p>
@@ -1754,13 +2073,12 @@
 
       <div class="footer-divider"></div>
 
-      <!-- Quick Links -->
       <div class="footer-col">
         <h4>Quick Links</h4>
         <ul>
           <li><a href="#">About</a></li>
-          <li><a href="#">Schedule</a></li>
-          <li><a href="#">Secretariat</a></li>
+          <li><a href="#schedule">Schedule</a></li>
+          <li><a href="secretariat.html">Secretariat</a></li>
           <li><a href="#">International Press</a></li>
           <li><a href="#">Allocations</a></li>
           <li><a href="#">FAQs</a></li>
@@ -1768,7 +2086,6 @@
         </ul>
       </div>
 
-      <!-- Contact -->
       <div class="footer-col">
         <h4>Contact Us</h4>
         <div class="footer-contact-item">
@@ -1785,7 +2102,6 @@
         </div>
       </div>
 
-      <!-- Event Details -->
       <div class="footer-col">
         <h4>Event Details</h4>
         <div class="footer-detail-item">
@@ -1821,27 +2137,19 @@
   </footer>
 
   <script>
-    // Hide placeholder once video loads
-    const video = document.getElementById('heroVideo');
-    const placeholderBg = document.getElementById('placeholderBg');
-    const placeholderIcon = document.getElementById('placeholderIcon');
-    if (video.querySelector('source')) {
-      video.addEventListener('loadeddata', () => {
-        placeholderBg.style.display = 'none';
-        placeholderIcon.style.display = 'none';
-      });
-    }
+    // ── NAV SCROLL BLUR ──
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 40);
+    }, { passive: true });
 
-    // Countdown to July 24 2026 00:00:00 IST
+    // ── COUNTDOWN ──
     const target = new Date('2026-07-24T00:00:00+05:30').getTime();
     const pad = n => String(n).padStart(2, '0');
-
     function tick() {
       const diff = target - Date.now();
       if (diff <= 0) {
-        ['days','hours','mins','secs'].forEach(id => {
-          document.getElementById('cd-' + id).textContent = '00';
-        });
+        ['days','hours','mins','secs'].forEach(id => document.getElementById('cd-' + id).textContent = '00');
         return;
       }
       document.getElementById('cd-days').textContent  = pad(Math.floor(diff / 86400000));
@@ -1849,48 +2157,62 @@
       document.getElementById('cd-mins').textContent  = pad(Math.floor((diff % 3600000) / 60000));
       document.getElementById('cd-secs').textContent  = pad(Math.floor((diff % 60000) / 1000));
     }
+    tick(); setInterval(tick, 1000);
 
-    tick();
-    setInterval(tick, 1000);
-
-    // ── FAQ ACCORDION ──
+    // ── FAQ ──
     document.querySelectorAll('.faq-item').forEach(item => {
       item.querySelector('.faq-question').addEventListener('click', () => {
         const isOpen = item.classList.contains('open');
-        // Close all
         document.querySelectorAll('.faq-item.open').forEach(o => o.classList.remove('open'));
-        // Open clicked if it was closed
         if (!isOpen) item.classList.add('open');
       });
     });
 
-    // ── FAQ SCROLL REVEAL ──
-    const faqObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (!entry.isIntersecting) return;
-        // Heading
-        if (entry.target.id === 'faqHeading') {
-          entry.target.classList.add('revealed');
+    // ── SCROLL REVEALS ──
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (!e.isIntersecting) return;
+        const el = e.target;
+        if (el.classList.contains('faq-heading')) { el.classList.add('revealed'); }
+        if (el.classList.contains('faq-sub'))     { el.classList.add('revealed'); }
+        if (el.classList.contains('faq-list'))    {
+          el.querySelectorAll('.faq-item').forEach((item, i) => setTimeout(() => item.classList.add('revealed'), i * 80));
         }
-        // Cards
-        const items = entry.target.querySelectorAll('.faq-item');
-        items.forEach((item, i) => {
-          setTimeout(() => item.classList.add('revealed'), i * 90);
-        });
-        faqObserver.unobserve(entry.target);
+        if (el.classList.contains('stats-grid')) {
+          el.querySelectorAll('.stat-card').forEach((item, i) => setTimeout(() => item.classList.add('revealed'), i * 100));
+        }
+        revealObserver.unobserve(el);
       });
     }, { threshold: 0.08 });
 
-    faqObserver.observe(document.getElementById('faqHeading'));
-    faqObserver.observe(document.querySelector('.faq-list'));
+    revealObserver.observe(document.getElementById('faqHeading'));
+    revealObserver.observe(document.getElementById('faqSub'));
+    revealObserver.observe(document.querySelector('.faq-list'));
+    const statsGrid = document.querySelector('.stats-grid');
+    if (statsGrid) revealObserver.observe(statsGrid);
+
+    // SG scroll reveal
+    const sgObserver = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.style.opacity = '1';
+          e.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.sg-photo-col, .sg-letter-col').forEach(el => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(28px)';
+      el.style.transition = 'opacity .7s ease, transform .7s ease';
+      sgObserver.observe(el);
+    });
 
     // ── SCHEDULE TABS ──
     const tabs = document.querySelectorAll('.day-tab');
     const panels = document.querySelectorAll('.timeline-panel');
 
     function revealItems(panel) {
-      const items = panel.querySelectorAll('.tl-item');
-      items.forEach((item, i) => {
+      panel.querySelectorAll('.tl-item').forEach((item, i) => {
         item.classList.remove('revealed');
         setTimeout(() => item.classList.add('revealed'), i * 60);
       });
@@ -1898,79 +2220,34 @@
 
     tabs.forEach(tab => {
       tab.addEventListener('click', () => {
-        const target = tab.dataset.day;
-
+        const dayTarget = tab.dataset.day;
         tabs.forEach(t => t.classList.remove('active'));
         tab.classList.add('active');
-
-        panels.forEach(p => {
-          p.classList.remove('active', 'visible');
-          p.style.display = 'none';
-        });
-
-        const panel = document.getElementById('day-' + target);
+        panels.forEach(p => { p.classList.remove('active','visible'); p.style.display = 'none'; });
+        const panel = document.getElementById('day-' + dayTarget);
         panel.style.display = 'block';
         panel.classList.add('active');
-        // trigger reflow then animate in
-        requestAnimationFrame(() => {
-          requestAnimationFrame(() => {
-            panel.classList.add('visible');
-            revealItems(panel);
-          });
-        });
+        requestAnimationFrame(() => requestAnimationFrame(() => {
+          panel.classList.add('visible');
+          revealItems(panel);
+        }));
       });
     });
 
-    // Animate active panel on load
     const firstPanel = document.getElementById('day-1');
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        firstPanel.classList.add('visible');
-        revealItems(firstPanel);
-      });
-    });
-
-    // ── COMMITTEE CAROUSEL ──
-    const ctrlChains = document.querySelectorAll('.ctrl-chain');
-
-    function updateCommitteeCarousel(time = 0) {
-      if (!ctrlChains.length) return;
-
-      const isMobile = window.matchMedia('(max-width: 768px)').matches;
-      const count = ctrlChains.length;
-      const spacing = isMobile ? 58 : 86;
-      const centerOffset = isMobile ? 18 : 51;
-      const active = (time / 1800) % count;
-
-      ctrlChains.forEach((chain, index) => {
-        let diff = index - active;
-        if (diff > count / 2) diff -= count;
-        if (diff < -count / 2) diff += count;
-
-        const y = centerOffset + diff * spacing;
-        const fade = Math.max(0, Math.abs(y) - (isMobile ? 170 : 230));
-        const opacity = Math.max(.14, 1 - fade / (isMobile ? 130 : 190));
-
-        chain.style.setProperty('--wheel-y', y + 'px');
-        chain.style.setProperty('--wheel-opacity', opacity.toFixed(3));
-      });
-
-      requestAnimationFrame(updateCommitteeCarousel);
-    }
-
-    requestAnimationFrame(updateCommitteeCarousel);
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      firstPanel.classList.add('visible');
+      revealItems(firstPanel);
+    }));
 
     // ── MOBILE MENU ──
     const menuBtn = document.getElementById('menuBtn');
     const mobileNav = document.getElementById('mobileNav');
-
     menuBtn.addEventListener('click', () => {
       const isOpen = mobileNav.classList.toggle('open');
       menuBtn.classList.toggle('open', isOpen);
       document.body.style.overflow = isOpen ? 'hidden' : '';
     });
-
-    // Close when a link is tapped
     mobileNav.querySelectorAll('a').forEach(a => {
       a.addEventListener('click', () => {
         mobileNav.classList.remove('open');
@@ -1979,22 +2256,62 @@
       });
     });
 
-    // Scroll-reveal for SG section
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          e.target.style.opacity = '1';
-          e.target.style.transform = 'translateY(0)';
-        }
-      });
-    }, { threshold: 0.15 });
+    // ── SCROLL PROGRESS ──
+    const progressBar = document.getElementById('scroll-progress');
+    window.addEventListener('scroll', () => {
+      const scrolled = document.body.scrollTop || document.documentElement.scrollTop;
+      const total = document.body.scrollHeight - window.innerHeight;
+      progressBar.style.width = (scrolled / total * 100) + '%';
+    }, { passive: true });
 
-    document.querySelectorAll('.sg-photo-col, .sg-letter-col').forEach(el => {
-      el.style.opacity = '0';
-      el.style.transform = 'translateY(24px)';
-      el.style.transition = 'opacity .6s ease, transform .6s ease';
-      observer.observe(el);
-    });
+    // ── STATS CARD REVEAL ──
+    (function() {
+      const cards = document.querySelectorAll('.stat-card');
+      const obs = new IntersectionObserver((entries) => {
+        entries.forEach((e, i) => {
+          if (!e.isIntersecting) return;
+          const idx = [...cards].indexOf(e.target);
+          setTimeout(() => e.target.classList.add('revealed'), idx * 100);
+          obs.unobserve(e.target);
+        });
+      }, { threshold: 0.1 });
+      cards.forEach(c => obs.observe(c));
+    })();
+
+    // ── COMMITTEES WHEEL ──
+    (function() {
+      const chains = document.querySelectorAll('.ctrl-chain');
+      if (!chains.length) return;
+      const count = chains.length;
+      const itemH = 90;
+      let current = 0;
+      let raf;
+
+      function layout(offset) {
+        chains.forEach((el, i) => {
+          const pos = ((i - offset % count + count) % count);
+          const center = count / 2;
+          const dist = Math.abs(pos - center);
+          const y = (pos - center) * itemH;
+          const opacity = Math.max(0, 1 - dist * 0.22);
+          el.style.setProperty('--wheel-y', y + 'px');
+          el.style.setProperty('--wheel-opacity', opacity);
+        });
+      }
+
+      function animate() {
+        current += 0.012;
+        layout(current);
+        raf = requestAnimationFrame(animate);
+      }
+
+      const stage = document.querySelector('.ctrl-chain-stage');
+      if (stage) {
+        animate();
+        stage.addEventListener('mouseenter', () => cancelAnimationFrame(raf));
+        stage.addEventListener('mouseleave', () => { raf = requestAnimationFrame(animate); });
+      }
+    })();
   </script>
 </body>
 </html>
