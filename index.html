@@ -178,15 +178,20 @@
     /* XVI — giant background watermark */
     .hero-roman {
       position: absolute;
-      right: -0.08em;
+      right: -0.06em;
       top: 50%;
-      transform: translateY(-52%);
+      transform: translateY(-50%);
       font-size: clamp(14rem, 32vw, 30rem);
       font-weight: 900;
       letter-spacing: -.06em;
       line-height: 1;
-      color: var(--teal);
-      opacity: .045;
+      color: transparent;
+      -webkit-text-stroke: 2.5px rgba(48,205,215,.75);
+      text-stroke: 2.5px rgba(48,205,215,.75);
+      -webkit-mask-image: linear-gradient(to top, transparent 6%, black 28%), linear-gradient(to left, rgba(0,0,0,.95) 20%, transparent 95%);
+      -webkit-mask-composite: destination-in;
+      mask-image: linear-gradient(to top, transparent 6%, black 28%), linear-gradient(to left, rgba(0,0,0,.95) 20%, transparent 95%);
+      mask-composite: intersect;
       pointer-events: none;
       user-select: none;
       z-index: 2;
