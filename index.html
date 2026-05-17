@@ -1431,15 +1431,6 @@
     /* ═══════════════════════════════════════
        SCROLL PROGRESS BAR
     ═══════════════════════════════════════ */
-    #scroll-progress {
-      position: fixed; top: 0; left: 0; height: 3px;
-      background: linear-gradient(90deg, var(--teal), var(--teal-light), var(--teal));
-      background-size: 200% 100%;
-      z-index: 9999; width: 0%;
-      box-shadow: 0 0 12px rgba(48,205,215,.7);
-      animation: gradientShift 2s linear infinite;
-      transition: width .08s linear;
-    }
 
     /* ═══════════════════════════════════════
        SECOND (REVERSED) MARQUEE
@@ -1637,8 +1628,6 @@
 </head>
 <body>
 
-  <!-- Scroll progress -->
-  <div id="scroll-progress"></div>
 
   <!-- Mobile nav drawer -->
   <div class="mobile-nav" id="mobileNav">
@@ -2252,13 +2241,6 @@
       });
     });
 
-    // ── SCROLL PROGRESS ──
-    const progressBar = document.getElementById('scroll-progress');
-    window.addEventListener('scroll', () => {
-      const scrolled = document.body.scrollTop || document.documentElement.scrollTop;
-      const total = document.body.scrollHeight - window.innerHeight;
-      progressBar.style.width = (scrolled / total * 100) + '%';
-    }, { passive: true });
 
     // ── STATS CARD REVEAL ──
     (function() {
