@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Resources | OakMUN XVI</title>
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { zoom: 1.1; }
+
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%       { opacity: .35; transform: scale(.6); }
+    }
+
+    :root {
+      --navy:       #003057;
+      --teal:       #30CDD7;
+      --teal-dark:  #1E96A5;
+      --teal-light: #B4EBF5;
+      --red:        #FF3750;
+      --white:      #FAF5ED;
+      --gold:       #BC9A6E;
+    }
+
+    html, body {
+      font-family: 'Montserrat', sans-serif;
+      background: var(--navy);
+      color: var(--white);
+      overflow-x: hidden;
+      min-height: 100%;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0; z-index: 200;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 22px 48px;
+      background: var(--navy);
+      border-bottom: 1px solid rgba(250,245,237,.08);
+      transition: background .4s, backdrop-filter .4s, padding .3s, box-shadow .4s;
+      animation: fadeDown .6s cubic-bezier(0.4,0,0.2,1) both;
+    }
+    nav.scrolled {
+      background: rgba(0,30,57,.88);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      padding: 14px 48px;
+      box-shadow: 0 1px 0 rgba(48,205,215,.12);
+      border-bottom-color: transparent;
+    }
+    .nav-logo {
+      font-size: 1rem; font-weight: 800;
+      letter-spacing: .16em; text-transform: uppercase;
+      color: var(--white); text-decoration: none;
+    }
+    .nav-logo span { color: var(--teal); }
+    .nav-links { display: flex; gap: 36px; list-style: none; }
+    .nav-links a {
+      font-size: .72rem; font-weight: 600;
+      letter-spacing: .12em; text-transform: uppercase;
+      color: rgba(250,245,237,.5); text-decoration: none;
+      transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--teal); }
+    .nav-links a.active { color: var(--white); }
+    .nav-cta {
+      background: var(--teal); color: var(--navy);
+      font-family: 'Montserrat', sans-serif;
+      font-size: .72rem; font-weight: 800;
+      letter-spacing: .12em; text-transform: uppercase;
+      border: none; border-radius: 6px; padding: 11px 24px;
+      cursor: pointer; transition: background .2s, transform .15s;
+    }
+    .nav-cta:hover { background: var(--teal-light); transform: translateY(-1px); }
+
+    .menu-btn {
+      display: none; flex-direction: column; justify-content: center;
+      gap: 5px; width: 36px; height: 36px;
+      background: none; border: none; cursor: pointer; padding: 4px; border-radius: 6px;
+    }
+    .menu-btn span {
+      display: block; width: 100%; height: 2px;
+      background: var(--white); border-radius: 2px;
+      transition: transform .3s, opacity .3s; transform-origin: center;
+    }
+    .menu-btn.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .menu-btn.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .menu-btn.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    .mobile-nav {
+      display: none; position: fixed;
+      top: 0; left: 0; right: 0; z-index: 199;
+      background: rgba(0,20,40,.97); backdrop-filter: blur(20px);
+      padding: 84px 24px 36px; flex-direction: column;
+      transform: translateY(-100%);
+      transition: transform .35s cubic-bezier(0.4,0,0.2,1);
+      border-bottom: 1px solid rgba(48,205,215,.15);
+    }
+    .mobile-nav.open { transform: translateY(0); }
+    .mobile-nav a {
+      font-size: .88rem; font-weight: 700;
+      letter-spacing: .1em; text-transform: uppercase;
+      color: rgba(250,245,237,.75); text-decoration: none;
+      padding: 18px 0; border-bottom: 1px solid rgba(250,245,237,.07);
+      transition: color .2s;
+    }
+    .mobile-nav a:last-child { border-bottom: none; }
+    .mobile-nav a:hover { color: var(--teal); }
+
+    /* ── PAGE ── */
+    .page { padding-top: 90px; }
+
+    /* ── HERO ── */
+    .hero {
+      padding: 72px 48px 64px;
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 40px;
+      border-bottom: 1px solid rgba(250,245,237,.07);
+      animation: fadeUp .6s .05s cubic-bezier(0.4,0,0.2,1) both;
+    }
+    .hero-left { display: flex; flex-direction: column; gap: 16px; }
+    .hero-kicker {
+      font-size: .62rem; font-weight: 700;
+      letter-spacing: .22em; text-transform: uppercase;
+      color: var(--teal);
+    }
+    .hero-title {
+      font-size: clamp(3rem, 6vw, 5rem);
+      font-weight: 900;
+      letter-spacing: -.03em;
+      line-height: .95;
+      color: var(--white);
+    }
+    .hero-sub {
+      font-size: .88rem; font-weight: 500;
+      color: rgba(250,245,237,.45);
+      max-width: 420px;
+      line-height: 1.7;
+      margin-top: 4px;
+    }
+    .hero-right {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+    .hero-count {
+      font-size: 4rem;
+      font-weight: 900;
+      letter-spacing: -.04em;
+      color: rgba(250,245,237,.07);
+      line-height: 1;
+    }
+    .coming-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(48,205,215,.1);
+      border: 1px solid rgba(48,205,215,.2);
+      border-radius: 100px;
+      padding: 8px 18px;
+    }
+    .coming-badge-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--teal);
+      animation: pulse-dot 2s ease-in-out infinite;
+    }
+    .coming-badge-text {
+      font-size: .6rem; font-weight: 800;
+      letter-spacing: .18em; text-transform: uppercase;
+      color: var(--teal);
+    }
+
+    /* ── SECTIONS ── */
+    .section {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 64px 48px;
+      border-bottom: 1px solid rgba(250,245,237,.07);
+    }
+    .section:last-child { border-bottom: none; }
+
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 16px;
+      margin-bottom: 36px;
+    }
+    .section-title {
+      font-size: 1.1rem;
+      font-weight: 800;
+      letter-spacing: -.01em;
+      color: var(--white);
+    }
+    .section-count {
+      font-size: .62rem; font-weight: 700;
+      letter-spacing: .14em; text-transform: uppercase;
+      color: rgba(250,245,237,.25);
+    }
+
+    /* ── GUIDE CARDS (background guides) ── */
+    .guides-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    .guide-card {
+      background: rgba(255,255,255,.03);
+      border: 1px solid rgba(250,245,237,.08);
+      border-radius: 16px;
+      padding: 28px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      transition: border-color .25s, background .25s, transform .25s;
+      cursor: default;
+      position: relative;
+      overflow: hidden;
+    }
+    .guide-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--teal);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform .3s ease;
+    }
+    .guide-card:hover { border-color: rgba(48,205,215,.2); background: rgba(48,205,215,.03); transform: translateY(-2px); }
+    .guide-card:hover::before { transform: scaleX(1); }
+
+    .guide-type {
+      font-size: .55rem; font-weight: 800;
+      letter-spacing: .2em; text-transform: uppercase;
+      color: rgba(250,245,237,.3);
+    }
+    .guide-name {
+      font-size: 1rem; font-weight: 800;
+      letter-spacing: -.01em;
+      color: var(--white);
+      line-height: 1.2;
+    }
+    .guide-topic {
+      font-size: .75rem; font-weight: 500;
+      color: rgba(250,245,237,.45);
+      line-height: 1.55;
+    }
+    .guide-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: auto;
+      padding-top: 14px;
+      border-top: 1px solid rgba(250,245,237,.06);
+    }
+    .guide-status {
+      font-size: .58rem; font-weight: 700;
+      letter-spacing: .14em; text-transform: uppercase;
+    }
+    .guide-status.soon { color: rgba(250,245,237,.25); }
+    .guide-status.ready { color: var(--teal); }
+
+    .guide-dl {
+      display: flex; align-items: center; gap: 6px;
+      font-size: .62rem; font-weight: 700;
+      letter-spacing: .1em; text-transform: uppercase;
+      color: rgba(250,245,237,.25);
+      cursor: not-allowed;
+      text-decoration: none;
+      transition: color .2s;
+    }
+    .guide-card.ready .guide-dl {
+      color: var(--teal);
+      cursor: pointer;
+    }
+    .guide-card.ready .guide-dl:hover { color: var(--teal-light); }
+
+    /* ── DOC CARDS ── */
+    .docs-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+
+    .doc-card {
+      background: rgba(255,255,255,.03);
+      border: 1px solid rgba(250,245,237,.08);
+      border-radius: 16px;
+      padding: 28px 28px;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      transition: border-color .25s, background .25s, transform .25s;
+      text-decoration: none;
+      position: relative;
+      overflow: hidden;
+    }
+    .doc-card:hover {
+      border-color: rgba(48,205,215,.22);
+      background: rgba(48,205,215,.03);
+      transform: translateY(-2px);
+    }
+
+    .doc-icon {
+      width: 48px; height: 48px;
+      border-radius: 12px;
+      background: rgba(48,205,215,.1);
+      border: 1px solid rgba(48,205,215,.15);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      color: var(--teal);
+    }
+
+    .doc-body { flex: 1; display: flex; flex-direction: column; gap: 5px; }
+    .doc-name {
+      font-size: .92rem; font-weight: 800;
+      letter-spacing: -.01em;
+      color: var(--white);
+    }
+    .doc-desc {
+      font-size: .72rem; font-weight: 500;
+      color: rgba(250,245,237,.4);
+      line-height: 1.5;
+    }
+    .doc-tag {
+      font-size: .55rem; font-weight: 800;
+      letter-spacing: .16em; text-transform: uppercase;
+      padding: 4px 10px; border-radius: 100px;
+      background: rgba(48,205,215,.1);
+      color: var(--teal);
+      width: fit-content;
+    }
+    .doc-tag.soon {
+      background: rgba(250,245,237,.06);
+      color: rgba(250,245,237,.3);
+    }
+
+    .doc-arrow {
+      color: rgba(250,245,237,.2);
+      flex-shrink: 0;
+      transition: color .2s, transform .2s;
+    }
+    .doc-card:hover .doc-arrow { color: var(--teal); transform: translateX(3px); }
+
+    /* ── LINK CARDS ── */
+    .links-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    .link-card {
+      background: rgba(255,255,255,.03);
+      border: 1px solid rgba(250,245,237,.08);
+      border-radius: 14px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      text-decoration: none;
+      transition: border-color .25s, background .25s, transform .25s;
+      position: relative;
+    }
+    .link-card:hover {
+      border-color: rgba(188,154,110,.25);
+      background: rgba(188,154,110,.04);
+      transform: translateY(-2px);
+    }
+
+    .link-card-top {
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .link-domain {
+      font-size: .58rem; font-weight: 700;
+      letter-spacing: .14em; text-transform: uppercase;
+      color: var(--gold);
+    }
+    .link-ext-icon { color: rgba(250,245,237,.2); transition: color .2s, transform .2s; }
+    .link-card:hover .link-ext-icon { color: var(--gold); transform: translate(2px, -2px); }
+
+    .link-title {
+      font-size: .9rem; font-weight: 800;
+      color: var(--white); line-height: 1.3;
+      letter-spacing: -.01em;
+    }
+    .link-desc {
+      font-size: .7rem; font-weight: 500;
+      color: rgba(250,245,237,.38);
+      line-height: 1.55;
+    }
+
+    /* ── FOOTER ── */
+    .page-footer {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 36px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid rgba(250,245,237,.06);
+    }
+    .footer-note {
+      font-size: .62rem; font-weight: 600;
+      letter-spacing: .1em; text-transform: uppercase;
+      color: rgba(250,245,237,.2);
+    }
+    .footer-dates {
+      font-size: .62rem; font-weight: 700;
+      letter-spacing: .12em; text-transform: uppercase;
+      color: rgba(48,205,215,.5);
+    }
+
+    /* ── MOBILE ── */
+    @media (max-width: 900px) {
+      .guides-grid { grid-template-columns: repeat(2, 1fr); }
+      .links-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 768px) {
+      html { zoom: 1; }
+      nav { padding: 18px 20px; }
+      nav.scrolled { padding: 14px 20px; }
+      .nav-links { display: none; }
+      .menu-btn { display: flex; }
+      .mobile-nav { display: flex; }
+      .nav-cta { padding: 9px 16px; font-size: .65rem; }
+
+      .hero { padding: 48px 20px 40px; flex-direction: column; align-items: flex-start; gap: 24px; }
+      .hero-right { align-items: flex-start; }
+      .hero-count { display: none; }
+      .section { padding: 48px 20px; }
+      .guides-grid { grid-template-columns: 1fr; }
+      .docs-grid { grid-template-columns: 1fr; }
+      .links-grid { grid-template-columns: 1fr; }
+      .page-footer { padding: 24px 20px; flex-direction: column; gap: 8px; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Mobile nav -->
+  <div class="mobile-nav" id="mobileNav">
+    <a href="index.html">Home</a>
+    <a href="committees.html">Committees</a>
+    <a href="secretariat.html">Secretariat</a>
+    <a href="index.html#schedule">Schedule</a>
+    <a href="faq.html">FAQ</a>
+    <a href="resources.html">Resources</a>
+  </div>
+
+  <!-- NAV -->
+  <nav id="navbar">
+    <a class="nav-logo" href="index.html">Oakridge <span>MUN</span></a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="committees.html">Committees</a></li>
+      <li><a href="secretariat.html">Secretariat</a></li>
+      <li><a href="index.html#schedule">Schedule</a></li>
+      <li><a href="faq.html">FAQ</a></li>
+      <li><a href="resources.html" class="active">Resources</a></li>
+    </ul>
+    <div style="display:flex;align-items:center;gap:12px;">
+      <button class="menu-btn" id="menuBtn" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+      <button class="nav-cta" onclick="window.location.href='register.html'">Register Now</button>
+    </div>
+  </nav>
+
+  <div class="page">
+
+    <!-- HERO -->
+    <div class="hero">
+      <div class="hero-left">
+        <div class="hero-kicker">OakMUN XVI · Chapter Resources</div>
+        <h1 class="hero-title">Resources.</h1>
+        <p class="hero-sub">Everything you need to prepare — background guides, procedure documents, delegate handbook, and research links. Updated as the conference approaches.</p>
+      </div>
+      <div class="hero-right">
+        <div class="hero-count">XVI</div>
+        <div class="coming-badge">
+          <span class="coming-badge-dot"></span>
+          <span class="coming-badge-text">Guides uploading soon</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- BACKGROUND GUIDES -->
+    <div class="section" style="animation: fadeUp .6s .12s cubic-bezier(0.4,0,0.2,1) both;">
+      <div class="section-header">
+        <div class="section-title">Background Guides</div>
+        <div class="section-count">Per committee · uploading July 2026</div>
+      </div>
+      <div class="guides-grid">
+
+        <div class="guide-card">
+          <div class="guide-type">Committee</div>
+          <div class="guide-name">UNSC</div>
+          <div class="guide-topic">United Nations Security Council — Agenda TBD</div>
+          <div class="guide-footer">
+            <span class="guide-status soon">Coming soon</span>
+            <a class="guide-dl">
+              <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M6.5 1v8M3 6l3.5 3.5L10 6M2 11h9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Download
+            </a>
+          </div>
+        </div>
+
+        <div class="guide-card">
+          <div class="guide-type">Committee</div>
+          <div class="guide-name">UNGA</div>
+          <div class="guide-topic">United Nations General Assembly — Agenda TBD</div>
+          <div class="guide-footer">
+            <span class="guide-status soon">Coming soon</span>
+            <a class="guide-dl">
+              <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M6.5 1v8M3 6l3.5 3.5L10 6M2 11h9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Download
+            </a>
+          </div>
+        </div>
+
+        <div class="guide-card">
+          <div class="guide-type">Committee</div>
+          <div class="guide-name">UNHRC</div>
+          <div class="guide-topic">Human Rights Council — Agenda TBD</div>
+          <div class="guide-footer">
+            <span class="guide-status soon">Coming soon</span>
+            <a class="guide-dl">
+              <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M6.5 1v8M3 6l3.5 3.5L10 6M2 11h9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Download
+            </a>
+          </div>
+        </div>
+
+        <div class="guide-card">
+          <div class="guide-type">Committee</div>
+          <div class="guide-name">ECOSOC</div>
+          <div class="guide-topic">Economic and Social Council — Agenda TBD</div>
+          <div class="guide-footer">
+            <span class="guide-status soon">Coming soon</span>
+            <a class="guide-dl">
+              <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M6.5 1v8M3 6l3.5 3.5L10 6M2 11h9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Download
+            </a>
+          </div>
+        </div>
+
+        <div class="guide-card">
+          <div class="guide-type">Committee</div>
+          <div class="guide-name">DISEC</div>
+          <div class="guide-topic">Disarmament & International Security — Agenda TBD</div>
+          <div class="guide-footer">
+            <span class="guide-status soon">Coming soon</span>
+            <a class="guide-dl">
+              <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M6.5 1v8M3 6l3.5 3.5L10 6M2 11h9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Download
+            </a>
+          </div>
+        </div>
+
+        <div class="guide-card">
+          <div class="guide-type">Committee</div>
+          <div class="guide-name">IP Comm</div>
+          <div class="guide-topic">International Press Committee — Agenda TBD</div>
+          <div class="guide-footer">
+            <span class="guide-status soon">Coming soon</span>
+            <a class="guide-dl">
+              <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M6.5 1v8M3 6l3.5 3.5L10 6M2 11h9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Download
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- DOCUMENTS -->
+    <div class="section" style="animation: fadeUp .6s .2s cubic-bezier(0.4,0,0.2,1) both;">
+      <div class="section-header">
+        <div class="section-title">Essential Documents</div>
+        <div class="section-count">Procedure · Format · Handbook</div>
+      </div>
+      <div class="docs-grid">
+
+        <a class="doc-card" href="#">
+          <div class="doc-icon">
+            <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+              <rect x="4" y="2" width="14" height="18" rx="2" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M8 7h6M8 11h6M8 15h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="doc-body">
+            <div class="doc-tag soon">Coming soon</div>
+            <div class="doc-name">Rules of Procedure</div>
+            <div class="doc-desc">Full RoP governing debate, motions, voting, and conduct across all committees at OakMUN XVI.</div>
+          </div>
+          <div class="doc-arrow">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M4 9h10M10 5l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+        </a>
+
+        <a class="doc-card" href="#">
+          <div class="doc-icon">
+            <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+              <path d="M11 3L3 7v5c0 4 3.6 7.7 8 8.9C15.4 19.7 19 16 19 12V7L11 3z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+              <path d="M8 11l2 2 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="doc-body">
+            <div class="doc-tag soon">Coming soon</div>
+            <div class="doc-name">Delegate Handbook</div>
+            <div class="doc-desc">A complete guide to the conference — schedule, venue map, committee rooms, dress code, and conduct expectations.</div>
+          </div>
+          <div class="doc-arrow">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M4 9h10M10 5l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+        </a>
+
+        <a class="doc-card" href="#">
+          <div class="doc-icon">
+            <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+              <path d="M14 3H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7L14 3z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+              <path d="M14 3v4h4M9 13h4M9 9h2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="doc-body">
+            <div class="doc-tag soon">Coming soon</div>
+            <div class="doc-name">Position Paper Format</div>
+            <div class="doc-desc">Required structure, word limits, submission deadline, and evaluation criteria for delegate position papers.</div>
+          </div>
+          <div class="doc-arrow">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M4 9h10M10 5l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+        </a>
+
+        <a class="doc-card" href="#">
+          <div class="doc-icon">
+            <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+              <circle cx="11" cy="11" r="8" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M11 7v4l3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="doc-body">
+            <div class="doc-tag soon">Coming soon</div>
+            <div class="doc-name">Conference Schedule</div>
+            <div class="doc-desc">Day-by-day timeline for all three days including opening ceremony, committee sessions, and award ceremony.</div>
+          </div>
+          <div class="doc-arrow">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M4 9h10M10 5l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+        </a>
+
+      </div>
+    </div>
+
+    <!-- RESEARCH LINKS -->
+    <div class="section" style="animation: fadeUp .6s .28s cubic-bezier(0.4,0,0.2,1) both;">
+      <div class="section-header">
+        <div class="section-title">Research Links</div>
+        <div class="section-count">External sources · UN databases · News</div>
+      </div>
+      <div class="links-grid">
+
+        <a class="link-card" href="https://www.un.org" target="_blank" rel="noopener">
+          <div class="link-card-top">
+            <span class="link-domain">un.org</span>
+            <svg class="link-ext-icon" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M4 10L10 4M10 4H6M10 4v4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="link-title">United Nations Official Site</div>
+          <div class="link-desc">Primary source for resolutions, press releases, and official UN documentation on all global issues.</div>
+        </a>
+
+        <a class="link-card" href="https://research.un.org" target="_blank" rel="noopener">
+          <div class="link-card-top">
+            <span class="link-domain">research.un.org</span>
+            <svg class="link-ext-icon" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M4 10L10 4M10 4H6M10 4v4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="link-title">UN Research Guides</div>
+          <div class="link-desc">Curated databases, reports, and treaty collections organized by topic and committee type.</div>
+        </a>
+
+        <a class="link-card" href="https://digitallibrary.un.org" target="_blank" rel="noopener">
+          <div class="link-card-top">
+            <span class="link-domain">digitallibrary.un.org</span>
+            <svg class="link-ext-icon" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M4 10L10 4M10 4H6M10 4v4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="link-title">UN Digital Library</div>
+          <div class="link-desc">Full-text access to UN resolutions, voting records, and official committee documents.</div>
+        </a>
+
+        <a class="link-card" href="https://www.bbc.com/news/world" target="_blank" rel="noopener">
+          <div class="link-card-top">
+            <span class="link-domain">bbc.com</span>
+            <svg class="link-ext-icon" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M4 10L10 4M10 4H6M10 4v4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="link-title">BBC World News</div>
+          <div class="link-desc">Up-to-date global reporting — useful for understanding the current state of your committee's agenda.</div>
+        </a>
+
+        <a class="link-card" href="https://www.cfr.org" target="_blank" rel="noopener">
+          <div class="link-card-top">
+            <span class="link-domain">cfr.org</span>
+            <svg class="link-ext-icon" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M4 10L10 4M10 4H6M10 4v4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="link-title">Council on Foreign Relations</div>
+          <div class="link-desc">In-depth policy briefs, country profiles, and expert analysis on international affairs and diplomacy.</div>
+        </a>
+
+        <a class="link-card" href="https://www.hrw.org" target="_blank" rel="noopener">
+          <div class="link-card-top">
+            <span class="link-domain">hrw.org</span>
+            <svg class="link-ext-icon" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M4 10L10 4M10 4H6M10 4v4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="link-title">Human Rights Watch</div>
+          <div class="link-desc">Detailed country and issue reports — essential for UNHRC delegates and human rights research.</div>
+        </a>
+
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="page-footer">
+      <span class="footer-note">OakMUN XVI · Oakridge International School</span>
+      <span class="footer-dates">24 July · 25 July · 26 July 2026</span>
+    </div>
+
+  </div>
+
+  <script>
+    // ── NAV SCROLL ──
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 40);
+    });
+
+    // ── MOBILE MENU ──
+    const menuBtn = document.getElementById('menuBtn');
+    const mobileNav = document.getElementById('mobileNav');
+    menuBtn.addEventListener('click', () => {
+      const isOpen = mobileNav.classList.toggle('open');
+      menuBtn.classList.toggle('open', isOpen);
+      document.body.style.overflow = isOpen ? 'hidden' : '';
+    });
+    mobileNav.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => {
+        mobileNav.classList.remove('open');
+        menuBtn.classList.remove('open');
+        document.body.style.overflow = '';
+      });
+    });
+  </script>
+</body>
+</html>
