@@ -672,10 +672,14 @@
     const navbar = document.getElementById('navbar');
     let navScrolled = false;
     window.addEventListener('scroll', () => {
+      if (window.innerWidth <= 768) return;
       const y = window.scrollY;
       if (!navScrolled && y > 40) { navScrolled = true; navbar.classList.add('scrolled'); }
       else if (navScrolled && y < 20) { navScrolled = false; navbar.classList.remove('scrolled'); }
     }, { passive: true });
+    window.addEventListener('resize', () => {
+      if (window.innerWidth <= 768 && navScrolled) { navScrolled = false; navbar.classList.remove('scrolled'); }
+    });
 
     // ── MOBILE MENU ──
     const menuBtn = document.getElementById('menuBtn');

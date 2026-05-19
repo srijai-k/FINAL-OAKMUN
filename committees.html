@@ -969,10 +969,14 @@
 
     let navScrolled = false;
     window.addEventListener('scroll', () => {
+      if (window.innerWidth <= 768) return;
       const y = window.scrollY;
       if (!navScrolled && y > 80) { navScrolled = true; navEl.classList.add('scrolled'); }
       else if (navScrolled && y < 55) { navScrolled = false; navEl.classList.remove('scrolled'); }
     }, { passive: true });
+    window.addEventListener('resize', () => {
+      if (window.innerWidth <= 768 && navScrolled) { navScrolled = false; navEl.classList.remove('scrolled'); }
+    });
 
     // ── DESKTOP HOVER EXPAND (logo mark trigger) ──
     const navMark = navEl.querySelector('.nav-mark');

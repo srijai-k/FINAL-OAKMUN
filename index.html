@@ -2529,6 +2529,7 @@
 
     let navScrolled = false;
     window.addEventListener('scroll', () => {
+      if (window.innerWidth <= 768) return;
       const y = window.scrollY;
       if (!navScrolled && y > 80) {
         navScrolled = true;
@@ -2538,6 +2539,9 @@
         navbar.classList.remove('scrolled');
       }
     }, { passive: true });
+    window.addEventListener('resize', () => {
+      if (window.innerWidth <= 768 && navScrolled) { navScrolled = false; navbar.classList.remove('scrolled'); }
+    });
     // ── DESKTOP HOVER EXPAND (logo mark trigger) ──
     const navMark = navbar.querySelector('.nav-mark');
     if (navMark) {
