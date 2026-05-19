@@ -9,7 +9,7 @@ module.exports = async function handler(req, res) {
     return res.status(400).json({ error: 'Name and email are required.' });
   }
 
-  const apiKey    = process.env.RESEND_OAKMUN_REGISTRATION;
+  const apiKey    = process.env.RESEND_WESTUDIE_REGISTRAtioN;
   const fromEmail = process.env.FROM_EMAIL || 'onboarding@resend.dev';
   const adminEmail = process.env.ADMIN_EMAIL || 'mun@oakridge.in';
 
