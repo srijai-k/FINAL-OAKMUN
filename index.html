@@ -595,122 +595,48 @@
     ═══════════════════════════════════════ */
     .stats-section {
       background: #000e1a;
-      padding: 80px 56px;
+      padding: 28px 56px;
+      border-top: 1px solid rgba(48,205,215,.08);
+      border-bottom: 1px solid rgba(48,205,215,.08);
     }
-    .stats-grid {
-      max-width: 1100px;
+    .stats-strip {
+      max-width: 860px;
       margin: 0 auto;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      grid-template-rows: auto auto;
-      gap: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
     }
-    .stat-card {
-      border-radius: 20px;
-      padding: 48px 44px;
-      position: relative;
-      overflow: hidden;
+    .stats-strip-item {
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
-      min-height: 260px;
-      opacity: 0;
-      transform: translateY(24px);
-      transition: opacity .55s ease, transform .55s ease;
+      align-items: center;
+      gap: 4px;
+      flex: 1;
     }
-    .stat-card.revealed { opacity: 1; transform: translateY(0); }
-
-    .stat-card-label {
-      font-size: .6rem;
-      font-weight: 800;
-      letter-spacing: .3em;
-      text-transform: uppercase;
-    }
-    .stat-card-num {
-      font-size: clamp(4.5rem, 10vw, 9rem);
+    .ss-num {
+      font-size: clamp(1.6rem, 3vw, 2.4rem);
       font-weight: 900;
-      line-height: .88;
-      letter-spacing: -.05em;
-    }
-    .stat-card-num em { font-style: normal; }
-    .stat-card-foot {
-      font-size: .82rem;
-      font-weight: 500;
-      line-height: 1.65;
-      max-width: 340px;
-    }
-
-    /* Card: Delegates */
-    .card-delegates {
-      background: rgba(48,205,215,.06);
-      border: 1px solid rgba(48,205,215,.16);
-    }
-    .card-delegates::after {
-      content: '';
-      position: absolute;
-      bottom: -20%; right: -10%;
-      width: 360px; height: 360px;
-      background: radial-gradient(circle, rgba(48,205,215,.13) 0%, transparent 65%);
-      pointer-events: none;
-    }
-    .card-delegates .stat-card-label { color: var(--teal); }
-    .card-delegates .stat-card-num   { color: var(--white); }
-    .card-delegates .stat-card-num em { color: var(--teal); }
-    .card-delegates .stat-card-foot  { color: rgba(250,245,237,.38); }
-
-    /* Card: Committees — inverted teal */
-    .card-committees {
-      background: var(--teal);
-    }
-    .card-committees::after {
-      content: '';
-      position: absolute;
-      top: -30%; right: -15%;
-      width: 320px; height: 320px;
-      background: radial-gradient(circle, rgba(255,255,255,.22) 0%, transparent 60%);
-      pointer-events: none;
-    }
-    .card-committees .stat-card-label { color: rgba(0,48,87,.6); }
-    .card-committees .stat-card-num   { color: var(--navy); }
-    .card-committees .stat-card-foot  { color: rgba(0,48,87,.52); }
-
-    /* Card: Days */
-    .card-days {
-      background: rgba(255,255,255,.03);
-      border: 1px solid rgba(250,245,237,.09);
-    }
-    .card-days::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0; height: 2px;
-      background: linear-gradient(90deg, transparent, rgba(48,205,215,.45), transparent);
-    }
-    .card-days .stat-card-label { color: rgba(250,245,237,.4); }
-    .card-days .stat-card-num   { color: var(--white); }
-    .card-days .stat-card-foot  { color: rgba(250,245,237,.35); }
-
-    /* Card: Edition */
-    .card-edition {
-      background: linear-gradient(140deg, rgba(30,150,165,.1) 0%, rgba(0,48,87,.25) 100%);
-      border: 1px solid rgba(48,205,215,.12);
-    }
-    .card-edition::before {
-      content: 'XVI';
-      position: absolute;
-      right: -2%; top: 50%;
-      transform: translateY(-50%);
-      font-size: 22vw;
-      font-weight: 900;
-      letter-spacing: -.08em;
-      color: rgba(48,205,215,.05);
+      letter-spacing: -.03em;
+      color: var(--white);
       line-height: 1;
-      pointer-events: none;
-      user-select: none;
     }
-    .card-edition .stat-card-label { color: var(--teal); }
-    .card-edition .stat-card-num   { color: var(--white); }
-    .card-edition .stat-card-num em { color: var(--teal); }
-    .card-edition .stat-card-foot  { color: rgba(250,245,237,.35); }
+    .ss-plus {
+      color: var(--teal);
+      font-size: .8em;
+    }
+    .ss-label {
+      font-size: .6rem;
+      font-weight: 700;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: rgba(250,245,237,.35);
+    }
+    .stats-strip-div {
+      width: 1px;
+      height: 36px;
+      background: rgba(250,245,237,.08);
+      flex-shrink: 0;
+    }
 
     /* ═══════════════════════════════════════
        SG LETTER
@@ -2005,33 +1931,26 @@
 
   <!-- ═══ STATS ═══ -->
   <section class="stats-section">
-    <img src="logo.png" alt="" class="stats-logo-watermark" aria-hidden="true" />
-    <div class="stats-grid">
-
-      <div class="stat-card card-delegates">
-        <span class="stat-card-label">Who's Coming</span>
-        <div class="stat-card-num">650<em>+</em></div>
-        <p class="stat-card-foot">Delegates from leading institutions across India, convening for three days of structured parliamentary debate and diplomatic engagement.</p>
+    <div class="stats-strip">
+      <div class="stats-strip-item">
+        <span class="ss-num">650<span class="ss-plus">+</span></span>
+        <span class="ss-label">Delegates</span>
       </div>
-
-      <div class="stat-card card-committees">
-        <span class="stat-card-label">The Committees</span>
-        <div class="stat-card-num">19</div>
-        <p class="stat-card-foot">Crisis cabinets. Legal tribunals. National assemblies. 18 open for registration — UNGA-SOCHUM reserved for orphanage delegates.</p>
+      <div class="stats-strip-div"></div>
+      <div class="stats-strip-item">
+        <span class="ss-num">19</span>
+        <span class="ss-label">Committees</span>
       </div>
-
-      <div class="stat-card card-days">
-        <span class="stat-card-label">Days of Debate</span>
-        <div class="stat-card-num" style="font-size:clamp(1.6rem,4vw,2.4rem);letter-spacing:-.02em;line-height:1.15;margin-bottom:16px;">Three Days.<br>One Stage.</div>
-        <p class="stat-card-foot">Three full days of committee sessions, plenary debate, and diplomatic resolution — across 19 forums and councils.</p>
+      <div class="stats-strip-div"></div>
+      <div class="stats-strip-item">
+        <span class="ss-num">3</span>
+        <span class="ss-label">Days</span>
       </div>
-
-      <div class="stat-card card-edition">
-        <span class="stat-card-label">The Legacy</span>
-        <div class="stat-card-num"><em>XVI</em></div>
-        <p class="stat-card-foot">16 chapters. 16 years of leaders built in this room. Your chapter starts 24 July 2026.</p>
+      <div class="stats-strip-div"></div>
+      <div class="stats-strip-item">
+        <span class="ss-num">XVI</span>
+        <span class="ss-label">Chapter</span>
       </div>
-
     </div>
   </section>
 
@@ -2334,9 +2253,6 @@
         if (el.classList.contains('faq-sub'))     { el.classList.add('revealed'); }
         if (el.classList.contains('faq-list'))    {
           el.querySelectorAll('.faq-item').forEach((item, i) => setTimeout(() => item.classList.add('revealed'), i * 80));
-        }
-        if (el.classList.contains('stats-grid')) {
-          el.querySelectorAll('.stat-card').forEach((item, i) => setTimeout(() => item.classList.add('revealed'), i * 100));
         }
         revealObserver.unobserve(el);
       });
