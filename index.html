@@ -107,7 +107,7 @@
       transition: opacity .3s cubic-bezier(.4,0,.2,1), max-width .45s cubic-bezier(.4,0,.2,1);
     }
     .nav-logo span { color: var(--teal); }
-    .nav-center { display: flex; align-items: center; flex-shrink: 0; }
+    .nav-center { display: flex; align-items: center; flex-shrink: 0; margin-left: 20px; }
     .nav-links-group {
       display: flex; gap: 22px; list-style: none;
       overflow: hidden; opacity: 1;
@@ -1568,6 +1568,50 @@
     .marquee-section-rev .marquee-dot  { background: rgba(250,245,237,.15); }
 
     /* ═══════════════════════════════════════
+       LOGO WATERMARKS & HERO LOGO
+    ═══════════════════════════════════════ */
+    .hero-logo-center {
+      width: 52px; height: 52px;
+      object-fit: contain;
+      opacity: .92;
+      filter: drop-shadow(0 0 18px rgba(48,205,215,.45));
+    }
+    .stats-logo-watermark {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 340px; height: 340px;
+      object-fit: contain;
+      opacity: .035;
+      pointer-events: none;
+      z-index: 0;
+      filter: grayscale(1) brightness(2);
+    }
+    .stats-grid { position: relative; z-index: 1; }
+    .cta-logo-seal {
+      display: block;
+      width: 64px; height: 64px;
+      object-fit: contain;
+      margin: 0 auto 32px;
+      opacity: .9;
+      filter: drop-shadow(0 0 24px rgba(48,205,215,.6));
+      position: relative; z-index: 1;
+    }
+    .ctrl-chain-stage { position: relative; }
+    .ctrl-chain-watermark {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 260px; height: 260px;
+      object-fit: contain;
+      opacity: .04;
+      pointer-events: none;
+      z-index: 0;
+      filter: grayscale(1) brightness(3);
+    }
+    .ctrl-chain-list { position: relative; z-index: 1; }
+
+    /* ═══════════════════════════════════════
        STATS AMBIENT GLOW
     ═══════════════════════════════════════ */
     .stats-section { position: relative; }
@@ -1791,7 +1835,11 @@
     <div class="hero-inner">
 
       <!-- Top bar -->
-      <div class="hero-topbar"></div>
+      <div class="hero-topbar">
+        <span class="hero-chapter-tag">Chapter XVI</span>
+        <img src="logo.png" alt="OakMUN" class="hero-logo-center" />
+        <span class="hero-loc-tag">Hyderabad · India</span>
+      </div>
 
       <!-- Stacked headline -->
       <div class="hero-headline">
@@ -1959,6 +2007,7 @@
 
   <!-- ═══ STATS ═══ -->
   <section class="stats-section">
+    <img src="logo.png" alt="" class="stats-logo-watermark" aria-hidden="true" />
     <div class="stats-grid">
 
       <div class="stat-card card-delegates">
@@ -2099,6 +2148,7 @@
       </div>
 
       <div class="ctrl-chain-stage">
+        <img src="logo.png" alt="" class="ctrl-chain-watermark" aria-hidden="true" />
         <div class="ctrl-chain-list">
           <div class="ctrl-chain"><span class="ctrl-chain-icon" style="--chain-color:var(--teal);"><span class="ctrl-chain-initial">DI</span></span><span class="ctrl-chain-name">DISEC</span></div>
           <div class="ctrl-chain"><span class="ctrl-chain-icon" style="--chain-color:var(--teal-light);"><span class="ctrl-chain-initial">UN</span></span><span class="ctrl-chain-name">UNSC</span></div>
@@ -2172,6 +2222,7 @@
 
   <!-- ═══ PRE-FOOTER CTA ═══ -->
   <div class="cta-banner">
+    <img src="logo.png" alt="OakMUN" class="cta-logo-seal" />
     <p class="cta-banner-eyebrow">Registration Open · Chapter XVI</p>
     <h2 class="cta-banner-title">Ready to<br><em>Delegate?</em></h2>
     <p class="cta-banner-sub">Join 500+ delegates from across India for three days of debate, diplomacy, and discovery.</p>
