@@ -595,48 +595,44 @@
     ═══════════════════════════════════════ */
     .stats-section {
       background: #000e1a;
-      padding: 28px 56px;
-      border-top: 1px solid rgba(48,205,215,.08);
-      border-bottom: 1px solid rgba(48,205,215,.08);
+      padding: 48px 56px;
     }
     .stats-strip {
-      max-width: 860px;
+      max-width: 1100px;
       margin: 0 auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
     }
     .stats-strip-item {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 4px;
-      flex: 1;
+      justify-content: center;
+      gap: 12px;
+      padding: 36px 24px;
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(48,205,215,.12);
+      border-radius: 16px;
     }
     .ss-num {
-      font-size: clamp(1.6rem, 3vw, 2.4rem);
+      font-size: clamp(2.8rem, 5vw, 4.5rem);
       font-weight: 900;
       letter-spacing: -.03em;
-      color: var(--white);
+      color: var(--teal);
       line-height: 1;
     }
     .ss-plus {
       color: var(--teal);
-      font-size: .8em;
     }
     .ss-label {
       font-size: .6rem;
       font-weight: 700;
       letter-spacing: .22em;
       text-transform: uppercase;
-      color: rgba(250,245,237,.35);
+      color: rgba(250,245,237,.45);
     }
-    .stats-strip-div {
-      width: 1px;
-      height: 36px;
-      background: rgba(250,245,237,.08);
-      flex-shrink: 0;
-    }
+    .stats-strip-div { display: none; }
 
     /* ═══════════════════════════════════════
        SG LETTER
@@ -1433,10 +1429,10 @@
       .hero-btn-primary, .hero-btn-ghost { width: 100%; text-align: center; padding: 14px 24px; }
       .scroll-indicator { left: 20px; }
 
-      .stats-section { padding: 48px 16px; }
-      .stats-grid { grid-template-columns: 1fr; gap: 12px; }
-      .stat-card { min-height: 200px; padding: 32px 28px; }
-      .stat-card-num { font-size: clamp(3.5rem, 18vw, 6rem); }
+      .stats-section { padding: 32px 16px; }
+      .stats-strip { grid-template-columns: 1fr 1fr; gap: 10px; }
+      .stats-strip-item { padding: 24px 16px; }
+      .ss-num { font-size: clamp(2rem, 10vw, 3rem); }
       .card-edition::before { font-size: 50vw; }
 
       .sg-section { padding: 72px 20px 80px; }
