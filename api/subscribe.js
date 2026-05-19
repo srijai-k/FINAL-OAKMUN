@@ -95,11 +95,11 @@ function confirmationEmail(firstName) {
           <td style="background:#001c36;padding:48px 48px 36px;">
 
             <!-- Eyebrow -->
-            <p style="margin:0 0 10px;font-size:10px;font-weight:800;letter-spacing:0.3em;text-transform:uppercase;color:#30CDD7;">Early Access Confirmed</p>
+            <p style="margin:0 0 10px;font-size:10px;font-weight:800;letter-spacing:0.3em;text-transform:uppercase;color:#30CDD7;">You're on the list</p>
 
             <!-- Headline -->
             <h1 style="margin:0 0 20px;font-size:28px;font-weight:800;line-height:1.2;color:#FAF5ED;">
-              Hey ${firstName} — <br>you're ahead of the crowd.
+              Hey ${firstName},<br>we'll keep you posted.
             </h1>
 
             <!-- Divider line -->
@@ -109,8 +109,8 @@ function confirmationEmail(firstName) {
 
             <!-- Body copy -->
             <p style="margin:0 0 16px;font-size:15px;line-height:1.8;color:rgba(250,245,237,0.62);">
-              Your spot on the early-access list for <strong style="color:#FAF5ED;">Oakridge MUN Chapter XVI</strong> is confirmed.
-              When registrations open, you'll hear from us <em>before</em> the public — giving you first pick of committees.
+              Thanks for your interest in <strong style="color:#FAF5ED;">Oakridge MUN Chapter XVI</strong>.
+              We'll send you an email as soon as registrations open — you won't miss a thing.
             </p>
 
             <!-- Date callout box -->
