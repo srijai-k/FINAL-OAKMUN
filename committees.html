@@ -480,8 +480,12 @@
       text-transform: uppercase;
       padding: 9px 18px;
       border-radius: 100px;
-      border: 1px solid rgba(48,205,215,.35);
-      box-shadow: 0 4px 24px rgba(0,0,0,.35);
+      border: 1.5px solid rgba(250,245,237,.18);
+      box-shadow:
+        0 2px 0 rgba(255,255,255,.07) inset,
+        0 -1px 0 rgba(0,0,0,.4) inset,
+        0 6px 24px rgba(0,0,0,.5),
+        0 1px 0 rgba(0,0,0,.6);
       opacity: 0;
       transform: translate(-50%, -50%) scale(.7);
       transition: opacity .2s ease, transform .2s cubic-bezier(.34,1.56,.64,1);
