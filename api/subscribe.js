@@ -21,9 +21,9 @@ module.exports = async function handler(req, res) {
         method: 'POST',
         headers: { 'Authorization': `Bearer ${apiKey}`, 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          from: `OakMUN XVI <${fromEmail}>`,
+          from: `Oakridge MUN XVI <${fromEmail}>`,
           to: [email],
-          subject: "You're on the list — OakMUN Chapter XVI",
+          subject: "You're on the list — Oakridge MUN Chapter XVI",
           html: confirmationEmail(firstName),
         }),
       }),
@@ -33,9 +33,9 @@ module.exports = async function handler(req, res) {
         method: 'POST',
         headers: { 'Authorization': `Bearer ${apiKey}`, 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          from: `OakMUN Signups <${fromEmail}>`,
+          from: `Oakridge MUN Signups <${fromEmail}>`,
           to: [adminEmail],
-          subject: `New signup: ${firstName} ${lastName} — OakMUN XVI`,
+          subject: `New signup: ${firstName} ${lastName} — Oakridge MUN XVI`,
           html: adminEmail_html({ firstName, lastName, email, school, committee, experience }),
         }),
       }),
@@ -71,7 +71,7 @@ function confirmationEmail(firstName) {
             <p style="margin:0 0 8px;font-size:11px;font-weight:800;letter-spacing:0.25em;text-transform:uppercase;color:#30CDD7;">You're on the list</p>
             <h1 style="margin:0 0 24px;font-size:30px;font-weight:800;line-height:1.15;color:#FAF5ED;">Hey ${firstName},<br>we've got you.</h1>
             <p style="margin:0 0 16px;font-size:15px;line-height:1.75;color:rgba(250,245,237,0.65);">
-              You're now on the early-access list for <strong style="color:#FAF5ED;">OakMUN Chapter XVI</strong>.
+              You're now on the early-access list for <strong style="color:#FAF5ED;">Oakridge MUN Chapter XVI</strong>.
               The moment registrations open, you'll be the first to know — before the public announcement.
             </p>
             <p style="margin:0 0 36px;font-size:15px;line-height:1.75;color:rgba(250,245,237,0.65);">
@@ -114,7 +114,7 @@ function confirmationEmail(firstName) {
         <tr>
           <td style="padding:24px 40px;">
             <p style="margin:0;font-size:11px;color:rgba(250,245,237,0.25);line-height:1.7;">
-              You received this because you signed up for early registration notifications on the OakMUN XVI website.
+              You received this because you signed up for early registration notifications on the Oakridge MUN XVI website.
               One email only — we don't spam.
             </p>
           </td>
@@ -135,7 +135,7 @@ function adminEmail_html({ firstName, lastName, email, school, committee, experi
   <table width="100%" cellpadding="0" cellspacing="0" style="max-width:520px;margin:0 auto;background:#fff;border-radius:10px;overflow:hidden;border:1px solid #e0e0e0;">
     <tr>
       <td style="background:#003057;padding:20px 28px;">
-        <p style="margin:0;font-size:11px;font-weight:800;letter-spacing:0.25em;text-transform:uppercase;color:#30CDD7;">OakMUN XVI — New Signup</p>
+        <p style="margin:0;font-size:11px;font-weight:800;letter-spacing:0.25em;text-transform:uppercase;color:#30CDD7;">Oakridge MUN XVI — New Signup</p>
       </td>
     </tr>
     <tr>
