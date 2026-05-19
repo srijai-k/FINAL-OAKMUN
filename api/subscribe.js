@@ -13,9 +13,13 @@ module.exports = async function handler(req, res) {
   const fromEmail = process.env.FROM_EMAIL || 'onboarding@resend.dev';
   const adminEmail = process.env.ADMIN_EMAIL || 'mun@oakridge.in';
 
+  if (!apiKey) {
+    console.error('Missing RESEND_OAKMUN_REGISTRATION env var');
+    return res.status(500).json({ error: 'Server misconfiguration.' });
+  }
+
   try {
-    // Send confirmation to subscriber + admin notification in parallel
-    await Promise.all([
+    const [confirmRes, adminRes] = await Promise.all([
       // 1. Confirmation email to the person who signed up
       fetch('https://api.resend.com/emails', {
         method: 'POST',
@@ -40,6 +44,13 @@ module.exports = async function handler(req, res) {
         }),
       }),
     ]);
+
+    if (!confirmRes.ok || !adminRes.ok) {
+      const confirmErr = !confirmRes.ok ? await confirmRes.json() : null;
+      const adminErr   = !adminRes.ok   ? await adminRes.json()   : null;
+      console.error('Resend error — confirm:', confirmErr, 'admin:', adminErr);
+      return res.status(500).json({ error: 'Failed to send email.', details: { confirmErr, adminErr } });
+    }
 
     return res.status(200).json({ success: true });
   } catch (err) {
