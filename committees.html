@@ -906,18 +906,25 @@
     }, { threshold: 0.08 });
     cards.forEach(card => observer.observe(card));
 
-    // Cursor-following capsule
+    // Cursor-following capsule with smooth lerp
     const capsule = document.getElementById('cursor-capsule');
-    let capsuleRaf;
+    let mouseX = 0, mouseY = 0, curX = 0, curY = 0;
+    const ease = 0.09;
+
+    (function loop() {
+      curX += (mouseX - curX) * ease;
+      curY += (mouseY - curY) * ease;
+      capsule.style.left = curX + 'px';
+      capsule.style.top  = curY + 'px';
+      requestAnimationFrame(loop);
+    })();
+
     document.querySelectorAll('.committee-card').forEach(card => {
       card.addEventListener('mouseenter', () => capsule.classList.add('visible'));
       card.addEventListener('mouseleave', () => capsule.classList.remove('visible'));
       card.addEventListener('mousemove', e => {
-        cancelAnimationFrame(capsuleRaf);
-        capsuleRaf = requestAnimationFrame(() => {
-          capsule.style.left = e.clientX + 'px';
-          capsule.style.top  = (e.clientY + 28) + 'px';
-        });
+        mouseX = e.clientX;
+        mouseY = e.clientY + 28;
       });
     });
 
