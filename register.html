@@ -120,6 +120,18 @@
     nav.scrolled .menu-btn { display: flex; }
     nav.scrolled .nav-center      { margin-left: 0; }
     nav.scrolled .nav-pill        { padding: 8px; border-radius: 14px; }
+
+    @media (min-width: 769px) {
+      nav.hover-expanded .nav-logo { opacity: 1 !important; max-width: 220px !important; }
+      nav.hover-expanded .nav-links-group { opacity: 1 !important; max-width: 400px !important; }
+      nav.hover-expanded .nav-links-group.left { padding: 0 18px 0 28px !important; }
+      nav.hover-expanded .nav-links-group.right { padding: 0 28px 0 18px !important; }
+      nav.hover-expanded .nav-right { max-width: 280px !important; margin-left: 10px !important; }
+      nav.hover-expanded .nav-center { margin-left: 20px !important; }
+      nav.hover-expanded .nav-pill { padding: 10px 10px 10px 28px !important; border-radius: 100px !important; }
+      nav.hover-expanded .nav-cta { display: flex !important; }
+      nav.hover-expanded .menu-btn { display: none !important; }
+    }
     
     
     
@@ -726,6 +738,20 @@
         note.textContent = err.message || 'Something went wrong. Please try again.';
         note.style.color = '#FF3750';
       }
+    });
+
+    // ── DESKTOP HOVER EXPAND ──
+    let navHoverTimer;
+    navbar.addEventListener('mouseenter', () => {
+      if (window.innerWidth > 768 && navbar.classList.contains('scrolled')) {
+        navHoverTimer = setTimeout(() => {
+          navbar.classList.add('hover-expanded');
+        }, 2000);
+      }
+    });
+    navbar.addEventListener('mouseleave', () => {
+      clearTimeout(navHoverTimer);
+      navbar.classList.remove('hover-expanded');
     });
   </script>
 
