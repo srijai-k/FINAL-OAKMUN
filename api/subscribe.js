@@ -9,40 +9,37 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: 'Name and email are required.' });
   }
 
-  const apiKey     = process.env.RESEND_API_KEY;
-  const audienceId = process.env.RESEND_AUDIENCE_ID;
-  const fromEmail  = process.env.FROM_EMAIL || 'onboarding@resend.dev';
+  const apiKey    = process.env.RESEND_API_KEY;
+  const fromEmail = process.env.FROM_EMAIL || 'onboarding@resend.dev';
+  const adminEmail = process.env.ADMIN_EMAIL || 'mun@oakridge.in';
 
   try {
-    // 1. Add to Resend Audience (the contact list you'll blast when regs open)
-    await fetch(`https://api.resend.com/audiences/${audienceId}/contacts`, {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${apiKey}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        email,
-        first_name: firstName,
-        last_name: lastName || '',
-        unsubscribed: false,
+    // Send confirmation to subscriber + admin notification in parallel
+    await Promise.all([
+      // 1. Confirmation email to the person who signed up
+      fetch('https://api.resend.com/emails', {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${apiKey}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          from: `OakMUN XVI <${fromEmail}>`,
+          to: [email],
+          subject: "You're on the list — OakMUN Chapter XVI",
+          html: confirmationEmail(firstName),
+        }),
       }),
-    });
 
-    // 2. Send instant confirmation email to subscriber
-    await fetch('https://api.resend.com/emails', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${apiKey}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        from: `OakMUN XVI <${fromEmail}>`,
-        to: [email],
-        subject: "You're on the list — OakMUN Chapter XVI",
-        html: confirmationEmail(firstName),
+      // 2. Admin notification so every signup lands in your inbox
+      fetch('https://api.resend.com/emails', {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${apiKey}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          from: `OakMUN Signups <${fromEmail}>`,
+          to: [adminEmail],
+          subject: `New signup: ${firstName} ${lastName} — OakMUN XVI`,
+          html: adminEmail_html({ firstName, lastName, email, school, committee, experience }),
+        }),
       }),
-    });
+    ]);
 
     return res.status(200).json({ success: true });
   } catch (err) {
@@ -91,7 +88,7 @@ function confirmationEmail(firstName) {
           </td>
         </tr>
 
-        <!-- Divider stats -->
+        <!-- Stats strip -->
         <tr>
           <td style="padding:0 40px;">
             <table width="100%" cellpadding="0" cellspacing="0" style="border-top:1px solid rgba(255,255,255,0.06);border-bottom:1px solid rgba(255,255,255,0.06);">
@@ -128,4 +125,38 @@ function confirmationEmail(firstName) {
   </table>
 </body>
 </html>`;
+}
+
+function adminEmail_html({ firstName, lastName, email, school, committee, experience }) {
+  return `<!DOCTYPE html>
+<html>
+<head><meta charset="UTF-8"></head>
+<body style="margin:0;padding:24px;background:#f4f4f4;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="max-width:520px;margin:0 auto;background:#fff;border-radius:10px;overflow:hidden;border:1px solid #e0e0e0;">
+    <tr>
+      <td style="background:#003057;padding:20px 28px;">
+        <p style="margin:0;font-size:11px;font-weight:800;letter-spacing:0.25em;text-transform:uppercase;color:#30CDD7;">OakMUN XVI — New Signup</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="padding:28px;">
+        <table width="100%" cellpadding="0" cellspacing="0">
+          ${row('Name', `${firstName} ${lastName}`)}
+          ${row('Email', email)}
+          ${row('School', school || '—')}
+          ${row('Committee', committee || '—')}
+          ${row('Experience', experience || '—')}
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>`;
+}
+
+function row(label, value) {
+  return `<tr>
+    <td style="padding:8px 0;font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#999;width:110px;">${label}</td>
+    <td style="padding:8px 0;font-size:14px;color:#111;">${value}</td>
+  </tr>`;
 }
