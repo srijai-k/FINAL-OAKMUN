@@ -45,18 +45,15 @@ module.exports = async function handler(req, res) {
       }),
     ]);
 
-    if (!confirmRes.ok || !adminRes.ok) {
+    if (!confirmRes.ok) {
       const confirmBody = await confirmRes.text();
-      const adminBody   = await adminRes.text();
-      console.error('Resend confirm status:', confirmRes.status, confirmBody);
-      console.error('Resend admin status:',   adminRes.status,   adminBody);
-      return res.status(500).json({
-        error: 'Failed to send email.',
-        confirmStatus: confirmRes.status,
-        confirmError: confirmBody,
-        adminStatus: adminRes.status,
-        adminError: adminBody,
-      });
+      console.error('Resend confirm failed:', confirmRes.status, confirmBody);
+      return res.status(500).json({ error: 'Failed to send confirmation email.', details: confirmBody });
+    }
+
+    if (!adminRes.ok) {
+      const adminBody = await adminRes.text();
+      console.error('Resend admin notify failed:', adminRes.status, adminBody);
     }
 
     return res.status(200).json({ success: true });
