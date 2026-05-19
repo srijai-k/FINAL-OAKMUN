@@ -50,72 +50,115 @@ module.exports = async function handler(req, res) {
 
 function confirmationEmail(firstName) {
   return `<!DOCTYPE html>
-<html>
-<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"></head>
-<body style="margin:0;padding:0;background:#003057;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;">
-  <table width="100%" cellpadding="0" cellspacing="0" style="background:#003057;padding:40px 20px;">
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <meta name="color-scheme" content="dark">
+  <title>You're on the list — Oakridge MUN XVI</title>
+</head>
+<body style="margin:0;padding:0;background:#0a1628;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;">
+
+  <!-- Outer wrapper -->
+  <table width="100%" cellpadding="0" cellspacing="0" role="presentation" style="background:#0a1628;padding:48px 16px;">
     <tr><td align="center">
-      <table width="600" cellpadding="0" cellspacing="0" style="background:#001e38;border-radius:16px;overflow:hidden;max-width:600px;width:100%;">
 
-        <!-- Header -->
+      <!-- Card -->
+      <table width="100%" cellpadding="0" cellspacing="0" role="presentation" style="max-width:580px;width:100%;border-radius:20px;overflow:hidden;border:1px solid rgba(48,205,215,0.12);">
+
+        <!-- ── Hero band ── -->
         <tr>
-          <td style="background:#003057;padding:32px 40px;text-align:center;border-bottom:1px solid rgba(48,205,215,0.15);">
-            <p style="margin:0;font-size:11px;font-weight:800;letter-spacing:0.3em;text-transform:uppercase;color:#30CDD7;">OAKRIDGE MODEL UNITED NATIONS</p>
-            <p style="margin:8px 0 0;font-size:13px;font-weight:600;letter-spacing:0.15em;color:rgba(250,245,237,0.5);">CHAPTER XVI &nbsp;·&nbsp; JULY 2026</p>
+          <td style="background:linear-gradient(135deg,#002244 0%,#003a6b 60%,#004f8a 100%);padding:44px 48px 40px;text-align:center;border-bottom:1px solid rgba(48,205,215,0.12);">
+            <!-- Monogram / seal placeholder -->
+            <table cellpadding="0" cellspacing="0" role="presentation" align="center" style="margin:0 auto 28px;">
+              <tr>
+                <td style="background:rgba(48,205,215,0.10);border:1.5px solid rgba(48,205,215,0.30);border-radius:50%;width:64px;height:64px;text-align:center;vertical-align:middle;">
+                  <span style="font-size:22px;font-weight:900;color:#30CDD7;letter-spacing:-1px;line-height:64px;">MUN</span>
+                </td>
+              </tr>
+            </table>
+            <p style="margin:0 0 6px;font-size:10px;font-weight:800;letter-spacing:0.35em;text-transform:uppercase;color:#30CDD7;">Oakridge Model United Nations</p>
+            <p style="margin:0;font-size:12px;font-weight:500;letter-spacing:0.18em;color:rgba(250,245,237,0.38);">CHAPTER XVI &nbsp;&middot;&nbsp; HYDERABAD &nbsp;&middot;&nbsp; JULY 2026</p>
           </td>
         </tr>
 
-        <!-- Body -->
+        <!-- ── Body ── -->
         <tr>
-          <td style="padding:48px 40px 40px;">
-            <p style="margin:0 0 8px;font-size:11px;font-weight:800;letter-spacing:0.25em;text-transform:uppercase;color:#30CDD7;">You're on the list</p>
-            <h1 style="margin:0 0 24px;font-size:30px;font-weight:800;line-height:1.15;color:#FAF5ED;">Hey ${firstName},<br>we've got you.</h1>
-            <p style="margin:0 0 16px;font-size:15px;line-height:1.75;color:rgba(250,245,237,0.65);">
-              You're now on the early-access list for <strong style="color:#FAF5ED;">Oakridge MUN Chapter XVI</strong>.
-              The moment registrations open, you'll be the first to know — before the public announcement.
+          <td style="background:#001c36;padding:48px 48px 36px;">
+
+            <!-- Eyebrow -->
+            <p style="margin:0 0 10px;font-size:10px;font-weight:800;letter-spacing:0.3em;text-transform:uppercase;color:#30CDD7;">Early Access Confirmed</p>
+
+            <!-- Headline -->
+            <h1 style="margin:0 0 20px;font-size:28px;font-weight:800;line-height:1.2;color:#FAF5ED;">
+              Hey ${firstName} — <br>you're ahead of the crowd.
+            </h1>
+
+            <!-- Divider line -->
+            <table width="40" cellpadding="0" cellspacing="0" role="presentation" style="margin:0 0 24px;">
+              <tr><td style="height:3px;background:#30CDD7;border-radius:2px;"></td></tr>
+            </table>
+
+            <!-- Body copy -->
+            <p style="margin:0 0 16px;font-size:15px;line-height:1.8;color:rgba(250,245,237,0.62);">
+              Your spot on the early-access list for <strong style="color:#FAF5ED;">Oakridge MUN Chapter XVI</strong> is confirmed.
+              When registrations open, you'll hear from us <em>before</em> the public — giving you first pick of committees.
             </p>
-            <p style="margin:0 0 36px;font-size:15px;line-height:1.75;color:rgba(250,245,237,0.65);">
-              Save the date: <strong style="color:#30CDD7;">24 – 26 July 2026</strong><br>
-              Oakridge International School, Hyderabad.
-            </p>
-            <table cellpadding="0" cellspacing="0">
+
+            <!-- Date callout box -->
+            <table width="100%" cellpadding="0" cellspacing="0" role="presentation" style="margin:28px 0 36px;border-left:3px solid #30CDD7;">
               <tr>
-                <td style="background:#30CDD7;border-radius:100px;padding:14px 32px;">
-                  <a href="https://oakmun.in/committees.html" style="font-size:12px;font-weight:800;letter-spacing:0.12em;text-transform:uppercase;color:#003057;text-decoration:none;">Explore Committees &rarr;</a>
+                <td style="padding:16px 20px;background:rgba(48,205,215,0.06);border-radius:0 8px 8px 0;">
+                  <p style="margin:0 0 4px;font-size:10px;font-weight:800;letter-spacing:0.25em;text-transform:uppercase;color:rgba(250,245,237,0.4);">Save the date</p>
+                  <p style="margin:0;font-size:17px;font-weight:700;color:#FAF5ED;">24 – 26 July 2026</p>
+                  <p style="margin:4px 0 0;font-size:13px;color:rgba(250,245,237,0.5);">Oakridge International School, Hyderabad</p>
+                </td>
+              </tr>
+            </table>
+
+            <!-- CTA button -->
+            <table cellpadding="0" cellspacing="0" role="presentation">
+              <tr>
+                <td style="border-radius:100px;background:#30CDD7;">
+                  <a href="https://oakridgemun.in/committees.html"
+                     style="display:inline-block;padding:14px 36px;font-size:11px;font-weight:800;letter-spacing:0.14em;text-transform:uppercase;color:#002244;text-decoration:none;border-radius:100px;">
+                    Explore Committees &rarr;
+                  </a>
+                </td>
+              </tr>
+            </table>
+
+          </td>
+        </tr>
+
+        <!-- ── Stats strip ── -->
+        <tr>
+          <td style="background:#001229;">
+            <table width="100%" cellpadding="0" cellspacing="0" role="presentation">
+              <tr>
+                <td width="33%" style="padding:22px 0;text-align:center;border-right:1px solid rgba(255,255,255,0.05);">
+                  <p style="margin:0;font-size:24px;font-weight:900;color:#FAF5ED;letter-spacing:-0.5px;">650<span style="font-size:14px;font-weight:700;color:#30CDD7;">+</span></p>
+                  <p style="margin:5px 0 0;font-size:9px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:rgba(250,245,237,0.3);">Delegates</p>
+                </td>
+                <td width="33%" style="padding:22px 0;text-align:center;border-right:1px solid rgba(255,255,255,0.05);">
+                  <p style="margin:0;font-size:24px;font-weight:900;color:#FAF5ED;letter-spacing:-0.5px;">19</p>
+                  <p style="margin:5px 0 0;font-size:9px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:rgba(250,245,237,0.3);">Committees</p>
+                </td>
+                <td width="33%" style="padding:22px 0;text-align:center;">
+                  <p style="margin:0;font-size:24px;font-weight:900;color:#FAF5ED;letter-spacing:-0.5px;">3</p>
+                  <p style="margin:5px 0 0;font-size:9px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:rgba(250,245,237,0.3);">Days</p>
                 </td>
               </tr>
             </table>
           </td>
         </tr>
 
-        <!-- Stats strip -->
+        <!-- ── Footer ── -->
         <tr>
-          <td style="padding:0 40px;">
-            <table width="100%" cellpadding="0" cellspacing="0" style="border-top:1px solid rgba(255,255,255,0.06);border-bottom:1px solid rgba(255,255,255,0.06);">
-              <tr>
-                <td style="padding:20px 0;text-align:center;">
-                  <p style="margin:0;font-size:22px;font-weight:800;color:#FAF5ED;">650<sup style="font-size:13px;">+</sup></p>
-                  <p style="margin:4px 0 0;font-size:10px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:rgba(250,245,237,0.35);">Delegates</p>
-                </td>
-                <td style="padding:20px 0;text-align:center;border-left:1px solid rgba(255,255,255,0.06);">
-                  <p style="margin:0;font-size:22px;font-weight:800;color:#FAF5ED;">19</p>
-                  <p style="margin:4px 0 0;font-size:10px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:rgba(250,245,237,0.35);">Committees</p>
-                </td>
-                <td style="padding:20px 0;text-align:center;border-left:1px solid rgba(255,255,255,0.06);">
-                  <p style="margin:0;font-size:22px;font-weight:800;color:#FAF5ED;">3</p>
-                  <p style="margin:4px 0 0;font-size:10px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:rgba(250,245,237,0.35);">Days</p>
-                </td>
-              </tr>
-            </table>
-          </td>
-        </tr>
-
-        <!-- Footer -->
-        <tr>
-          <td style="padding:24px 40px;">
-            <p style="margin:0;font-size:11px;color:rgba(250,245,237,0.25);line-height:1.7;">
-              You received this because you signed up for early registration notifications on the Oakridge MUN XVI website.
-              One email only — we don't spam.
+          <td style="background:#001229;padding:20px 48px 28px;border-top:1px solid rgba(255,255,255,0.04);">
+            <p style="margin:0;font-size:11px;line-height:1.7;color:rgba(250,245,237,0.2);">
+              You received this because you signed up for early registration notifications at oakridgemun.in.
+              We sent exactly one email — no newsletters, no spam.
             </p>
           </td>
         </tr>
@@ -123,40 +166,65 @@ function confirmationEmail(firstName) {
       </table>
     </td></tr>
   </table>
+
 </body>
 </html>`;
 }
 
 function adminEmail_html({ firstName, lastName, email, school, committee, experience }) {
   return `<!DOCTYPE html>
-<html>
-<head><meta charset="UTF-8"></head>
-<body style="margin:0;padding:24px;background:#f4f4f4;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;">
-  <table width="100%" cellpadding="0" cellspacing="0" style="max-width:520px;margin:0 auto;background:#fff;border-radius:10px;overflow:hidden;border:1px solid #e0e0e0;">
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"></head>
+<body style="margin:0;padding:32px 16px;background:#f0f2f5;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" role="presentation" style="max-width:520px;margin:0 auto;">
+
+    <!-- Header -->
     <tr>
-      <td style="background:#003057;padding:20px 28px;">
-        <p style="margin:0;font-size:11px;font-weight:800;letter-spacing:0.25em;text-transform:uppercase;color:#30CDD7;">Oakridge MUN XVI — New Signup</p>
-      </td>
-    </tr>
-    <tr>
-      <td style="padding:28px;">
-        <table width="100%" cellpadding="0" cellspacing="0">
-          ${row('Name', `${firstName} ${lastName}`)}
-          ${row('Email', email)}
-          ${row('School', school || '—')}
-          ${row('Committee', committee || '—')}
-          ${row('Experience', experience || '—')}
+      <td style="background:#003057;padding:22px 32px;border-radius:14px 14px 0 0;">
+        <table width="100%" cellpadding="0" cellspacing="0" role="presentation">
+          <tr>
+            <td>
+              <p style="margin:0;font-size:9px;font-weight:800;letter-spacing:0.3em;text-transform:uppercase;color:#30CDD7;">Oakridge MUN XVI</p>
+              <p style="margin:4px 0 0;font-size:15px;font-weight:700;color:#FAF5ED;">New Registration Interest</p>
+            </td>
+            <td align="right" style="vertical-align:middle;">
+              <span style="display:inline-block;background:rgba(48,205,215,0.15);border:1px solid rgba(48,205,215,0.35);border-radius:100px;padding:4px 14px;font-size:10px;font-weight:700;letter-spacing:0.1em;color:#30CDD7;">NEW</span>
+            </td>
+          </tr>
         </table>
       </td>
     </tr>
+
+    <!-- Body -->
+    <tr>
+      <td style="background:#ffffff;padding:28px 32px;border-left:1px solid #e4e7ec;border-right:1px solid #e4e7ec;">
+        <table width="100%" cellpadding="0" cellspacing="0" role="presentation">
+          ${adminRow('Name', `${firstName} ${lastName}`)}
+          ${adminRow('Email', email)}
+          ${adminRow('School', school || '—')}
+          ${adminRow('Committee Interest', committee || '—')}
+          ${adminRow('MUN Experience', experience || '—')}
+        </table>
+      </td>
+    </tr>
+
+    <!-- Footer -->
+    <tr>
+      <td style="background:#f8f9fb;padding:16px 32px;border:1px solid #e4e7ec;border-top:none;border-radius:0 0 14px 14px;">
+        <p style="margin:0;font-size:11px;color:#9ca3af;line-height:1.6;">
+          Submitted via oakridgemun.in early-access form &nbsp;&middot;&nbsp; Oakridge MUN XVI Secretariat
+        </p>
+      </td>
+    </tr>
+
   </table>
 </body>
 </html>`;
 }
 
-function row(label, value) {
+function adminRow(label, value) {
   return `<tr>
-    <td style="padding:8px 0;font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#999;width:110px;">${label}</td>
-    <td style="padding:8px 0;font-size:14px;color:#111;">${value}</td>
+    <td style="padding:10px 0;font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#9ca3af;width:130px;vertical-align:top;border-bottom:1px solid #f3f4f6;">${label}</td>
+    <td style="padding:10px 0;font-size:14px;font-weight:500;color:#111827;border-bottom:1px solid #f3f4f6;">${value}</td>
   </tr>`;
 }
