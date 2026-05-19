@@ -84,14 +84,7 @@ function confirmationEmail(firstName) {
         <!-- ── Hero band ── -->
         <tr>
           <td style="background:linear-gradient(135deg,#002244 0%,#003a6b 60%,#004f8a 100%);padding:44px 48px 40px;text-align:center;border-bottom:1px solid rgba(48,205,215,0.12);">
-            <!-- Monogram / seal placeholder -->
-            <table cellpadding="0" cellspacing="0" role="presentation" align="center" style="margin:0 auto 28px;">
-              <tr>
-                <td style="background:rgba(48,205,215,0.10);border:1.5px solid rgba(48,205,215,0.30);border-radius:50%;width:64px;height:64px;text-align:center;vertical-align:middle;">
-                  <span style="font-size:22px;font-weight:900;color:#30CDD7;letter-spacing:-1px;line-height:64px;">MUN</span>
-                </td>
-              </tr>
-            </table>
+            <img src="https://oakridgemun-2026.vercel.app/logo.png" alt="Oakridge MUN" width="80" height="80" style="display:block;margin:0 auto 24px;border-radius:50%;">
             <p style="margin:0 0 6px;font-size:10px;font-weight:800;letter-spacing:0.35em;text-transform:uppercase;color:#30CDD7;">Oakridge Model United Nations</p>
             <p style="margin:0;font-size:12px;font-weight:500;letter-spacing:0.18em;color:rgba(250,245,237,0.38);">CHAPTER XVI &nbsp;&middot;&nbsp; HYDERABAD &nbsp;&middot;&nbsp; JULY 2026</p>
           </td>
@@ -135,7 +128,7 @@ function confirmationEmail(firstName) {
             <table cellpadding="0" cellspacing="0" role="presentation">
               <tr>
                 <td style="border-radius:100px;background:#30CDD7;">
-                  <a href="https://oakridgemun.in/committees.html"
+                  <a href="https://oakridgemun-2026.vercel.app/committees.html"
                      style="display:inline-block;padding:14px 36px;font-size:11px;font-weight:800;letter-spacing:0.14em;text-transform:uppercase;color:#002244;text-decoration:none;border-radius:100px;">
                     Explore Committees &rarr;
                   </a>
