@@ -123,14 +123,11 @@
     }
     .nav-links-group a:hover, .nav-links-group a.active { color: var(--white); }
     .nav-mark {
-      width: 50px; height: 50px; border-radius: 14px;
-      background: rgba(48,205,215,.06); border: 1px solid rgba(48,205,215,.12);
       display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0;
-      transition: background .2s, border-color .2s;
+      flex-shrink: 0; padding: 0 6px;
     }
-    .nav-mark img { width: 34px; height: 34px; object-fit: contain; opacity: .9; }
-    .nav-mark:hover { background: rgba(48,205,215,.12); border-color: rgba(48,205,215,.25); }
+    .nav-mark img { width: 44px; height: 44px; object-fit: contain; opacity: .92; filter: drop-shadow(0 0 8px rgba(48,205,215,.35)); transition: filter .2s, opacity .2s; }
+    .nav-mark:hover img { opacity: 1; filter: drop-shadow(0 0 14px rgba(48,205,215,.65)); }
     /* hover-expand when collapsed — suppressed while actively scrolling */
     nav.scrolled:not(.is-scrolling) .nav-pill:hover .nav-logo        { opacity: 1; max-width: 220px; }
     nav.scrolled:not(.is-scrolling) .nav-pill:hover .nav-links-group { opacity: 1; max-width: 400px; padding-left: 18px; padding-right: 18px; }
@@ -2012,14 +2009,14 @@
 
       <div class="stat-card card-delegates">
         <span class="stat-card-label">Who's Coming</span>
-        <div class="stat-card-num">500<em>+</em></div>
+        <div class="stat-card-num">650<em>+</em></div>
         <p class="stat-card-foot">Delegates. One floor. Zero silence. The sharpest minds from across India — ready to argue, persuade, and lead.</p>
       </div>
 
       <div class="stat-card card-committees">
-        <span class="stat-card-label">The Arenas</span>
-        <div class="stat-card-num">20</div>
-        <p class="stat-card-foot">Crisis cabinets. Legal tribunals. National assemblies. Every issue. No escape. Pick your battlefield.</p>
+        <span class="stat-card-label">The Committees</span>
+        <div class="stat-card-num">19</div>
+        <p class="stat-card-foot">Crisis cabinets. Legal tribunals. National assemblies. 18 open for registration — UNGA-SOCHUM reserved for orphanage delegates.</p>
       </div>
 
       <div class="stat-card card-days">
@@ -2225,7 +2222,7 @@
     <img src="logo.png" alt="OakMUN" class="cta-logo-seal" />
     <p class="cta-banner-eyebrow">Registration Open · Chapter XVI</p>
     <h2 class="cta-banner-title">Ready to<br><em>Delegate?</em></h2>
-    <p class="cta-banner-sub">Join 500+ delegates from across India for three days of debate, diplomacy, and discovery.</p>
+    <p class="cta-banner-sub">Join 650+ delegates from across India for three days of debate, diplomacy, and discovery.</p>
     <button class="cta-banner-btn" onclick="window.location.href='register.html'">Register Now &nbsp;→</button>
   </div>
 
