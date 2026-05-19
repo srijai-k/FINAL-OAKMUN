@@ -145,7 +145,7 @@
       border: none; border-radius: 100px; padding: 11px 22px;
       cursor: pointer; white-space: nowrap; transition: background .2s, transform .15s;
     }
-    .nav-cta:hover { background: var(--teal-light); transform: translateY(-1px); }
+    .nav-cta:hover { background: #27b5be; }
     /* scrolled — collapse to logo mark only */
     nav.scrolled .nav-logo        { opacity: 0; max-width: 0; }
     nav.scrolled .nav-links-group { opacity: 0; max-width: 0; padding: 0; }
@@ -363,13 +363,11 @@
       border-radius: 8px;
       padding: 15px 34px;
       cursor: pointer;
-      transition: transform .2s, box-shadow .2s, background .2s;
-      box-shadow: 0 4px 24px rgba(0,0,0,.35);
+      transition: background .2s, transform .15s;
     }
     .hero-btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 32px rgba(0,0,0,.45);
-      background: #fff;
+      transform: translateY(-1px);
+      background: #ede8e1;
     }
     .hero-btn-ghost {
       font-family: 'Montserrat', sans-serif;
@@ -1613,21 +1611,16 @@
       max-width: 500px; margin: 0 auto 52px; line-height: 1.75;
       position: relative; z-index: 1;
     }
-    @keyframes pulse-btn {
-      0%, 100% { box-shadow: 0 0 48px rgba(48,205,215,.45), 0 8px 32px rgba(0,0,0,.3); }
-      50%       { box-shadow: 0 0 90px rgba(48,205,215,.75), 0 8px 32px rgba(0,0,0,.4); }
-    }
     .cta-banner-btn {
       font-family: 'Montserrat', sans-serif;
       font-size: 1rem; font-weight: 800; letter-spacing: .12em;
       text-transform: uppercase; color: var(--navy);
       background: var(--teal); border: none;
       border-radius: 12px; padding: 22px 60px; cursor: pointer;
-      animation: pulse-btn 2.5s ease-in-out infinite;
-      transition: transform .2s, background .2s;
+      transition: transform .15s, background .2s;
       position: relative; z-index: 1;
     }
-    .cta-banner-btn:hover { transform: translateY(-4px) scale(1.03); background: #3de0eb; }
+    .cta-banner-btn:hover { transform: translateY(-1px); background: var(--teal-light); }
 
     /* Schedule mobile stacking — must be last */
     @media (max-width: 768px) {
