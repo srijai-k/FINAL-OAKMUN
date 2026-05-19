@@ -466,6 +466,32 @@
       transform: translateY(-2px);
     }
 
+    #cursor-capsule {
+      position: fixed;
+      top: 0; left: 0;
+      pointer-events: none;
+      z-index: 9999;
+      background: var(--navy);
+      color: var(--white);
+      font-family: 'Montserrat', sans-serif;
+      font-size: .6rem;
+      font-weight: 800;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      padding: 9px 18px;
+      border-radius: 100px;
+      border: 1px solid rgba(48,205,215,.35);
+      box-shadow: 0 4px 24px rgba(0,0,0,.35);
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(.7);
+      transition: opacity .2s ease, transform .2s cubic-bezier(.34,1.56,.64,1);
+      white-space: nowrap;
+    }
+    #cursor-capsule.visible {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }
+
     footer {
       background: var(--navy);
       padding: 64px 56px 0;
@@ -671,6 +697,8 @@
   </style>
 </head>
 <body>
+  <div id="cursor-capsule">View Committee</div>
+
   <div class="mobile-nav" id="mobileNav">
     <a href="index.html">Home</a>
     <a href="committees.html">Committees</a>
@@ -877,6 +905,21 @@
       });
     }, { threshold: 0.08 });
     cards.forEach(card => observer.observe(card));
+
+    // Cursor-following capsule
+    const capsule = document.getElementById('cursor-capsule');
+    let capsuleRaf;
+    document.querySelectorAll('.committee-card').forEach(card => {
+      card.addEventListener('mouseenter', () => capsule.classList.add('visible'));
+      card.addEventListener('mouseleave', () => capsule.classList.remove('visible'));
+      card.addEventListener('mousemove', e => {
+        cancelAnimationFrame(capsuleRaf);
+        capsuleRaf = requestAnimationFrame(() => {
+          capsule.style.left = e.clientX + 'px';
+          capsule.style.top  = (e.clientY + 28) + 'px';
+        });
+      });
+    });
 
     let scrollCollapseTimer;
     window.addEventListener('scroll', () => {
