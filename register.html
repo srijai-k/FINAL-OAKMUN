@@ -489,6 +489,15 @@
       .form-grid { grid-template-columns: 1fr; }
       .form-grid .full { grid-column: 1; }
       .page-title { font-size: clamp(2.4rem, 11vw, 4rem); }
+
+      /* Stats strip: 2×2 wrap */
+      .stats-strip { flex-wrap: wrap; border-radius: 12px; }
+      .stat-block { flex: 0 0 50%; border-right: none; border-bottom: 1px solid rgba(250,245,237,.07); padding: 20px 0; }
+      .stat-block:nth-child(odd)  { border-right: 1px solid rgba(250,245,237,.07); }
+      .stat-block:nth-last-child(-n+2) { border-bottom: none; }
+
+      /* Ticker: tighter padding on small screens */
+      .ticker-item { padding: 0 16px; }
     }
   </style>
 </head>
