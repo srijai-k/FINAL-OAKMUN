@@ -148,7 +148,7 @@
       padding: 16px;
       opacity: 0;
       pointer-events: none;
-      transition: opacity .3s cubic-bezier(0.4,0,0.2,1), transform .3s cubic-bezier(0.4,0,0.2,1);
+      transition: opacity .3s .25s cubic-bezier(0.4,0,0.2,1), transform .3s .25s cubic-bezier(0.4,0,0.2,1);
       box-shadow: 0 24px 60px rgba(0,0,0,.6), 0 0 0 1px rgba(48,205,215,.06);
       z-index: 300;
     }
@@ -156,6 +156,7 @@
       opacity: 1;
       pointer-events: auto;
       transform: translateX(-50%) translateY(0);
+      transition-delay: 0s;
     }
     .nav-drop-grid {
       display: grid;
@@ -210,6 +211,7 @@
     }
     .nav-has-drop:hover .nav-drop--events {
       transform: translateY(0);
+      transition-delay: 0s;
     }
     .nav-drop--events .nav-drop-grid {
       grid-template-columns: 1fr;
@@ -1989,6 +1991,7 @@
                 <a href="social-night.html" class="nav-drop-item">Social Night</a>
                 <a href="networking-hour.html" class="nav-drop-item">Networking Hour</a>
                 <a href="orphanage-initiative.html" class="nav-drop-item">Orphanage Initiative</a>
+                <a href="#faq" class="nav-drop-item">FAQ</a>
               </div>
             </div>
           </li>
