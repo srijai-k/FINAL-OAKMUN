@@ -1806,20 +1806,22 @@
     /* ═══════════════════════════════════════
        BEYOND THE DAIS
     ═══════════════════════════════════════ */
-    /* BTD — warm white light section */
+    /* BTD section */
     .btd-wrapper {
-      background: #FAF5ED;
+      background: #020c18;
       position: relative;
       overflow: hidden;
+      border-top: 1px solid rgba(48,205,215,.08);
+      border-bottom: 1px solid rgba(48,205,215,.08);
     }
     .btd-wrapper::before {
       content: '';
       position: absolute;
       top: -20%;
       right: -5%;
-      width: 500px; height: 500px;
+      width: 600px; height: 600px;
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(48,205,215,.06) 0%, transparent 65%);
+      background: radial-gradient(circle, rgba(48,205,215,.07) 0%, transparent 65%);
       pointer-events: none;
     }
     .btd-section {
@@ -1832,18 +1834,18 @@
     .btd-eyebrow {
       font-size: .5rem; font-weight: 700;
       letter-spacing: .28em; text-transform: uppercase;
-      color: var(--teal-dark); margin-bottom: 14px;
+      color: var(--teal); margin-bottom: 14px;
     }
     .btd-heading {
       font-size: clamp(1.8rem, 3.5vw, 3rem);
       font-weight: 900; letter-spacing: -.03em; line-height: 1;
-      color: var(--navy); margin-bottom: 10px;
+      color: var(--white); margin-bottom: 10px;
     }
-    .btd-heading em { font-style: italic; font-weight: 300; color: rgba(0,48,87,.3); }
+    .btd-heading em { font-style: italic; font-weight: 300; color: rgba(250,245,237,.4); }
     .btd-sub {
       font-size: clamp(.8rem, 1.4vw, 1rem);
       font-weight: 400; line-height: 1.6;
-      color: rgba(0,48,87,.5);
+      color: rgba(250,245,237,.38);
       max-width: 520px; margin-bottom: 48px;
     }
     .btd-grid {
@@ -1854,11 +1856,11 @@
     .btd-card {
       display: block;
       text-decoration: none;
-      background: white;
-      border: 1px solid rgba(0,48,87,.08);
+      background: rgba(48,205,215,.03);
+      border: 1px solid rgba(48,205,215,.1);
       border-radius: 16px;
       padding: 32px 28px;
-      transition: border-color .22s, background .22s, transform .22s, box-shadow .22s;
+      transition: border-color .22s, background .22s, transform .22s;
       position: relative;
       overflow: hidden;
     }
@@ -1870,11 +1872,11 @@
       opacity: 0;
       transition: opacity .3s;
     }
-    .btd-card:hover { border-color: rgba(30,150,165,.3); background: rgba(48,205,215,.04); transform: translateY(-3px); box-shadow: 0 12px 40px rgba(0,48,87,.08); }
+    .btd-card:hover { border-color: rgba(48,205,215,.28); background: rgba(48,205,215,.06); transform: translateY(-3px); }
     .btd-card:hover::before { opacity: 1; }
     .btd-card-accent {
       width: 28px; height: 2px;
-      background: linear-gradient(to right, var(--teal-dark), rgba(30,150,165,.2));
+      background: linear-gradient(to right, var(--teal), rgba(48,205,215,.2));
       margin-bottom: 20px;
       transition: width .25s;
     }
@@ -1882,24 +1884,24 @@
     .btd-card-tag {
       font-size: .4rem; font-weight: 700;
       letter-spacing: .24em; text-transform: uppercase;
-      color: var(--teal-dark); opacity: .75;
+      color: var(--teal); opacity: .7;
       margin-bottom: 10px;
     }
     .btd-card-title {
       font-size: clamp(1rem, 1.8vw, 1.3rem);
       font-weight: 800; letter-spacing: -.02em;
-      color: var(--navy); margin-bottom: 12px;
+      color: var(--white); margin-bottom: 12px;
     }
     .btd-card-desc {
       font-size: clamp(.72rem, 1.2vw, .88rem);
       font-weight: 400; line-height: 1.6;
-      color: rgba(0,48,87,.48);
+      color: rgba(250,245,237,.38);
       margin-bottom: 24px;
     }
     .btd-card-link {
       font-size: .5rem; font-weight: 700;
       letter-spacing: .12em; text-transform: uppercase;
-      color: var(--teal-dark);
+      color: var(--teal);
       display: inline-flex; align-items: center; gap: 6px;
       transition: gap .2s;
     }

@@ -239,30 +239,34 @@
     }
     .quote-text strong { font-weight: 800; font-style: normal; color: rgba(250,245,237,.85); }
 
-    /* ── LOGISTICS — warm white ── */
-    .logistics-wrapper { background: #FAF5ED; }
+    /* ── LOGISTICS ── */
+    .logistics-wrapper {
+      background: #001a2e;
+      border-top: 1px solid rgba(48,205,215,.07);
+    }
     .logistics-inner {
       max-width: 1200px; margin: 0 auto;
       padding: 72px 48px;
       display: grid; grid-template-columns: 1fr 1fr;
       gap: 80px; align-items: start;
     }
-    .logistics-left .section-label { color: var(--teal-dark); opacity: 1; }
-    .logistics-left .section-label::before { background: var(--teal-dark); }
-    .logistics-left .section-heading { color: var(--navy); }
+    .logistics-left .section-label { color: var(--teal); opacity: .75; }
+    .logistics-left .section-label::before { background: var(--teal); }
+    .logistics-left .section-heading { color: var(--white); }
     .detail-list { margin-top: 24px; display: flex; flex-direction: column; }
-    .detail-row { display: flex; gap: 0; border-bottom: 1px solid rgba(0,48,87,.07); padding: 18px 0; }
-    .detail-row:first-child { border-top: 1px solid rgba(0,48,87,.07); }
-    .detail-key { font-size: .48rem; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; color: var(--navy); flex-shrink: 0; min-width: 120px; padding-right: 20px; }
-    .detail-val { font-size: clamp(.75rem, 1.2vw, .88rem); font-weight: 400; line-height: 1.6; color: rgba(0,48,87,.5); }
-    .detail-val a { color: var(--teal-dark); text-decoration: none; }
+    .detail-row { display: flex; gap: 0; border-bottom: 1px solid rgba(250,245,237,.06); padding: 18px 0; }
+    .detail-row:first-child { border-top: 1px solid rgba(250,245,237,.06); }
+    .detail-key { font-size: .48rem; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; color: var(--white); flex-shrink: 0; min-width: 120px; padding-right: 20px; }
+    .detail-val { font-size: clamp(.75rem, 1.2vw, .88rem); font-weight: 400; line-height: 1.6; color: rgba(250,245,237,.42); }
+    .detail-val a { color: var(--teal); text-decoration: none; }
     .detail-val a:hover { text-decoration: underline; }
     .logistics-right {
-      background: var(--navy);
+      background: rgba(48,205,215,.04);
+      border: 1px solid rgba(48,205,215,.12);
       border-radius: 20px; padding: 40px 36px;
       margin-top: 8px;
     }
-    .logistics-cta-label { font-size: .44rem; font-weight: 700; letter-spacing: .24em; text-transform: uppercase; color: rgba(250,245,237,.3); margin-bottom: 14px; }
+    .logistics-cta-label { font-size: .44rem; font-weight: 700; letter-spacing: .24em; text-transform: uppercase; color: rgba(48,205,215,.5); margin-bottom: 14px; }
     .logistics-cta-heading { font-size: clamp(1.2rem, 2vw, 1.8rem); font-weight: 900; letter-spacing: -.025em; line-height: 1.1; color: var(--white); margin-bottom: 16px; }
     .logistics-cta-body { font-size: .76rem; font-weight: 400; line-height: 1.7; color: rgba(250,245,237,.38); margin-bottom: 28px; }
     .cta-btn {
@@ -436,7 +440,7 @@
       <div class="logistics-inner">
         <div class="logistics-left">
           <div class="section-label">Logistics</div>
-          <h2 class="section-heading" style="color: var(--navy);">Participation<br>details.</h2>
+          <h2 class="section-heading">Participation<br>details.</h2>
           <div class="detail-list">
             <div class="detail-row"><span class="detail-key">Location</span><span class="detail-val">A children's home in Hyderabad — exact details shared with confirmed participants.</span></div>
             <div class="detail-row"><span class="detail-key">Who</span><span class="detail-val">All registered delegates. Voluntary, but strongly encouraged.</span></div>

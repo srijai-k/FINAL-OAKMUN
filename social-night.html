@@ -222,27 +222,30 @@
     .expect-card-title { font-size: .9rem; font-weight: 800; letter-spacing: -.01em; color: var(--white); margin-bottom: 10px; }
     .expect-card-desc { font-size: .7rem; font-weight: 400; line-height: 1.65; color: rgba(250,245,237,.35); }
 
-    /* ── LOGISTICS — warm white ── */
-    .logistics-wrapper { background: #FAF5ED; }
+    /* ── LOGISTICS ── */
+    .logistics-wrapper {
+      background: #001a2e;
+      border-top: 1px solid rgba(188,154,110,.08);
+    }
     .logistics-inner {
       max-width: 1200px; margin: 0 auto;
       padding: 72px 48px;
       display: grid; grid-template-columns: 1fr 1fr;
       gap: 80px; align-items: start;
     }
-    .logistics-left .section-label { color: #8a6840; opacity: 1; }
-    .logistics-left .section-label::before { background: #8a6840; }
-    .logistics-left .section-heading { color: var(--navy); }
+    .logistics-left .section-label { color: var(--gold); opacity: .75; }
+    .logistics-left .section-label::before { background: var(--gold); }
+    .logistics-left .section-heading { color: var(--white); }
     .detail-list { margin-top: 24px; display: flex; flex-direction: column; }
-    .detail-row { display: flex; gap: 0; border-bottom: 1px solid rgba(0,48,87,.07); padding: 18px 0; }
-    .detail-row:first-child { border-top: 1px solid rgba(0,48,87,.07); }
-    .detail-key { font-size: .48rem; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; color: var(--navy); flex-shrink: 0; min-width: 100px; padding-right: 20px; }
-    .detail-val { font-size: clamp(.75rem, 1.2vw, .88rem); font-weight: 400; line-height: 1.6; color: rgba(0,48,87,.5); }
+    .detail-row { display: flex; gap: 0; border-bottom: 1px solid rgba(250,245,237,.06); padding: 18px 0; }
+    .detail-row:first-child { border-top: 1px solid rgba(250,245,237,.06); }
+    .detail-key { font-size: .48rem; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; color: var(--white); flex-shrink: 0; min-width: 100px; padding-right: 20px; }
+    .detail-val { font-size: clamp(.75rem, 1.2vw, .88rem); font-weight: 400; line-height: 1.6; color: rgba(250,245,237,.42); }
     .logistics-right {
-      background: #020c18;
+      background: rgba(188,154,110,.05);
+      border: 1px solid rgba(188,154,110,.15);
       border-radius: 20px; padding: 40px 36px;
       margin-top: 8px;
-      border: 1px solid rgba(188,154,110,.15);
     }
     .logistics-cta-label { font-size: .44rem; font-weight: 700; letter-spacing: .24em; text-transform: uppercase; color: rgba(188,154,110,.55); margin-bottom: 14px; }
     .logistics-cta-heading { font-size: clamp(1.2rem, 2vw, 1.8rem); font-weight: 900; letter-spacing: -.025em; line-height: 1.1; color: var(--white); margin-bottom: 16px; }
@@ -402,7 +405,7 @@
       <div class="logistics-inner">
         <div class="logistics-left">
           <div class="section-label">Logistics</div>
-          <h2 class="section-heading" style="color: var(--navy);">Plan ahead.<br>Come prepared.</h2>
+          <h2 class="section-heading">Plan ahead.<br>Come prepared.</h2>
           <div class="detail-list">
             <div class="detail-row"><span class="detail-key">When</span><span class="detail-val">Day 2 — evening. Exact time in the conference schedule.</span></div>
             <div class="detail-row"><span class="detail-key">Theme</span><span class="detail-val">To be revealed before the conference. Follow our Instagram for the first look.</span></div>
