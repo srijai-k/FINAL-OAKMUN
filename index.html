@@ -152,6 +152,14 @@
       box-shadow: 0 24px 60px rgba(0,0,0,.6), 0 0 0 1px rgba(48,205,215,.06);
       z-index: 300;
     }
+    /* transparent bridge fills the gap so moving mouse into dropdown doesn't lose hover */
+    .nav-drop::before {
+      content: '';
+      position: absolute;
+      top: -20px;
+      left: 0; right: 0;
+      height: 20px;
+    }
     .nav-has-drop:hover .nav-drop {
       opacity: 1;
       pointer-events: auto;
@@ -218,7 +226,15 @@
     }
     .nav-drop--events .nav-drop-item {
       font-size: .62rem;
-      padding: 9px 10px;
+      padding: 9px 10px 9px 14px;
+      border-left: 2px solid transparent;
+      transition: background .2s, color .2s, border-color .2s, padding-left .2s;
+    }
+    .nav-drop--events .nav-drop-item:hover {
+      background: rgba(48,205,215,.1);
+      color: var(--teal) !important;
+      border-left-color: var(--teal);
+      padding-left: 18px;
     }
     .nav-mark {
       display: flex; align-items: center; justify-content: center;
