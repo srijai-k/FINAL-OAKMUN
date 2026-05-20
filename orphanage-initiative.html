@@ -118,15 +118,8 @@
 
     /* ── MISSION STRIP ── */
     .mission-strip {
-      background: #003057;
-      border-bottom: 1px solid rgba(48,205,215,.08);
+      background: var(--teal);
       position: relative; overflow: hidden;
-    }
-    .mission-strip::before {
-      content: '';
-      position: absolute; inset: 0;
-      background: radial-gradient(ellipse at 50% 100%, rgba(48,205,215,.05) 0%, transparent 55%);
-      pointer-events: none;
     }
     .mission-strip-inner {
       max-width: 1200px; margin: 0 auto;
@@ -135,17 +128,17 @@
     }
     .mission-stat {
       text-align: center; padding: 52px 24px;
-      border-right: 1px solid rgba(48,205,215,.07);
+      border-right: 1px solid rgba(0,48,87,.15);
       position: relative;
     }
     .mission-stat:last-child { border-right: none; }
     .mission-stat-num {
       font-size: clamp(2.5rem, 5vw, 4rem);
       font-weight: 900; letter-spacing: -.04em;
-      color: var(--teal); line-height: 1; margin-bottom: 10px;
+      color: var(--navy); line-height: 1; margin-bottom: 10px;
       animation: countUp .6s .1s both;
     }
-    .mission-stat-label { font-size: .44rem; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; color: rgba(250,245,237,.28); }
+    .mission-stat-label { font-size: .44rem; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; color: rgba(0,48,87,.55); }
 
     /* ── MISSION / ABOUT ── */
     .about-section {

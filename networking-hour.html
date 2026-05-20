@@ -119,8 +119,7 @@
 
     /* ── FAST FACTS STRIP ── */
     .facts-strip {
-      background: #003057;
-      border-bottom: 1px solid rgba(48,205,215,.08);
+      background: var(--teal);
       animation: fadeUp .6s .08s cubic-bezier(0.4,0,0.2,1) both;
     }
     .facts-strip-inner {
@@ -129,15 +128,14 @@
       padding: 0 48px;
     }
     .fact-item {
-      padding: 36px 0;
+      padding: 36px 32px;
       display: flex; flex-direction: column; gap: 6px;
-      border-right: 1px solid rgba(250,245,237,.05);
-      padding-right: 32px; padding-left: 32px;
+      border-right: 1px solid rgba(0,48,87,.15);
     }
     .fact-item:first-child { padding-left: 0; }
     .fact-item:last-child { border-right: none; }
-    .fact-num { font-size: clamp(1.6rem, 3vw, 2.4rem); font-weight: 900; letter-spacing: -.04em; color: var(--teal); line-height: 1; }
-    .fact-label { font-size: .42rem; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; color: rgba(250,245,237,.28); }
+    .fact-num { font-size: clamp(1.6rem, 3vw, 2.4rem); font-weight: 900; letter-spacing: -.04em; color: var(--navy); line-height: 1; }
+    .fact-label { font-size: .42rem; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; color: rgba(0,48,87,.55); }
 
     /* ── ABOUT — 2 col ── */
     .about-section {
