@@ -1789,6 +1789,92 @@
       .tl-item:has(.type-social)    { border-color: rgba(30,150,165,.15); }
       .tl-item:has(.type-meal)      { border-color: rgba(188,154,110,.1); }
     }
+
+    /* ═══════════════════════════════════════
+       BEYOND THE DAIS
+    ═══════════════════════════════════════ */
+    .btd-section {
+      padding: 80px 40px 90px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .btd-eyebrow {
+      font-size: .5rem; font-weight: 700;
+      letter-spacing: .28em; text-transform: uppercase;
+      color: var(--teal); margin-bottom: 14px;
+    }
+    .btd-heading {
+      font-size: clamp(1.8rem, 3.5vw, 3rem);
+      font-weight: 900; letter-spacing: -.03em; line-height: 1;
+      color: var(--white); margin-bottom: 10px;
+    }
+    .btd-heading em { font-style: italic; font-weight: 300; color: rgba(250,245,237,.5); }
+    .btd-sub {
+      font-size: clamp(.8rem, 1.4vw, 1rem);
+      font-weight: 400; line-height: 1.6;
+      color: rgba(250,245,237,.4);
+      max-width: 520px; margin-bottom: 48px;
+    }
+    .btd-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    .btd-card {
+      display: block;
+      text-decoration: none;
+      background: rgba(255,255,255,.028);
+      border: 1px solid rgba(250,245,237,.07);
+      border-radius: 16px;
+      padding: 32px 28px;
+      transition: border-color .22s, background .22s, transform .22s;
+      position: relative;
+      overflow: hidden;
+    }
+    .btd-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 0% 0%, rgba(48,205,215,.07) 0%, transparent 60%);
+      opacity: 0;
+      transition: opacity .3s;
+    }
+    .btd-card:hover { border-color: rgba(48,205,215,.28); background: rgba(48,205,215,.04); transform: translateY(-3px); }
+    .btd-card:hover::before { opacity: 1; }
+    .btd-card-icon {
+      font-size: 1.6rem; margin-bottom: 18px; display: block;
+      line-height: 1;
+    }
+    .btd-card-tag {
+      font-size: .4rem; font-weight: 700;
+      letter-spacing: .24em; text-transform: uppercase;
+      color: var(--teal); opacity: .7;
+      margin-bottom: 10px;
+    }
+    .btd-card-title {
+      font-size: clamp(1rem, 1.8vw, 1.3rem);
+      font-weight: 800; letter-spacing: -.02em;
+      color: var(--white); margin-bottom: 12px;
+    }
+    .btd-card-desc {
+      font-size: clamp(.72rem, 1.2vw, .88rem);
+      font-weight: 400; line-height: 1.6;
+      color: rgba(250,245,237,.38);
+      margin-bottom: 24px;
+    }
+    .btd-card-link {
+      font-size: .5rem; font-weight: 700;
+      letter-spacing: .12em; text-transform: uppercase;
+      color: var(--teal);
+      display: inline-flex; align-items: center; gap: 6px;
+      transition: gap .2s;
+    }
+    .btd-card:hover .btd-card-link { gap: 10px; }
+
+    @media (max-width: 768px) {
+      .btd-section { padding: 60px 20px 70px; }
+      .btd-grid { grid-template-columns: 1fr; gap: 14px; }
+    }
   </style>
 </head>
 <body>
@@ -2241,6 +2327,36 @@
         </div>
 
       </div>
+    </div>
+  </section>
+
+  <!-- ═══ BEYOND THE DAIS ═══ -->
+  <section class="btd-section">
+    <div class="btd-eyebrow">Chapter XVI · Beyond the Committees</div>
+    <h2 class="btd-heading">More than <em>debate.</em></h2>
+    <p class="btd-sub">Oakridge MUN XVI is more than resolutions and gavels — experience the moments that happen outside the committee room.</p>
+    <div class="btd-grid">
+      <a href="networking-hour.html" class="btd-card">
+        <span class="btd-card-icon">🤝</span>
+        <div class="btd-card-tag">Day 1 · Evening</div>
+        <div class="btd-card-title">Networking Hour</div>
+        <p class="btd-card-desc">An informal hour for delegates to connect across committees, exchange ideas, and build the relationships that last beyond the conference.</p>
+        <span class="btd-card-link">Learn more →</span>
+      </a>
+      <a href="social-night.html" class="btd-card">
+        <span class="btd-card-icon">🎭</span>
+        <div class="btd-card-tag">Day 2 · Night</div>
+        <div class="btd-card-title">Social Night</div>
+        <p class="btd-card-desc">A themed evening of celebration, performances, and memories. The highlight of every Oakridge MUN — dress up, show up, and make it count.</p>
+        <span class="btd-card-link">Learn more →</span>
+      </a>
+      <a href="orphanage-initiative.html" class="btd-card">
+        <span class="btd-card-icon">🌱</span>
+        <div class="btd-card-tag">Community · Outreach</div>
+        <div class="btd-card-title">Orphanage Initiative</div>
+        <p class="btd-card-desc">Giving back beyond the dais. Delegates come together to support a local children's home — because diplomacy starts with compassion.</p>
+        <span class="btd-card-link">Learn more →</span>
+      </a>
     </div>
   </section>
 
