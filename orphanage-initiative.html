@@ -12,9 +12,14 @@
 
     @keyframes navSlideDown { from { opacity: 0; transform: translateX(-50%) translateY(-18px); } to { opacity: 1; transform: translateX(-50%) translateY(0); } }
     @keyframes fadeUp { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     @keyframes pulse-dot { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: .35; transform: scale(.6); } }
+    @keyframes countUp { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 
-    :root { --navy: #003057; --teal: #30CDD7; --teal-dark: #1E96A5; --white: #FAF5ED; --gold: #BC9A6E; }
+    :root {
+      --navy: #003057; --teal: #30CDD7; --teal-dark: #1E96A5;
+      --teal-light: #B4EBF5; --white: #FAF5ED; --gold: #BC9A6E;
+    }
     html, body { font-family: 'Montserrat', sans-serif; background: var(--navy); color: var(--white); overflow-x: hidden; min-height: 100%; }
 
     /* ── NAV ── */
@@ -65,61 +70,219 @@
 
     /* ── PAGE ── */
     .page { padding-top: 90px; }
-    .page-hero { padding: 72px 48px 64px; max-width: 1200px; margin: 0 auto; display: flex; align-items: flex-end; justify-content: space-between; gap: 40px; border-bottom: 1px solid rgba(250,245,237,.07); animation: fadeUp .6s .05s cubic-bezier(0.4,0,0.2,1) both; }
+
+    /* ── HERO ── */
+    .page-hero {
+      position: relative;
+      padding: 72px 48px 80px;
+      overflow: hidden;
+      border-bottom: 1px solid rgba(48,205,215,.1);
+      animation: fadeUp .6s .05s cubic-bezier(0.4,0,0.2,1) both;
+    }
+    .page-hero::before {
+      content: '';
+      position: absolute; top: -30%; right: -5%;
+      width: 700px; height: 700px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(48,205,215,.06) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .page-hero::after {
+      content: '';
+      position: absolute; bottom: -30%; left: 5%;
+      width: 400px; height: 400px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(188,154,110,.04) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .page-hero-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: flex; align-items: flex-end; justify-content: space-between; gap: 40px;
+      position: relative; z-index: 1;
+    }
     .page-hero-left { display: flex; flex-direction: column; }
     .page-hero-back { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; color: rgba(250,245,237,.3); font-size: .5rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; margin-bottom: 28px; transition: color .2s; width: fit-content; }
     .page-hero-back:hover { color: var(--teal); }
     .page-kicker { font-size: .58rem; font-weight: 700; letter-spacing: .24em; text-transform: uppercase; color: var(--teal); margin-bottom: 14px; }
-    .page-title { font-size: clamp(2.8rem, 5.5vw, 5rem); font-weight: 900; letter-spacing: -.03em; line-height: .9; color: var(--white); margin-bottom: 20px; }
-    .page-subtitle { font-size: clamp(.82rem, 1.4vw, 1rem); font-weight: 400; line-height: 1.7; color: rgba(250,245,237,.4); max-width: 520px; margin-bottom: 28px; }
+    .page-title { font-size: clamp(3.2rem, 6.5vw, 6rem); font-weight: 900; letter-spacing: -.03em; line-height: .88; color: var(--white); margin-bottom: 22px; }
+    .page-subtitle { font-size: clamp(.84rem, 1.4vw, 1rem); font-weight: 400; line-height: 1.7; color: rgba(250,245,237,.42); max-width: 480px; margin-bottom: 32px; }
     .detail-badges { display: flex; flex-wrap: wrap; gap: 8px; }
-    .detail-badge { display: inline-flex; align-items: center; gap: 7px; background: rgba(48,205,215,.06); border: 1px solid rgba(48,205,215,.16); border-radius: 100px; padding: 7px 16px; font-size: .46rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: rgba(250,245,237,.55); }
+    .detail-badge { display: inline-flex; align-items: center; gap: 7px; background: rgba(48,205,215,.06); border: 1px solid rgba(48,205,215,.18); border-radius: 100px; padding: 7px 16px; font-size: .46rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: rgba(250,245,237,.6); }
     .detail-badge-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--teal); flex-shrink: 0; animation: pulse-dot 2s ease-in-out infinite; }
-    .page-hero-deco { font-size: clamp(4rem, 8vw, 7.5rem); font-weight: 900; letter-spacing: -.05em; line-height: 1; color: rgba(48,205,215,.06); flex-shrink: 0; user-select: none; text-align: right; }
+    .page-hero-deco {
+      font-size: clamp(4rem, 8vw, 7.5rem);
+      font-weight: 900; letter-spacing: -.05em; line-height: 1;
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(48,205,215,.1);
+      flex-shrink: 0; user-select: none; text-align: right;
+      animation: fadeIn .8s .3s both;
+    }
 
-    /* MISSION STRIP */
-    .mission-strip { background: rgba(48,205,215,.03); border-top: 1px solid rgba(48,205,215,.09); border-bottom: 1px solid rgba(48,205,215,.09); padding: 48px; }
-    .mission-strip-inner { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, 1fr); }
-    .mission-stat { text-align: center; padding: 0 24px; }
-    .mission-stat + .mission-stat { border-left: 1px solid rgba(48,205,215,.09); }
-    .mission-stat-num { font-size: clamp(2.2rem, 4.5vw, 3.5rem); font-weight: 900; letter-spacing: -.04em; color: var(--teal); line-height: 1; margin-bottom: 8px; }
-    .mission-stat-label { font-size: .44rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: rgba(250,245,237,.3); }
+    /* ── MISSION STRIP ── */
+    .mission-strip {
+      background: #001a2e;
+      border-bottom: 1px solid rgba(48,205,215,.08);
+      position: relative; overflow: hidden;
+    }
+    .mission-strip::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 50% 100%, rgba(48,205,215,.05) 0%, transparent 55%);
+      pointer-events: none;
+    }
+    .mission-strip-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      padding: 0 48px; position: relative; z-index: 1;
+    }
+    .mission-stat {
+      text-align: center; padding: 52px 24px;
+      border-right: 1px solid rgba(48,205,215,.07);
+      position: relative;
+    }
+    .mission-stat:last-child { border-right: none; }
+    .mission-stat-num {
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 900; letter-spacing: -.04em;
+      color: var(--teal); line-height: 1; margin-bottom: 10px;
+      animation: countUp .6s .1s both;
+    }
+    .mission-stat-label { font-size: .44rem; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; color: rgba(250,245,237,.28); }
 
-    /* SECTIONS */
-    .section-divider { max-width: 1200px; margin: 0 auto; padding: 0 48px; }
-    .section-divider hr { border: none; border-top: 1px solid rgba(250,245,237,.05); }
-    .content-section { max-width: 1200px; margin: 0 auto; padding: 60px 48px; }
+    /* ── MISSION / ABOUT ── */
+    .about-section {
+      background: var(--navy);
+      position: relative; overflow: hidden;
+    }
+    .about-bg-word {
+      position: absolute; right: -0.04em; top: 50%;
+      transform: translateY(-50%);
+      font-size: clamp(7rem, 16vw, 14rem);
+      font-weight: 900; letter-spacing: -.04em;
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(48,205,215,.04);
+      pointer-events: none; user-select: none;
+      line-height: 1; white-space: nowrap;
+    }
+    .about-inner {
+      max-width: 1200px; margin: 0 auto;
+      padding: 80px 48px;
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 72px; align-items: center;
+      position: relative; z-index: 1;
+    }
     .section-label { display: flex; align-items: center; gap: 10px; font-size: .46rem; font-weight: 700; letter-spacing: .26em; text-transform: uppercase; color: var(--teal); opacity: .75; margin-bottom: 12px; }
     .section-label::before { content: ''; width: 16px; height: 1.5px; background: var(--teal); flex-shrink: 0; }
-    .section-heading { font-size: clamp(1.5rem, 2.8vw, 2.4rem); font-weight: 900; letter-spacing: -.025em; line-height: 1.05; color: var(--white); margin-bottom: 18px; }
-    .section-body { font-size: clamp(.78rem, 1.3vw, .95rem); font-weight: 400; line-height: 1.85; color: rgba(250,245,237,.42); max-width: 660px; }
+    .section-heading { font-size: clamp(1.6rem, 2.8vw, 2.6rem); font-weight: 900; letter-spacing: -.025em; line-height: 1.05; color: var(--white); margin-bottom: 20px; }
+    .section-body { font-size: clamp(.78rem, 1.3vw, .94rem); font-weight: 400; line-height: 1.85; color: rgba(250,245,237,.42); }
     .section-body p + p { margin-top: 14px; }
+    .about-right {
+      background: rgba(48,205,215,.04);
+      border: 1px solid rgba(48,205,215,.1);
+      border-radius: 20px; padding: 40px 36px;
+    }
+    .about-pull { font-size: clamp(1.1rem, 2vw, 1.5rem); font-weight: 300; font-style: italic; line-height: 1.55; color: rgba(250,245,237,.52); }
+    .about-pull strong { font-weight: 800; font-style: normal; color: var(--teal); }
+    .about-pull-attr { margin-top: 20px; font-size: .44rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: rgba(250,245,237,.2); }
 
-    .expect-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 14px; margin-top: 32px; }
-    .expect-card { background: rgba(255,255,255,.025); border: 1px solid rgba(250,245,237,.06); border-top: 2px solid rgba(48,205,215,.2); border-radius: 14px; padding: 28px 24px; transition: border-top-color .2s, background .2s; }
-    .expect-card:hover { border-top-color: rgba(48,205,215,.5); background: rgba(48,205,215,.03); }
-    .expect-card-num { font-size: .45rem; font-weight: 900; letter-spacing: .18em; color: rgba(48,205,215,.45); margin-bottom: 12px; text-transform: uppercase; }
-    .expect-card-title { font-size: .82rem; font-weight: 800; letter-spacing: -.01em; color: var(--white); margin-bottom: 8px; }
-    .expect-card-desc { font-size: .68rem; font-weight: 400; line-height: 1.65; color: rgba(250,245,237,.36); }
+    /* ── CONTRIBUTE — dark bg ── */
+    .contribute-wrapper {
+      background: #001a2e;
+      border-top: 1px solid rgba(48,205,215,.07);
+      border-bottom: 1px solid rgba(48,205,215,.07);
+    }
+    .contribute-inner { max-width: 1200px; margin: 0 auto; padding: 72px 48px; }
+    .expect-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 16px; margin-top: 36px; }
+    .expect-card {
+      background: rgba(48,205,215,.03);
+      border: 1px solid rgba(48,205,215,.09);
+      border-radius: 16px; padding: 32px 26px;
+      transition: border-color .22s, background .22s, transform .22s;
+      position: relative; overflow: hidden;
+    }
+    .expect-card::after {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(to right, var(--teal), transparent);
+      opacity: .35; transition: opacity .22s;
+    }
+    .expect-card:hover { border-color: rgba(48,205,215,.22); background: rgba(48,205,215,.06); transform: translateY(-3px); }
+    .expect-card:hover::after { opacity: .8; }
+    .expect-card-num { font-size: .44rem; font-weight: 900; letter-spacing: .2em; color: rgba(48,205,215,.4); margin-bottom: 14px; text-transform: uppercase; }
+    .expect-card-title { font-size: .9rem; font-weight: 800; letter-spacing: -.01em; color: var(--white); margin-bottom: 10px; }
+    .expect-card-desc { font-size: .7rem; font-weight: 400; line-height: 1.65; color: rgba(250,245,237,.35); }
 
-    /* QUOTE */
-    .quote-section { background: rgba(48,205,215,.03); border-top: 1px solid rgba(48,205,215,.08); border-bottom: 1px solid rgba(48,205,215,.08); padding: 64px 48px; text-align: center; }
-    .quote-inner { max-width: 760px; margin: 0 auto; }
-    .quote-mark { font-size: 3.5rem; font-weight: 900; color: rgba(48,205,215,.15); line-height: .8; margin-bottom: 8px; }
-    .quote-text { font-size: clamp(1rem, 2vw, 1.6rem); font-weight: 300; font-style: italic; line-height: 1.55; color: rgba(250,245,237,.5); }
-    .quote-text strong { font-weight: 800; font-style: normal; color: rgba(250,245,237,.82); }
+    /* ── QUOTE ── */
+    .quote-section {
+      position: relative;
+      background: #020c18;
+      border-top: 1px solid rgba(48,205,215,.08);
+      border-bottom: 1px solid rgba(48,205,215,.08);
+      padding: 90px 48px;
+      text-align: center;
+      overflow: hidden;
+    }
+    .quote-section::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 50% 50%, rgba(48,205,215,.05) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .quote-inner { max-width: 820px; margin: 0 auto; position: relative; z-index: 1; }
+    .quote-mark {
+      font-size: 5rem; font-weight: 900;
+      color: rgba(48,205,215,.12);
+      line-height: .7; margin-bottom: 12px;
+    }
+    .quote-text {
+      font-size: clamp(1.1rem, 2.2vw, 1.8rem);
+      font-weight: 300; font-style: italic;
+      line-height: 1.55; color: rgba(250,245,237,.52);
+    }
+    .quote-text strong { font-weight: 800; font-style: normal; color: rgba(250,245,237,.85); }
 
-    .detail-list { margin-top: 24px; display: flex; flex-direction: column; gap: 16px; max-width: 620px; }
-    .detail-row { display: flex; gap: 16px; align-items: baseline; }
-    .detail-key { font-size: .5rem; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; color: var(--white); flex-shrink: 0; min-width: 90px; }
-    .detail-val { font-size: clamp(.75rem, 1.2vw, .9rem); font-weight: 400; line-height: 1.6; color: rgba(250,245,237,.42); }
-    .detail-val a { color: var(--teal); text-decoration: none; }
+    /* ── LOGISTICS — warm white ── */
+    .logistics-wrapper { background: #FAF5ED; }
+    .logistics-inner {
+      max-width: 1200px; margin: 0 auto;
+      padding: 72px 48px;
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 80px; align-items: start;
+    }
+    .logistics-left .section-label { color: var(--teal-dark); opacity: 1; }
+    .logistics-left .section-label::before { background: var(--teal-dark); }
+    .logistics-left .section-heading { color: var(--navy); }
+    .detail-list { margin-top: 24px; display: flex; flex-direction: column; }
+    .detail-row { display: flex; gap: 0; border-bottom: 1px solid rgba(0,48,87,.07); padding: 18px 0; }
+    .detail-row:first-child { border-top: 1px solid rgba(0,48,87,.07); }
+    .detail-key { font-size: .48rem; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; color: var(--navy); flex-shrink: 0; min-width: 120px; padding-right: 20px; }
+    .detail-val { font-size: clamp(.75rem, 1.2vw, .88rem); font-weight: 400; line-height: 1.6; color: rgba(0,48,87,.5); }
+    .detail-val a { color: var(--teal-dark); text-decoration: none; }
     .detail-val a:hover { text-decoration: underline; }
+    .logistics-right {
+      background: var(--navy);
+      border-radius: 20px; padding: 40px 36px;
+      margin-top: 8px;
+    }
+    .logistics-cta-label { font-size: .44rem; font-weight: 700; letter-spacing: .24em; text-transform: uppercase; color: rgba(250,245,237,.3); margin-bottom: 14px; }
+    .logistics-cta-heading { font-size: clamp(1.2rem, 2vw, 1.8rem); font-weight: 900; letter-spacing: -.025em; line-height: 1.1; color: var(--white); margin-bottom: 16px; }
+    .logistics-cta-body { font-size: .76rem; font-weight: 400; line-height: 1.7; color: rgba(250,245,237,.38); margin-bottom: 28px; }
+    .cta-btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: linear-gradient(180deg, var(--teal) 0%, var(--teal-dark) 100%);
+      color: var(--navy);
+      font-size: .62rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase;
+      border: none; border-radius: 12px; padding: 13px 22px;
+      cursor: pointer; text-decoration: none;
+      transition: transform .18s, box-shadow .18s;
+      box-shadow: 0 6px 20px rgba(48,205,215,.2);
+    }
+    .cta-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(48,205,215,.3); }
 
+    /* ── PAGE FOOTER ── */
     .page-footer { max-width: 1200px; margin: 0 auto; padding: 32px 48px 64px; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; border-top: 1px solid rgba(250,245,237,.05); margin-top: 20px; }
     .footer-note { font-size: .46rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: rgba(250,245,237,.18); }
     .footer-dates { font-size: .46rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: rgba(48,205,215,.3); }
 
+    /* ── MOBILE ── */
     @media (max-width: 768px) {
       .nav-links-group { max-width: 0 !important; opacity: 0 !important; padding: 0 !important; overflow: hidden; }
       .nav-right { max-width: 52px !important; margin-left: 10px; }
@@ -127,16 +290,19 @@
       nav.scrolled .nav-logo { opacity: 1 !important; max-width: 220px !important; }
       nav.scrolled .nav-right { opacity: 1 !important; max-width: 52px !important; margin-left: 10px !important; }
       nav.scrolled .nav-pill { padding: 8px 8px 8px 18px !important; border-radius: 100px !important; }
-      .page-hero { flex-direction: column; align-items: flex-start; gap: 0; padding: 48px 20px 40px; }
+      .page-hero { padding: 48px 20px 52px; }
+      .page-hero-inner { flex-direction: column; align-items: flex-start; gap: 0; }
       .page-hero-deco { display: none; }
-      .mission-strip { padding: 36px 20px; }
-      .mission-strip-inner { grid-template-columns: 1fr; gap: 28px; }
-      .mission-stat + .mission-stat { border-left: none; border-top: 1px solid rgba(48,205,215,.09); padding-top: 28px; }
-      .content-section { padding: 44px 20px; }
-      .section-divider { padding: 0 20px; }
-      .quote-section { padding: 48px 20px; }
-      .page-footer { padding: 28px 20px 52px; flex-direction: column; align-items: flex-start; gap: 6px; }
+      .mission-strip-inner { grid-template-columns: 1fr; padding: 0 20px; }
+      .mission-stat { border-right: none; border-bottom: 1px solid rgba(48,205,215,.07); padding: 36px 0; }
+      .mission-stat:last-child { border-bottom: none; }
+      .about-inner { grid-template-columns: 1fr; gap: 32px; padding: 60px 20px; }
+      .about-bg-word { display: none; }
+      .contribute-inner { padding: 60px 20px; }
       .expect-grid { grid-template-columns: 1fr; }
+      .quote-section { padding: 64px 20px; }
+      .logistics-inner { grid-template-columns: 1fr; gap: 32px; padding: 60px 20px; }
+      .page-footer { padding: 28px 20px 52px; flex-direction: column; align-items: flex-start; gap: 6px; }
       .detail-row { flex-direction: column; gap: 4px; }
       .detail-key { min-width: auto; }
     }
@@ -179,21 +345,23 @@
   <div class="page">
 
     <div class="page-hero">
-      <div class="page-hero-left">
-        <a href="index.html" class="page-hero-back">← Back to Home</a>
-        <div class="page-kicker">Oakridge MUN XVI &nbsp;·&nbsp; Community Outreach</div>
-        <h1 class="page-title">Orphanage<br>Initiative.</h1>
-        <p class="page-subtitle">Diplomacy starts with compassion. Delegates visit a local children's home to bring joy, support, and the belief that change starts small.</p>
-        <div class="detail-badges">
-          <div class="detail-badge"><span class="detail-badge-dot"></span>Community Outreach</div>
-          <div class="detail-badge"><span class="detail-badge-dot"></span>All Delegates</div>
-          <div class="detail-badge"><span class="detail-badge-dot"></span>Hyderabad</div>
+      <div class="page-hero-inner">
+        <div class="page-hero-left">
+          <a href="index.html" class="page-hero-back">← Back to Home</a>
+          <div class="page-kicker">Oakridge MUN XVI &nbsp;·&nbsp; Community Outreach</div>
+          <h1 class="page-title">Orphanage<br>Initiative.</h1>
+          <p class="page-subtitle">Diplomacy starts with compassion. Delegates step beyond the conference room to visit a local children's home — because the best resolutions start with real people.</p>
+          <div class="detail-badges">
+            <div class="detail-badge"><span class="detail-badge-dot"></span>Community Outreach</div>
+            <div class="detail-badge"><span class="detail-badge-dot"></span>All Delegates</div>
+            <div class="detail-badge"><span class="detail-badge-dot"></span>Hyderabad</div>
+          </div>
         </div>
+        <div class="page-hero-deco">XVI<br>Cares.</div>
       </div>
-      <div class="page-hero-deco">XVI<br>Cares.</div>
     </div>
 
-    <div class="mission-strip" style="animation: fadeUp .6s .1s cubic-bezier(0.4,0,0.2,1) both;">
+    <div class="mission-strip">
       <div class="mission-strip-inner">
         <div class="mission-stat">
           <div class="mission-stat-num">1</div>
@@ -210,59 +378,78 @@
       </div>
     </div>
 
-    <div class="content-section" style="animation: fadeUp .6s .14s cubic-bezier(0.4,0,0.2,1) both;">
-      <div class="section-label">Our Mission</div>
-      <h2 class="section-heading">Beyond the resolution.<br>Into the community.</h2>
-      <div class="section-body">
-        <p>The Orphanage Initiative is a cornerstone of what Oakridge MUN stands for. Every year, delegates don't just debate the world's problems — they take a small but meaningful step toward solving them. A visit to a local children's home reminds us that diplomacy, at its heart, is about people.</p>
-        <p>Delegates spend time with the children — through games, activities, conversations, and simply being present. It's a two-way experience: as much as the delegates give, they receive something far more valuable in return — perspective.</p>
-      </div>
-    </div>
-
-    <div class="section-divider"><hr /></div>
-
-    <div class="content-section" style="animation: fadeUp .6s .18s cubic-bezier(0.4,0,0.2,1) both;">
-      <div class="section-label">How to Contribute</div>
-      <h2 class="section-heading">Four ways to make a difference.</h2>
-      <div class="expect-grid">
-        <div class="expect-card">
-          <div class="expect-card-num">01 — Donate</div>
-          <div class="expect-card-title">Supplies matter.</div>
-          <p class="expect-card-desc">Stationery, books, games, essentials — a curated donation list will be shared with all registered delegates.</p>
+    <div class="about-section">
+      <div class="about-bg-word">COMPASSION.</div>
+      <div class="about-inner">
+        <div class="about-left">
+          <div class="section-label">Our Mission</div>
+          <h2 class="section-heading">Beyond the resolution.<br>Into the community.</h2>
+          <div class="section-body">
+            <p>The Orphanage Initiative is a cornerstone of what Oakridge MUN stands for. Every year, delegates don't just debate the world's problems — they take a small but meaningful step toward solving them.</p>
+            <p>Delegates spend time with the children — through games, activities, conversations, and simply being present. It's a two-way experience: as much as the delegates give, they receive something far more valuable in return — perspective.</p>
+          </div>
         </div>
-        <div class="expect-card">
-          <div class="expect-card-num">02 — Visit</div>
-          <div class="expect-card-title">Show up in person.</div>
-          <p class="expect-card-desc">Spend time at the children's home. Play games, share meals, tell stories. Your presence matters most.</p>
-        </div>
-        <div class="expect-card">
-          <div class="expect-card-num">03 — Fundraise</div>
-          <div class="expect-card-title">Committees can contribute.</div>
-          <p class="expect-card-desc">Committees can organise small fundraising drives before or during the conference. Details shared post-registration.</p>
-        </div>
-        <div class="expect-card">
-          <div class="expect-card-num">04 — Spread the Word</div>
-          <div class="expect-card-title">Amplify the impact.</div>
-          <p class="expect-card-desc">Tell your school, friends, and family. More attention means bigger impact.</p>
+        <div class="about-right">
+          <p class="about-pull">"You debate resolutions in committee. Here, you <strong>become one.</strong>"</p>
+          <p class="about-pull-attr">— Past Oakridge MUN Delegate</p>
         </div>
       </div>
     </div>
 
-    <div class="quote-section" style="animation: fadeUp .6s .22s cubic-bezier(0.4,0,0.2,1) both;">
+    <div class="contribute-wrapper">
+      <div class="contribute-inner">
+        <div class="section-label">How to Contribute</div>
+        <h2 class="section-heading">Four ways to make a difference.</h2>
+        <div class="expect-grid">
+          <div class="expect-card">
+            <div class="expect-card-num">01 — Donate</div>
+            <div class="expect-card-title">Supplies matter.</div>
+            <p class="expect-card-desc">Stationery, books, games, essentials — a curated donation list will be shared with all registered delegates.</p>
+          </div>
+          <div class="expect-card">
+            <div class="expect-card-num">02 — Visit</div>
+            <div class="expect-card-title">Show up in person.</div>
+            <p class="expect-card-desc">Spend time at the children's home. Play games, share meals, tell stories. Your presence matters most.</p>
+          </div>
+          <div class="expect-card">
+            <div class="expect-card-num">03 — Fundraise</div>
+            <div class="expect-card-title">Committees can contribute.</div>
+            <p class="expect-card-desc">Committees can organise small fundraising drives before or during the conference. Details shared post-registration.</p>
+          </div>
+          <div class="expect-card">
+            <div class="expect-card-num">04 — Spread the Word</div>
+            <div class="expect-card-title">Amplify the impact.</div>
+            <p class="expect-card-desc">Tell your school, friends, and family. More attention means bigger impact for the children's home.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="quote-section">
       <div class="quote-inner">
         <div class="quote-mark">"</div>
         <p class="quote-text">The best diplomats are the ones who understand that <strong>every resolution has a human face</strong> — and every human face deserves to be seen.</p>
       </div>
     </div>
 
-    <div class="content-section" style="animation: fadeUp .6s .26s cubic-bezier(0.4,0,0.2,1) both;">
-      <div class="section-label">Logistics</div>
-      <h2 class="section-heading">Participation details.</h2>
-      <div class="detail-list">
-        <div class="detail-row"><span class="detail-key">Location</span><span class="detail-val">A children's home in Hyderabad — exact details shared with confirmed participants.</span></div>
-        <div class="detail-row"><span class="detail-key">Who</span><span class="detail-val">All registered delegates. Voluntary, but strongly encouraged.</span></div>
-        <div class="detail-row"><span class="detail-key">What to Bring</span><span class="detail-val">A donation item from the curated list, comfortable clothes, and an open heart.</span></div>
-        <div class="detail-row"><span class="detail-key">Contact</span><span class="detail-val"><a href="mailto:mun@oakridge.in">mun@oakridge.in</a> for any questions.</span></div>
+    <div class="logistics-wrapper">
+      <div class="logistics-inner">
+        <div class="logistics-left">
+          <div class="section-label">Logistics</div>
+          <h2 class="section-heading" style="color: var(--navy);">Participation<br>details.</h2>
+          <div class="detail-list">
+            <div class="detail-row"><span class="detail-key">Location</span><span class="detail-val">A children's home in Hyderabad — exact details shared with confirmed participants.</span></div>
+            <div class="detail-row"><span class="detail-key">Who</span><span class="detail-val">All registered delegates. Voluntary, but strongly encouraged.</span></div>
+            <div class="detail-row"><span class="detail-key">What to Bring</span><span class="detail-val">A donation item from the curated list, comfortable clothes, and an open heart.</span></div>
+            <div class="detail-row"><span class="detail-key">Contact</span><span class="detail-val"><a href="mailto:mun@oakridge.in">mun@oakridge.in</a> for any questions.</span></div>
+          </div>
+        </div>
+        <div class="logistics-right">
+          <div class="logistics-cta-label">Join the Initiative</div>
+          <h3 class="logistics-cta-heading">Be a delegate who does more than debate.</h3>
+          <p class="logistics-cta-body">Register for Oakridge MUN XVI and be part of a conference that believes diplomacy starts with empathy — not just in the committee room, but in the community.</p>
+          <a href="register.html" class="cta-btn">Register Now →</a>
+        </div>
       </div>
     </div>
 

@@ -12,11 +12,12 @@
 
     @keyframes navSlideDown { from { opacity: 0; transform: translateX(-50%) translateY(-18px); } to { opacity: 1; transform: translateX(-50%) translateY(0); } }
     @keyframes fadeUp { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     @keyframes pulse-dot { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: .35; transform: scale(.6); } }
 
     :root {
       --navy: #003057; --teal: #30CDD7; --teal-dark: #1E96A5;
-      --white: #FAF5ED; --gold: #BC9A6E;
+      --teal-light: #B4EBF5; --white: #FAF5ED; --gold: #BC9A6E;
     }
     html, body { font-family: 'Montserrat', sans-serif; background: var(--navy); color: var(--white); overflow-x: hidden; min-height: 100%; }
 
@@ -69,54 +70,198 @@
     /* ── PAGE ── */
     .page { padding-top: 90px; }
 
-    /* ── PAGE HERO ── */
+    /* ── HERO ── */
     .page-hero {
-      padding: 72px 48px 64px;
+      position: relative;
+      padding: 72px 48px 80px;
+      max-width: 100%;
+      overflow: hidden;
+      border-bottom: 1px solid rgba(48,205,215,.1);
+      animation: fadeUp .6s .05s cubic-bezier(0.4,0,0.2,1) both;
+    }
+    .page-hero::before {
+      content: '';
+      position: absolute;
+      top: -40%;
+      right: -5%;
+      width: 700px; height: 700px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(48,205,215,.07) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .page-hero-inner {
       max-width: 1200px;
       margin: 0 auto;
       display: flex;
       align-items: flex-end;
       justify-content: space-between;
       gap: 40px;
-      border-bottom: 1px solid rgba(250,245,237,.07);
-      animation: fadeUp .6s .05s cubic-bezier(0.4,0,0.2,1) both;
+      position: relative;
+      z-index: 1;
     }
     .page-hero-left { display: flex; flex-direction: column; }
     .page-hero-back { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; color: rgba(250,245,237,.3); font-size: .5rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; margin-bottom: 28px; transition: color .2s; width: fit-content; }
     .page-hero-back:hover { color: var(--teal); }
     .page-kicker { font-size: .58rem; font-weight: 700; letter-spacing: .24em; text-transform: uppercase; color: var(--teal); margin-bottom: 14px; }
-    .page-title { font-size: clamp(3rem, 6vw, 5.5rem); font-weight: 900; letter-spacing: -.03em; line-height: .9; color: var(--white); margin-bottom: 20px; }
-    .page-subtitle { font-size: clamp(.82rem, 1.4vw, 1rem); font-weight: 400; line-height: 1.7; color: rgba(250,245,237,.4); max-width: 520px; margin-bottom: 28px; }
+    .page-title { font-size: clamp(3.5rem, 7vw, 6.5rem); font-weight: 900; letter-spacing: -.03em; line-height: .88; color: var(--white); margin-bottom: 22px; }
+    .page-subtitle { font-size: clamp(.84rem, 1.4vw, 1rem); font-weight: 400; line-height: 1.7; color: rgba(250,245,237,.42); max-width: 480px; margin-bottom: 32px; }
     .detail-badges { display: flex; flex-wrap: wrap; gap: 8px; }
-    .detail-badge { display: inline-flex; align-items: center; gap: 7px; background: rgba(48,205,215,.06); border: 1px solid rgba(48,205,215,.16); border-radius: 100px; padding: 7px 16px; font-size: .46rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: rgba(250,245,237,.55); }
+    .detail-badge { display: inline-flex; align-items: center; gap: 7px; background: rgba(48,205,215,.06); border: 1px solid rgba(48,205,215,.18); border-radius: 100px; padding: 7px 16px; font-size: .46rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: rgba(250,245,237,.6); }
     .detail-badge-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--teal); flex-shrink: 0; animation: pulse-dot 2s ease-in-out infinite; }
-    .page-hero-deco { font-size: clamp(5rem, 10vw, 9rem); font-weight: 900; letter-spacing: -.05em; line-height: 1; color: rgba(48,205,215,.06); flex-shrink: 0; user-select: none; }
+    .page-hero-deco {
+      font-size: clamp(7rem, 14vw, 13rem);
+      font-weight: 900; letter-spacing: -.06em; line-height: 1;
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(48,205,215,.12);
+      flex-shrink: 0; user-select: none;
+      animation: fadeIn .8s .3s both;
+    }
 
-    /* ── DIVIDER ── */
-    .section-divider { max-width: 1200px; margin: 0 auto; padding: 0 48px; }
-    .section-divider hr { border: none; border-top: 1px solid rgba(250,245,237,.05); }
+    /* ── FAST FACTS STRIP ── */
+    .facts-strip {
+      background: #001a2e;
+      border-bottom: 1px solid rgba(48,205,215,.08);
+      animation: fadeUp .6s .08s cubic-bezier(0.4,0,0.2,1) both;
+    }
+    .facts-strip-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      padding: 0 48px;
+    }
+    .fact-item {
+      padding: 36px 0;
+      display: flex; flex-direction: column; gap: 6px;
+      border-right: 1px solid rgba(250,245,237,.05);
+      padding-right: 32px; padding-left: 32px;
+    }
+    .fact-item:first-child { padding-left: 0; }
+    .fact-item:last-child { border-right: none; }
+    .fact-num { font-size: clamp(1.6rem, 3vw, 2.4rem); font-weight: 900; letter-spacing: -.04em; color: var(--teal); line-height: 1; }
+    .fact-label { font-size: .42rem; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; color: rgba(250,245,237,.28); }
 
-    /* ── CONTENT SECTIONS ── */
-    .content-section { max-width: 1200px; margin: 0 auto; padding: 60px 48px; }
+    /* ── ABOUT — 2 col ── */
+    .about-section {
+      position: relative;
+      overflow: hidden;
+      background: var(--navy);
+    }
+    .about-bg-word {
+      position: absolute;
+      right: -0.04em; top: 50%;
+      transform: translateY(-50%);
+      font-size: clamp(8rem, 18vw, 16rem);
+      font-weight: 900; letter-spacing: -.04em;
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(48,205,215,.04);
+      pointer-events: none; user-select: none;
+      line-height: 1; white-space: nowrap;
+    }
+    .about-inner {
+      max-width: 1200px; margin: 0 auto;
+      padding: 80px 48px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+      position: relative; z-index: 1;
+    }
+    .about-left {}
     .section-label { display: flex; align-items: center; gap: 10px; font-size: .46rem; font-weight: 700; letter-spacing: .26em; text-transform: uppercase; color: var(--teal); opacity: .75; margin-bottom: 12px; }
     .section-label::before { content: ''; width: 16px; height: 1.5px; background: var(--teal); flex-shrink: 0; }
-    .section-heading { font-size: clamp(1.5rem, 2.8vw, 2.4rem); font-weight: 900; letter-spacing: -.025em; line-height: 1.05; color: var(--white); margin-bottom: 18px; }
-    .section-body { font-size: clamp(.78rem, 1.3vw, .95rem); font-weight: 400; line-height: 1.85; color: rgba(250,245,237,.42); max-width: 660px; }
+    .section-heading { font-size: clamp(1.6rem, 2.8vw, 2.6rem); font-weight: 900; letter-spacing: -.025em; line-height: 1.05; color: var(--white); margin-bottom: 20px; }
+    .section-body { font-size: clamp(.78rem, 1.3vw, .94rem); font-weight: 400; line-height: 1.85; color: rgba(250,245,237,.42); }
     .section-body p + p { margin-top: 14px; }
+    .about-right {
+      background: rgba(48,205,215,.04);
+      border: 1px solid rgba(48,205,215,.1);
+      border-radius: 20px;
+      padding: 40px 36px;
+    }
+    .about-pull {
+      font-size: clamp(1.1rem, 2vw, 1.6rem);
+      font-weight: 300; font-style: italic;
+      line-height: 1.55;
+      color: rgba(250,245,237,.55);
+    }
+    .about-pull strong { font-weight: 800; font-style: normal; color: var(--teal); }
+    .about-pull-attr {
+      margin-top: 20px;
+      font-size: .44rem; font-weight: 700;
+      letter-spacing: .2em; text-transform: uppercase;
+      color: rgba(250,245,237,.2);
+    }
 
-    /* ── EXPECT GRID ── */
-    .expect-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 14px; margin-top: 32px; }
-    .expect-card { background: rgba(255,255,255,.025); border: 1px solid rgba(250,245,237,.06); border-top: 2px solid rgba(48,205,215,.2); border-radius: 14px; padding: 28px 24px; transition: border-top-color .2s, background .2s; }
-    .expect-card:hover { border-top-color: rgba(48,205,215,.5); background: rgba(48,205,215,.03); }
-    .expect-card-num { font-size: .45rem; font-weight: 900; letter-spacing: .18em; color: rgba(48,205,215,.45); margin-bottom: 12px; text-transform: uppercase; }
-    .expect-card-title { font-size: .82rem; font-weight: 800; letter-spacing: -.01em; color: var(--white); margin-bottom: 8px; }
-    .expect-card-desc { font-size: .68rem; font-weight: 400; line-height: 1.65; color: rgba(250,245,237,.36); }
+    /* ── EXPECT — dark bg ── */
+    .expect-wrapper {
+      background: #001a2e;
+      border-top: 1px solid rgba(48,205,215,.07);
+      border-bottom: 1px solid rgba(48,205,215,.07);
+    }
+    .expect-inner {
+      max-width: 1200px; margin: 0 auto;
+      padding: 72px 48px;
+    }
+    .expect-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 16px; margin-top: 36px; }
+    .expect-card {
+      background: rgba(48,205,215,.03);
+      border: 1px solid rgba(48,205,215,.09);
+      border-radius: 16px; padding: 32px 26px;
+      transition: border-color .22s, background .22s, transform .22s;
+      position: relative; overflow: hidden;
+    }
+    .expect-card::after {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(to right, var(--teal), transparent);
+      opacity: .4;
+      transition: opacity .22s;
+    }
+    .expect-card:hover { border-color: rgba(48,205,215,.22); background: rgba(48,205,215,.05); transform: translateY(-3px); }
+    .expect-card:hover::after { opacity: .8; }
+    .expect-card-num { font-size: .44rem; font-weight: 900; letter-spacing: .2em; color: rgba(48,205,215,.4); margin-bottom: 14px; text-transform: uppercase; }
+    .expect-card-title { font-size: .9rem; font-weight: 800; letter-spacing: -.01em; color: var(--white); margin-bottom: 10px; }
+    .expect-card-desc { font-size: .7rem; font-weight: 400; line-height: 1.65; color: rgba(250,245,237,.35); }
 
-    /* ── DETAIL LIST ── */
-    .detail-list { margin-top: 24px; display: flex; flex-direction: column; gap: 16px; max-width: 620px; }
-    .detail-row { display: flex; gap: 16px; align-items: baseline; }
-    .detail-key { font-size: .5rem; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; color: var(--white); flex-shrink: 0; min-width: 90px; }
-    .detail-val { font-size: clamp(.75rem, 1.2vw, .9rem); font-weight: 400; line-height: 1.6; color: rgba(250,245,237,.42); }
+    /* ── LOGISTICS — warm white ── */
+    .logistics-wrapper {
+      background: #FAF5ED;
+    }
+    .logistics-inner {
+      max-width: 1200px; margin: 0 auto;
+      padding: 72px 48px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+    .logistics-left .section-label { color: var(--teal-dark); opacity: 1; }
+    .logistics-left .section-label::before { background: var(--teal-dark); }
+    .logistics-left .section-heading { color: var(--navy); }
+    .detail-list { margin-top: 24px; display: flex; flex-direction: column; gap: 0; }
+    .detail-row { display: flex; gap: 0; align-items: stretch; border-bottom: 1px solid rgba(0,48,87,.07); padding: 18px 0; }
+    .detail-row:first-child { border-top: 1px solid rgba(0,48,87,.07); }
+    .detail-key { font-size: .48rem; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; color: var(--navy); flex-shrink: 0; min-width: 100px; padding-right: 20px; }
+    .detail-val { font-size: clamp(.75rem, 1.2vw, .88rem); font-weight: 400; line-height: 1.6; color: rgba(0,48,87,.5); }
+    .logistics-right {
+      background: var(--navy);
+      border-radius: 20px;
+      padding: 40px 36px;
+      margin-top: 8px;
+    }
+    .logistics-cta-label { font-size: .44rem; font-weight: 700; letter-spacing: .24em; text-transform: uppercase; color: rgba(250,245,237,.3); margin-bottom: 14px; }
+    .logistics-cta-heading { font-size: clamp(1.2rem, 2vw, 1.8rem); font-weight: 900; letter-spacing: -.025em; line-height: 1.1; color: var(--white); margin-bottom: 16px; }
+    .logistics-cta-body { font-size: .76rem; font-weight: 400; line-height: 1.7; color: rgba(250,245,237,.38); margin-bottom: 28px; }
+    .cta-btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: linear-gradient(180deg, var(--teal) 0%, var(--teal-dark) 100%);
+      color: var(--navy);
+      font-size: .62rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase;
+      border: none; border-radius: 12px; padding: 13px 22px;
+      cursor: pointer; text-decoration: none;
+      transition: transform .18s, box-shadow .18s;
+      box-shadow: 0 6px 20px rgba(48,205,215,.2);
+    }
+    .cta-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(48,205,215,.3); }
 
     /* ── PAGE FOOTER ── */
     .page-footer { max-width: 1200px; margin: 0 auto; padding: 32px 48px 64px; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; border-top: 1px solid rgba(250,245,237,.05); margin-top: 20px; }
@@ -131,12 +276,19 @@
       nav.scrolled .nav-logo { opacity: 1 !important; max-width: 220px !important; }
       nav.scrolled .nav-right { opacity: 1 !important; max-width: 52px !important; margin-left: 10px !important; }
       nav.scrolled .nav-pill { padding: 8px 8px 8px 18px !important; border-radius: 100px !important; }
-      .page-hero { flex-direction: column; align-items: flex-start; gap: 0; padding: 48px 20px 40px; }
+      .page-hero { padding: 48px 20px 52px; }
+      .page-hero-inner { flex-direction: column; align-items: flex-start; gap: 0; }
       .page-hero-deco { display: none; }
-      .content-section { padding: 44px 20px; }
-      .section-divider { padding: 0 20px; }
-      .page-footer { padding: 28px 20px 52px; flex-direction: column; align-items: flex-start; gap: 6px; }
+      .facts-strip-inner { grid-template-columns: repeat(2, 1fr); padding: 0 20px; }
+      .fact-item:nth-child(2) { border-right: none; }
+      .fact-item:nth-child(3) { padding-left: 0; border-top: 1px solid rgba(250,245,237,.05); }
+      .fact-item { padding: 24px 20px 24px 0; }
+      .about-inner { grid-template-columns: 1fr; gap: 32px; padding: 60px 20px; }
+      .about-bg-word { display: none; }
+      .expect-inner { padding: 60px 20px; }
       .expect-grid { grid-template-columns: 1fr; }
+      .logistics-inner { grid-template-columns: 1fr; gap: 32px; padding: 60px 20px; }
+      .page-footer { padding: 28px 20px 52px; flex-direction: column; align-items: flex-start; gap: 6px; }
       .detail-row { flex-direction: column; gap: 4px; }
       .detail-key { min-width: auto; }
     }
@@ -179,68 +331,108 @@
   <div class="page">
 
     <div class="page-hero">
-      <div class="page-hero-left">
-        <a href="index.html" class="page-hero-back">← Back to Home</a>
-        <div class="page-kicker">Oakridge MUN XVI &nbsp;·&nbsp; Day 1 Evening</div>
-        <h1 class="page-title">Networking<br>Hour.</h1>
-        <p class="page-subtitle">An informal hour where the real connections happen — step out of your committee room and into a room full of people who think like you.</p>
-        <div class="detail-badges">
-          <div class="detail-badge"><span class="detail-badge-dot"></span>Day 1 · Evening</div>
-          <div class="detail-badge"><span class="detail-badge-dot"></span>All Delegates</div>
-          <div class="detail-badge"><span class="detail-badge-dot"></span>Venue TBA</div>
+      <div class="page-hero-inner">
+        <div class="page-hero-left">
+          <a href="index.html" class="page-hero-back">← Back to Home</a>
+          <div class="page-kicker">Oakridge MUN XVI &nbsp;·&nbsp; Day 1 · Evening</div>
+          <h1 class="page-title">Networking<br>Hour.</h1>
+          <p class="page-subtitle">Step out of your committee room and into the room where the real connections happen. No gavels, no points of order — just people.</p>
+          <div class="detail-badges">
+            <div class="detail-badge"><span class="detail-badge-dot"></span>Day 1 · Evening</div>
+            <div class="detail-badge"><span class="detail-badge-dot"></span>All Delegates</div>
+            <div class="detail-badge"><span class="detail-badge-dot"></span>Venue TBA</div>
+          </div>
         </div>
-      </div>
-      <div class="page-hero-deco">NH</div>
-    </div>
-
-    <div class="content-section" style="animation: fadeUp .6s .1s cubic-bezier(0.4,0,0.2,1) both;">
-      <div class="section-label">About the Event</div>
-      <h2 class="section-heading">Where diplomacy gets personal.</h2>
-      <div class="section-body">
-        <p>The Networking Hour at Oakridge MUN XVI is an unstructured, informal gathering designed to give delegates a break from the formality of committee and a chance to simply connect. Whether you're looking to find allies for your resolution, swap notes with a delegate from another committee, or just make a friend — this is your space.</p>
-        <p>Past delegates have called it one of the most memorable parts of the conference. No gavels, no points of order. Just people, conversations, and a whole lot of energy.</p>
+        <div class="page-hero-deco">NH</div>
       </div>
     </div>
 
-    <div class="section-divider"><hr /></div>
-
-    <div class="content-section" style="animation: fadeUp .6s .16s cubic-bezier(0.4,0,0.2,1) both;">
-      <div class="section-label">What to Expect</div>
-      <h2 class="section-heading">An hour well spent.</h2>
-      <div class="expect-grid">
-        <div class="expect-card">
-          <div class="expect-card-num">01 — Open Mingling</div>
-          <div class="expect-card-title">No agenda. No seating plan.</div>
-          <p class="expect-card-desc">Walk up to anyone and start a conversation — that's the whole point.</p>
+    <div class="facts-strip">
+      <div class="facts-strip-inner">
+        <div class="fact-item">
+          <div class="fact-num">60</div>
+          <div class="fact-label">Minutes of open time</div>
         </div>
-        <div class="expect-card">
-          <div class="expect-card-num">02 — Cross-Committee</div>
-          <div class="expect-card-title">Broaden your perspective.</div>
-          <p class="expect-card-desc">Meet delegates from committees you'd never interact with otherwise.</p>
+        <div class="fact-item">
+          <div class="fact-num">15+</div>
+          <div class="fact-label">Committees in the room</div>
         </div>
-        <div class="expect-card">
-          <div class="expect-card-num">03 — Refreshments</div>
-          <div class="expect-card-title">Conversations flow easier.</div>
-          <p class="expect-card-desc">Food and drinks available. A long day of debate deserves a proper break.</p>
+        <div class="fact-item">
+          <div class="fact-num">650+</div>
+          <div class="fact-label">Delegates to meet</div>
         </div>
-        <div class="expect-card">
-          <div class="expect-card-num">04 — Activities</div>
-          <div class="expect-card-title">Ease in naturally.</div>
-          <p class="expect-card-desc">Icebreaker games and activities if walking up to strangers isn't your thing.</p>
+        <div class="fact-item">
+          <div class="fact-num">0</div>
+          <div class="fact-label">Agendas. Just talk.</div>
         </div>
       </div>
     </div>
 
-    <div class="section-divider"><hr /></div>
+    <div class="about-section">
+      <div class="about-bg-word">CONNECT.</div>
+      <div class="about-inner">
+        <div class="about-left">
+          <div class="section-label">About the Event</div>
+          <h2 class="section-heading">Where diplomacy<br>gets personal.</h2>
+          <div class="section-body">
+            <p>The Networking Hour at Oakridge MUN XVI is an unstructured, informal gathering designed to give delegates a break from the formality of committee — and a chance to simply connect.</p>
+            <p>Whether you're looking to find allies for your resolution, swap notes with a delegate from another committee, or just make a new friend — this is your space. Past delegates call it one of the most memorable parts of the conference.</p>
+          </div>
+        </div>
+        <div class="about-right">
+          <p class="about-pull">"The best conversations I had at MUN didn't happen in the committee room. They happened <strong>in the hour after.</strong>"</p>
+          <p class="about-pull-attr">— Past Oakridge MUN Delegate</p>
+        </div>
+      </div>
+    </div>
 
-    <div class="content-section" style="animation: fadeUp .6s .22s cubic-bezier(0.4,0,0.2,1) both;">
-      <div class="section-label">Logistics</div>
-      <h2 class="section-heading">Everything you need to know.</h2>
-      <div class="detail-list">
-        <div class="detail-row"><span class="detail-key">When</span><span class="detail-val">Day 1 — evening. Exact time listed in the conference schedule.</span></div>
-        <div class="detail-row"><span class="detail-key">Who</span><span class="detail-val">All registered delegates. No additional RSVP required.</span></div>
-        <div class="detail-row"><span class="detail-key">Attire</span><span class="detail-val">Committee formals are fine. Comfort is encouraged.</span></div>
-        <div class="detail-row"><span class="detail-key">Venue</span><span class="detail-val">To be announced closer to the conference date.</span></div>
+    <div class="expect-wrapper">
+      <div class="expect-inner">
+        <div class="section-label">What to Expect</div>
+        <h2 class="section-heading">An hour well spent.</h2>
+        <div class="expect-grid">
+          <div class="expect-card">
+            <div class="expect-card-num">01 — Open Mingling</div>
+            <div class="expect-card-title">No agenda. No seating plan.</div>
+            <p class="expect-card-desc">Walk up to anyone and start a conversation. That's the whole point — and it's easier than it sounds.</p>
+          </div>
+          <div class="expect-card">
+            <div class="expect-card-num">02 — Cross-Committee</div>
+            <div class="expect-card-title">Broaden your perspective.</div>
+            <p class="expect-card-desc">Meet delegates from committees you'd never interact with otherwise. The diversity of thought is half the value.</p>
+          </div>
+          <div class="expect-card">
+            <div class="expect-card-num">03 — Refreshments</div>
+            <div class="expect-card-title">Conversations flow easier.</div>
+            <p class="expect-card-desc">Food and drinks available. A long day of debate deserves a proper break before the evening.</p>
+          </div>
+          <div class="expect-card">
+            <div class="expect-card-num">04 — Icebreakers</div>
+            <div class="expect-card-title">Ease in naturally.</div>
+            <p class="expect-card-desc">Activities and prompts if walking up to strangers isn't your thing — we've got you covered.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="logistics-wrapper">
+      <div class="logistics-inner">
+        <div class="logistics-left">
+          <div class="section-label">Logistics</div>
+          <h2 class="section-heading" style="color: var(--navy);">Everything you need<br>to know.</h2>
+          <div class="detail-list">
+            <div class="detail-row"><span class="detail-key">When</span><span class="detail-val">Day 1 — evening. Exact time in the conference schedule.</span></div>
+            <div class="detail-row"><span class="detail-key">Who</span><span class="detail-val">All registered delegates. No additional RSVP required.</span></div>
+            <div class="detail-row"><span class="detail-key">Attire</span><span class="detail-val">Committee formals are fine. Comfort is encouraged.</span></div>
+            <div class="detail-row"><span class="detail-key">Venue</span><span class="detail-val">To be announced closer to the conference date.</span></div>
+          </div>
+        </div>
+        <div class="logistics-right">
+          <div class="logistics-cta-label">Ready for Chapter XVI?</div>
+          <h3 class="logistics-cta-heading">Don't miss the hour that defines the conference.</h3>
+          <p class="logistics-cta-body">Secure your delegate spot and be in that room. The connections you make during the Networking Hour tend to follow you long after the conference ends.</p>
+          <a href="register.html" class="cta-btn">Register Now →</a>
+        </div>
       </div>
     </div>
 
