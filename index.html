@@ -1841,10 +1841,13 @@
     }
     .btd-card:hover { border-color: rgba(48,205,215,.28); background: rgba(48,205,215,.04); transform: translateY(-3px); }
     .btd-card:hover::before { opacity: 1; }
-    .btd-card-icon {
-      font-size: 1.6rem; margin-bottom: 18px; display: block;
-      line-height: 1;
+    .btd-card-accent {
+      width: 28px; height: 2px;
+      background: linear-gradient(to right, var(--teal), rgba(48,205,215,.2));
+      margin-bottom: 20px;
+      transition: width .25s;
     }
+    .btd-card:hover .btd-card-accent { width: 44px; }
     .btd-card-tag {
       font-size: .4rem; font-weight: 700;
       letter-spacing: .24em; text-transform: uppercase;
@@ -2283,6 +2286,36 @@
     </div>
   </div>
 
+  <!-- ═══ BEYOND THE DAIS ═══ -->
+  <section class="btd-section">
+    <div class="btd-eyebrow">Chapter XVI · Beyond the Committees</div>
+    <h2 class="btd-heading">More than <em>debate.</em></h2>
+    <p class="btd-sub">Oakridge MUN XVI is more than resolutions and gavels — experience the moments that happen outside the committee room.</p>
+    <div class="btd-grid">
+      <a href="networking-hour.html" class="btd-card">
+        <div class="btd-card-accent"></div>
+        <div class="btd-card-tag">Day 1 · Evening</div>
+        <div class="btd-card-title">Networking Hour</div>
+        <p class="btd-card-desc">An informal hour for delegates to connect across committees, exchange ideas, and build the relationships that last beyond the conference.</p>
+        <span class="btd-card-link">Learn more →</span>
+      </a>
+      <a href="social-night.html" class="btd-card">
+        <div class="btd-card-accent"></div>
+        <div class="btd-card-tag">Day 2 · Night</div>
+        <div class="btd-card-title">Social Night</div>
+        <p class="btd-card-desc">A themed evening of celebration, performances, and memories. The highlight of every Oakridge MUN — dress up, show up, and make it count.</p>
+        <span class="btd-card-link">Learn more →</span>
+      </a>
+      <a href="orphanage-initiative.html" class="btd-card">
+        <div class="btd-card-accent"></div>
+        <div class="btd-card-tag">Community · Outreach</div>
+        <div class="btd-card-title">Orphanage Initiative</div>
+        <p class="btd-card-desc">Giving back beyond the dais. Delegates come together to support a local children's home — because diplomacy starts with compassion.</p>
+        <span class="btd-card-link">Learn more →</span>
+      </a>
+    </div>
+  </section>
+
   <!-- ═══ FAQ ═══ -->
   <section class="faq-section" id="faq">
     <div class="faq-inner">
@@ -2327,36 +2360,6 @@
         </div>
 
       </div>
-    </div>
-  </section>
-
-  <!-- ═══ BEYOND THE DAIS ═══ -->
-  <section class="btd-section">
-    <div class="btd-eyebrow">Chapter XVI · Beyond the Committees</div>
-    <h2 class="btd-heading">More than <em>debate.</em></h2>
-    <p class="btd-sub">Oakridge MUN XVI is more than resolutions and gavels — experience the moments that happen outside the committee room.</p>
-    <div class="btd-grid">
-      <a href="networking-hour.html" class="btd-card">
-        <span class="btd-card-icon">🤝</span>
-        <div class="btd-card-tag">Day 1 · Evening</div>
-        <div class="btd-card-title">Networking Hour</div>
-        <p class="btd-card-desc">An informal hour for delegates to connect across committees, exchange ideas, and build the relationships that last beyond the conference.</p>
-        <span class="btd-card-link">Learn more →</span>
-      </a>
-      <a href="social-night.html" class="btd-card">
-        <span class="btd-card-icon">🎭</span>
-        <div class="btd-card-tag">Day 2 · Night</div>
-        <div class="btd-card-title">Social Night</div>
-        <p class="btd-card-desc">A themed evening of celebration, performances, and memories. The highlight of every Oakridge MUN — dress up, show up, and make it count.</p>
-        <span class="btd-card-link">Learn more →</span>
-      </a>
-      <a href="orphanage-initiative.html" class="btd-card">
-        <span class="btd-card-icon">🌱</span>
-        <div class="btd-card-tag">Community · Outreach</div>
-        <div class="btd-card-title">Orphanage Initiative</div>
-        <p class="btd-card-desc">Giving back beyond the dais. Delegates come together to support a local children's home — because diplomacy starts with compassion.</p>
-        <span class="btd-card-link">Learn more →</span>
-      </a>
     </div>
   </section>
 
