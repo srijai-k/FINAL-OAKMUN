@@ -75,7 +75,7 @@
     .nav-center { display: flex; align-items: center; flex-shrink: 0; margin-left: 20px; transition: margin-left .6s cubic-bezier(0.4,0,0.2,1); }
     .nav-links-group {
       display: flex; gap: 24px; list-style: none;
-      white-space: nowrap; overflow: hidden; opacity: 1;
+      white-space: nowrap; overflow: visible; opacity: 1;
       transition: opacity .4s cubic-bezier(0.4,0,0.2,1), max-width .6s cubic-bezier(0.4,0,0.2,1), padding .6s cubic-bezier(0.4,0,0.2,1);
     }
     .nav-links-group.left  { padding-right: 20px; max-width: 400px; }
@@ -112,7 +112,7 @@
     .nav-cta:hover { transform: translateY(-3px); box-shadow: 0 12px 30px rgba(2,20,26,0.08); }
     .nav-cta:active { transform: translateY(0) scale(.997); box-shadow: 0 6px 16px rgba(2,20,26,0.06); }
     nav.scrolled .nav-logo        { opacity: 0; max-width: 0; }
-    nav.scrolled .nav-links-group { opacity: 0; max-width: 0; padding: 0; }
+    nav.scrolled .nav-links-group { opacity: 0; max-width: 0; padding: 0; pointer-events: none; }
     nav.scrolled .nav-right       { opacity: 0; max-width: 0; margin-left: 0; }
     nav.scrolled .nav-cta         { opacity: 0; max-width: 0; padding: 0; pointer-events: none; }
     nav.scrolled .menu-btn        { opacity: 0; pointer-events: none; }
@@ -724,34 +724,121 @@
       .committee-visual { border-radius: 20px; }
       .filters-row { flex-wrap: wrap; }
     }
+  
+    .nav-has-drop { position: relative; list-style: none; }
+    .nav-has-drop > a::after { content: ' ▾'; font-size: .5em; opacity: .55; }
+    .nav-drop {
+      position: absolute; top: calc(100% + 18px); left: 50%;
+      transform: translateX(-50%) translateY(-6px); width: 320px;
+      background: rgba(3,10,22,.97); backdrop-filter: blur(32px); -webkit-backdrop-filter: blur(32px);
+      border: 1px solid rgba(48,205,215,.15); border-radius: 16px; padding: 16px;
+      opacity: 0; pointer-events: none;
+      transition: opacity .3s .55s cubic-bezier(0.4,0,0.2,1), transform .3s .55s cubic-bezier(0.4,0,0.2,1);
+      box-shadow: 0 24px 60px rgba(0,0,0,.6), 0 0 0 1px rgba(48,205,215,.06); z-index: 300;
+    }
+    .nav-drop::before { content: ''; position: absolute; top: -20px; left: 0; right: 0; height: 20px; }
+    .nav-has-drop:hover .nav-drop { opacity: 1; pointer-events: auto; transform: translateX(-50%) translateY(0); transition-delay: 0s; }
+    .nav-drop-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 2px; }
+    .nav-drop-item {
+      font-size: .58rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+      color: rgba(250,245,237,.55) !important; text-decoration: none; padding: 7px 8px;
+      border-radius: 6px; transition: background .15s, color .15s; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .nav-drop-item:hover { background: rgba(48,205,215,.1); color: var(--teal) !important; }
+    .nav-drop-reserved { color: rgba(188,154,110,.55) !important; }
+    .nav-drop-reserved:hover { background: rgba(188,154,110,.08); color: #BC9A6E !important; }
+    .nav-drop-footer {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-top: 12px; padding-top: 10px; border-top: 1px solid rgba(250,245,237,.07);
+      font-size: .54rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+    }
+    .nav-drop-footer span { color: rgba(250,245,237,.25); }
+    .nav-drop-footer a { color: var(--teal); text-decoration: none; }
+    .nav-drop-footer a:hover { opacity: .75; }
+    .nav-drop--events { width: 210px; left: auto; right: 0; transform: translateY(-6px); }
+    .nav-has-drop:hover .nav-drop--events { transform: translateY(0); transition-delay: 0s; }
+    .nav-drop--events .nav-drop-grid { grid-template-columns: 1fr; }
+    .nav-drop--events .nav-drop-item {
+      font-size: .62rem; padding: 9px 10px 9px 14px;
+      border-left: 2px solid transparent;
+      transition: background .2s, color .2s, border-color .2s, padding-left .2s;
+    }
+    .nav-drop--events .nav-drop-item:hover {
+      background: rgba(48,205,215,.1); color: var(--teal) !important;
+      border-left-color: var(--teal); padding-left: 18px;
+    }
   </style>
 </head>
 <body>
   <div id="cursor-capsule">View Committee</div>
 
+    <!-- Mobile nav drawer -->
   <div class="mobile-nav" id="mobileNav">
     <a href="index.html">Home</a>
     <a href="committees.html">Committees</a>
     <a href="secretariat.html">Secretariat</a>
     <a href="index.html#schedule">Schedule</a>
-    <a href="index.html#faq">FAQ</a>
     <a href="resources.html">Resources</a>
+    <a href="social-night.html">Social Night</a>
+    <a href="networking-hour.html">Networking Hour</a>
+    <a href="orphanage-initiative.html">Orphanage Initiative</a>
+    <a href="index.html#faq">FAQ</a>
   </div>
 
-  <nav>
+  <!-- NAV -->
+  <nav id="navbar">
     <div class="nav-pill">
       <a class="nav-logo" href="index.html">Oakridge <span>MUN</span></a>
       <div class="nav-center">
         <ul class="nav-links-group left">
           <li><a href="index.html">Home</a></li>
-          <li><a href="committees.html" class="active">Committees</a></li>
+          <li class="nav-has-drop">
+            <a href="committees.html" class="active">Committees</a>
+            <div class="nav-drop">
+              <div class="nav-drop-grid">
+                <a href="committees.html" class="nav-drop-item">DISEC</a>
+                <a href="committees.html" class="nav-drop-item">UNSC</a>
+                <a href="committees.html" class="nav-drop-item">UNHRC</a>
+                <a href="committees.html" class="nav-drop-item">JCC-1</a>
+                <a href="committees.html" class="nav-drop-item">JCC-2</a>
+                <a href="committees.html" class="nav-drop-item">HCC</a>
+                <a href="committees.html" class="nav-drop-item">Lok Sabha</a>
+                <a href="committees.html" class="nav-drop-item">Armageddon</a>
+                <a href="committees.html" class="nav-drop-item">OIC</a>
+                <a href="committees.html" class="nav-drop-item">UN Women</a>
+                <a href="committees.html" class="nav-drop-item">COPUOS</a>
+                <a href="committees.html" class="nav-drop-item">US Senate</a>
+                <a href="committees.html" class="nav-drop-item">UNODC</a>
+                <a href="committees.html" class="nav-drop-item">ECOFIN</a>
+                <a href="committees.html" class="nav-drop-item">Special Committee</a>
+                <a href="committees.html" class="nav-drop-item">FIFA</a>
+                <a href="committees.html" class="nav-drop-item">WHO</a>
+                <a href="committees.html" class="nav-drop-item">IP</a>
+                <a href="committees.html" class="nav-drop-item nav-drop-reserved">UNGA-SOCHUM</a>
+              </div>
+              <div class="nav-drop-footer">
+                <span>19 committees &amp;nbsp;&middot;&amp;nbsp; 3 days</span>
+                <a href="committees.html">View all &rarr;</a>
+              </div>
+            </div>
+          </li>
           <li><a href="secretariat.html">Secretariat</a></li>
         </ul>
         <div class="nav-mark"><img src="logo.png" alt="Oakridge MUN" /></div>
         <ul class="nav-links-group right">
           <li><a href="index.html#schedule">Schedule</a></li>
-          <li><a href="index.html#faq">FAQ</a></li>
           <li><a href="resources.html">Resources</a></li>
+          <li class="nav-has-drop">
+            <a href="#">Other</a>
+            <div class="nav-drop nav-drop--events">
+              <div class="nav-drop-grid">
+                <a href="social-night.html" class="nav-drop-item">Social Night</a>
+                <a href="networking-hour.html" class="nav-drop-item">Networking Hour</a>
+                <a href="orphanage-initiative.html" class="nav-drop-item">Orphanage Initiative</a>
+                <a href="index.html#faq" class="nav-drop-item">FAQ</a>
+              </div>
+            </div>
+          </li>
         </ul>
       </div>
       <div class="nav-right">
