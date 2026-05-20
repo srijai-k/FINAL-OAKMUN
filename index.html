@@ -113,7 +113,7 @@
     }
     .nav-links-group {
       display: flex; gap: 22px; list-style: none;
-      overflow: hidden; opacity: 1;
+      overflow: visible; opacity: 1;
       transition: opacity .4s cubic-bezier(0.4,0,0.2,1), max-width .6s cubic-bezier(0.4,0,0.2,1), padding .6s cubic-bezier(0.4,0,0.2,1);
     }
     .nav-links-group.left  { padding: 0 18px 0 28px; max-width: 400px; }
@@ -254,7 +254,7 @@
     }
     /* scrolled — collapse to logo mark only */
     nav.scrolled .nav-logo        { opacity: 0; max-width: 0; }
-    nav.scrolled .nav-links-group { opacity: 0; max-width: 0; padding: 0; }
+    nav.scrolled .nav-links-group { opacity: 0; max-width: 0; padding: 0; pointer-events: none; }
     nav.scrolled .nav-right       { opacity: 0; max-width: 0; margin-left: 0; }
     nav.scrolled .nav-cta         { opacity: 0; max-width: 0; padding: 0; pointer-events: none; }
     nav.scrolled .menu-btn        { opacity: 0; pointer-events: none; }
