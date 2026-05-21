@@ -470,6 +470,116 @@
       margin-top: 5px;
     }
 
+    /* ── DELEGATION GUIDELINES ── */
+    .guidelines-section {
+      background: #001223;
+      padding: 100px 56px;
+      position: relative;
+      overflow: hidden;
+    }
+    .guidelines-section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 0%, rgba(48,205,215,.06) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .guidelines-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+    .guidelines-kicker {
+      font-size: .6rem;
+      font-weight: 700;
+      letter-spacing: .3em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 16px;
+    }
+    .guidelines-title {
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 900;
+      letter-spacing: -.03em;
+      color: var(--white);
+      margin-bottom: 20px;
+    }
+    .guidelines-desc {
+      font-size: 1rem;
+      font-weight: 400;
+      line-height: 1.8;
+      color: rgba(250,245,237,.6);
+      max-width: 680px;
+      margin-bottom: 40px;
+    }
+    .guidelines-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(48,205,215,.08);
+      border: 1px solid rgba(48,205,215,.2);
+      border-radius: 100px;
+      padding: 8px 18px;
+      font-size: .62rem;
+      font-weight: 700;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--teal);
+    }
+    .guidelines-badge-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--teal);
+      animation: pulse-dot 2s ease-in-out infinite;
+    }
+    @keyframes pulse-dot-reg {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%       { opacity: .3; transform: scale(.55); }
+    }
+    .guidelines-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 40px;
+    }
+    .guidelines-card {
+      background: rgba(250,245,237,.03);
+      border: 1px solid rgba(250,245,237,.08);
+      border-radius: 16px;
+      padding: 28px 24px;
+    }
+    .guidelines-card-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: rgba(48,205,215,.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+      color: var(--teal);
+    }
+    .guidelines-card-icon svg { width: 18px; height: 18px; }
+    .guidelines-card h3 {
+      font-size: .78rem;
+      font-weight: 800;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--white);
+      margin-bottom: 10px;
+    }
+    .guidelines-card p {
+      font-size: .82rem;
+      line-height: 1.7;
+      color: rgba(250,245,237,.45);
+    }
+    @media (max-width: 768px) {
+      .guidelines-section { padding: 72px 20px; }
+      .guidelines-grid { grid-template-columns: 1fr; }
+    }
+
     /* ── FOOTER ── */
     footer { background: #001223; padding: 72px 56px 0; position: relative; overflow: hidden; }
     footer::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(to right, transparent, rgba(48,205,215,.3), transparent); }
@@ -606,9 +716,7 @@
     <a href="resources.html">Resources</a>
     <a href="social-night.html">Social Night</a>
     <a href="networking-hour.html">Networking Hour</a>
-    <a href="orphanage-initiative.html">Orphanage Initiative</a>
-    <a href="delegation-guidelines.html">Delegation Guidelines</a>
-    <a href="index.html#faq">FAQ</a>
+    <a href="orphanage-initiative.html">Community Outreach</a>
   </div>
 
   <!-- NAV -->
@@ -631,9 +739,7 @@
               <div class="nav-drop-grid">
                 <a href="social-night.html" class="nav-drop-item">Social Night</a>
                 <a href="networking-hour.html" class="nav-drop-item">Networking Hour</a>
-                <a href="orphanage-initiative.html" class="nav-drop-item">Orphanage Initiative</a>
-                <a href="delegation-guidelines.html" class="nav-drop-item">Delegation Guidelines</a>
-                <a href="index.html#faq" class="nav-drop-item">FAQ</a>
+                <a href="orphanage-initiative.html" class="nav-drop-item">Community Outreach</a>
               </div>
             </div>
           </li>
@@ -757,6 +863,42 @@
     </div>
 
   </div>
+
+  <!-- ═══ DELEGATION GUIDELINES ═══ -->
+  <section class="guidelines-section">
+    <div class="guidelines-inner">
+      <div class="guidelines-kicker">Delegation Resources</div>
+      <h2 class="guidelines-title">Delegation Guidelines</h2>
+      <p class="guidelines-desc">The official Delegation Guidelines for Oakridge MUN XVI are being finalised by the Secretariat. They will be published here ahead of the conference and cover everything from delegation conduct to preparation expectations.</p>
+      <div class="guidelines-badge">
+        <span class="guidelines-badge-dot"></span>
+        Publishing ahead of conference
+      </div>
+      <div class="guidelines-grid">
+        <div class="guidelines-card">
+          <div class="guidelines-card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+          </div>
+          <h3>Delegate Conduct</h3>
+          <p>Standards of behaviour, dress code, and professional expectations for all delegates throughout the conference.</p>
+        </div>
+        <div class="guidelines-card">
+          <div class="guidelines-card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 12h8M8 8h8M8 16h5"/></svg>
+          </div>
+          <h3>Position Papers</h3>
+          <p>Submission format, deadlines, and research guidance for preparing your delegation's official position papers.</p>
+        </div>
+        <div class="guidelines-card">
+          <div class="guidelines-card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+          </div>
+          <h3>Preparation Timeline</h3>
+          <p>Key dates and preparation milestones leading up to the conference — from research phase to final briefings.</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <script>
     // ── NAV SCROLL ──

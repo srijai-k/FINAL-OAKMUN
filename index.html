@@ -106,7 +106,7 @@
       max-width: 220px; opacity: 1;
       transition: opacity .5s cubic-bezier(0.4,0,0.2,1), max-width .6s cubic-bezier(0.4,0,0.2,1);
     }
-    .nav-logo span { color: var(--teal); }
+    .nav-logo span { color: var(--white); }
     .nav-center {
       display: flex; align-items: center; flex-shrink: 0; margin-left: 20px;
       transition: margin-left .6s cubic-bezier(0.4,0,0.2,1);
@@ -299,25 +299,12 @@
       width: 100%;
       height: calc(100vh / 1.1);
       overflow: hidden;
-      background: var(--navy);
+      background: url('hero_page_5.png') center bottom / cover no-repeat var(--navy);
     }
 
-    .hero video {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
+    .hero video { display: none; }
 
-    .hero-overlay {
-      position: absolute;
-      inset: 0;
-      background:
-        linear-gradient(to bottom, rgba(0,10,30,.6) 0%, rgba(0,20,45,.35) 40%, rgba(0,10,20,.92) 100%),
-        linear-gradient(110deg, rgba(0,30,60,.55) 0%, transparent 55%);
-    }
+    .hero-overlay { position: absolute; inset: 0; background: rgba(0,5,18,.12); }
 
     /* Ambient glow — left-leaning */
     .hero-glow {
@@ -368,25 +355,24 @@
       inset: 0;
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
-      padding: 0 56px 16px;
+      align-items: center;
+      justify-content: center;
+      padding: 120px 56px 80px;
+      text-align: center;
       z-index: 10;
     }
 
-    /* Top bar */
-
-    /* Stacked headline — left-aligned */
+    /* Stacked headline — centered */
     .hero-headline {
-      flex: 1;
       display: flex;
       flex-direction: column;
-      justify-content: center;
-      padding: 0;
-      gap: 4px;
-      max-width: 68%;
+      align-items: center;
+      gap: 6px;
+      max-width: 100%;
+      margin-bottom: 32px;
     }
     .hero-word-main {
-      font-size: clamp(3rem, 9vw, 8.5rem);
+      font-size: clamp(2.2rem, 6vw, 5.5rem);
       font-weight: 900;
       line-height: .88;
       letter-spacing: -.05em;
@@ -396,11 +382,12 @@
     .hero-word-sub {
       display: flex;
       align-items: center;
+      justify-content: center;
       gap: 18px;
       animation: fadeUp .85s cubic-bezier(0.4,0,0.2,1) .62s both;
     }
     .hero-word-accent {
-      font-size: clamp(1.8rem, 5.2vw, 5rem);
+      font-size: clamp(1.2rem, 3.5vw, 3.2rem);
       font-weight: 900;
       letter-spacing: -.03em;
       color: var(--teal);
@@ -414,7 +401,7 @@
       border-radius: 2px;
     }
     .hero-word-light {
-      font-size: clamp(1.8rem, 5.2vw, 5rem);
+      font-size: clamp(1.2rem, 3.5vw, 3.2rem);
       font-weight: 900;
       letter-spacing: -.03em;
       text-transform: uppercase;
@@ -422,16 +409,17 @@
       line-height: 1;
     }
 
-    /* Bottom row: info left, countdown right */
+    /* Bottom row — centered column */
     .hero-bottom {
       display: flex;
-      align-items: flex-end;
-      justify-content: space-between;
-      gap: 32px;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
     }
     .hero-bottom-left {
       display: flex;
       flex-direction: column;
+      align-items: center;
       gap: 8px;
       animation: fadeUp .7s cubic-bezier(0.4,0,0.2,1) .78s both;
     }
@@ -439,7 +427,7 @@
       font-size: clamp(.8rem, 1.2vw, .98rem);
       font-weight: 500;
       font-style: italic;
-      color: rgba(250,245,237,.48);
+      color: rgba(250,245,237,.9);
       letter-spacing: .05em;
     }
     .hero-dates {
@@ -450,7 +438,7 @@
       font-weight: 700;
       letter-spacing: .22em;
       text-transform: uppercase;
-      color: rgba(250,245,237,.88);
+      color: rgba(250,245,237,.95);
     }
     .hero-dates .dot {
       width: 3px; height: 3px;
@@ -520,20 +508,31 @@
       gap: 8px;
     }
     .cd-value {
+      position: relative;
       font-size: clamp(1.8rem, 3vw, 2.8rem);
       font-weight: 800;
       line-height: 1;
       color: var(--white);
       min-width: 72px;
       text-align: center;
-      background: rgba(255,255,255,.04);
-      border: 1px solid rgba(48,205,215,.22);
-      border-radius: 10px;
-      padding: 8px 10px 6px;
-      backdrop-filter: blur(12px);
       letter-spacing: -.02em;
-      box-shadow: inset 0 1px 0 rgba(48,205,215,.12), 0 4px 24px rgba(0,0,0,.3);
+      background: rgba(255,255,255,.08);
+      backdrop-filter: blur(28px) saturate(2.2) brightness(1.1);
+      -webkit-backdrop-filter: blur(28px) saturate(2.2) brightness(1.1);
+      border: 1px solid rgba(255,255,255,.45);
+      border-radius: 16px;
+      padding: 10px 12px 8px;
+      overflow: hidden;
+      box-shadow: inset 0 1.5px 0 rgba(255,255,255,.55), inset 0 -1px 0 rgba(0,0,0,.12), 0 8px 32px rgba(0,0,0,.2);
       animation: countFlip .2s ease;
+    }
+    /* inner coloured tint — gives the iOS glass its characteristic look */
+    .cd-value::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(120,160,255,.22) 0%, rgba(180,120,255,.18) 50%, rgba(80,200,255,.14) 100%);
+      pointer-events: none;
     }
     .cd-label {
       font-size: .5rem;
@@ -617,7 +616,7 @@
     ═══════════════════════════════════════ */
     .theme-section {
       position: relative;
-      padding: 100px 64px;
+      padding: 140px 64px;
       overflow: hidden;
       background: #003057;
     }
@@ -658,15 +657,15 @@
       gap: 0;
     }
     .theme-label {
-      font-size: .6rem;
+      font-size: .65rem;
       font-weight: 700;
       letter-spacing: .28em;
       text-transform: uppercase;
       color: var(--teal);
-      margin-bottom: 28px;
+      margin-bottom: 32px;
     }
     .theme-title {
-      font-size: clamp(2.8rem, 5.5vw, 5rem);
+      font-size: clamp(3.2rem, 6vw, 5.8rem);
       font-weight: 900;
       letter-spacing: -.035em;
       line-height: 1;
@@ -697,11 +696,11 @@
       flex-shrink: 0;
     }
     .theme-caption {
-      font-size: .95rem;
+      font-size: 1.05rem;
       font-weight: 400;
       font-style: italic;
       line-height: 1.8;
-      color: rgba(250,245,237,.5);
+      color: rgba(250,245,237,.7);
       max-width: 680px;
     }
 
@@ -1965,9 +1964,7 @@
     <a href="resources.html">Resources</a>
     <a href="social-night.html">Social Night</a>
     <a href="networking-hour.html">Networking Hour</a>
-    <a href="orphanage-initiative.html">Orphanage Initiative</a>
-    <a href="delegation-guidelines.html">Delegation Guidelines</a>
-    <a href="#faq">FAQ</a>
+    <a href="orphanage-initiative.html">Community Outreach</a>
   </div>
 
   <!-- NAV -->
@@ -1990,9 +1987,7 @@
               <div class="nav-drop-grid">
                 <a href="social-night.html" class="nav-drop-item">Social Night</a>
                 <a href="networking-hour.html" class="nav-drop-item">Networking Hour</a>
-                <a href="orphanage-initiative.html" class="nav-drop-item">Orphanage Initiative</a>
-                <a href="delegation-guidelines.html" class="nav-drop-item">Delegation Guidelines</a>
-                <a href="#faq" class="nav-drop-item">FAQ</a>
+                <a href="orphanage-initiative.html" class="nav-drop-item">Community Outreach</a>
               </div>
             </div>
           </li>
@@ -2013,28 +2008,22 @@
     <div class="hero-overlay"></div>
     <div class="hero-glow"></div>
 
-    <!-- XVI watermark -->
-    <div class="hero-roman" aria-hidden="true"><span>X</span><span>V</span><span>I</span></div>
 
 
     <div class="hero-inner">
 
-      <!-- Top bar -->
-
       <!-- Stacked headline -->
       <div class="hero-headline">
-        <h1 class="hero-word-main">OAKRIDGE</h1>
+        <h1 class="hero-word-main">OAKRIDGE MUN</h1>
         <div class="hero-word-sub">
-          <span class="hero-word-accent">MODEL</span>
-          <div class="hero-word-rule"></div>
-          <span class="hero-word-light">United Nations</span>
+          <span class="hero-word-light">Model United Nations</span>
         </div>
       </div>
 
-      <!-- Bottom: info + countdown -->
+      <!-- Info + countdown -->
       <div class="hero-bottom">
         <div class="hero-bottom-left">
-          <p class="hero-tagline">"Create. Debate. Innovate."</p>
+          <p class="hero-tagline">Create. Debate. Innovate.</p>
           <div class="hero-dates">
             <span>24th July</span><span class="dot"></span>
             <span>25th July</span><span class="dot"></span>
@@ -2072,6 +2061,9 @@
       </div>
 
     </div>
+
+    <!-- scroll indicator -->
+    <div style="position:absolute;bottom:28px;left:50%;transform:translateX(-50%);font-size:.6rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:rgba(250,245,237,.35);z-index:10;animation:fadeUp .6s .9s both;">scroll to explore</div>
 
   </section>
 
@@ -2367,7 +2359,7 @@
       <a href="orphanage-initiative.html" class="btd-card">
         <div class="btd-card-accent"></div>
         <div class="btd-card-tag">Community · Outreach</div>
-        <div class="btd-card-title">Orphanage Initiative</div>
+        <div class="btd-card-title">Community Outreach</div>
         <p class="btd-card-desc">Children from a local orphanage join the conference as real delegates — with their own committee, their own voice, and a seat at the table.</p>
         <span class="btd-card-link">Learn more →</span>
       </a>
@@ -2462,7 +2454,7 @@
       <div class="footer-col">
         <h4>Contact Us</h4>
         <div class="footer-contact-item">
-          <p>Secretary-General</p>
+          <p>General Enquiries</p>
           <a href="mailto:mun@oakridge.in">mun@oakridge.in</a>
         </div>
         <div class="footer-contact-item">
