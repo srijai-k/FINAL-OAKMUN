@@ -326,10 +326,16 @@
       color: var(--white);
       line-height: 1.2;
     }
+    .guide-agenda-label {
+      font-size: .52rem; font-weight: 800;
+      letter-spacing: .18em; text-transform: uppercase;
+      color: rgba(48,205,215,.45);
+      margin-bottom: 4px;
+    }
     .guide-topic {
-      font-size: .75rem; font-weight: 500;
-      color: rgba(250,245,237,.45);
-      line-height: 1.55;
+      font-size: .82rem; font-weight: 600;
+      color: rgba(250,245,237,.55);
+      line-height: 1.5;
     }
     .guide-footer {
       display: flex;
@@ -366,6 +372,7 @@
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 14px;
+      max-width: 720px;
     }
 
     .doc-card {
@@ -482,25 +489,33 @@
     }
 
     /* ── FOOTER ── */
-    .page-footer {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 36px 48px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      border-top: 1px solid rgba(250,245,237,.06);
-    }
-    .footer-note {
-      font-size: .62rem; font-weight: 600;
-      letter-spacing: .1em; text-transform: uppercase;
-      color: rgba(250,245,237,.2);
-    }
-    .footer-dates {
-      font-size: .62rem; font-weight: 700;
-      letter-spacing: .12em; text-transform: uppercase;
-      color: rgba(48,205,215,.5);
-    }
+    footer { background: #001223; padding: 72px 56px 0; position: relative; overflow: hidden; }
+    footer::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(to right, transparent, rgba(48,205,215,.3), transparent); }
+    .footer-top { display: grid; grid-template-columns: 300px 1px 1fr 1fr 1fr; gap: 0 48px; padding-bottom: 64px; }
+    .footer-divider { background: rgba(250,245,237,.08); width: 1px; align-self: stretch; }
+    .footer-brand { display: flex; flex-direction: column; gap: 20px; padding-right: 16px; }
+    .footer-logo { width: 64px; height: 64px; object-fit: contain; filter: brightness(0) invert(1); opacity: .85; }
+    .footer-chapter { font-size: .72rem; font-weight: 800; letter-spacing: .2em; text-transform: uppercase; color: var(--white); }
+    .footer-desc { font-size: .82rem; line-height: 1.75; color: rgba(250,245,237,.4); }
+    .footer-col h4 { font-size: .65rem; font-weight: 800; letter-spacing: .2em; text-transform: uppercase; color: var(--teal); margin-bottom: 20px; }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+    .footer-col ul li a { font-size: .85rem; font-weight: 500; color: rgba(250,245,237,.55); text-decoration: none; transition: color .2s; }
+    .footer-col ul li a:hover { color: var(--teal); }
+    .footer-contact-item { margin-bottom: 18px; }
+    .footer-contact-item p { font-size: .78rem; font-weight: 700; color: var(--white); margin-bottom: 4px; letter-spacing: .04em; }
+    .footer-contact-item a { font-size: .82rem; color: var(--teal); text-decoration: none; transition: opacity .2s; }
+    .footer-contact-item a:hover { opacity: .75; }
+    .footer-contact-item span { font-size: .82rem; color: rgba(250,245,237,.4); line-height: 1.6; display: block; }
+    .footer-detail-item { margin-bottom: 18px; }
+    .footer-detail-item p { font-size: .78rem; font-weight: 700; color: var(--white); margin-bottom: 4px; letter-spacing: .04em; }
+    .footer-detail-item span { font-size: .82rem; color: rgba(250,245,237,.4); font-style: italic; }
+    .footer-social { display: flex; gap: 12px; margin-top: 6px; }
+    .footer-social a { width: 36px; height: 36px; border-radius: 50%; border: 1px solid rgba(250,245,237,.12); display: flex; align-items: center; justify-content: center; color: rgba(250,245,237,.4); text-decoration: none; transition: border-color .2s, color .2s, background .2s; }
+    .footer-social a:hover { border-color: var(--teal); color: var(--teal); background: rgba(48,205,215,.08); }
+    .footer-social svg { width: 15px; height: 15px; fill: currentColor; }
+    .footer-bottom { border-top: 1px solid rgba(250,245,237,.06); padding: 24px 0; display: flex; align-items: center; justify-content: space-between; }
+    .footer-bottom p { font-size: .7rem; font-weight: 500; color: rgba(250,245,237,.25); letter-spacing: .04em; }
+    .footer-bottom a { color: var(--teal); text-decoration: none; }
 
     /* ── MOBILE ── */
     @media (max-width: 900px) {
@@ -527,7 +542,10 @@
       .guides-grid { grid-template-columns: 1fr; }
       .docs-grid { grid-template-columns: 1fr; }
       .links-grid { grid-template-columns: 1fr; }
-      .page-footer { padding: 24px 20px; flex-direction: column; gap: 8px; text-align: center; }
+      footer { padding: 48px 20px 0; }
+      .footer-top { grid-template-columns: 1fr; gap: 32px 0; }
+      .footer-divider { display: none; }
+      .footer-bottom { flex-direction: column; gap: 6px; text-align: center; }
     }
   
     .nav-has-drop { position: relative; list-style: none; }
@@ -587,6 +605,7 @@
     <a href="social-night.html">Social Night</a>
     <a href="networking-hour.html">Networking Hour</a>
     <a href="orphanage-initiative.html">Orphanage Initiative</a>
+    <a href="delegation-guidelines.html">Delegation Guidelines</a>
     <a href="index.html#faq">FAQ</a>
   </div>
 
@@ -611,6 +630,7 @@
                 <a href="social-night.html" class="nav-drop-item">Social Night</a>
                 <a href="networking-hour.html" class="nav-drop-item">Networking Hour</a>
                 <a href="orphanage-initiative.html" class="nav-drop-item">Orphanage Initiative</a>
+                <a href="delegation-guidelines.html" class="nav-drop-item">Delegation Guidelines</a>
                 <a href="index.html#faq" class="nav-drop-item">FAQ</a>
               </div>
             </div>
@@ -653,7 +673,8 @@
         <div class="guide-card">
           <div class="guide-type">Committee</div>
           <div class="guide-name">UNSC</div>
-          <div class="guide-topic">United Nations Security Council — Agenda TBD</div>
+          <div class="guide-agenda-label">Agenda</div>
+          <div class="guide-topic">United Nations Security Council — To Be Announced</div>
           <div class="guide-footer">
             <span class="guide-status soon">Coming soon</span>
             <a class="guide-dl">
@@ -666,7 +687,8 @@
         <div class="guide-card">
           <div class="guide-type">Committee</div>
           <div class="guide-name">UNGA</div>
-          <div class="guide-topic">United Nations General Assembly — Agenda TBD</div>
+          <div class="guide-agenda-label">Agenda</div>
+          <div class="guide-topic">United Nations General Assembly — To Be Announced</div>
           <div class="guide-footer">
             <span class="guide-status soon">Coming soon</span>
             <a class="guide-dl">
@@ -679,7 +701,8 @@
         <div class="guide-card">
           <div class="guide-type">Committee</div>
           <div class="guide-name">UNHRC</div>
-          <div class="guide-topic">Human Rights Council — Agenda TBD</div>
+          <div class="guide-agenda-label">Agenda</div>
+          <div class="guide-topic">Human Rights Council — To Be Announced</div>
           <div class="guide-footer">
             <span class="guide-status soon">Coming soon</span>
             <a class="guide-dl">
@@ -692,7 +715,8 @@
         <div class="guide-card">
           <div class="guide-type">Committee</div>
           <div class="guide-name">ECOSOC</div>
-          <div class="guide-topic">Economic and Social Council — Agenda TBD</div>
+          <div class="guide-agenda-label">Agenda</div>
+          <div class="guide-topic">Economic and Social Council — To Be Announced</div>
           <div class="guide-footer">
             <span class="guide-status soon">Coming soon</span>
             <a class="guide-dl">
@@ -705,7 +729,8 @@
         <div class="guide-card">
           <div class="guide-type">Committee</div>
           <div class="guide-name">DISEC</div>
-          <div class="guide-topic">Disarmament & International Security — Agenda TBD</div>
+          <div class="guide-agenda-label">Agenda</div>
+          <div class="guide-topic">Disarmament & International Security — To Be Announced</div>
           <div class="guide-footer">
             <span class="guide-status soon">Coming soon</span>
             <a class="guide-dl">
@@ -718,7 +743,8 @@
         <div class="guide-card">
           <div class="guide-type">Committee</div>
           <div class="guide-name">IP Comm</div>
-          <div class="guide-topic">International Press Committee — Agenda TBD</div>
+          <div class="guide-agenda-label">Agenda</div>
+          <div class="guide-topic">International Press Committee — To Be Announced</div>
           <div class="guide-footer">
             <span class="guide-status soon">Coming soon</span>
             <a class="guide-dl">
@@ -735,7 +761,7 @@
     <div class="section" style="animation: fadeUp .6s .2s cubic-bezier(0.4,0,0.2,1) both;">
       <div class="section-header">
         <div class="section-title">Essential Documents</div>
-        <div class="section-count">Procedure · Format · Handbook</div>
+        <div class="section-count">Procedure · Handbook</div>
       </div>
       <div class="docs-grid">
 
@@ -773,39 +799,6 @@
           </div>
         </a>
 
-        <a class="doc-card" href="#">
-          <div class="doc-icon">
-            <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-              <path d="M14 3H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7L14 3z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
-              <path d="M14 3v4h4M9 13h4M9 9h2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-            </svg>
-          </div>
-          <div class="doc-body">
-            <div class="doc-tag soon">Coming soon</div>
-            <div class="doc-name">Position Paper Format</div>
-            <div class="doc-desc">Required structure, word limits, submission deadline, and evaluation criteria for delegate position papers.</div>
-          </div>
-          <div class="doc-arrow">
-            <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M4 9h10M10 5l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </div>
-        </a>
-
-        <a class="doc-card" href="#">
-          <div class="doc-icon">
-            <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-              <circle cx="11" cy="11" r="8" stroke="currentColor" stroke-width="1.5"/>
-              <path d="M11 7v4l3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </div>
-          <div class="doc-body">
-            <div class="doc-tag soon">Coming soon</div>
-            <div class="doc-name">Conference Schedule</div>
-            <div class="doc-desc">Day-by-day timeline for all three days including opening ceremony, committee sessions, and award ceremony.</div>
-          </div>
-          <div class="doc-arrow">
-            <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M4 9h10M10 5l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </div>
-        </a>
 
       </div>
     </div>
@@ -875,13 +868,68 @@
       </div>
     </div>
 
-    <!-- FOOTER -->
-    <div class="page-footer">
-      <span class="footer-note">Oakridge MUN XVI · Oakridge International School</span>
-      <span class="footer-dates">24 July · 25 July · 26 July 2026</span>
-    </div>
-
   </div>
+
+  <footer>
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img src="logo.png" alt="Oakridge MUN Logo" class="footer-logo" />
+        <p class="footer-chapter">Chapter XVI</p>
+        <p class="footer-desc">Oakridge Model United Nations brings together passionate delegates from across the high schools of India for three days of diplomatic excellence.</p>
+      </div>
+      <div class="footer-divider"></div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="index.html#schedule">Schedule</a></li>
+          <li><a href="secretariat.html">Secretariat</a></li>
+          <li><a href="committees.html">Committees</a></li>
+          <li><a href="resources.html">Resources</a></li>
+          <li><a href="index.html#faq">FAQs</a></li>
+          <li><a href="register.html">Register</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact Us</h4>
+        <div class="footer-contact-item">
+          <p>Secretary-General</p>
+          <a href="mailto:mun@oakridge.in">mun@oakridge.in</a>
+        </div>
+        <div class="footer-contact-item">
+          <p>Secretary-General</p>
+          <a href="mailto:shrey_vajpayee@oakridge.in">shrey_vajpayee@oakridge.in</a>
+        </div>
+        <div class="footer-contact-item">
+          <p>Location</p>
+          <span>Oakridge International School<br>Hyderabad, India</span>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Event Details</h4>
+        <div class="footer-detail-item">
+          <p>Dates</p>
+          <span style="font-style:normal;">24th July – 26th July, 2026</span>
+        </div>
+        <div class="footer-detail-item">
+          <p>Theme</p>
+          <span>"Create. Debate. Innovate."</span>
+        </div>
+        <div class="footer-detail-item">
+          <p>Connect With Us</p>
+          <div class="footer-social">
+            <a href="https://www.instagram.com/oakmun/" target="_blank" rel="noopener" aria-label="Instagram">
+              <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Oakridge International School. All rights reserved.</p>
+      <p>Website designed and developed by <a href="#">Srijai Kodali</a></p>
+    </div>
+  </footer>
 
   <script>
     // ── NAV SCROLL ──
