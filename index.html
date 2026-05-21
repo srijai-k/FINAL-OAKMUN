@@ -386,7 +386,7 @@
       max-width: 68%;
     }
     .hero-word-main {
-      font-size: clamp(4.2rem, 13vw, 12.5rem);
+      font-size: clamp(3rem, 9vw, 8.5rem);
       font-weight: 900;
       line-height: .88;
       letter-spacing: -.05em;
@@ -414,11 +414,11 @@
       border-radius: 2px;
     }
     .hero-word-light {
-      font-size: clamp(1.2rem, 3.4vw, 3.4rem);
-      font-weight: 300;
-      letter-spacing: .06em;
+      font-size: clamp(1.8rem, 5.2vw, 5rem);
+      font-weight: 900;
+      letter-spacing: -.03em;
       text-transform: uppercase;
-      color: rgba(250,245,237,.42);
+      color: var(--teal);
       line-height: 1;
     }
 
@@ -1288,7 +1288,7 @@
        FAQ
     ═══════════════════════════════════════ */
     .faq-section {
-      background: #003057;
+      background: #001223;
       padding: 100px 56px 120px;
       position: relative;
       overflow: hidden;
@@ -1552,10 +1552,10 @@
       .hero-inner { padding: 0 20px 36px; }
 
       .hero-headline { max-width: 100%; gap: 4px; }
-      .hero-word-main { font-size: clamp(3rem, 16vw, 5.5rem); }
+      .hero-word-main { font-size: clamp(2.4rem, 12vw, 5rem); }
       .hero-word-accent { font-size: clamp(1.4rem, 8.5vw, 3rem); }
       .hero-word-rule { height: clamp(1.4rem, 7.5vw, 2.8rem); }
-      .hero-word-light { font-size: clamp(1rem, 5.5vw, 2rem); }
+      .hero-word-light { font-size: clamp(1.4rem, 8.5vw, 3rem); }
       .hero-bottom { flex-direction: column; align-items: flex-start; gap: 24px; }
       .hero-bottom-right { order: -1; }
       .countdown { gap: 6px; }
@@ -1596,7 +1596,14 @@
       .footer-divider { display: none; }
       .footer-bottom { flex-direction: column; gap: 8px; padding: 20px 0; }
 
-      .ctrl-chains-section { display: none; }
+      .ctrl-chains-section { min-height: auto; }
+      .ctrl-chains-sticky { min-height: auto; flex-direction: column; }
+      .ctrl-copy { width: 100%; height: auto; padding: 72px 20px 28px; }
+      .ctrl-title { font-size: 2.6rem; }
+      .ctrl-subtitle { max-width: 100%; font-size: .9rem; }
+      .ctrl-chain-stage { width: 100%; height: 56vh; }
+      .ctrl-chain-name { font-size: clamp(2.2rem, 9vw, 3.8rem); max-width: 75vw; }
+      .ctrl-chain-icon { width: 50px; height: 50px; font-size: 12px; }
     }
 
     /* ═══════════════════════════════════════
@@ -1710,7 +1717,7 @@
        PRE-FOOTER CTA BANNER
     ═══════════════════════════════════════ */
     .cta-banner {
-      background: linear-gradient(160deg, #003057 0%, #003057 50%, #003057 100%);
+      background: linear-gradient(160deg, #001223 0%, #001a35 60%, #001223 100%);
       position: relative; overflow: hidden;
       padding: 120px 56px;
       text-align: center;
@@ -2293,21 +2300,21 @@
           <div class="ctrl-chain"><span class="ctrl-chain-icon" style="--chain-color:var(--teal);"><span class="ctrl-chain-initial">DI</span></span><span class="ctrl-chain-name">DISEC</span></div>
           <div class="ctrl-chain"><span class="ctrl-chain-icon" style="--chain-color:var(--teal-light);"><span class="ctrl-chain-initial">UN</span></span><span class="ctrl-chain-name">UNSC</span></div>
           <div class="ctrl-chain"><span class="ctrl-chain-icon" style="--chain-color:var(--teal-light);"><span class="ctrl-chain-initial">HR</span></span><span class="ctrl-chain-name">UNHRC</span></div>
-          <div class="ctrl-chain"><span class="ctrl-chain-icon" style="--chain-color:var(--red); color:var(--white);"><span class="ctrl-chain-initial">J1</span></span><span class="ctrl-chain-name">JCC-1</span></div>
-          <div class="ctrl-chain"><span class="ctrl-chain-icon" style="--chain-color:var(--peach);"><span class="ctrl-chain-initial">J2</span></span><span class="ctrl-chain-name">JCC-2</span></div>
-          <div class="ctrl-chain"><span class="ctrl-chain-icon" style="--chain-color:var(--gold);"><span class="ctrl-chain-initial">HC</span></span><span class="ctrl-chain-name">HCC</span></div>
-          <div class="ctrl-chain"><span class="ctrl-chain-icon" style="--chain-color:var(--yellow);"><span class="ctrl-chain-initial">LS</span></span><span class="ctrl-chain-name">LOK SABHA</span></div>
+          <div class="ctrl-chain"><span class="ctrl-chain-icon" style="--chain-color:var(--teal-dark); color:var(--white);"><span class="ctrl-chain-initial">J1</span></span><span class="ctrl-chain-name">JCC-1</span></div>
+          <div class="ctrl-chain"><span class="ctrl-chain-icon" style="--chain-color:var(--teal);"><span class="ctrl-chain-initial">J2</span></span><span class="ctrl-chain-name">JCC-2</span></div>
+          <div class="ctrl-chain"><span class="ctrl-chain-icon" style="--chain-color:#BC9A6E;"><span class="ctrl-chain-initial">HC</span></span><span class="ctrl-chain-name">HCC</span></div>
+          <div class="ctrl-chain"><span class="ctrl-chain-icon" style="--chain-color:#BC9A6E;"><span class="ctrl-chain-initial">LS</span></span><span class="ctrl-chain-name">LOK SABHA</span></div>
           <div class="ctrl-chain"><span class="ctrl-chain-icon" style="--chain-color:var(--teal-dark); color:var(--white);"><span class="ctrl-chain-initial">AR</span></span><span class="ctrl-chain-name">ARMAGEDDON</span></div>
           <div class="ctrl-chain"><span class="ctrl-chain-icon" style="--chain-color:var(--teal);"><span class="ctrl-chain-initial">OI</span></span><span class="ctrl-chain-name">OIC</span></div>
           <div class="ctrl-chain"><span class="ctrl-chain-icon" style="--chain-color:var(--teal-light);"><span class="ctrl-chain-initial">UW</span></span><span class="ctrl-chain-name">UN WOMEN</span></div>
-          <div class="ctrl-chain"><span class="ctrl-chain-icon" style="--chain-color:var(--red); color:var(--white);"><span class="ctrl-chain-initial">CO</span></span><span class="ctrl-chain-name">COPUOS</span></div>
-          <div class="ctrl-chain"><span class="ctrl-chain-icon" style="--chain-color:var(--peach);"><span class="ctrl-chain-initial">US</span></span><span class="ctrl-chain-name">US SENATE</span></div>
+          <div class="ctrl-chain"><span class="ctrl-chain-icon" style="--chain-color:var(--teal-dark); color:var(--white);"><span class="ctrl-chain-initial">CO</span></span><span class="ctrl-chain-name">COPUOS</span></div>
+          <div class="ctrl-chain"><span class="ctrl-chain-icon" style="--chain-color:var(--teal-light);"><span class="ctrl-chain-initial">US</span></span><span class="ctrl-chain-name">US SENATE</span></div>
           <div class="ctrl-chain"><span class="ctrl-chain-icon" style="--chain-color:var(--teal-dark); color:var(--white);"><span class="ctrl-chain-initial">UD</span></span><span class="ctrl-chain-name">UNODC</span></div>
-          <div class="ctrl-chain"><span class="ctrl-chain-icon" style="--chain-color:var(--yellow);"><span class="ctrl-chain-initial">EC</span></span><span class="ctrl-chain-name">ECOFIN</span></div>
+          <div class="ctrl-chain"><span class="ctrl-chain-icon" style="--chain-color:#BC9A6E;"><span class="ctrl-chain-initial">EC</span></span><span class="ctrl-chain-name">ECOFIN</span></div>
           <div class="ctrl-chain"><span class="ctrl-chain-icon" style="--chain-color:var(--teal);"><span class="ctrl-chain-initial">SC</span></span><span class="ctrl-chain-name">Special Committee</span></div>
           <div class="ctrl-chain"><span class="ctrl-chain-icon" style="--chain-color:var(--teal);"><span class="ctrl-chain-initial">FI</span></span><span class="ctrl-chain-name">FIFA</span></div>
           <div class="ctrl-chain"><span class="ctrl-chain-icon" style="--chain-color:var(--teal-light);"><span class="ctrl-chain-initial">WH</span></span><span class="ctrl-chain-name">WHO</span></div>
-          <div class="ctrl-chain"><span class="ctrl-chain-icon" style="--chain-color:var(--peach);"><span class="ctrl-chain-initial">IP</span></span><span class="ctrl-chain-name">IP</span></div>
+          <div class="ctrl-chain"><span class="ctrl-chain-icon" style="--chain-color:var(--teal);"><span class="ctrl-chain-initial">IP</span></span><span class="ctrl-chain-name">IP</span></div>
         </div>
       </div>
     </div>
