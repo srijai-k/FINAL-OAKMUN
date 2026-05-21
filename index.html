@@ -782,12 +782,15 @@
     .sg-inner {
       max-width: 1100px;
       margin: 0 auto;
-      display: grid;
-      grid-template-columns: 380px 1fr;
-      gap: 80px;
-      align-items: start;
       position: relative;
       z-index: 1;
+      overflow: hidden;
+    }
+    .sg-photo-col {
+      float: left;
+      width: 380px;
+      margin-right: 80px;
+      margin-bottom: 24px;
     }
 
     .sg-photo-wrap {
