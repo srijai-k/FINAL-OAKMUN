@@ -166,6 +166,67 @@
       text-align: right;
     }
 
+    /* ── GALLERY ── */
+    .gallery-section {
+      background: #001223;
+      padding: 100px 64px;
+      position: relative;
+    }
+    .gallery-section::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+      background: radial-gradient(ellipse at 50% 0%, rgba(48,205,215,.04) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .gallery-inner { max-width: 1100px; margin: 0 auto; position: relative; z-index: 1; }
+    .gallery-eyebrow {
+      font-size: .58rem; font-weight: 700; letter-spacing: .22em; text-transform: uppercase;
+      color: var(--teal); opacity: .65; margin-bottom: 14px;
+    }
+    .gallery-title {
+      font-size: clamp(2rem, 4.5vw, 3.5rem);
+      font-weight: 900; letter-spacing: -.03em; line-height: 1;
+      color: var(--white); margin-bottom: 14px;
+    }
+    .gallery-desc {
+      font-size: .9rem; font-weight: 400; line-height: 1.7;
+      color: rgba(250,245,237,.4); max-width: 540px; margin-bottom: 48px;
+    }
+    .photo-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+    .photo-grid.two-col { grid-template-columns: repeat(2, 1fr); }
+    .photo-slot {
+      aspect-ratio: 4/3;
+      border-radius: 14px;
+      background: rgba(48,205,215,.04);
+      border: 1px solid rgba(48,205,215,.1);
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px;
+      position: relative;
+      overflow: hidden;
+      transition: border-color .25s, background .25s;
+    }
+    .photo-slot:hover { border-color: rgba(48,205,215,.2); background: rgba(48,205,215,.07); }
+    .photo-slot img {
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      object-fit: cover; border-radius: 14px;
+      display: none;
+    }
+    .photo-slot img.loaded { display: block; }
+    .photo-slot-icon { color: rgba(48,205,215,.25); }
+    .photo-slot-label {
+      font-size: .55rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase;
+      color: rgba(250,245,237,.2); text-align: center; padding: 0 16px;
+    }
+    .photo-slot.wide { grid-column: span 2; aspect-ratio: 16/7; }
+
+    .awards-section {
+      background: var(--navy);
+      padding: 100px 64px;
+    }
+    .awards-inner { max-width: 1100px; margin: 0 auto; }
+
     /* ── MOBILE ── */
     @media (max-width: 768px) {
       nav { top: 10px; }
@@ -180,6 +241,9 @@
       .hero { padding: 100px 24px 60px; min-height: auto; }
       .hero-inner { grid-template-columns: 1fr; gap: 0; }
       .hero-deco { display: none; }
+      .gallery-section, .awards-section { padding: 72px 24px; }
+      .photo-grid { grid-template-columns: 1fr 1fr; }
+      .photo-slot.wide { grid-column: span 2; }
     }
   </style>
 </head>
@@ -194,6 +258,7 @@
     <a href="social-night.html">Social Night</a>
     <a href="networking-hour.html">Networking Hour</a>
     <a href="orphanage-initiative.html">Orphanage Initiative</a>
+    <a href="delegation-guidelines.html">Delegation Guidelines</a>
     <a href="index.html#faq">FAQ</a>
   </div>
 
@@ -217,6 +282,7 @@
                 <a href="social-night.html" class="nav-drop-item">Social Night</a>
                 <a href="networking-hour.html" class="nav-drop-item">Networking Hour</a>
                 <a href="orphanage-initiative.html" class="nav-drop-item">Orphanage Initiative</a>
+                <a href="delegation-guidelines.html" class="nav-drop-item">Delegation Guidelines</a>
                 <a href="index.html#faq" class="nav-drop-item">FAQ</a>
               </div>
             </div>
@@ -245,6 +311,59 @@
         </div>
       </div>
       <div class="hero-deco">XVI<br>Cares.</div>
+    </div>
+  </section>
+
+  <!-- GALLERY: COMMITTEE PHOTOS -->
+  <section class="gallery-section">
+    <div class="gallery-inner">
+      <div class="gallery-eyebrow">From Last Year's OakMUN</div>
+      <h2 class="gallery-title">In the Committee Room.</h2>
+      <p class="gallery-desc">Snapshots of the orphanage children at last year's Oakridge MUN — debating, deliberating, and making their voices heard for the first time.</p>
+      <div class="photo-grid">
+        <div class="photo-slot">
+          <!-- Replace src with actual photo path when available -->
+          <!-- <img src="photos/orphanage-committee-1.jpg" alt="Orphanage committee session" onload="this.classList.add('loaded')"> -->
+          <svg class="photo-slot-icon" width="32" height="32" viewBox="0 0 32 32" fill="none"><rect x="2" y="6" width="28" height="20" rx="3" stroke="currentColor" stroke-width="1.5"/><circle cx="16" cy="16" r="5" stroke="currentColor" stroke-width="1.5"/><circle cx="24" cy="10" r="1.5" fill="currentColor" opacity=".5"/></svg>
+          <span class="photo-slot-label">Committee Session</span>
+        </div>
+        <div class="photo-slot">
+          <!-- <img src="photos/orphanage-committee-2.jpg" alt="Delegates at table" onload="this.classList.add('loaded')"> -->
+          <svg class="photo-slot-icon" width="32" height="32" viewBox="0 0 32 32" fill="none"><rect x="2" y="6" width="28" height="20" rx="3" stroke="currentColor" stroke-width="1.5"/><circle cx="16" cy="16" r="5" stroke="currentColor" stroke-width="1.5"/><circle cx="24" cy="10" r="1.5" fill="currentColor" opacity=".5"/></svg>
+          <span class="photo-slot-label">Debate in Session</span>
+        </div>
+        <div class="photo-slot">
+          <!-- <img src="photos/orphanage-committee-3.jpg" alt="Children at committee" onload="this.classList.add('loaded')"> -->
+          <svg class="photo-slot-icon" width="32" height="32" viewBox="0 0 32 32" fill="none"><rect x="2" y="6" width="28" height="20" rx="3" stroke="currentColor" stroke-width="1.5"/><circle cx="16" cy="16" r="5" stroke="currentColor" stroke-width="1.5"/><circle cx="24" cy="10" r="1.5" fill="currentColor" opacity=".5"/></svg>
+          <span class="photo-slot-label">Young Delegates</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY: AWARDS CEREMONY -->
+  <section class="awards-section">
+    <div class="awards-inner">
+      <div class="gallery-eyebrow">Awards Ceremony</div>
+      <h2 class="gallery-title">Their Moment on Stage.</h2>
+      <p class="gallery-desc">Every child who participated received recognition on stage at the closing ceremony — a moment of pride for them and for everyone who made it possible.</p>
+      <div class="photo-grid two-col">
+        <div class="photo-slot wide">
+          <!-- <img src="photos/orphanage-awards-stage.jpg" alt="Children receiving awards on stage" onload="this.classList.add('loaded')"> -->
+          <svg class="photo-slot-icon" width="36" height="36" viewBox="0 0 36 36" fill="none"><rect x="2" y="6" width="32" height="24" rx="3" stroke="currentColor" stroke-width="1.5"/><circle cx="18" cy="18" r="6" stroke="currentColor" stroke-width="1.5"/><circle cx="28" cy="11" r="1.5" fill="currentColor" opacity=".5"/></svg>
+          <span class="photo-slot-label">Awards on Stage — Wide Shot</span>
+        </div>
+        <div class="photo-slot">
+          <!-- <img src="photos/orphanage-awards-1.jpg" alt="Award ceremony" onload="this.classList.add('loaded')"> -->
+          <svg class="photo-slot-icon" width="32" height="32" viewBox="0 0 32 32" fill="none"><rect x="2" y="6" width="28" height="20" rx="3" stroke="currentColor" stroke-width="1.5"/><circle cx="16" cy="16" r="5" stroke="currentColor" stroke-width="1.5"/><circle cx="24" cy="10" r="1.5" fill="currentColor" opacity=".5"/></svg>
+          <span class="photo-slot-label">Receiving Awards</span>
+        </div>
+        <div class="photo-slot">
+          <!-- <img src="photos/orphanage-awards-2.jpg" alt="Celebration" onload="this.classList.add('loaded')"> -->
+          <svg class="photo-slot-icon" width="32" height="32" viewBox="0 0 32 32" fill="none"><rect x="2" y="6" width="28" height="20" rx="3" stroke="currentColor" stroke-width="1.5"/><circle cx="16" cy="16" r="5" stroke="currentColor" stroke-width="1.5"/><circle cx="24" cy="10" r="1.5" fill="currentColor" opacity=".5"/></svg>
+          <span class="photo-slot-label">Celebration</span>
+        </div>
+      </div>
     </div>
   </section>
 

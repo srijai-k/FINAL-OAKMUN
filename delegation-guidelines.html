@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Networking Hour | Oakridge MUN XVI</title>
+  <title>Delegation Guidelines | Oakridge MUN XVI</title>
   <link rel="icon" type="image/png" href="favicon.png" />
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-@media (min-width: 769px) { html { zoom: 1.1; } }
+    @media (min-width: 769px) { html { zoom: 1.1; } }
 
     @keyframes navSlideDown { from { opacity: 0; transform: translateX(-50%) translateY(-18px); } to { opacity: 1; transform: translateX(-50%) translateY(0); } }
     @keyframes fadeUp { from { opacity: 0; transform: translateY(32px); } to { opacity: 1; transform: translateY(0); } }
@@ -16,7 +16,7 @@
 
     :root {
       --navy: #003057; --teal: #30CDD7; --teal-dark: #1E96A5;
-      --teal-light: #B4EBF5; --white: #FAF5ED; --gold: #BC9A6E;
+      --teal-light: #B4EBF5; --white: #FAF5ED; --gold: #BC9A6E; --dark: #001223;
     }
     html, body { font-family: 'Montserrat', sans-serif; background: var(--navy); color: var(--white); overflow-x: hidden; min-height: 100%; }
 
@@ -39,7 +39,7 @@
     .nav-drop-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 2px; }
     .nav-drop-item { font-size: .58rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: rgba(250,245,237,.55) !important; text-decoration: none; padding: 7px 8px; border-radius: 6px; transition: background .15s, color .15s; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .nav-drop-item:hover { background: rgba(48,205,215,.1); color: var(--teal) !important; }
-    .nav-drop--events { width: 210px; left: auto; right: 0; transform: translateY(-6px); }
+    .nav-drop--events { width: 220px; left: auto; right: 0; transform: translateY(-6px); }
     .nav-has-drop:hover .nav-drop--events { transform: translateY(0); transition-delay: 0s; }
     .nav-drop--events .nav-drop-grid { grid-template-columns: 1fr; }
     .nav-drop--events .nav-drop-item { font-size: .62rem; padding: 9px 10px 9px 14px; border-left: 2px solid transparent; transition: background .2s, color .2s, border-color .2s, padding-left .2s; }
@@ -81,162 +81,63 @@
 
     /* ── HERO ── */
     .hero {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      position: relative;
-      overflow: hidden;
+      min-height: 100vh; display: flex; align-items: center;
+      position: relative; overflow: hidden;
       padding: 120px 64px 80px;
     }
     .hero::before {
-      content: '';
-      position: absolute; top: -20%; right: -8%;
+      content: ''; position: absolute; top: -20%; right: -8%;
       width: 700px; height: 700px; border-radius: 50%;
-      background: radial-gradient(circle, rgba(48,205,215,.08) 0%, transparent 65%);
+      background: radial-gradient(circle, rgba(48,205,215,.07) 0%, transparent 65%);
       pointer-events: none;
     }
-    .hero::after {
-      content: '';
-      position: absolute; bottom: 10%; left: -5%;
-      width: 500px; height: 500px; border-radius: 50%;
-      background: radial-gradient(circle, rgba(30,150,165,.06) 0%, transparent 65%);
-      pointer-events: none;
-    }
-    .hero-inner {
-      max-width: 1100px;
-      margin: 0 auto;
-      width: 100%;
-      display: grid;
-      grid-template-columns: 1fr auto;
-      align-items: center;
-      gap: 60px;
-      position: relative;
-      z-index: 1;
-    }
-    .hero-back {
-      display: inline-flex; align-items: center; gap: 8px;
-      font-size: .6rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
-      color: rgba(250,245,237,.38); text-decoration: none;
-      margin-bottom: 32px;
-      transition: color .2s;
-      animation: fadeUp .5s .05s cubic-bezier(0.4,0,0.2,1) both;
-    }
+    .hero-inner { max-width: 1100px; margin: 0 auto; width: 100%; display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 60px; position: relative; z-index: 1; }
+    .hero-back { display: inline-flex; align-items: center; gap: 8px; font-size: .6rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: rgba(250,245,237,.38); text-decoration: none; margin-bottom: 32px; transition: color .2s; animation: fadeUp .5s .05s cubic-bezier(0.4,0,0.2,1) both; }
     .hero-back:hover { color: var(--teal); }
-    .hero-kicker {
-      font-size: .6rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase;
-      color: var(--teal); margin-bottom: 20px;
-      animation: fadeUp .5s .1s cubic-bezier(0.4,0,0.2,1) both;
+    .hero-kicker { font-size: .6rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--teal); margin-bottom: 20px; animation: fadeUp .5s .1s cubic-bezier(0.4,0,0.2,1) both; }
+    .hero-title { font-size: clamp(3rem, 6.5vw, 5.5rem); font-weight: 900; letter-spacing: -.03em; line-height: .95; color: var(--white); margin-bottom: 28px; animation: fadeUp .5s .15s cubic-bezier(0.4,0,0.2,1) both; }
+    .hero-desc { font-size: clamp(.88rem, 1.4vw, 1.05rem); font-weight: 400; line-height: 1.7; color: rgba(250,245,237,.5); max-width: 520px; margin-bottom: 36px; animation: fadeUp .5s .2s cubic-bezier(0.4,0,0.2,1) both; }
+    .hero-badges { display: flex; flex-wrap: wrap; gap: 10px; animation: fadeUp .5s .25s cubic-bezier(0.4,0,0.2,1) both; }
+    .hero-badge { display: inline-flex; align-items: center; gap: 8px; padding: 7px 14px; border-radius: 100px; background: rgba(48,205,215,.06); border: 1px solid rgba(48,205,215,.2); font-size: .56rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--teal); }
+    .hero-badge-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--teal); animation: pulse-dot 2s ease-in-out infinite; }
+    .hero-deco { font-size: clamp(5rem, 10vw, 8.5rem); font-weight: 900; letter-spacing: -.04em; line-height: 1; color: transparent; -webkit-text-stroke: 1px rgba(48,205,215,.1); user-select: none; pointer-events: none; animation: fadeUp .6s .05s cubic-bezier(0.4,0,0.2,1) both; }
+
+    /* ── COMING SOON ── */
+    .coming-section {
+      background: var(--dark);
+      padding: 100px 64px;
+      text-align: center;
+      position: relative;
     }
-    .hero-title {
-      font-size: clamp(3.5rem, 7vw, 6rem);
-      font-weight: 900; letter-spacing: -.03em; line-height: .95;
-      color: var(--white); margin-bottom: 28px;
-      animation: fadeUp .5s .15s cubic-bezier(0.4,0,0.2,1) both;
+    .coming-section::before {
+      content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+      width: 600px; height: 400px; border-radius: 50%;
+      background: radial-gradient(ellipse, rgba(48,205,215,.04) 0%, transparent 65%);
+      pointer-events: none;
     }
-    .hero-desc {
-      font-size: clamp(.88rem, 1.4vw, 1.05rem);
-      font-weight: 400; line-height: 1.7;
-      color: rgba(250,245,237,.55);
-      max-width: 520px; margin-bottom: 36px;
-      animation: fadeUp .5s .2s cubic-bezier(0.4,0,0.2,1) both;
-    }
-    .hero-badges {
-      display: flex; flex-wrap: wrap; gap: 10px;
-      animation: fadeUp .5s .25s cubic-bezier(0.4,0,0.2,1) both;
-    }
-    .hero-badge {
-      display: inline-flex; align-items: center; gap: 8px;
-      padding: 7px 14px; border-radius: 100px;
-      background: rgba(48,205,215,.06); border: 1px solid rgba(48,205,215,.2);
-      font-size: .56rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+    .coming-inner { max-width: 600px; margin: 0 auto; position: relative; z-index: 1; }
+    .coming-icon {
+      width: 72px; height: 72px; border-radius: 18px;
+      background: rgba(48,205,215,.08); border: 1px solid rgba(48,205,215,.16);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 32px;
       color: var(--teal);
     }
-    .hero-badge-dot {
-      width: 5px; height: 5px; border-radius: 50%;
-      background: var(--teal);
-      animation: pulse-dot 2s ease-in-out infinite;
+    .coming-title { font-size: clamp(1.8rem, 4vw, 3rem); font-weight: 900; letter-spacing: -.03em; color: var(--white); margin-bottom: 20px; }
+    .coming-desc { font-size: .95rem; font-weight: 400; line-height: 1.75; color: rgba(250,245,237,.4); margin-bottom: 36px; }
+    .coming-badge {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 10px 24px; border-radius: 100px;
+      background: rgba(48,205,215,.07); border: 1px solid rgba(48,205,215,.18);
+      font-size: .6rem; font-weight: 800; letter-spacing: .18em; text-transform: uppercase;
+      color: var(--teal);
     }
-    .hero-deco {
-      font-size: clamp(6rem, 12vw, 10rem);
-      font-weight: 900; letter-spacing: -.04em; line-height: 1;
-      color: transparent;
-      -webkit-text-stroke: 1px rgba(48,205,215,.1);
-      user-select: none; pointer-events: none;
-      animation: fadeUp .6s .05s cubic-bezier(0.4,0,0.2,1) both;
-    }
+    .coming-badge-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--teal); animation: pulse-dot 1.8s ease-in-out infinite; }
 
-    /* ── GALLERY ── */
-    .gallery-section {
-      background: #001223;
-      padding: 100px 64px;
-      position: relative;
-    }
-    .gallery-section::before {
-      content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-      background: radial-gradient(ellipse at 50% 0%, rgba(48,205,215,.04) 0%, transparent 60%);
-      pointer-events: none;
-    }
-    .gallery-inner { max-width: 1100px; margin: 0 auto; position: relative; z-index: 1; }
-    .gallery-eyebrow {
-      font-size: .58rem; font-weight: 700; letter-spacing: .22em; text-transform: uppercase;
-      color: var(--teal); opacity: .65; margin-bottom: 14px;
-    }
-    .gallery-title {
-      font-size: clamp(2rem, 4.5vw, 3.5rem);
-      font-weight: 900; letter-spacing: -.03em; line-height: 1;
-      color: var(--white); margin-bottom: 14px;
-    }
-    .gallery-desc {
-      font-size: .9rem; font-weight: 400; line-height: 1.7;
-      color: rgba(250,245,237,.4); max-width: 540px; margin-bottom: 48px;
-    }
-    .photo-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-    }
-    .photo-slot {
-      aspect-ratio: 4/3;
-      border-radius: 14px;
-      background: rgba(48,205,215,.04);
-      border: 1px solid rgba(48,205,215,.1);
-      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px;
-      position: relative; overflow: hidden;
-      transition: border-color .25s, background .25s;
-    }
-    .photo-slot:hover { border-color: rgba(48,205,215,.2); background: rgba(48,205,215,.07); }
-    .photo-slot img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; border-radius: 14px; display: none; }
-    .photo-slot img.loaded { display: block; }
-    .photo-slot-icon { color: rgba(48,205,215,.25); }
-    .photo-slot-label { font-size: .55rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: rgba(250,245,237,.2); text-align: center; padding: 0 16px; }
-    .photo-slot.wide { grid-column: span 2; aspect-ratio: 16/7; }
-
-    /* ── NGO LOGOS ── */
-    .ngo-section {
-      background: var(--navy);
-      padding: 100px 64px;
-    }
-    .ngo-inner { max-width: 1100px; margin: 0 auto; }
-    .ngo-logos-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 16px;
-    }
-    .ngo-logo-slot {
-      aspect-ratio: 3/2;
-      border-radius: 14px;
-      background: rgba(255,255,255,.03);
-      border: 1px solid rgba(250,245,237,.08);
-      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px;
-      position: relative; overflow: hidden;
-      transition: border-color .25s, background .25s, transform .25s;
-    }
-    .ngo-logo-slot:hover { border-color: rgba(48,205,215,.18); background: rgba(48,205,215,.04); transform: translateY(-2px); }
-    .ngo-logo-slot img { max-width: 70%; max-height: 60%; object-fit: contain; filter: brightness(0) invert(1); opacity: .45; transition: opacity .2s; display: none; }
-    .ngo-logo-slot img.loaded { display: block; }
-    .ngo-logo-slot:hover img { opacity: .75; }
-    .ngo-logo-placeholder { color: rgba(250,245,237,.15); }
-    .ngo-logo-name { font-size: .56rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: rgba(250,245,237,.2); text-align: center; padding: 0 12px; }
+    /* ── FOOTER ── */
+    .page-footer { padding: 40px 64px; display: flex; align-items: center; justify-content: space-between; border-top: 1px solid rgba(250,245,237,.06); }
+    .footer-note { font-size: .62rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: rgba(250,245,237,.2); }
+    .footer-dates { font-size: .62rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: rgba(48,205,215,.45); }
 
     /* ── MOBILE ── */
     @media (max-width: 768px) {
@@ -252,10 +153,8 @@
       .hero { padding: 100px 24px 60px; min-height: auto; }
       .hero-inner { grid-template-columns: 1fr; gap: 0; }
       .hero-deco { display: none; }
-      .gallery-section, .ngo-section { padding: 72px 24px; }
-      .photo-grid { grid-template-columns: 1fr 1fr; }
-      .photo-slot.wide { grid-column: span 2; }
-      .ngo-logos-grid { grid-template-columns: repeat(2, 1fr); }
+      .coming-section { padding: 72px 24px; }
+      .page-footer { padding: 28px 24px; flex-direction: column; gap: 8px; text-align: center; }
     }
   </style>
 </head>
@@ -270,6 +169,7 @@
     <a href="social-night.html">Social Night</a>
     <a href="networking-hour.html">Networking Hour</a>
     <a href="orphanage-initiative.html">Orphanage Initiative</a>
+    <a href="delegation-guidelines.html">Delegation Guidelines</a>
     <a href="index.html#faq">FAQ</a>
   </div>
 
@@ -293,6 +193,7 @@
                 <a href="social-night.html" class="nav-drop-item">Social Night</a>
                 <a href="networking-hour.html" class="nav-drop-item">Networking Hour</a>
                 <a href="orphanage-initiative.html" class="nav-drop-item">Orphanage Initiative</a>
+                <a href="delegation-guidelines.html" class="nav-drop-item">Delegation Guidelines</a>
                 <a href="index.html#faq" class="nav-drop-item">FAQ</a>
               </div>
             </div>
@@ -311,18 +212,42 @@
     <div class="hero-inner">
       <div>
         <a href="index.html" class="hero-back">← Back to Home</a>
-        <div class="hero-kicker">Oakridge MUN XVI &nbsp;·&nbsp; Day 1 &nbsp;·&nbsp; Evening</div>
-        <h1 class="hero-title">Networking<br>Hour.</h1>
-        <p class="hero-desc">Step out of your committee room and into the room where the real connections happen. No gavels, no points of order — just people.</p>
+        <div class="hero-kicker">Oakridge MUN XVI &nbsp;·&nbsp; Delegate Resources</div>
+        <h1 class="hero-title">Delegation<br>Guidelines.</h1>
+        <p class="hero-desc">Everything your delegation needs to know — conduct expectations, preparation requirements, and conference protocols for Oakridge MUN XVI.</p>
         <div class="hero-badges">
-          <div class="hero-badge"><span class="hero-badge-dot"></span>Day 1 · Evening</div>
           <div class="hero-badge"><span class="hero-badge-dot"></span>All Delegates</div>
-          <div class="hero-badge"><span class="hero-badge-dot"></span>Informal</div>
+          <div class="hero-badge"><span class="hero-badge-dot"></span>Chapter XVI</div>
+          <div class="hero-badge"><span class="hero-badge-dot"></span>Guidelines</div>
         </div>
       </div>
-      <div class="hero-deco">NH</div>
+      <div class="hero-deco">DG</div>
     </div>
   </section>
+
+  <!-- CONTENT PLACEHOLDER -->
+  <section class="coming-section">
+    <div class="coming-inner">
+      <div class="coming-icon">
+        <svg width="30" height="30" viewBox="0 0 30 30" fill="none">
+          <path d="M6 4h18a2 2 0 012 2v18a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2z" stroke="currentColor" stroke-width="1.6"/>
+          <path d="M10 10h10M10 15h10M10 20h6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <h2 class="coming-title">Guidelines Coming Soon</h2>
+      <p class="coming-desc">The official Delegation Guidelines for Oakridge MUN XVI are being finalised by the Secretariat. They will be published here ahead of the conference and cover everything from delegation conduct to preparation expectations.</p>
+      <div class="coming-badge">
+        <span class="coming-badge-dot"></span>
+        Publishing ahead of conference
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <div class="page-footer">
+    <span class="footer-note">Oakridge MUN XVI · Oakridge International School</span>
+    <span class="footer-dates">24 July · 25 July · 26 July 2026</span>
+  </div>
 
   <script>
     const navbar = document.getElementById('navbar');
