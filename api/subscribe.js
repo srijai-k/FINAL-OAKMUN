@@ -3,13 +3,13 @@ module.exports = async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const { firstName, lastName, email, school, committee, experience } = req.body;
+  const { firstName, lastName, email, school } = req.body;
 
   if (!firstName || !email) {
     return res.status(400).json({ error: 'Name and email are required.' });
   }
 
-  const apiKey    = process.env.RESEND_WESTUDIE_REGISTRAtioN;
+  const apiKey    = process.env.RESEND_OAKMUN_REGISTRATION;
   const fromEmail = process.env.FROM_EMAIL || 'onboarding@resend.dev';
   const adminEmail = process.env.ADMIN_EMAIL || 'mun@oakridge.in';
 
@@ -54,6 +54,16 @@ module.exports = async function handler(req, res) {
     if (!adminRes.ok) {
       const adminBody = await adminRes.text();
       console.error('Resend admin notify failed:', adminRes.status, adminBody);
+    }
+
+    // Log to Google Sheets (non-blocking — don't fail the request if this errors)
+    const sheetsUrl = process.env.SHEETS_WEBHOOK_URL;
+    if (sheetsUrl) {
+      fetch(sheetsUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ firstName, lastName, email, school }),
+      }).catch(err => console.error('Sheets log failed:', err));
     }
 
     return res.status(200).json({ success: true });
@@ -179,7 +189,7 @@ function confirmationEmail(firstName) {
 </html>`;
 }
 
-function adminEmail_html({ firstName, lastName, email, school, committee, experience }) {
+function adminEmail_html({ firstName, lastName, email, school }) {
   return `<!DOCTYPE html>
 <html lang="en">
 <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"></head>
@@ -210,8 +220,6 @@ function adminEmail_html({ firstName, lastName, email, school, committee, experi
           ${adminRow('Name', `${firstName} ${lastName}`)}
           ${adminRow('Email', email)}
           ${adminRow('School', school || '—')}
-          ${adminRow('Committee Interest', committee || '—')}
-          ${adminRow('MUN Experience', experience || '—')}
         </table>
       </td>
     </tr>
