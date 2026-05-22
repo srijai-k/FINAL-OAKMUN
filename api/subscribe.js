@@ -9,54 +9,37 @@ module.exports = async function handler(req, res) {
     return res.status(400).json({ error: 'Name and email are required.' });
   }
 
-  const apiKey    = process.env.RESEND_OAKMUN_REGISTRATION;
-  const fromEmail = process.env.FROM_EMAIL || 'onboarding@resend.dev';
-  const adminEmail = process.env.ADMIN_EMAIL || 'mun@oakridge.in';
-
-  if (!apiKey) {
-    console.error('Missing RESEND_OAKMUN_REGISTRATION env var');
-    return res.status(500).json({ error: 'Server misconfiguration.' });
-  }
-
   try {
-    const [confirmRes, adminRes] = await Promise.all([
-      // 1. Confirmation email to the person who signed up
-      fetch('https://api.resend.com/emails', {
-        method: 'POST',
-        headers: { 'Authorization': `Bearer ${apiKey}`, 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          from: `Oakridge MUN XVI <${fromEmail}>`,
-          to: [email],
-          subject: "You're on the list — Oakridge MUN Chapter XVI",
-          html: confirmationEmail(firstName),
+    // Resend emails — non-blocking, skipped if API key not configured
+    const apiKey = process.env.RESEND_OAKMUN_REGISTRATION;
+    if (apiKey) {
+      const fromEmail  = process.env.FROM_EMAIL || 'onboarding@resend.dev';
+      const adminEmail = process.env.ADMIN_EMAIL || 'mun@oakridge.in';
+      Promise.all([
+        fetch('https://api.resend.com/emails', {
+          method: 'POST',
+          headers: { 'Authorization': `Bearer ${apiKey}`, 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            from: `Oakridge MUN XVI <${fromEmail}>`,
+            to: [email],
+            subject: "You're on the list — Oakridge MUN Chapter XVI",
+            html: confirmationEmail(firstName),
+          }),
         }),
-      }),
-
-      // 2. Admin notification so every signup lands in your inbox
-      fetch('https://api.resend.com/emails', {
-        method: 'POST',
-        headers: { 'Authorization': `Bearer ${apiKey}`, 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          from: `Oakridge MUN Signups <${fromEmail}>`,
-          to: [adminEmail],
-          subject: `New signup: ${firstName} ${lastName} — Oakridge MUN XVI`,
-          html: adminEmail_html({ firstName, lastName, email, school }),
+        fetch('https://api.resend.com/emails', {
+          method: 'POST',
+          headers: { 'Authorization': `Bearer ${apiKey}`, 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            from: `Oakridge MUN Signups <${fromEmail}>`,
+            to: [adminEmail],
+            subject: `New signup: ${firstName} ${lastName} — Oakridge MUN XVI`,
+            html: adminEmail_html({ firstName, lastName, email, school }),
+          }),
         }),
-      }),
-    ]);
-
-    if (!confirmRes.ok) {
-      const confirmBody = await confirmRes.text();
-      console.error('Resend confirm failed:', confirmRes.status, confirmBody);
-      return res.status(500).json({ error: 'Failed to send confirmation email.', details: confirmBody });
+      ]).catch(err => console.error('Resend error:', err));
     }
 
-    if (!adminRes.ok) {
-      const adminBody = await adminRes.text();
-      console.error('Resend admin notify failed:', adminRes.status, adminBody);
-    }
-
-    // Log to Google Sheets (non-blocking — don't fail the request if this errors)
+    // Log to Google Sheets — non-blocking
     const sheetsUrl = process.env.SHEETS_WEBHOOK_URL;
     if (sheetsUrl) {
       fetch(sheetsUrl, {
