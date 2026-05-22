@@ -1344,7 +1344,7 @@
       overflow: hidden;
       opacity: 0;
       transform: translateY(20px);
-      transition: opacity .5s ease, transform .5s ease, border-color .25s, background .25s;
+      transition: opacity .5s ease, transform .5s ease, border-color .35s ease, background .35s ease;
     }
     .faq-item.revealed { opacity: 1; transform: translateY(0); }
     .faq-item:hover { background: rgba(48,205,215,.04); border-color: rgba(48,205,215,.15); }
@@ -1355,18 +1355,20 @@
       align-items: center;
       justify-content: space-between;
       gap: 24px;
-      padding: 22px 28px;
+      padding: 24px 28px;
       cursor: pointer;
       user-select: none;
     }
     .faq-q-text {
       font-size: 1rem;
       font-weight: 600;
-      color: var(--white);
-      line-height: 1.4;
+      color: rgba(250,245,237,.85);
+      line-height: 1.45;
+      transition: color .3s ease;
     }
+    .faq-item.open .faq-q-text { color: var(--white); }
     .faq-toggle {
-      width: 36px; height: 36px;
+      width: 34px; height: 34px;
       border-radius: 50%;
       border: 1.5px solid rgba(250,245,237,.15);
       background: transparent;
@@ -1374,26 +1376,23 @@
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
-      cursor: pointer;
-      transition: background .25s, border-color .25s;
+      transition: background .35s cubic-bezier(0.16,1,0.3,1), border-color .35s ease, transform .35s cubic-bezier(0.16,1,0.3,1);
     }
-    .faq-item.open .faq-toggle { background: var(--teal); border-color: var(--teal); }
-    .faq-toggle svg { width: 14px; height: 14px; stroke: rgba(250,245,237,.6); stroke-width: 2; transition: stroke .25s; }
+    .faq-item.open .faq-toggle { background: var(--teal); border-color: var(--teal); transform: rotate(45deg); }
+    .faq-toggle svg { width: 13px; height: 13px; stroke: rgba(250,245,237,.55); stroke-width: 2; transition: stroke .3s ease; }
     .faq-item.open .faq-toggle svg { stroke: var(--navy); }
-    .faq-toggle .h-bar { transition: transform .35s ease, opacity .25s ease; }
-    .faq-item.open .faq-toggle .h-bar { transform: rotate(90deg); opacity: 0; }
+    .faq-toggle .h-bar { transition: none; }
     .faq-answer {
-      max-height: 0;
+      height: 0;
       overflow: hidden;
-      transition: max-height .2s cubic-bezier(0.2,0.8,0.2,1);
+      transition: height 0.45s cubic-bezier(0.16,1,0.3,1);
     }
-    .faq-item.open .faq-answer { max-height: 400px; }
     .faq-a-text {
-      padding: 0 28px 24px;
+      padding: 0 28px 26px;
       font-size: .9rem;
       font-weight: 400;
-      line-height: 1.78;
-      color: rgba(250,245,237,.6);
+      line-height: 1.8;
+      color: rgba(250,245,237,.58);
     }
 
     /* ═══════════════════════════════════════
@@ -2537,10 +2536,19 @@
 
     // ── FAQ ──
     document.querySelectorAll('.faq-item').forEach(item => {
+      const answer = item.querySelector('.faq-answer');
       item.querySelector('.faq-question').addEventListener('click', () => {
         const isOpen = item.classList.contains('open');
-        document.querySelectorAll('.faq-item.open').forEach(o => o.classList.remove('open'));
-        if (!isOpen) item.classList.add('open');
+        // Close all open items
+        document.querySelectorAll('.faq-item.open').forEach(o => {
+          o.classList.remove('open');
+          o.querySelector('.faq-answer').style.height = '0';
+        });
+        // Open clicked if it was closed
+        if (!isOpen) {
+          item.classList.add('open');
+          answer.style.height = answer.scrollHeight + 'px';
+        }
       });
     });
 
