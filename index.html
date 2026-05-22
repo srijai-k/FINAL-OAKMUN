@@ -342,21 +342,22 @@
     /* XVI watermark */
     .hero-watermark {
       position: absolute;
-      bottom: 0.6em;
-      right: -0.02em;
-      font-size: clamp(14rem, 30vw, 36rem);
+      top: 50%;
+      right: -0.01em;
+      transform: translateY(-48%);
+      font-size: clamp(12rem, 26vw, 30rem);
       font-weight: 900;
       line-height: 1;
       letter-spacing: -.06em;
       color: transparent;
-      -webkit-text-stroke: 2.5px rgba(48,205,215,.28);
-      text-stroke: 2.5px rgba(48,205,215,.28);
+      -webkit-text-stroke: 3px rgba(48,205,215,.55);
+      text-stroke: 3px rgba(48,205,215,.55);
       pointer-events: none;
       user-select: none;
-      z-index: 4;
+      z-index: 5;
       white-space: nowrap;
-      animation: fadeIn 2s ease 1s both;
-      text-shadow: 0 0 80px rgba(48,205,215,.08);
+      animation: fadeIn 1.5s ease .8s both;
+      text-shadow: 0 0 120px rgba(48,205,215,.18), 0 0 40px rgba(48,205,215,.12);
     }
 
     /* Dot grid — subtle, fades toward right */
@@ -523,31 +524,31 @@
     .countdown { display: flex; gap: 10px; align-items: center; }
     .cd-unit { display: flex; flex-direction: column; align-items: center; gap: 7px; }
     .cd-value {
-      font-size: clamp(1.8rem, 2.8vw, 2.8rem);
+      font-size: clamp(2rem, 3vw, 3.2rem);
       font-weight: 900;
       line-height: 1;
-      color: var(--white);
-      min-width: 76px;
+      color: var(--teal);
+      min-width: 84px;
       text-align: center;
       letter-spacing: -.03em;
-      background: rgba(48,205,215,.1);
-      border: 1px solid rgba(48,205,215,.3);
-      border-radius: 12px;
-      padding: 14px 10px 12px;
-      box-shadow: 0 0 20px rgba(48,205,215,.1), inset 0 1px 0 rgba(48,205,215,.2);
+      background: rgba(48,205,215,.14);
+      border: 1.5px solid rgba(48,205,215,.55);
+      border-radius: 10px;
+      padding: 16px 12px 14px;
+      box-shadow: 0 0 32px rgba(48,205,215,.22), inset 0 1px 0 rgba(48,205,215,.35);
     }
     .cd-label {
-      font-size: .48rem;
+      font-size: .5rem;
       font-weight: 700;
       letter-spacing: .22em;
       text-transform: uppercase;
-      color: var(--teal);
+      color: rgba(48,205,215,.7);
     }
     .cd-sep {
-      font-size: 1.8rem;
-      font-weight: 200;
-      color: rgba(48,205,215,.35);
-      margin-bottom: 20px;
+      font-size: 2rem;
+      font-weight: 300;
+      color: rgba(48,205,215,.5);
+      margin-bottom: 22px;
     }
 
     /* Scroll hint */
