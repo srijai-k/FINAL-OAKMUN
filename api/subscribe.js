@@ -40,7 +40,7 @@ module.exports = async function handler(req, res) {
           from: `Oakridge MUN Signups <${fromEmail}>`,
           to: [adminEmail],
           subject: `New signup: ${firstName} ${lastName} — Oakridge MUN XVI`,
-          html: adminEmail_html({ firstName, lastName, email, school, committee, experience }),
+          html: adminEmail_html({ firstName, lastName, email, school }),
         }),
       }),
     ]);
