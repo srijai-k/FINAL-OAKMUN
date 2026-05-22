@@ -44,9 +44,11 @@ module.exports = async function handler(req, res) {
     if (sheetsUrl) {
       fetch(sheetsUrl, {
         method: 'POST',
+        redirect: 'follow',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ firstName, lastName, email, school }),
-      }).catch(err => console.error('Sheets log failed:', err));
+      }).then(r => console.log('Sheets log status:', r.status))
+        .catch(err => console.error('Sheets log failed:', err));
     }
 
     return res.status(200).json({ success: true });
