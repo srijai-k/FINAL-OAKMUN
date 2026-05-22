@@ -292,60 +292,6 @@
     }
 
     /* ═══════════════════════════════════════
-       PRELOADER
-    ═══════════════════════════════════════ */
-    #preloader {
-      position: fixed;
-      inset: 0;
-      z-index: 9999;
-      background: #010B18;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-    }
-    #preloader.pl-exit {
-      transform: translateY(-100%);
-      transition: transform .55s cubic-bezier(0.76, 0, 0.24, 1);
-    }
-    .pl-counter {
-      position: relative;
-      z-index: 1;
-      font-size: clamp(6rem, 20vw, 18rem);
-      font-weight: 900;
-      line-height: 1;
-      letter-spacing: -.04em;
-      color: var(--white);
-      min-width: 3ch;
-      text-align: center;
-      user-select: none;
-    }
-    .pl-wordmark {
-      position: absolute;
-      bottom: 10%;
-      left: 50%;
-      transform: translateX(-50%);
-      font-size: .58rem;
-      font-weight: 800;
-      letter-spacing: .4em;
-      text-transform: uppercase;
-      color: rgba(250,245,237,.12);
-      white-space: nowrap;
-    }
-    .pl-bar {
-      position: absolute;
-      bottom: 0; left: 0; right: 0;
-      height: 2px;
-      background: rgba(255,255,255,.04);
-    }
-    .pl-bar-fill {
-      height: 100%;
-      background: var(--teal);
-      width: 0%;
-      box-shadow: 0 0 14px rgba(48,205,215,.8);
-    }
-
-    /* ═══════════════════════════════════════
        HERO
     ═══════════════════════════════════════ */
     .hero {
@@ -404,7 +350,7 @@
       -webkit-mask-composite: destination-in;
       mask-image: linear-gradient(to top, transparent 6%, black 28%), linear-gradient(to left, rgba(0,0,0,.95) 20%, transparent 95%);
       mask-composite: intersect;
-      animation: fadeIn 1.8s ease 2.4s both;
+      animation: fadeIn 1.8s ease .4s both;
     }
     .hero-roman span {
       display: block;
@@ -438,13 +384,13 @@
       line-height: .88;
       letter-spacing: -.05em;
       color: var(--white);
-      animation: fadeUp .85s cubic-bezier(0.4,0,0.2,1) 2.48s both;
+      animation: fadeUp .85s cubic-bezier(0.4,0,0.2,1) .48s both;
     }
     .hero-word-sub {
       display: flex;
       align-items: center;
       gap: 18px;
-      animation: fadeUp .85s cubic-bezier(0.4,0,0.2,1) 2.62s both;
+      animation: fadeUp .85s cubic-bezier(0.4,0,0.2,1) .62s both;
     }
     .hero-word-accent {
       font-size: clamp(1.8rem, 5.2vw, 5rem);
@@ -479,7 +425,7 @@
       display: flex;
       flex-direction: column;
       gap: 8px;
-      animation: fadeUp .7s cubic-bezier(0.4,0,0.2,1) 2.78s both;
+      animation: fadeUp .7s cubic-bezier(0.4,0,0.2,1) .78s both;
     }
     .hero-tagline {
       font-size: clamp(.8rem, 1.2vw, .98rem);
@@ -546,7 +492,7 @@
 
     .hero-bottom-right {
       flex-shrink: 0;
-      animation: fadeUp .7s cubic-bezier(0.4,0,0.2,1) 2.92s both;
+      animation: fadeUp .7s cubic-bezier(0.4,0,0.2,1) .92s both;
     }
     .countdown {
       display: flex;
@@ -599,7 +545,7 @@
       align-items: center;
       gap: 8px;
       opacity: 0;
-      animation: fadeIn 1s ease 3.8s forwards;
+      animation: fadeIn 1s ease 1.8s forwards;
     }
     .scroll-indicator span {
       font-size: .5rem;
@@ -1990,12 +1936,6 @@
 </head>
 <body>
 
-  <!-- ═══ PRELOADER ═══ -->
-  <div id="preloader">
-<div class="pl-counter" id="pl-counter">00</div>
-    <p class="pl-wordmark">Oakridge Model United Nations &nbsp;·&nbsp; Chapter XVI</p>
-    <div class="pl-bar"><div class="pl-bar-fill" id="pl-fill"></div></div>
-  </div>
 
 
   <!-- Mobile nav drawer -->
@@ -2609,39 +2549,6 @@
 
       resize(); init(); draw();
       window.addEventListener('resize', () => { resize(); init(); });
-    })();
-
-    // ── PRELOADER ──
-    (function () {
-      const preloader = document.getElementById('preloader');
-      const counter   = document.getElementById('pl-counter');
-      const fill      = document.getElementById('pl-fill');
-const DURATION = 1800;
-      let startTs = null;
-
-      function ease(t) {
-        return t < 0.65 ? (t / 0.65) * 0.82 : 0.82 + ((t - 0.65) / 0.35) * 0.18;
-      }
-
-      function frame(ts) {
-        if (!startTs) startTs = ts;
-        const t = Math.min((ts - startTs) / DURATION, 1);
-        const p = Math.floor(ease(t) * 100);
-        counter.textContent = p.toString().padStart(2, '0');
-        fill.style.width = p + '%';
-        if (t < 1) {
-          requestAnimationFrame(frame);
-        } else {
-          counter.textContent = '100';
-          fill.style.width = '100%';
-          setTimeout(() => {
-            preloader.classList.add('pl-exit');
-            setTimeout(() => preloader.remove(), 600);
-          }, 180);
-        }
-      }
-
-      requestAnimationFrame(frame);
     })();
 
     // ── COUNTDOWN ──
