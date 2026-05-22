@@ -42,12 +42,9 @@ module.exports = async function handler(req, res) {
     // Log to Google Sheets — non-blocking
     const sheetsUrl = process.env.SHEETS_WEBHOOK_URL;
     if (sheetsUrl) {
-      fetch(sheetsUrl, {
-        method: 'POST',
-        redirect: 'follow',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ firstName, lastName, email, school }),
-      }).then(r => console.log('Sheets log status:', r.status))
+      const params = new URLSearchParams({ firstName, lastName, email, school });
+      fetch(`${sheetsUrl}?${params.toString()}`, { redirect: 'follow' })
+        .then(r => console.log('Sheets log status:', r.status))
         .catch(err => console.error('Sheets log failed:', err));
     }
 
