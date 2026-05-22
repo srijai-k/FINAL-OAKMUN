@@ -308,28 +308,6 @@
       transform: translateY(-100%);
       transition: transform .55s cubic-bezier(0.76, 0, 0.24, 1);
     }
-    .pl-tags {
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-    }
-    .pl-tag {
-      position: absolute;
-      font-size: clamp(.55rem, 1vw, .85rem);
-      font-weight: 800;
-      letter-spacing: .18em;
-      text-transform: uppercase;
-      color: rgba(48,205,215,.18);
-      white-space: nowrap;
-      opacity: 0;
-      animation: plTagFlash var(--dur, 1.5s) ease var(--delay, 0s) infinite;
-    }
-    @keyframes plTagFlash {
-      0%   { opacity: 0; transform: translateY(6px); }
-      20%  { opacity: 1; transform: translateY(0); }
-      80%  { opacity: 1; transform: translateY(0); }
-      100% { opacity: 0; transform: translateY(-6px); }
-    }
     .pl-counter {
       position: relative;
       z-index: 1;
@@ -2014,8 +1992,7 @@
 
   <!-- ═══ PRELOADER ═══ -->
   <div id="preloader">
-    <div class="pl-tags" id="pl-tags"></div>
-    <div class="pl-counter" id="pl-counter">00</div>
+<div class="pl-counter" id="pl-counter">00</div>
     <p class="pl-wordmark">Oakridge Model United Nations &nbsp;·&nbsp; Chapter XVI</p>
     <div class="pl-bar"><div class="pl-bar-fill" id="pl-fill"></div></div>
   </div>
@@ -2639,28 +2616,7 @@
       const preloader = document.getElementById('preloader');
       const counter   = document.getElementById('pl-counter');
       const fill      = document.getElementById('pl-fill');
-      const tagWrap   = document.getElementById('pl-tags');
-
-      const tags = [
-        '#OAKRIDGEMUN','#CHAPTERXVI','#DELEGATE','#DEBATE',
-        '#INNOVATE','#CREATE','#MUN2026','#HYDERABAD',
-        '#SECRETARIAT','#RESOLUTION','#CHAIR','#DIPLOMAT',
-        '#CONFERENCE','#COMMITTEE','#GAVELDROP'
-      ];
-
-      tags.forEach(tag => {
-        for (let j = 0; j < 3; j++) {
-          const el = document.createElement('span');
-          el.className = 'pl-tag';
-          el.textContent = tag;
-          const dur   = (1.0 + Math.random() * 1.8).toFixed(2);
-          const delay = (Math.random() * 2.2).toFixed(2);
-          el.style.cssText = `left:${3+Math.random()*88}%;top:${3+Math.random()*88}%;--dur:${dur}s;--delay:${delay}s`;
-          tagWrap.appendChild(el);
-        }
-      });
-
-      const DURATION = 1800;
+const DURATION = 1800;
       let startTs = null;
 
       function ease(t) {
