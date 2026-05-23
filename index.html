@@ -70,7 +70,7 @@
       font-family: 'Montserrat', sans-serif;
       background: var(--navy);
       color: var(--white);
-      overflow-x: hidden;
+      overflow-x: clip;
     }
 
     /* ═══════════════════════════════════════
@@ -1838,7 +1838,7 @@
       .footer-bottom { flex-direction: column; gap: 8px; padding: 20px 0; }
 
       .ctrl-chains-section { min-height: auto; }
-      .ctrl-chains-sticky { min-height: auto; flex-direction: column; }
+      .ctrl-chains-sticky { min-height: auto; flex-direction: column; overflow: visible; }
       .ctrl-copy { width: 100%; height: auto; padding: 72px 20px 28px; }
       .ctrl-title { font-size: 2.6rem; }
       .ctrl-subtitle { max-width: 100%; font-size: .9rem; }
