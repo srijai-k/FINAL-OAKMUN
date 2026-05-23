@@ -329,8 +329,8 @@
       color: var(--white);
       text-decoration: none;
       opacity: 0;
-      transform: translateY(30px);
-      transition: opacity .55s ease, transform .55s ease;
+      transform: translateY(16px);
+      transition: opacity .28s ease, transform .28s ease;
       perspective: 900px;
     }
 
@@ -373,25 +373,9 @@
       transition: transform .6s cubic-bezier(.16,1,.3,1), border-color .6s cubic-bezier(.16,1,.3,1);
     }
 
-    .committee-visual::after {
-      content: '';
-      position: absolute;
-      right: -32%;
-      bottom: -34%;
-      width: 82%;
-      aspect-ratio: 1;
-      border-radius: 50%;
-      border: 26px solid rgba(250,245,237,.36);
-      transition: transform .6s cubic-bezier(.16,1,.3,1);
-    }
-
     .committee-card:hover .committee-visual::before {
       transform: rotate(1deg) scale(.94);
       border-color: rgba(0,48,87,.28);
-    }
-
-    .committee-card:hover .committee-visual::after {
-      transform: translate3d(-18px,-20px,0) scale(1.1);
     }
 
     .tile-logo {
@@ -410,6 +394,39 @@
       opacity: .4;
     }
 
+    /* ── COMMITTEE PHOTO ── */
+    .tile-photo {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      z-index: 0;
+      transition: transform .7s cubic-bezier(.16,1,.3,1), filter .6s ease;
+    }
+    .committee-card:hover .tile-photo {
+      transform: scale(1.08);
+      filter: saturate(1.1);
+    }
+    .tile-photo-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to top,
+        rgba(0,12,36,.82) 0%,
+        rgba(0,20,48,.5)  40%,
+        rgba(0,12,36,.25) 100%
+      );
+      z-index: 1;
+      pointer-events: none;
+    }
+    /* Ensure decorative elements sit above photo + overlay */
+    .committee-visual::before { z-index: 2; }
+    .tile-logo    { z-index: 3; }
+    .status       { z-index: 3; }
+    .committee-code { z-index: 3; }
+
     .status {
       position: absolute;
       top: 18px;
@@ -419,7 +436,8 @@
       font-weight: 800;
       letter-spacing: .16em;
       text-transform: uppercase;
-      color: rgba(0,48,87,.52);
+      color: rgba(250,245,237,.7);
+      text-shadow: 0 1px 6px rgba(0,0,0,.4);
     }
 
     .committee-code {
@@ -429,67 +447,43 @@
       align-items: center;
       justify-content: center;
       padding: 22px;
-      font-size: clamp(2.4rem, 4.2vw, 4.6rem);
+      font-size: clamp(1.7rem, 3vw, 3.2rem);
       font-weight: 900;
       line-height: .9;
-      letter-spacing: -.08em;
-      color: var(--navy);
-      text-shadow: 0 1px 0 rgba(250,245,237,.28);
+      letter-spacing: -.05em;
+      color: #fff;
+      text-shadow: 0 2px 16px rgba(0,0,0,.55);
       transition: transform .6s cubic-bezier(.16,1,.3,1);
     }
 
+    .committee-code.med {
+      font-size: clamp(1.15rem, 2vw, 2.1rem);
+      letter-spacing: -.04em;
+    }
+
     .committee-code.long {
-      font-size: clamp(1.55rem, 2.7vw, 3rem);
-      letter-spacing: -.06em;
+      font-size: clamp(0.82rem, 1.45vw, 1.55rem);
+      letter-spacing: -.03em;
     }
 
     .committee-card:hover .committee-code {
       transform: translateY(-4px) scale(1.03);
     }
 
-    .committee-ring {
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      width: 58%;
-      aspect-ratio: 1;
-      border: 1px dashed rgba(0,48,87,.26);
-      border-radius: 50%;
-      transform: translate(-50%, -50%) rotate(12deg);
-      transition: transform .65s cubic-bezier(.16,1,.3,1), border-color .65s cubic-bezier(.16,1,.3,1);
-    }
-
-    .committee-card:hover .committee-ring {
-      transform: translate(-50%, -50%) rotate(70deg) scale(1.08);
-      border-color: rgba(0,48,87,.4);
-    }
+    .committee-ring { display: none; }
 
     .committee-title {
-      margin-top: 15px;
-      font-size: 1rem;
-      line-height: 1.22;
+      margin-top: 14px;
+      font-size: .78rem;
+      line-height: 1.35;
       font-weight: 600;
-      letter-spacing: -.04em;
-      color: rgba(250,245,237,.88);
-      transition: color .35s ease, transform .35s ease;
-    }
-
-    .committee-subtitle {
-      margin-top: 6px;
-      font-size: .7rem;
-      line-height: 1.4;
-      font-weight: 500;
-      color: rgba(250,245,237,.45);
+      letter-spacing: -.01em;
+      color: rgba(250,245,237,.75);
       transition: color .35s ease, transform .35s ease;
     }
 
     .committee-card:hover .committee-title {
       color: var(--white);
-      transform: translateY(-2px);
-    }
-
-    .committee-card:hover .committee-subtitle {
-      color: rgba(250,245,237,.65);
       transform: translateY(-2px);
     }
 
@@ -836,24 +830,24 @@
       </div>
 
       <section class="committee-grid" aria-label="Oakridge MUN committees">
-        <a class="committee-card" href="committee.html?committee=disec" data-type="committee" data-name="DISEC Disarmament and security" style="--tile-a:#1E96A5;--tile-b:#30CDD7;"><div class="committee-visual"><img class="tile-logo" src="logo.png" alt="" /><span class="status">Committee</span><span class="committee-ring"></span><strong class="committee-code">DI</strong></div><h2 class="committee-title">DISEC</h2><p class="committee-subtitle">Disarmament and security</p></a>
-        <a class="committee-card" href="committee.html?committee=unsc" data-type="council" data-name="UNSC Security council" style="--tile-a:#001b3d;--tile-b:#003057;"><div class="committee-visual"><img class="tile-logo" src="logo.png" alt="" /><span class="status">Council</span><span class="committee-ring"></span><strong class="committee-code long">UNSC</strong></div><h2 class="committee-title">UNSC</h2><p class="committee-subtitle">Security council</p></a>
-        <a class="committee-card" href="committee.html?committee=unhrc" data-type="committee" data-name="UNHRC Human rights council" style="--tile-a:#BC9A6E;--tile-b:#e8c99a;"><div class="committee-visual"><img class="tile-logo" src="logo.png" alt="" /><span class="status">Committee</span><span class="committee-ring"></span><strong class="committee-code">HR</strong></div><h2 class="committee-title">UNHRC</h2><p class="committee-subtitle">Human rights council</p></a>
-        <a class="committee-card" href="committee.html?committee=jcc-1" data-type="crisis" data-name="JCC-1 Joint crisis cabinet" style="--tile-a:#c0162a;--tile-b:#FF3750;"><div class="committee-visual"><img class="tile-logo" src="logo.png" alt="" /><span class="status">Crisis</span><span class="committee-ring"></span><strong class="committee-code">J1</strong></div><h2 class="committee-title">JCC-1</h2><p class="committee-subtitle">Joint crisis cabinet</p></a>
-        <a class="committee-card" href="committee.html?committee=jcc-2" data-type="crisis" data-name="JCC-2 Joint crisis cabinet" style="--tile-a:#FF3750;--tile-b:#1E96A5;"><div class="committee-visual"><img class="tile-logo" src="logo.png" alt="" /><span class="status">Crisis</span><span class="committee-ring"></span><strong class="committee-code">J2</strong></div><h2 class="committee-title">JCC-2</h2><p class="committee-subtitle">Joint crisis cabinet</p></a>
-        <a class="committee-card" href="committee.html?committee=hcc" data-type="crisis" data-name="HCC Historic crisis committee" style="--tile-a:#7b4a1e;--tile-b:#BC9A6E;"><div class="committee-visual"><img class="tile-logo" src="logo.png" alt="" /><span class="status">Cabinet</span><span class="committee-ring"></span><strong class="committee-code">HC</strong></div><h2 class="committee-title">HCC</h2><p class="committee-subtitle">Historic crisis committee</p></a>
-        <a class="committee-card" href="committee.html?committee=lok-sabha" data-type="assembly" data-name="LOK SABHA Indian parliament" style="--tile-a:#FF3750;--tile-b:#BC9A6E;"><div class="committee-visual"><img class="tile-logo" src="logo.png" alt="" /><span class="status">Assembly</span><span class="committee-ring"></span><strong class="committee-code long">LS</strong></div><h2 class="committee-title">LOK SABHA</h2><p class="committee-subtitle">Indian parliament</p></a>
-        <a class="committee-card" href="committee.html?committee=armageddon" data-type="crisis" data-name="ARMAGEDDON High-stakes crisis room" style="--tile-a:#0d0d0d;--tile-b:#FF3750;"><div class="committee-visual"><img class="tile-logo" src="logo.png" alt="" /><span class="status">Crisis</span><span class="committee-ring"></span><strong class="committee-code long">AR</strong></div><h2 class="committee-title">ARMAGEDDON</h2><p class="committee-subtitle">High-stakes crisis room</p></a>
-        <a class="committee-card" href="committee.html?committee=oic" data-type="council" data-name="OIC Islamic cooperation" style="--tile-a:#1a5c2e;--tile-b:#2e9955;"><div class="committee-visual"><img class="tile-logo" src="logo.png" alt="" /><span class="status">Council</span><span class="committee-ring"></span><strong class="committee-code long">OIC</strong></div><h2 class="committee-title">OIC</h2><p class="committee-subtitle">Islamic cooperation</p></a>
-        <a class="committee-card" href="committee.html?committee=un-women" data-type="committee" data-name="UN WOMEN Gender equality forum" style="--tile-a:#7b2d6e;--tile-b:#c44fb0;"><div class="committee-visual"><img class="tile-logo" src="logo.png" alt="" /><span class="status">Committee</span><span class="committee-ring"></span><strong class="committee-code">UW</strong></div><h2 class="committee-title">UN WOMEN</h2><p class="committee-subtitle">Gender equality forum</p></a>
-        <a class="committee-card" href="committee.html?committee=copuos" data-type="committee" data-name="COPUOS Outer space affairs" style="--tile-a:#003057;--tile-b:#1E96A5;"><div class="committee-visual"><img class="tile-logo" src="logo.png" alt="" /><span class="status">Committee</span><span class="committee-ring"></span><strong class="committee-code">CO</strong></div><h2 class="committee-title">COPUOS</h2><p class="committee-subtitle">Outer space affairs</p></a>
-        <a class="committee-card" href="committee.html?committee=us-senate" data-type="assembly" data-name="US SENATE Legislative chamber" style="--tile-a:#1a2c5c;--tile-b:#3352a3;"><div class="committee-visual"><img class="tile-logo" src="logo.png" alt="" /><span class="status">Senate</span><span class="committee-ring"></span><strong class="committee-code">US</strong></div><h2 class="committee-title">US SENATE</h2><p class="committee-subtitle">Legislative chamber</p></a>
-        <a class="committee-card" href="committee.html?committee=unodc" data-type="committee" data-name="UNODC Drugs and crime" style="--tile-a:#4a1a0e;--tile-b:#c05a2e;"><div class="committee-visual"><img class="tile-logo" src="logo.png" alt="" /><span class="status">Agency</span><span class="committee-ring"></span><strong class="committee-code">UD</strong></div><h2 class="committee-title">UNODC</h2><p class="committee-subtitle">Drugs and crime</p></a>
-        <a class="committee-card" href="committee.html?committee=ecofin" data-type="committee" data-name="ECOFIN Economic and financial" style="--tile-a:#1d5c3a;--tile-b:#30CDD7;"><div class="committee-visual"><img class="tile-logo" src="logo.png" alt="" /><span class="status">Committee</span><span class="committee-ring"></span><strong class="committee-code">EC</strong></div><h2 class="committee-title">ECOFIN</h2><p class="committee-subtitle">Economic and financial</p></a>
-        <a class="committee-card" href="committee.html?committee=sc-unc" data-type="special" data-name="Special Committee on the UN Charter" style="--tile-a:#BC9A6E;--tile-b:#003057;"><div class="committee-visual"><img class="tile-logo" src="logo.png" alt="" /><span class="status">Special</span><span class="committee-ring"></span><strong class="committee-code long">SC</strong></div><h2 class="committee-title">Special Committee</h2><p class="committee-subtitle">UN Charter review</p></a>
-        <a class="committee-card" href="committee.html?committee=fifa" data-type="special" data-name="FIFA Global football governance" style="--tile-a:#1a3a1a;--tile-b:#30CDD7;"><div class="committee-visual"><img class="tile-logo" src="logo.png" alt="" /><span class="status">Federation</span><span class="committee-ring"></span><strong class="committee-code">FI</strong></div><h2 class="committee-title">FIFA</h2><p class="committee-subtitle">Global football governance</p></a>
-        <a class="committee-card" href="committee.html?committee=who" data-type="agency" data-name="WHO World health organization" style="--tile-a:#003057;--tile-b:#30CDD7;"><div class="committee-visual"><img class="tile-logo" src="logo.png" alt="" /><span class="status">Agency</span><span class="committee-ring"></span><strong class="committee-code">WH</strong></div><h2 class="committee-title">WHO</h2><p class="committee-subtitle">World health organization</p></a>
-        <a class="committee-card" href="committee.html?committee=ip" data-type="press" data-name="IP International press" style="--tile-a:#1c1c1c;--tile-b:#3a3a3a;"><div class="committee-visual"><img class="tile-logo" src="logo.png" alt="" /><span class="status">Press</span><span class="committee-ring"></span><strong class="committee-code">IP</strong></div><h2 class="committee-title">IP</h2><p class="committee-subtitle">International press</p></a>
+        <a class="committee-card" href="committee.html?committee=disec" data-type="committee" data-name="DISEC Disarmament and security" style="--tile-a:#1E96A5;--tile-b:#30CDD7;"><div class="committee-visual"><img class="tile-photo" src="committee_photos/disec.jpg" alt="" /><div class="tile-photo-overlay"></div><img class="tile-logo" src="logo.png" alt="" /><span class="status">Committee</span><span class="committee-ring"></span><strong class="committee-code med">DISEC</strong></div><h2 class="committee-title">Disarmament and International Security Committee</h2></a>
+        <a class="committee-card" href="committee.html?committee=unsc" data-type="council" data-name="UNSC Security council" style="--tile-a:#001b3d;--tile-b:#003057;"><div class="committee-visual"><img class="tile-photo" src="committee_photos/unsc.jpg" alt="" /><div class="tile-photo-overlay"></div><img class="tile-logo" src="logo.png" alt="" /><span class="status">Council</span><span class="committee-ring"></span><strong class="committee-code med">UNSC</strong></div><h2 class="committee-title">United Nations Security Council</h2></a>
+        <a class="committee-card" href="committee.html?committee=unhrc" data-type="committee" data-name="UNHRC Human rights council" style="--tile-a:#BC9A6E;--tile-b:#e8c99a;"><div class="committee-visual"><img class="tile-photo" src="committee_photos/unhrc.jpg" alt="" /><div class="tile-photo-overlay"></div><img class="tile-logo" src="logo.png" alt="" /><span class="status">Committee</span><span class="committee-ring"></span><strong class="committee-code med">UNHRC</strong></div><h2 class="committee-title">United Nations Human Rights Council</h2></a>
+        <a class="committee-card" href="committee.html?committee=jcc-1" data-type="crisis" data-name="JCC-1 Joint crisis cabinet" style="--tile-a:#c0162a;--tile-b:#FF3750;"><div class="committee-visual"><img class="tile-photo" src="committee_photos/jcc-1.jpg" alt="" /><div class="tile-photo-overlay"></div><img class="tile-logo" src="logo.png" alt="" /><span class="status">Crisis</span><span class="committee-ring"></span><strong class="committee-code med">JCC-1</strong></div><h2 class="committee-title">Joint Crisis Cabinet — Side Alpha</h2></a>
+        <a class="committee-card" href="committee.html?committee=jcc-2" data-type="crisis" data-name="JCC-2 Joint crisis cabinet" style="--tile-a:#FF3750;--tile-b:#1E96A5;"><div class="committee-visual"><img class="tile-photo" src="committee_photos/jcc-2.jpg" alt="" /><div class="tile-photo-overlay"></div><img class="tile-logo" src="logo.png" alt="" /><span class="status">Crisis</span><span class="committee-ring"></span><strong class="committee-code med">JCC-2</strong></div><h2 class="committee-title">Joint Crisis Cabinet — Side Beta</h2></a>
+        <a class="committee-card" href="committee.html?committee=hcc" data-type="crisis" data-name="HCC Historic crisis committee" style="--tile-a:#7b4a1e;--tile-b:#BC9A6E;"><div class="committee-visual"><img class="tile-photo" src="committee_photos/hcc.jpg" alt="" /><div class="tile-photo-overlay"></div><img class="tile-logo" src="logo.png" alt="" /><span class="status">Cabinet</span><span class="committee-ring"></span><strong class="committee-code">HCC</strong></div><h2 class="committee-title">Historic Crisis Committee</h2></a>
+        <a class="committee-card" href="committee.html?committee=lok-sabha" data-type="assembly" data-name="LOK SABHA Indian parliament" style="--tile-a:#FF3750;--tile-b:#BC9A6E;"><div class="committee-visual"><img class="tile-photo" src="committee_photos/lok_sabha.jpg" alt="" /><div class="tile-photo-overlay"></div><img class="tile-logo" src="logo.png" alt="" /><span class="status">Assembly</span><span class="committee-ring"></span><strong class="committee-code long">LOK SABHA</strong></div><h2 class="committee-title">Lok Sabha — Indian Parliament</h2></a>
+        <a class="committee-card" href="committee.html?committee=armageddon" data-type="crisis" data-name="ARMAGEDDON High-stakes crisis room" style="--tile-a:#0d0d0d;--tile-b:#FF3750;"><div class="committee-visual"><img class="tile-photo" src="committee_photos/armageddon.jpg" alt="" /><div class="tile-photo-overlay"></div><img class="tile-logo" src="logo.png" alt="" /><span class="status">Crisis</span><span class="committee-ring"></span><strong class="committee-code long">ARMAGEDDON</strong></div><h2 class="committee-title">High-Stakes Crisis Committee</h2></a>
+        <a class="committee-card" href="committee.html?committee=oic" data-type="council" data-name="OIC Islamic cooperation" style="--tile-a:#1a5c2e;--tile-b:#2e9955;"><div class="committee-visual"><img class="tile-photo" src="committee_photos/oic.jpg" alt="" /><div class="tile-photo-overlay"></div><img class="tile-logo" src="logo.png" alt="" /><span class="status">Council</span><span class="committee-ring"></span><strong class="committee-code">OIC</strong></div><h2 class="committee-title">Organisation of Islamic Cooperation</h2></a>
+        <a class="committee-card" href="committee.html?committee=un-women" data-type="committee" data-name="UN WOMEN Gender equality forum" style="--tile-a:#7b2d6e;--tile-b:#c44fb0;"><div class="committee-visual"><img class="tile-photo" src="committee_photos/un_woman.jpg" alt="" /><div class="tile-photo-overlay"></div><img class="tile-logo" src="logo.png" alt="" /><span class="status">Committee</span><span class="committee-ring"></span><strong class="committee-code long">UN WOMEN</strong></div><h2 class="committee-title">UN Entity for Gender Equality</h2></a>
+        <a class="committee-card" href="committee.html?committee=copuos" data-type="committee" data-name="COPUOS Outer space affairs" style="--tile-a:#003057;--tile-b:#1E96A5;"><div class="committee-visual"><img class="tile-photo" src="committee_photos/copous.jpg" alt="" /><div class="tile-photo-overlay"></div><img class="tile-logo" src="logo.png" alt="" /><span class="status">Committee</span><span class="committee-ring"></span><strong class="committee-code med">COPUOS</strong></div><h2 class="committee-title">Committee on Peaceful Uses of Outer Space</h2></a>
+        <a class="committee-card" href="committee.html?committee=us-senate" data-type="assembly" data-name="US SENATE Legislative chamber" style="--tile-a:#1a2c5c;--tile-b:#3352a3;"><div class="committee-visual"><img class="tile-photo" src="committee_photos/us_senate.jpg" alt="" /><div class="tile-photo-overlay"></div><img class="tile-logo" src="logo.png" alt="" /><span class="status">Senate</span><span class="committee-ring"></span><strong class="committee-code long">US SENATE</strong></div><h2 class="committee-title">United States Senate</h2></a>
+        <a class="committee-card" href="committee.html?committee=unodc" data-type="committee" data-name="UNODC Drugs and crime" style="--tile-a:#4a1a0e;--tile-b:#c05a2e;"><div class="committee-visual"><img class="tile-photo" src="committee_photos/unodc.jpg" alt="" /><div class="tile-photo-overlay"></div><img class="tile-logo" src="logo.png" alt="" /><span class="status">Agency</span><span class="committee-ring"></span><strong class="committee-code med">UNODC</strong></div><h2 class="committee-title">UN Office on Drugs and Crime</h2></a>
+        <a class="committee-card" href="committee.html?committee=ecofin" data-type="committee" data-name="ECOFIN Economic and financial" style="--tile-a:#1d5c3a;--tile-b:#30CDD7;"><div class="committee-visual"><img class="tile-photo" src="committee_photos/ecofin.jpg" alt="" /><div class="tile-photo-overlay"></div><img class="tile-logo" src="logo.png" alt="" /><span class="status">Committee</span><span class="committee-ring"></span><strong class="committee-code med">ECOFIN</strong></div><h2 class="committee-title">Economic and Financial Committee</h2></a>
+        <a class="committee-card" href="committee.html?committee=sc-unc" data-type="special" data-name="Special Committee on the UN Charter" style="--tile-a:#BC9A6E;--tile-b:#003057;"><div class="committee-visual"><img class="tile-photo" src="committee_photos/un_charter.jpg" alt="" /><div class="tile-photo-overlay"></div><img class="tile-logo" src="logo.png" alt="" /><span class="status">Special</span><span class="committee-ring"></span><strong class="committee-code med">SC-UNC</strong></div><h2 class="committee-title">Special Committee on the UN Charter</h2></a>
+        <a class="committee-card" href="committee.html?committee=fifa" data-type="special" data-name="FIFA Global football governance" style="--tile-a:#1a3a1a;--tile-b:#30CDD7;"><div class="committee-visual"><img class="tile-photo" src="committee_photos/fifa.jpg" alt="" /><div class="tile-photo-overlay"></div><img class="tile-logo" src="logo.png" alt="" /><span class="status">Federation</span><span class="committee-ring"></span><strong class="committee-code">FIFA</strong></div><h2 class="committee-title">International Football Governance</h2></a>
+        <a class="committee-card" href="committee.html?committee=who" data-type="agency" data-name="WHO World health organization" style="--tile-a:#003057;--tile-b:#30CDD7;"><div class="committee-visual"><img class="tile-photo" src="committee_photos/who.jpg" alt="" /><div class="tile-photo-overlay"></div><img class="tile-logo" src="logo.png" alt="" /><span class="status">Agency</span><span class="committee-ring"></span><strong class="committee-code">WHO</strong></div><h2 class="committee-title">World Health Organization</h2></a>
+        <a class="committee-card" href="committee.html?committee=ip" data-type="press" data-name="IP International press" style="--tile-a:#1c1c1c;--tile-b:#3a3a3a;"><div class="committee-visual"><img class="tile-photo" src="committee_photos/IP.jpg" alt="" /><div class="tile-photo-overlay"></div><img class="tile-logo" src="logo.png" alt="" /><span class="status">Press</span><span class="committee-ring"></span><strong class="committee-code">IP</strong></div><h2 class="committee-title">International Press Corps</h2></a>
         <div class="empty-state" id="emptyState">No committees match your search.</div>
       </section>
     </div>
@@ -965,7 +959,7 @@
         card.style.display = show ? '' : 'none';
         if (show) {
           card.classList.remove('revealed');
-          setTimeout(() => card.classList.add('revealed'), visible * 55);
+          setTimeout(() => card.classList.add('revealed'), visible * 22);
           visible++;
         }
       });
@@ -991,10 +985,10 @@
       entries.forEach(entry => {
         if (!entry.isIntersecting) return;
         const index = [...cards].indexOf(entry.target);
-        setTimeout(() => entry.target.classList.add('revealed'), index * 55);
+        setTimeout(() => entry.target.classList.add('revealed'), index * 22);
         observer.unobserve(entry.target);
       });
-    }, { threshold: 0.08 });
+    }, { threshold: 0.02 });
     cards.forEach(card => observer.observe(card));
 
     // Cursor-following capsule with smooth lerp
