@@ -1113,20 +1113,25 @@
         const email     = document.getElementById('inp-email').value.trim();
         const school    = document.getElementById('inp-school').value.trim();
 
-        const missing = !firstName || !lastName || !email || !school;
+        const missing  = !firstName || !lastName || !email || !school;
+        const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email);
 
-        if (missing) {
-          // slide to end first, then show error and bounce back
+        const errorMsg = missing
+          ? 'Please fill in all fields before submitting.'
+          : !validEmail
+          ? 'That doesn\'t look like a valid email — double-check it.'
+          : null;
+
+        if (errorMsg) {
           slideToEnd(() => {
             wrap.classList.add('s-error');
             thumb.innerHTML = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 4l8 8M12 4l-8 8"/></svg>';
-            label.textContent = 'Fill all fields first';
+            label.textContent = missing ? 'Fill all fields first' : 'Invalid email';
             label.style.paddingLeft = '0';
             label.style.opacity = '1';
-            note.textContent = 'Please fill in your first name, last name, email and school.';
+            note.textContent = errorMsg;
             note.style.color = '#FF3750';
-            // bounce back after a moment
-            setTimeout(resetToIdle, 1600);
+            setTimeout(resetToIdle, 1800);
           });
           return;
         }
