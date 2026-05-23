@@ -375,41 +375,82 @@
       flex-direction: column;
       justify-content: center;
       padding: 0;
-      gap: 4px;
-      max-width: 68%;
+      gap: 0;
+      max-width: 80%;
     }
-    .hero-word-main {
-      font-size: clamp(3rem, 9vw, 8.5rem);
-      font-weight: 900;
-      line-height: .88;
-      letter-spacing: -.05em;
-      color: var(--white);
-      animation: fadeUp .85s cubic-bezier(0.4,0,0.2,1) .48s both;
-    }
-    .hero-word-sub {
+
+    /* Eyebrow */
+    .hero-eyebrow-line {
       display: flex;
       align-items: center;
-      gap: 18px;
-      animation: fadeUp .85s cubic-bezier(0.4,0,0.2,1) .62s both;
+      gap: 14px;
+      margin-bottom: 10px;
+      animation: fadeUp .6s cubic-bezier(0.4,0,0.2,1) .3s both;
+    }
+    .hero-eyebrow-line span {
+      font-size: .52rem;
+      font-weight: 700;
+      letter-spacing: .32em;
+      text-transform: uppercase;
+      color: rgba(250,245,237,.38);
+    }
+    .hero-eyebrow-line::before {
+      content: '';
+      display: block;
+      width: 28px; height: 2px;
+      background: var(--teal);
+      border-radius: 2px;
+      flex-shrink: 0;
+    }
+
+    /* Main title "OAKRIDGE" */
+    .hero-word-main {
+      font-size: clamp(3rem, 8vw, 7.5rem);
+      font-weight: 900;
+      line-height: .84;
+      letter-spacing: -.05em;
+      color: var(--white);
+      text-transform: uppercase;
+      animation: fadeUp .85s cubic-bezier(0.4,0,0.2,1) .42s both;
+    }
+
+    /* Teal gradient rule */
+    .hero-title-rule {
+      width: min(520px, 90%);
+      height: 2px;
+      margin: 14px 0 12px;
+      background: linear-gradient(to right, var(--teal), rgba(48,205,215,.18), transparent);
+      border-radius: 2px;
+      animation: fadeIn .7s ease .56s both;
+    }
+
+    /* "MODEL UNITED NATIONS" row */
+    .hero-word-sub {
+      display: flex;
+      align-items: baseline;
+      gap: 0;
+      animation: fadeUp .85s cubic-bezier(0.4,0,0.2,1) .58s both;
     }
     .hero-word-accent {
-      font-size: clamp(1.8rem, 5.2vw, 5rem);
-      font-weight: 900;
-      letter-spacing: -.03em;
-      color: var(--teal);
+      font-size: clamp(1.2rem, 3.2vw, 3rem);
+      font-weight: 700;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: rgba(250,245,237,.55);
       line-height: 1;
     }
-    .hero-word-rule {
-      flex-shrink: 0;
-      width: 3px;
-      height: clamp(1.8rem, 4.5vw, 4.5rem);
-      background: rgba(48,205,215,.45);
-      border-radius: 2px;
+    .hero-word-dot {
+      font-size: clamp(1.1rem, 2.8vw, 2.6rem);
+      font-weight: 900;
+      color: var(--teal);
+      margin: 0 clamp(8px, 1.2vw, 16px);
+      line-height: 1;
+      opacity: .7;
     }
     .hero-word-light {
-      font-size: clamp(1.8rem, 5.2vw, 5rem);
+      font-size: clamp(1.2rem, 3.2vw, 3rem);
       font-weight: 900;
-      letter-spacing: -.03em;
+      letter-spacing: .18em;
       text-transform: uppercase;
       color: var(--teal);
       line-height: 1;
@@ -1743,12 +1784,18 @@
       nav.scrolled .nav-pill  { padding: 8px 8px 8px 18px; border-radius: 100px; }
 
       .hero-roman { right: -0.05em; top: auto; bottom: -0.1em; transform: none; gap: clamp(.6rem, 2vw, 1.4rem); opacity: .22; }
-      .hero-inner { padding: 0 20px 36px; }
-      .hero-headline { max-width: 100%; gap: 4px; }
-      .hero-word-main { font-size: clamp(2.4rem, 12vw, 5rem); }
-      .hero-word-accent { font-size: clamp(1.4rem, 8.5vw, 3rem); }
+      .hero-inner { padding: 0 22px 36px; }
+      .hero-headline { max-width: 100%; gap: 0; }
+      .hero-eyebrow-line { margin-bottom: 10px; gap: 10px; }
+      .hero-eyebrow-line span { font-size: .55rem; letter-spacing: .22em; }
+      .hero-eyebrow-line::before { width: 22px; }
+      .hero-word-main { font-size: clamp(3.6rem, 16vw, 6rem); letter-spacing: -.04em; }
+      .hero-title-rule { width: 100%; margin: 10px 0 9px; }
+      .hero-word-sub { flex-wrap: nowrap; align-items: baseline; gap: 0; }
+      .hero-word-accent { font-size: clamp(1.1rem, 5vw, 2.4rem); letter-spacing: .08em; }
+      .hero-word-dot { font-size: clamp(1rem, 4.5vw, 2.1rem); margin: 0 5px; }
+      .hero-word-light { font-size: clamp(1.1rem, 5vw, 2.4rem); letter-spacing: .06em; }
       .hero-word-rule { height: clamp(1.4rem, 7.5vw, 2.8rem); }
-      .hero-word-light { font-size: clamp(1.4rem, 8.5vw, 3rem); }
       .hero-bottom { flex-direction: column; align-items: flex-start; gap: 24px; }
       .hero-bottom-right { order: -1; }
       .countdown { gap: 6px; }
@@ -2222,11 +2269,13 @@
     <div class="hero-inner">
 
       <div class="hero-headline">
+        <div class="hero-eyebrow-line"><span>Chapter XVI &nbsp;·&nbsp; Hyderabad &nbsp;·&nbsp; 2026</span></div>
         <h1 class="hero-word-main">OAKRIDGE</h1>
+        <div class="hero-title-rule"></div>
         <div class="hero-word-sub">
           <span class="hero-word-accent">MODEL</span>
-          <div class="hero-word-rule"></div>
-          <span class="hero-word-light">United Nations</span>
+          <span class="hero-word-dot">·</span>
+          <span class="hero-word-light">UNITED NATIONS</span>
         </div>
       </div>
 
@@ -2754,52 +2803,6 @@
   <script>
     // ── NAV SCROLL BLUR ──
     const navbar = document.getElementById('navbar');
-
-    // ── HERO PARTICLES ──
-    (function () {
-      const hero = document.querySelector('.hero');
-      if (!hero) return;
-      const canvas = document.createElement('canvas');
-      canvas.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;z-index:4;pointer-events:none;';
-      hero.appendChild(canvas);
-      const ctx = canvas.getContext('2d');
-      let w, h, pts;
-
-      function resize() {
-        w = canvas.width  = hero.offsetWidth;
-        h = canvas.height = hero.offsetHeight;
-      }
-
-      function init() {
-        pts = Array.from({ length: 110 }, () => ({
-          x:  Math.random() * w,
-          y:  Math.random() * h,
-          r:  Math.random() * 1.4 + 0.3,
-          vx: (Math.random() - 0.5) * 0.18,
-          vy: (Math.random() - 0.5) * 0.18,
-          o:  Math.random() * 0.45 + 0.08,
-        }));
-      }
-
-      function draw() {
-        ctx.clearRect(0, 0, w, h);
-        pts.forEach(p => {
-          ctx.beginPath();
-          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(48,205,215,${p.o})`;
-          ctx.fill();
-          p.x += p.vx; p.y += p.vy;
-          if (p.x < -4) p.x = w + 4;
-          if (p.x > w + 4) p.x = -4;
-          if (p.y < -4) p.y = h + 4;
-          if (p.y > h + 4) p.y = -4;
-        });
-        requestAnimationFrame(draw);
-      }
-
-      resize(); init(); draw();
-      window.addEventListener('resize', () => { resize(); init(); });
-    })();
 
     // ── COUNTDOWN ──
     const target = new Date('2026-07-24T00:00:00+05:30').getTime();
