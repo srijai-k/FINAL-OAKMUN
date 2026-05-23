@@ -311,7 +311,7 @@
     /* ── FORM CARD ── */
     .form-card {
       width: 100%;
-      max-width: 580px;
+      max-width: 100%;
       background: rgba(255,255,255,.035);
       border: 1px solid rgba(250,245,237,.08);
       border-radius: 24px;
@@ -540,6 +540,146 @@
       letter-spacing: .05em;
     }
 
+    /* ── REGISTER SPLIT LAYOUT ── */
+    .reg-split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      width: 100%;
+      max-width: 1200px;
+      padding: 0 48px;
+      align-items: start;
+    }
+    .reg-left {
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+      animation: fadeUp .6s .1s cubic-bezier(0.4,0,0.2,1) both;
+      position: sticky;
+      top: 140px;
+    }
+    .reg-right {
+      animation: fadeUp .6s .2s cubic-bezier(0.4,0,0.2,1) both;
+    }
+    .reg-headline {
+      font-size: clamp(2.8rem, 4.5vw, 4.6rem);
+      font-weight: 900;
+      letter-spacing: -.045em;
+      line-height: .92;
+      color: var(--white);
+    }
+    .reg-headline em {
+      font-style: normal;
+      background: linear-gradient(135deg, var(--teal) 0%, var(--teal-light) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .reg-sub {
+      font-size: .92rem;
+      font-weight: 400;
+      line-height: 1.75;
+      color: rgba(250,245,237,.5);
+      max-width: 440px;
+    }
+    .reg-bullets {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .reg-bullets li {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: .86rem;
+      font-weight: 500;
+      color: rgba(250,245,237,.75);
+      line-height: 1.5;
+    }
+    .rb-icon {
+      flex-shrink: 0;
+      width: 20px; height: 20px;
+      border-radius: 6px;
+      background: rgba(48,205,215,.1);
+      border: 1px solid rgba(48,205,215,.2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: .65rem;
+      color: var(--teal);
+      font-weight: 900;
+      margin-top: 1px;
+    }
+    .reg-urgency {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: .62rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: rgba(188,154,110,.9);
+      padding: 10px 18px;
+      background: rgba(188,154,110,.07);
+      border: 1px solid rgba(188,154,110,.2);
+      border-radius: 100px;
+      width: fit-content;
+    }
+    .reg-urgency-dot {
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: var(--gold);
+      flex-shrink: 0;
+      animation: pulse-dot 1.8s ease-in-out infinite;
+    }
+    .reg-dates-row {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      border: 1px solid rgba(48,205,215,.18);
+      border-radius: 100px;
+      overflow: hidden;
+      width: fit-content;
+    }
+    .reg-inline-stats {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(250,245,237,.07);
+    }
+    .ris-block {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .ris-num {
+      font-size: 1.75rem;
+      font-weight: 900;
+      letter-spacing: -.04em;
+      color: var(--white);
+      line-height: 1;
+    }
+    .ris-num sup { font-size: .8rem; color: var(--teal); }
+    .ris-label {
+      font-size: .52rem;
+      font-weight: 700;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: rgba(250,245,237,.3);
+    }
+    .ris-div {
+      width: 1px;
+      height: 32px;
+      background: rgba(250,245,237,.1);
+    }
+    .reg-schools {
+      font-size: .68rem;
+      font-weight: 600;
+      color: rgba(250,245,237,.3);
+      letter-spacing: .05em;
+    }
+    .reg-schools span { color: rgba(48,205,215,.7); }
+
     /* ── STATS STRIP ── */
     .stats-strip {
       display: flex;
@@ -736,6 +876,11 @@
       .form-grid .full { grid-column: 1; }
       .page-title { font-size: clamp(2.4rem, 11vw, 4rem); }
 
+      /* Register split: stack on mobile */
+      .reg-split { grid-template-columns: 1fr; gap: 40px; padding: 0; }
+      .reg-left { position: static; }
+      .reg-headline { font-size: clamp(2.6rem, 11vw, 3.8rem); }
+
       /* Stats strip: 2×2 wrap */
       .stats-strip { flex-wrap: wrap; border-radius: 12px; }
       .stat-block { flex: 0 0 50%; border-right: none; border-bottom: 1px solid rgba(250,245,237,.07); padding: 20px 0; }
@@ -839,6 +984,7 @@
   <div class="mobile-nav" id="mobileNav">
     <a href="index.html">Home</a>
     <a href="committees.html">Committees</a>
+    <a href="secretariat.html">Secretariat</a>
     <a href="index.html#schedule">Schedule</a>
     <a href="resources.html">Resources</a>
     <a href="social-night.html">Social Night</a>
@@ -854,6 +1000,7 @@
         <ul class="nav-links-group left">
           <li><a href="index.html">Home</a></li>
           <li><a href="committees.html">Committees</a></li>
+          <li><a href="secretariat.html">Secretariat</a></li>
         </ul>
         <div class="nav-mark"><img src="logo.png" alt="Oakridge MUN" /></div>
         <ul class="nav-links-group right">
@@ -879,91 +1026,120 @@
   </nav>
 
   <div class="wrapper">
+    <div class="reg-split">
 
-    <!-- Header -->
-    <div class="page-header">
-      <div class="status-pill">
-        <span class="status-dot"></span>
-        <span class="status-text">Registration not yet open</span>
-      </div>
-
-      <h1 class="page-title">Get notified first.</h1>
-
-      <p class="page-sub">Leave your details below and we'll reach out the moment registration opens — before the public announcement.</p>
-
-      <div class="dates-row">
-        <span class="date-chip">24 July</span>
-        <span class="date-chip">25 July</span>
-        <span class="date-chip">26 July 2026</span>
-      </div>
-    </div>
-
-    <!-- Form card -->
-    <div class="form-card">
-      <div class="form-card-title">Early access — <span>Chapter XVI</span></div>
-
-      <div class="form-grid">
-        <div class="field">
-          <label>First Name</label>
-          <input id="inp-first" type="text" placeholder="First" />
+      <!-- LEFT: conviction copy -->
+      <div class="reg-left">
+        <div class="status-pill">
+          <span class="status-dot"></span>
+          <span class="status-text">Registration Opening Soon</span>
         </div>
-        <div class="field">
-          <label>Last Name</label>
-          <input id="inp-last" type="text" placeholder="Last" />
+
+        <h1 class="reg-headline">Debate<br>what <em>matters.</em></h1>
+
+        <p class="reg-sub">Oakridge MUN Chapter XVI brings together 700+ of India's sharpest minds for three days of high-stakes diplomacy, elite debate, and real leadership at scale.</p>
+
+        <ul class="reg-bullets">
+          <li>
+            <span class="rb-icon">↗</span>
+            <span>19 committees spanning global crises & policy</span>
+          </li>
+          <li>
+            <span class="rb-icon">↗</span>
+            <span>700+ delegates from schools across India</span>
+          </li>
+          <li>
+            <span class="rb-icon">↗</span>
+            <span>3 full days of high-level debate & diplomacy</span>
+          </li>
+          <li>
+            <span class="rb-icon">↗</span>
+            <span>Official awards, certificates & recognition</span>
+          </li>
+          <li>
+            <span class="rb-icon">↗</span>
+            <span>XVI editions of MUN excellence — our biggest yet</span>
+          </li>
+        </ul>
+
+        <div class="reg-urgency">
+          <span class="reg-urgency-dot"></span>
+          Spots are limited — notified delegates get first access
         </div>
-        <div class="field full">
-          <label>Email Address</label>
-          <input id="inp-email" type="email" placeholder="you@school.edu" />
+
+        <div class="reg-dates-row">
+          <span class="date-chip">24 July</span>
+          <span class="date-chip">25 July</span>
+          <span class="date-chip">26 July 2026</span>
         </div>
-        <div class="field full">
-          <label>School / Institution</label>
-          <div class="school-wrap">
-            <input id="inp-school" type="text" placeholder="Type your school name…" autocomplete="off" />
-            <div class="school-dropdown" id="schoolDropdown"></div>
+
+        <div class="reg-inline-stats">
+          <div class="ris-block">
+            <span class="ris-num">700<sup>+</sup></span>
+            <span class="ris-label">Delegates</span>
+          </div>
+          <div class="ris-div"></div>
+          <div class="ris-block">
+            <span class="ris-num">19</span>
+            <span class="ris-label">Committees</span>
+          </div>
+          <div class="ris-div"></div>
+          <div class="ris-block">
+            <span class="ris-num">XVI</span>
+            <span class="ris-label">Chapter</span>
           </div>
         </div>
       </div>
 
-      <div class="divider-line"></div>
+      <!-- RIGHT: form -->
+      <div class="reg-right">
+        <div class="form-card">
+          <div class="form-card-title">Get notified first — <span>Chapter XVI</span></div>
 
-      <!-- slide-to-send -->
-      <div class="slide-hint" id="slideHint">
-        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><path d="M2 8h10M8 4l4 4-4 4"/></svg>
-        Slide to get notified
-      </div>
-      <div class="slide-btn-wrap" id="submitBtn" role="button" aria-label="Slide to notify me">
-        <div class="slide-fill" id="regFill"></div>
-        <div class="slide-label" id="regLabel">Notify Me When Open</div>
-        <div class="slide-thumb" id="regThumb">
-          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M2 8h10M8 4l4 4-4 4"/>
-          </svg>
+          <div class="form-grid">
+            <div class="field">
+              <label>First Name</label>
+              <input id="inp-first" type="text" placeholder="First" />
+            </div>
+            <div class="field">
+              <label>Last Name</label>
+              <input id="inp-last" type="text" placeholder="Last" />
+            </div>
+            <div class="field full">
+              <label>Email Address</label>
+              <input id="inp-email" type="email" placeholder="you@school.edu" />
+            </div>
+            <div class="field full">
+              <label>School / Institution</label>
+              <div class="school-wrap">
+                <input id="inp-school" type="text" placeholder="Type your school name…" autocomplete="off" />
+                <div class="school-dropdown" id="schoolDropdown"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="divider-line"></div>
+
+          <!-- slide-to-send -->
+          <div class="slide-hint" id="slideHint">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><path d="M2 8h10M8 4l4 4-4 4"/></svg>
+            Slide to get notified
+          </div>
+          <div class="slide-btn-wrap" id="submitBtn" role="button" aria-label="Slide to notify me">
+            <div class="slide-fill" id="regFill"></div>
+            <div class="slide-label" id="regLabel">Notify Me When Open</div>
+            <div class="slide-thumb" id="regThumb">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M2 8h10M8 4l4 4-4 4"/>
+              </svg>
+            </div>
+          </div>
+
+          <p class="form-note" id="formNote">One email only. No spam, ever.</p>
         </div>
       </div>
 
-      <p class="form-note" id="formNote">One email only. No spam, ever.</p>
     </div>
-
-    <!-- Stats strip -->
-    <div class="stats-strip">
-      <div class="stat-block">
-        <div class="stat-num">700<sup>+</sup></div>
-        <div class="stat-label">Delegates</div>
-      </div>
-      <div class="stat-block">
-        <div class="stat-num">19</div>
-        <div class="stat-label">Committees</div>
-      </div>
-      <div class="stat-block">
-        <div class="stat-num">3</div>
-        <div class="stat-label">Days</div>
-      </div>
-      <div class="stat-block">
-        <div class="stat-num">XVI</div>
-        <div class="stat-label">Chapter</div>
-      </div>
-    </div>
-
   </div>
 
   <!-- ═══ DELEGATION GUIDELINES ═══ -->
