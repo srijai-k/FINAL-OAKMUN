@@ -298,7 +298,7 @@
       position: relative;
       width: 100%;
       height: calc(100vh / 1.1);
-      overflow: hidden;
+      overflow: clip;
       background: var(--navy);
     }
 
@@ -694,7 +694,7 @@
     .theme-section {
       position: relative;
       padding: 140px 64px;
-      overflow: hidden;
+      overflow: clip;
       background: #003057;
     }
     .theme-section::after {
@@ -838,7 +838,7 @@
       background: var(--navy);
       padding: 100px 56px 120px;
       position: relative;
-      overflow: hidden;
+      overflow: clip;
     }
     /* subtle bg text */
     .sg-section::before {
@@ -1245,7 +1245,7 @@
     .ctrl-chains-sticky {
       position: relative;
       min-height: 100vh;
-      overflow: hidden;
+      overflow: clip;
       display: flex;
     }
     .ctrl-copy {
@@ -1311,7 +1311,7 @@
       position: relative;
       height: 100vh;
       width: 54%;
-      overflow: hidden;
+      overflow: clip;
     }
     .ctrl-chain-list {
       align-items: flex-start;
@@ -1838,7 +1838,7 @@
       .footer-bottom { flex-direction: column; gap: 8px; padding: 20px 0; }
 
       .ctrl-chains-section { min-height: auto; }
-      .ctrl-chains-sticky { min-height: auto; flex-direction: column; overflow: visible; }
+      .ctrl-chains-sticky { min-height: auto; flex-direction: column; }
       .ctrl-copy { width: 100%; height: auto; padding: 72px 20px 28px; }
       .ctrl-title { font-size: 2.6rem; }
       .ctrl-subtitle { max-width: 100%; font-size: .9rem; }
@@ -1959,7 +1959,7 @@
     ═══════════════════════════════════════ */
     .cta-banner {
       background: linear-gradient(160deg, #001223 0%, #001a35 60%, #001223 100%);
-      position: relative; overflow: hidden;
+      position: relative; overflow: clip;
       padding: 120px 56px;
       text-align: center;
     }
