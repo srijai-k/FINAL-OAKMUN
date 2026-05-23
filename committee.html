@@ -254,15 +254,27 @@
       border-radius: 20px;
       transform: rotate(-5deg);
     }
-    .hero-panel::after {
-      content: '';
+    /* ── PANEL PHOTO ── */
+    .panel-photo {
       position: absolute;
-      right: -34%;
-      bottom: -34%;
-      width: 85%;
-      aspect-ratio: 1;
-      border-radius: 50%;
-      border: 42px solid rgba(250,245,237,.34);
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      z-index: 0;
+    }
+    .panel-photo-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to top,
+        rgba(0,12,36,.82) 0%,
+        rgba(0,20,48,.5)  40%,
+        rgba(0,12,36,.25) 100%
+      );
+      z-index: 1;
+      pointer-events: none;
     }
     .panel-code {
       position: absolute;
@@ -271,23 +283,27 @@
       align-items: center;
       justify-content: center;
       padding: 42px;
-      font-size: clamp(4rem, 8vw, 7rem);
+      font-size: clamp(2.4rem, 5vw, 5rem);
       font-weight: 900;
-      letter-spacing: -.08em;
-      color: var(--navy);
-      z-index: 1;
+      letter-spacing: -.05em;
+      color: #fff;
+      text-shadow: 0 2px 20px rgba(0,0,0,.55);
+      z-index: 2;
     }
+    .panel-code.med  { font-size: clamp(1.7rem, 3.5vw, 3.5rem); letter-spacing: -.04em; }
+    .panel-code.long { font-size: clamp(1.1rem, 2.2vw, 2.2rem); letter-spacing: -.03em; }
     .panel-label {
       position: absolute;
       top: 30px;
       left: 50%;
       transform: translateX(-50%);
-      z-index: 1;
+      z-index: 2;
       font-size: .68rem;
       font-weight: 900;
       letter-spacing: .18em;
       text-transform: uppercase;
-      color: rgba(0,48,87,.52);
+      color: rgba(250,245,237,.75);
+      text-shadow: 0 1px 6px rgba(0,0,0,.4);
     }
     .panel-logo {
       position: absolute;
@@ -297,7 +313,7 @@
       height: 48px;
       object-fit: contain;
       opacity: .28;
-      z-index: 1;
+      z-index: 2;
     }
 
     /* ══════════════════════════════════════
@@ -1103,11 +1119,50 @@
     document.getElementById('committeeTitle').textContent = name;
     document.getElementById('committeeSubtitle').textContent = subtitle;
     document.getElementById('panelLabel').textContent = type;
-    document.getElementById('panelCode').textContent = code;
+
+    // Panel code: show full name, size by length
+    const panelCodeEl = document.getElementById('panelCode');
+    panelCodeEl.textContent = name;
+    if (name.length > 8) panelCodeEl.classList.add('long');
+    else if (name.length > 5) panelCodeEl.classList.add('med');
+
     document.getElementById('overviewTitle').textContent = `${name} overview`;
     document.getElementById('overviewText').textContent = overview;
     document.getElementById('heroPanel').style.setProperty('--tile-a', palette[colorIndex % palette.length]);
     document.getElementById('heroPanel').style.setProperty('--tile-b', palette[(colorIndex + 2) % palette.length]);
+
+    // Inject committee photo if available
+    const photos = {
+      'disec':     'disec.jpg',
+      'unsc':      'unsc.jpg',
+      'unhrc':     'unhrc.jpg',
+      'jcc-1':     'jcc-1.jpg',
+      'jcc-2':     'jcc-2.jpg',
+      'hcc':       'hcc.jpg',
+      'lok-sabha': 'lok_sabha.jpg',
+      'armageddon':'armageddon.jpg',
+      'oic':       'oic.jpg',
+      'un-women':  'un_woman.jpg',
+      'copuos':    'copous.jpg',
+      'us-senate': 'us_senate.jpg',
+      'ecofin':    'ecofin.jpg',
+      'fifa':      'fifa.jpg',
+      'who':       'who.jpg',
+      'ip':        'IP.jpg',
+      'unodc':     'unodc.jpg',
+      'sc-unc':    'un_charter.jpg',
+    };
+    if (photos[key]) {
+      const panel = document.getElementById('heroPanel');
+      const img = document.createElement('img');
+      img.className = 'panel-photo';
+      img.src = `committee_photos/${photos[key]}`;
+      img.alt = '';
+      const overlay = document.createElement('div');
+      overlay.className = 'panel-photo-overlay';
+      panel.prepend(overlay);
+      panel.prepend(img);
+    }
 
     // overview
     document.getElementById('overviewTitle').textContent = `${name} overview`;
