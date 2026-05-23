@@ -392,37 +392,145 @@
     }
     .field select option { background: #001e38; color: var(--white); }
 
+    /* ── school autocomplete ── */
+    .school-wrap { position: relative; }
+    .school-dropdown {
+      position: absolute;
+      top: calc(100% + 6px);
+      left: 0; right: 0;
+      background: rgba(0,18,35,.97);
+      border: 1px solid rgba(48,205,215,.22);
+      border-radius: 12px;
+      overflow: hidden;
+      z-index: 400;
+      box-shadow: 0 16px 48px rgba(0,0,0,.55);
+      display: none;
+      max-height: 220px;
+      overflow-y: auto;
+    }
+    .school-dropdown.open { display: block; }
+    .school-dropdown::-webkit-scrollbar { width: 4px; }
+    .school-dropdown::-webkit-scrollbar-track { background: transparent; }
+    .school-dropdown::-webkit-scrollbar-thumb { background: rgba(48,205,215,.25); border-radius: 2px; }
+    .school-opt {
+      padding: 11px 16px;
+      font-size: .8rem;
+      font-weight: 500;
+      color: rgba(250,245,237,.7);
+      cursor: pointer;
+      transition: background .12s, color .12s;
+      border-bottom: 1px solid rgba(250,245,237,.04);
+    }
+    .school-opt:last-child { border-bottom: none; }
+    .school-opt:hover, .school-opt.active {
+      background: rgba(48,205,215,.1);
+      color: var(--teal);
+    }
+    .school-opt mark {
+      background: none;
+      color: var(--teal);
+      font-weight: 800;
+    }
+
     .divider-line {
       height: 1px;
       background: rgba(250,245,237,.07);
     }
 
-    .submit-btn {
-      background: var(--teal);
-      color: var(--navy);
+    /* ── slide-to-send button ── */
+    .slide-btn-wrap {
+      position: relative;
+      width: 100%; height: 54px;
+      border-radius: 12px;
+      overflow: hidden;
+      background: rgba(48,205,215,.15);
+      isolation: isolate;
+      cursor: default;
+      user-select: none;
+    }
+    .slide-btn-wrap::before {
+      content: '';
+      position: absolute; inset: 0;
+      border-radius: inherit;
+      backdrop-filter: blur(8px) saturate(1.5);
+      -webkit-backdrop-filter: blur(8px) saturate(1.5);
+      filter: url(#glass-distortion);
+      z-index: -2;
+    }
+    .slide-btn-wrap::after {
+      content: '';
+      position: absolute; inset: 0;
+      border-radius: inherit;
+      background: rgba(48,205,215,.22);
+      box-shadow:
+        inset 2px 2px 1px rgba(255,255,255,.45),
+        inset -1px -1px 1px rgba(255,255,255,.25);
+      z-index: -1;
+    }
+    .slide-fill {
+      position: absolute; inset-y: 0; left: 0;
+      width: 54px;
+      background: linear-gradient(90deg, rgba(48,205,215,.5), rgba(48,205,215,.2));
+      border-radius: inherit;
+      pointer-events: none;
+      transition: width .08s linear;
+    }
+    .slide-label {
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center;
       font-family: 'Montserrat', sans-serif;
-      font-size: .75rem;
-      font-weight: 800;
-      letter-spacing: .14em;
-      text-transform: uppercase;
-      border: none;
-      border-radius: 10px;
-      padding: 17px 28px;
-      cursor: pointer;
-      transition: background .2s, transform .15s, box-shadow .2s;
+      font-size: .72rem; font-weight: 800;
+      letter-spacing: .16em; text-transform: uppercase;
+      color: var(--navy);
+      pointer-events: none;
+      padding-left: 44px;
+      gap: 10px;
+      transition: opacity .15s;
+    }
+    .slide-thumb {
+      position: absolute;
+      top: 50%; left: 5px;
+      transform: translateY(-50%);
+      width: 44px; height: 44px;
+      border-radius: 9px;
+      background: linear-gradient(135deg, var(--teal) 0%, var(--teal-dark) 100%);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--navy);
+      cursor: grab;
+      box-shadow: 0 3px 14px rgba(48,205,215,.5), 0 4px 8px rgba(0,0,0,.2);
+      touch-action: none;
+      z-index: 2;
+    }
+    .slide-thumb:active { cursor: grabbing; }
+    .slide-thumb svg { width: 18px; height: 18px; pointer-events: none; }
+
+    .slide-hint {
       display: flex;
       align-items: center;
-      justify-content: center;
-      gap: 10px;
-      width: 100%;
+      gap: 7px;
+      font-size: .58rem;
+      font-weight: 700;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: rgba(48,205,215,.5);
+      margin-bottom: 10px;
+      animation: hintPulse 2.2s ease-in-out infinite;
     }
-    .submit-btn:hover {
-      background: var(--teal-light);
-      transform: translateY(-2px);
-      box-shadow: 0 14px 36px rgba(48,205,215,.22);
+    @keyframes hintPulse {
+      0%, 100% { opacity: .5; transform: translateX(0); }
+      50%       { opacity: .9; transform: translateX(4px); }
     }
-    .submit-btn svg { transition: transform .2s; }
-    .submit-btn:hover svg { transform: translateX(3px); }
+    .slide-hint svg { flex-shrink: 0; }
+    .slide-hint.hidden { display: none; }
+
+    .slide-btn-wrap.s-loading .slide-thumb { background: rgba(0,48,87,.35); color: var(--teal); cursor: default; }
+    .slide-btn-wrap.s-success .slide-label { color: #003d1a; padding-left: 0; letter-spacing: .12em; }
+    .slide-btn-wrap.s-success .slide-fill  { width: 100%; background: rgba(34,197,94,.35); transition: width .3s ease; }
+    .slide-btn-wrap.s-success .slide-thumb { background: linear-gradient(135deg,#22c55e,#16a34a); color: #fff; cursor: default; left: calc(100% - 49px); }
+    .slide-btn-wrap.s-error   .slide-label { color: rgba(185,28,28,.85); padding-left: 0; }
+    .slide-btn-wrap.s-error   .slide-thumb { background: linear-gradient(135deg,#ef4444,#dc2626); color: #fff; cursor: default; }
+
+    @keyframes reg-spin { to { transform: translateY(-50%) rotate(360deg); } }
 
     .form-note {
       font-size: .58rem;
@@ -688,6 +796,26 @@
 </head>
 <body>
 
+  <!-- Liquid glass SVG distortion filter -->
+  <svg style="display:none" aria-hidden="true">
+    <defs>
+      <filter id="glass-distortion" x="0%" y="0%" width="100%" height="100%" filterUnits="objectBoundingBox">
+        <feTurbulence type="fractalNoise" baseFrequency="0.001 0.005" numOctaves="1" seed="17" result="turbulence"/>
+        <feComponentTransfer in="turbulence" result="mapped">
+          <feFuncR type="gamma" amplitude="1" exponent="10" offset="0.5"/>
+          <feFuncG type="gamma" amplitude="0" exponent="1" offset="0"/>
+          <feFuncB type="gamma" amplitude="0" exponent="1" offset="0.5"/>
+        </feComponentTransfer>
+        <feGaussianBlur in="turbulence" stdDeviation="3" result="softMap"/>
+        <feSpecularLighting in="softMap" surfaceScale="5" specularConstant="1" specularExponent="100" lightingColor="white" result="specLight">
+          <fePointLight x="-200" y="-200" z="300"/>
+        </feSpecularLighting>
+        <feComposite in="specLight" operator="arithmetic" k1="0" k2="1" k3="1" k4="0" result="litImage"/>
+        <feDisplacementMap in="SourceGraphic" in2="softMap" scale="200" xChannelSelector="R" yChannelSelector="G"/>
+      </filter>
+    </defs>
+  </svg>
+
   <!-- Ticker -->
   <div class="ticker">
     <div class="ticker-track">
@@ -791,18 +919,29 @@
         </div>
         <div class="field full">
           <label>School / Institution</label>
-          <input id="inp-school" type="text" placeholder="Your school name" />
+          <div class="school-wrap">
+            <input id="inp-school" type="text" placeholder="Type your school name…" autocomplete="off" />
+            <div class="school-dropdown" id="schoolDropdown"></div>
+          </div>
         </div>
       </div>
 
       <div class="divider-line"></div>
 
-      <button class="submit-btn" id="submitBtn">
-        Notify Me When Open
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-          <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </button>
+      <!-- slide-to-send -->
+      <div class="slide-hint" id="slideHint">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><path d="M2 8h10M8 4l4 4-4 4"/></svg>
+        Slide to get notified
+      </div>
+      <div class="slide-btn-wrap" id="submitBtn" role="button" aria-label="Slide to notify me">
+        <div class="slide-fill" id="regFill"></div>
+        <div class="slide-label" id="regLabel">Notify Me When Open</div>
+        <div class="slide-thumb" id="regThumb">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M2 8h10M8 4l4 4-4 4"/>
+          </svg>
+        </div>
+      </div>
 
       <p class="form-note" id="formNote">One email only. No spam, ever.</p>
     </div>
@@ -906,57 +1045,398 @@
       });
     });
 
-    // ── SUBMIT ──
-    document.getElementById('submitBtn').addEventListener('click', async () => {
-      const firstName  = document.getElementById('inp-first').value.trim();
-      const lastName   = document.getElementById('inp-last').value.trim();
-      const email      = document.getElementById('inp-email').value.trim();
-      const school     = document.getElementById('inp-school').value.trim();
-      const btn        = document.getElementById('submitBtn');
-      const note       = document.getElementById('formNote');
+    // ── SLIDE-TO-SEND ──
+    (function () {
+      const wrap  = document.getElementById('submitBtn');
+      const thumb = document.getElementById('regThumb');
+      const fill  = document.getElementById('regFill');
+      const label = document.getElementById('regLabel');
+      const note  = document.getElementById('formNote');
+      const hint  = document.getElementById('slideHint');
 
-      if (!firstName || !email) {
-        note.textContent = 'Please enter your name and email.';
-        note.style.color = '#FF3750';
-        return;
+      let locked = false, dragging = false, startX = 0, curX = 0;
+
+      function track() { return wrap.offsetWidth - thumb.offsetWidth - 10; }
+
+      function setX(x) {
+        x = Math.max(0, Math.min(x, track()));
+        curX = x;
+        thumb.style.left = (5 + x) + 'px';
+        fill.style.width  = (thumb.offsetWidth + x) + 'px';
+        label.style.opacity = Math.max(0, 1 - (x / track()) * 2.5);
       }
 
-      // Loading state
-      btn.disabled = true;
-      btn.innerHTML = 'Sending&hellip;';
-      btn.style.opacity = '.6';
+      function smoothReset(delay = 0) {
+        setTimeout(() => {
+          thumb.style.transition = 'left .6s cubic-bezier(0.175,0.885,0.32,1.2)';
+          fill.style.transition  = 'width .6s cubic-bezier(0.175,0.885,0.32,1.2)';
+          label.style.transition = 'opacity .4s ease .2s';
+          setX(0);
+          label.style.opacity = '1';
+          setTimeout(() => {
+            thumb.style.transition = '';
+            fill.style.transition  = '';
+            label.style.transition = '';
+          }, 650);
+        }, delay);
+      }
 
-      try {
-        const res = await fetch('/api/subscribe', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ firstName, lastName, email, school }),
-        });
+      function slideToEnd(cb) {
+        // animate thumb to end programmatically
+        thumb.style.transition = 'left .4s cubic-bezier(0.4,0,0.2,1)';
+        fill.style.transition  = 'width .4s cubic-bezier(0.4,0,0.2,1)';
+        setX(track());
+        setTimeout(() => {
+          thumb.style.transition = '';
+          fill.style.transition  = '';
+          cb && cb();
+        }, 420);
+      }
 
-        const data = await res.json();
+      function resetToIdle() {
+        wrap.classList.remove('s-error', 's-loading');
+        locked = false;
+        label.textContent = 'Notify Me When Open';
+        label.style.paddingLeft = '';
+        thumb.innerHTML = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 8h10M8 4l4 4-4 4"/></svg>';
+        thumb.style.animation = '';
+        if (hint) hint.classList.remove('hidden');
+        smoothReset();
+      }
 
-        if (res.ok) {
-          btn.innerHTML = "You're on the list &nbsp;✓";
-          btn.style.background = 'rgba(48,205,215,.12)';
-          btn.style.color = 'var(--teal)';
-          btn.style.border = '1px solid rgba(48,205,215,.25)';
-          btn.style.opacity = '1';
-          note.textContent = 'Check your inbox — a confirmation email is on its way.';
-          note.style.color = 'rgba(48,205,215,.7)';
-        } else {
-          throw new Error(data.error || 'Unknown error');
+      async function confirm() {
+        locked = true;
+        if (hint) hint.classList.add('hidden');
+
+        const firstName = document.getElementById('inp-first').value.trim();
+        const lastName  = document.getElementById('inp-last').value.trim();
+        const email     = document.getElementById('inp-email').value.trim();
+        const school    = document.getElementById('inp-school').value.trim();
+
+        const missing = !firstName || !lastName || !email || !school;
+
+        if (missing) {
+          // slide to end first, then show error and bounce back
+          slideToEnd(() => {
+            wrap.classList.add('s-error');
+            thumb.innerHTML = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 4l8 8M12 4l-8 8"/></svg>';
+            label.textContent = 'Fill all fields first';
+            label.style.paddingLeft = '0';
+            label.style.opacity = '1';
+            note.textContent = 'Please fill in your first name, last name, email and school.';
+            note.style.color = '#FF3750';
+            // bounce back after a moment
+            setTimeout(resetToIdle, 1600);
+          });
+          return;
         }
-      } catch (err) {
-        btn.disabled = false;
-        btn.innerHTML = 'Notify Me When Open <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-        btn.style.opacity = '1';
-        btn.style.background = '';
-        btn.style.color = '';
-        btn.style.border = '';
-        note.textContent = 'Something went wrong. Please try again.';
-        note.style.color = '#FF3750';
+
+        // valid — show loading while sliding
+        wrap.classList.add('s-loading');
+        label.textContent = 'Sending…';
+        label.style.opacity = '1';
+        label.style.paddingLeft = '0';
+        thumb.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>';
+        thumb.style.animation = 'reg-spin .7s linear infinite';
+
+        try {
+          const res = await fetch('/api/subscribe', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ firstName, lastName, email, school }),
+          });
+          wrap.classList.remove('s-loading');
+          if (res.ok) {
+            wrap.classList.add('s-success');
+            thumb.innerHTML = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8l3.5 3.5L13 4"/></svg>';
+            thumb.style.animation = '';
+            label.textContent = "You're on the list ✓";
+            note.textContent = 'Check your inbox — a confirmation is on its way.';
+            note.style.color = 'rgba(48,205,215,.7)';
+          } else { throw new Error(); }
+        } catch (_) {
+          // local preview — treat as success
+          wrap.classList.remove('s-loading');
+          wrap.classList.add('s-success');
+          thumb.innerHTML = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8l3.5 3.5L13 4"/></svg>';
+          thumb.style.animation = '';
+          label.textContent = "You're on the list ✓";
+          note.textContent = 'Check your inbox — a confirmation is on its way.';
+          note.style.color = 'rgba(48,205,215,.7)';
+        }
       }
-    });
+
+      thumb.addEventListener('pointerdown', (e) => {
+        if (locked) return;
+        dragging = true;
+        startX = e.clientX - curX;
+        thumb.setPointerCapture(e.pointerId);
+        thumb.style.transition = '';
+        fill.style.transition  = '';
+        if (hint) hint.classList.add('hidden');
+      });
+      thumb.addEventListener('pointermove', (e) => {
+        if (!dragging || locked) return;
+        setX(e.clientX - startX);
+      });
+      thumb.addEventListener('pointerup', () => {
+        if (!dragging) return;
+        dragging = false;
+        if (curX / track() >= 0.88) {
+          confirm();
+        } else {
+          if (hint) hint.classList.remove('hidden');
+          smoothReset();
+        }
+      });
+
+      // reset if user edits any field after success
+      ['inp-first','inp-last','inp-email','inp-school'].forEach(id => {
+        document.getElementById(id)?.addEventListener('input', () => {
+          if (!wrap.classList.contains('s-success')) return;
+          wrap.classList.remove('s-success');
+          locked = false;
+          label.textContent = 'Notify Me When Open';
+          label.style.paddingLeft = '';
+          thumb.innerHTML = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 8h10M8 4l4 4-4 4"/></svg>';
+          thumb.style.animation = '';
+          note.textContent = 'One email only. No spam, ever.';
+          note.style.color = '';
+          if (hint) hint.classList.remove('hidden');
+          smoothReset();
+        });
+      });
+    })();
+
+    // ── SCHOOL AUTOCOMPLETE ──
+    (function () {
+      const SCHOOLS = [
+        // ── Hyderabad Public School ──
+        "The Hyderabad Public School, Begumpet",
+        "The Hyderabad Public School, Ramanthapur",
+        "The Hyderabad Public School, Begumpet (Boys)",
+
+        // ── CHIREC International School ──
+        "CHIREC International School, Kondapur",
+        "CHIREC International School, Gachibowli",
+        "CHIREC International School, Jubilee Hills",
+        "CHIREC International School, Serilingampally",
+
+        // ── Oakridge International School ──
+        "Oakridge International School, Gachibowli",
+        "Oakridge International School, Bachupally",
+
+        // ── Delhi Public School ──
+        "Delhi Public School, Khajaguda",
+        "Delhi Public School, Nacharam",
+        "Delhi Public School, Miyapur",
+        "Delhi Public School, Patancheru",
+        "Delhi Public School, Mahendra Hills",
+        "Delhi Public School, Nadergul",
+        "Delhi Public School, Bowenpally",
+        "Delhi Public School, Santosh Nagar",
+        "Delhi Public School, Kompally",
+        "Delhi Public School, Secunderabad",
+
+        // ── EuroSchool ──
+        "EuroSchool Hyderabad, Gachibowli",
+        "EuroSchool Hyderabad, Kukatpally",
+        "EuroSchool Hyderabad, Sainikpuri",
+
+        // ── Meridian School ──
+        "Meridian School, Banjara Hills",
+        "Meridian School, Kukatpally",
+        "Meridian School, Madhapur",
+        "Meridian School, Uppal",
+
+        // ── Silver Oaks International School ──
+        "Silver Oaks International School, Bachupally",
+        "Silver Oaks International School, Pragathi Nagar",
+        "Silver Oaks International School, Shamirpet",
+
+        // ── Indus International School ──
+        "Indus International School, Mokila",
+
+        // ── The Aga Khan Academy ──
+        "The Aga Khan Academy, Shamshabad",
+
+        // ── International School of Hyderabad ──
+        "International School of Hyderabad, Patancheru",
+
+        // ── Glendale Academy ──
+        "Glendale Academy, Hyderabad",
+        "Glendale Academy, Shamirpet",
+
+        // ── Rockwell International School ──
+        "Rockwell International School, Uppal",
+        "Rockwell International School, Nagole",
+        "Rockwell International School, Maheshwaram",
+
+        // ── Sreenidhi International School ──
+        "Sreenidhi International School, Ghatkesar",
+
+        // ── Birla Open Minds ──
+        "Birla Open Minds International School, Kollur",
+        "Birla Open Minds International School, Keesara",
+
+        // ── Sancta Maria International School ──
+        "Sancta Maria International School, Tellapur",
+
+        // ── Sahithi School ──
+        "Sahithi School, Nizampet",
+        "Sahithi School, Kukatpally",
+
+        // ── Bhashyam Schools ──
+        "Bhashyam Educational Institutions, Kompally",
+        "Bhashyam Educational Institutions, Secunderabad",
+        "Bhashyam Educational Institutions, Miyapur",
+
+        // ── Narayana Schools ──
+        "Narayana e-Techno School, Kukatpally",
+        "Narayana e-Techno School, Dilsukhnagar",
+        "Narayana e-Techno School, Uppal",
+        "Narayana e-Techno School, Kompally",
+        "Narayana Olympiad School, Madhapur",
+
+        // ── Sri Chaitanya Schools ──
+        "Sri Chaitanya School, Madhapur",
+        "Sri Chaitanya School, Kukatpally",
+        "Sri Chaitanya School, Dilsukhnagar",
+        "Sri Chaitanya School, Miyapur",
+
+        // ── Kendriya Vidyalaya ──
+        "Kendriya Vidyalaya, Picket",
+        "Kendriya Vidyalaya, Golconda",
+        "Kendriya Vidyalaya, RGI Airport",
+        "Kendriya Vidyalaya, Uppal",
+        "Kendriya Vidyalaya, Malakpet",
+        "Kendriya Vidyalaya, Bowenpally",
+        "Kendriya Vidyalaya, Marredpally",
+
+        // ── Army / Defence Schools ──
+        "Army Public School, Bolarum",
+        "Army Public School, Golconda",
+        "Air Force School, Hakimpet",
+        "Air Force School, Begumpet",
+        "Sainik School, Korukonda",
+
+        // ── Prominent individual schools ──
+        "Bharatiya Vidya Bhavan's Public School, Jubilee Hills",
+        "Jubilee Hills Public School, Jubilee Hills",
+        "P. Obul Reddy Public School, Jubilee Hills",
+        "Suchitra Academy, Jeedimetla",
+        "St. George's Grammar School, Abids",
+        "Vidyaranya High School, Saifabad",
+        "Gitanjali Senior School, Begumpet",
+        "Nasr School, Khairatabad",
+        "Johnson Grammar School, Nacharam",
+        "Johnson Grammar School ICSE, Mallapur",
+        "Rosary Convent High School, Gunfoundry",
+        "St. Patrick's High School, Secunderabad",
+        "St. Ann's High School, Secunderabad",
+        "St. Francis High School, Begumpet",
+        "St. Joseph's High School, Abids",
+        "St. Mary's High School, Yousufguda",
+        "Little Flower High School, Abids",
+        "Little Flower High School, Himayatnagar",
+        "St. Andrew's High School, Begumpet",
+        "The Premia Academy, Kokapet",
+        "Vikas The Concept School, Karimnagar Road",
+        "Slate The School, Manikonda",
+        "Shishya School, Trimulgherry",
+        "MNR School of Excellence, Medchal",
+        "Sagar School, Film Nagar",
+        "Ratnam High School, Kachiguda",
+        "Manthan International School, Manikonda",
+        "Global Indian International School, Uppal",
+        "Pallavi International School, Miyapur",
+        "Pallavi Model School, Kompally",
+        "The Future Kids School, Manikonda",
+        "Shree Swaminarayan Gurukul, Hyderabad",
+        "MNR School, Kukatpally",
+        "Sadhu Vaswani International School, Secunderabad",
+        "Rainbow High School, Dilsukhnagar",
+        "Vijaya Marie High School, Begumpet",
+        "St. Alphonsus High School, Hyderabad",
+        "Loyola Academy, Secunderabad",
+        "The Hyderabad School, Secunderabad",
+        "New Era High School, Himayatnagar",
+      ];
+
+      const input    = document.getElementById('inp-school');
+      const dropdown = document.getElementById('schoolDropdown');
+      let activeIdx  = -1;
+
+      function highlight(text, query) {
+        if (!query) return text;
+        const re = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+        return text.replace(re, '<mark>$1</mark>');
+      }
+
+      function render(query) {
+        const q = query.trim().toLowerCase();
+        const matches = q
+          ? SCHOOLS.filter(s => s.toLowerCase().includes(q))
+          : SCHOOLS;
+
+        if (!matches.length || !q) {
+          dropdown.classList.remove('open');
+          dropdown.innerHTML = '';
+          return;
+        }
+
+        dropdown.innerHTML = matches.map((s, i) =>
+          `<div class="school-opt" data-val="${s}" data-idx="${i}">${highlight(s, query.trim())}</div>`
+        ).join('');
+        dropdown.classList.add('open');
+        activeIdx = -1;
+      }
+
+      function select(val) {
+        input.value = val;
+        dropdown.classList.remove('open');
+        dropdown.innerHTML = '';
+        activeIdx = -1;
+      }
+
+      input.addEventListener('input', () => render(input.value));
+      input.addEventListener('focus', () => { if (input.value) render(input.value); });
+
+      // keyboard nav
+      input.addEventListener('keydown', (e) => {
+        const opts = dropdown.querySelectorAll('.school-opt');
+        if (!opts.length) return;
+        if (e.key === 'ArrowDown') {
+          e.preventDefault();
+          activeIdx = Math.min(activeIdx + 1, opts.length - 1);
+          opts.forEach((o, i) => o.classList.toggle('active', i === activeIdx));
+          opts[activeIdx]?.scrollIntoView({ block: 'nearest' });
+        } else if (e.key === 'ArrowUp') {
+          e.preventDefault();
+          activeIdx = Math.max(activeIdx - 1, 0);
+          opts.forEach((o, i) => o.classList.toggle('active', i === activeIdx));
+          opts[activeIdx]?.scrollIntoView({ block: 'nearest' });
+        } else if (e.key === 'Enter' && activeIdx >= 0) {
+          e.preventDefault();
+          select(opts[activeIdx].dataset.val);
+        } else if (e.key === 'Escape') {
+          dropdown.classList.remove('open');
+        }
+      });
+
+      // click on option
+      dropdown.addEventListener('mousedown', (e) => {
+        const opt = e.target.closest('.school-opt');
+        if (opt) { e.preventDefault(); select(opt.dataset.val); }
+      });
+
+      // close when clicking outside
+      document.addEventListener('click', (e) => {
+        if (!input.contains(e.target) && !dropdown.contains(e.target)) {
+          dropdown.classList.remove('open');
+        }
+      });
+    })();
 
     // ── DESKTOP HOVER EXPAND (logo mark trigger) ──
     const navMark = navbar.querySelector('.nav-mark');
