@@ -2062,114 +2062,6 @@
       .btd-section { padding: 60px 20px 70px; }
       .btd-grid { grid-template-columns: 1fr; gap: 14px; }
     }
-
-    /* ═══════════════════════════════════════
-       BTD CARD PHOTO BACKGROUNDS
-    ═══════════════════════════════════════ */
-    .btd-card {
-      position: relative;
-      overflow: hidden;
-    }
-    .btd-card-photo {
-      position: absolute;
-      inset: 0;
-      width: 100%; height: 100%;
-      object-fit: cover;
-      object-position: center;
-      z-index: 0;
-      opacity: 0;
-      transition: opacity .4s ease;
-    }
-    .btd-card-photo.loaded { opacity: 1; }
-    .btd-card-photo-overlay {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to top, rgba(0,18,35,.95) 0%, rgba(0,18,35,.6) 60%, rgba(0,18,35,.4) 100%);
-      z-index: 1;
-      pointer-events: none;
-      display: none;
-    }
-    .btd-card:has(.btd-card-photo.loaded) .btd-card-photo-overlay { display: block; }
-    .btd-card > *:not(.btd-card-photo):not(.btd-card-photo-overlay) { position: relative; z-index: 2; }
-
-    /* ═══════════════════════════════════════
-       GALLERY
-    ═══════════════════════════════════════ */
-    .gallery-section {
-      background: #001223;
-      padding: 100px 56px 110px;
-      position: relative;
-      overflow: hidden;
-    }
-    .gallery-section::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 1px;
-      background: linear-gradient(to right, transparent, rgba(48,205,215,.25), transparent);
-    }
-    .gallery-inner { max-width: 1200px; margin: 0 auto; }
-    .gallery-header { margin-bottom: 48px; }
-    .gallery-kicker {
-      font-size: .65rem; font-weight: 700;
-      letter-spacing: .28em; text-transform: uppercase;
-      color: var(--teal); margin-bottom: 14px;
-    }
-    .gallery-title {
-      font-size: clamp(2.4rem, 4vw, 3.6rem);
-      font-weight: 900; letter-spacing: -.035em;
-      color: var(--white); line-height: 1.05;
-    }
-    .gallery-grid {
-      display: grid;
-      grid-template-columns: 2fr 1fr 1fr;
-      grid-template-rows: 280px 280px;
-      gap: 14px;
-    }
-    .gallery-item {
-      border-radius: 16px;
-      overflow: hidden;
-      position: relative;
-    }
-    .gallery-item.g-tall { grid-row: span 2; }
-    .gallery-item img {
-      width: 100%; height: 100%;
-      object-fit: cover; object-position: center;
-      display: block;
-      transition: transform .7s cubic-bezier(.16,1,.3,1);
-    }
-    .gallery-item:hover img { transform: scale(1.05); }
-    .gallery-ph {
-      width: 100%; height: 100%;
-      background: rgba(255,255,255,.025);
-      border: 1.5px dashed rgba(48,205,215,.16);
-      border-radius: 16px;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      gap: 12px;
-      transition: background .25s, border-color .25s;
-    }
-    .gallery-ph:hover { background: rgba(48,205,215,.04); border-color: rgba(48,205,215,.28); }
-    .gallery-ph-icon { opacity: .22; }
-    .gallery-ph-label {
-      font-size: .7rem; font-weight: 700;
-      letter-spacing: .14em; text-transform: uppercase;
-      color: rgba(250,245,237,.35);
-    }
-    .gallery-ph-hint {
-      font-size: .56rem; font-weight: 500;
-      color: rgba(48,205,215,.28);
-      letter-spacing: .06em; font-family: monospace;
-    }
-
-    @media (max-width: 768px) {
-      .gallery-section { padding: 72px 20px 80px; }
-      .gallery-grid {
-        grid-template-columns: 1fr 1fr;
-        grid-template-rows: 180px 180px 180px;
-      }
-      .gallery-item.g-tall { grid-row: span 1; }
-    }
   </style>
 </head>
 <body>
@@ -2584,9 +2476,6 @@
     <p class="btd-sub">Oakridge MUN XVI is more than resolutions and gavels — experience the moments that happen outside the committee room.</p>
     <div class="btd-grid">
       <a href="networking-hour.html" class="btd-card">
-        <!-- Replace placeholder below with: <img class="btd-card-photo loaded" src="conf_photos/networking.jpg" alt="" /> -->
-        <img class="btd-card-photo" src="conf_photos/networking.jpg" alt="" onload="this.classList.add('loaded')" />
-        <div class="btd-card-photo-overlay"></div>
         <div class="btd-card-accent"></div>
         <div class="btd-card-tag">Day 1 · Evening</div>
         <div class="btd-card-title">Networking Hour</div>
@@ -2594,9 +2483,6 @@
         <span class="btd-card-link">Learn more →</span>
       </a>
       <a href="social-night.html" class="btd-card">
-        <!-- Replace placeholder below with: <img class="btd-card-photo loaded" src="conf_photos/social_night.jpg" alt="" /> -->
-        <img class="btd-card-photo" src="conf_photos/social_night.jpg" alt="" onload="this.classList.add('loaded')" />
-        <div class="btd-card-photo-overlay"></div>
         <div class="btd-card-accent"></div>
         <div class="btd-card-tag">Day 2 · Night</div>
         <div class="btd-card-title">Social Night</div>
@@ -2604,9 +2490,6 @@
         <span class="btd-card-link">Learn more →</span>
       </a>
       <a href="orphanage-initiative.html" class="btd-card">
-        <!-- Replace placeholder below with: <img class="btd-card-photo loaded" src="conf_photos/outreach.jpg" alt="" /> -->
-        <img class="btd-card-photo" src="conf_photos/outreach.jpg" alt="" onload="this.classList.add('loaded')" />
-        <div class="btd-card-photo-overlay"></div>
         <div class="btd-card-accent"></div>
         <div class="btd-card-tag">Community · Outreach</div>
         <div class="btd-card-title">Community Outreach</div>
@@ -2616,85 +2499,6 @@
     </div>
   </section>
   </div>
-
-  <!-- ═══ GALLERY ═══ -->
-  <section class="gallery-section">
-    <div class="gallery-inner">
-      <div class="gallery-header">
-        <p class="gallery-kicker">Oakridge MUN · Through the Lens</p>
-        <h2 class="gallery-title">Moments from<br>the Conference</h2>
-      </div>
-      <div class="gallery-grid">
-
-        <!-- LARGE LEFT — replace src with conf_photos/gallery_1.jpg -->
-        <div class="gallery-item g-tall">
-          <div class="gallery-ph">
-            <svg class="gallery-ph-icon" width="48" height="48" viewBox="0 0 48 48" fill="none">
-              <rect x="4" y="14" width="40" height="28" rx="5" stroke="#30CDD7" stroke-width="1.8"/>
-              <circle cx="24" cy="28" r="8" stroke="#30CDD7" stroke-width="1.8"/>
-              <path d="M17 14l2.5-5h9l2.5 5" stroke="#30CDD7" stroke-width="1.8" stroke-linejoin="round"/>
-              <circle cx="38" cy="20" r="2" fill="#30CDD7" opacity=".4"/>
-            </svg>
-            <span class="gallery-ph-label">Opening Ceremony</span>
-            <span class="gallery-ph-hint">conf_photos/gallery_1.jpg</span>
-          </div>
-        </div>
-
-        <!-- TOP-RIGHT 1 — replace with conf_photos/gallery_2.jpg -->
-        <div class="gallery-item">
-          <div class="gallery-ph">
-            <svg class="gallery-ph-icon" width="36" height="36" viewBox="0 0 48 48" fill="none">
-              <rect x="4" y="14" width="40" height="28" rx="5" stroke="#30CDD7" stroke-width="1.8"/>
-              <circle cx="24" cy="28" r="8" stroke="#30CDD7" stroke-width="1.8"/>
-              <path d="M17 14l2.5-5h9l2.5 5" stroke="#30CDD7" stroke-width="1.8" stroke-linejoin="round"/>
-            </svg>
-            <span class="gallery-ph-label">Committee in Session</span>
-            <span class="gallery-ph-hint">conf_photos/gallery_2.jpg</span>
-          </div>
-        </div>
-
-        <!-- TOP-RIGHT 2 — replace with conf_photos/gallery_3.jpg -->
-        <div class="gallery-item">
-          <div class="gallery-ph">
-            <svg class="gallery-ph-icon" width="36" height="36" viewBox="0 0 48 48" fill="none">
-              <rect x="4" y="14" width="40" height="28" rx="5" stroke="#30CDD7" stroke-width="1.8"/>
-              <circle cx="24" cy="28" r="8" stroke="#30CDD7" stroke-width="1.8"/>
-              <path d="M17 14l2.5-5h9l2.5 5" stroke="#30CDD7" stroke-width="1.8" stroke-linejoin="round"/>
-            </svg>
-            <span class="gallery-ph-label">Delegates Networking</span>
-            <span class="gallery-ph-hint">conf_photos/gallery_3.jpg</span>
-          </div>
-        </div>
-
-        <!-- BOTTOM-RIGHT 1 — replace with conf_photos/gallery_4.jpg -->
-        <div class="gallery-item">
-          <div class="gallery-ph">
-            <svg class="gallery-ph-icon" width="36" height="36" viewBox="0 0 48 48" fill="none">
-              <rect x="4" y="14" width="40" height="28" rx="5" stroke="#30CDD7" stroke-width="1.8"/>
-              <circle cx="24" cy="28" r="8" stroke="#30CDD7" stroke-width="1.8"/>
-              <path d="M17 14l2.5-5h9l2.5 5" stroke="#30CDD7" stroke-width="1.8" stroke-linejoin="round"/>
-            </svg>
-            <span class="gallery-ph-label">Social Night</span>
-            <span class="gallery-ph-hint">conf_photos/gallery_4.jpg</span>
-          </div>
-        </div>
-
-        <!-- BOTTOM-RIGHT 2 — replace with conf_photos/gallery_5.jpg -->
-        <div class="gallery-item">
-          <div class="gallery-ph">
-            <svg class="gallery-ph-icon" width="36" height="36" viewBox="0 0 48 48" fill="none">
-              <rect x="4" y="14" width="40" height="28" rx="5" stroke="#30CDD7" stroke-width="1.8"/>
-              <circle cx="24" cy="28" r="8" stroke="#30CDD7" stroke-width="1.8"/>
-              <path d="M17 14l2.5-5h9l2.5 5" stroke="#30CDD7" stroke-width="1.8" stroke-linejoin="round"/>
-            </svg>
-            <span class="gallery-ph-label">Awards Ceremony</span>
-            <span class="gallery-ph-hint">conf_photos/gallery_5.jpg</span>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
 
   <!-- ═══ FAQ ═══ -->
   <section class="faq-section" id="faq">
