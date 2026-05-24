@@ -680,6 +680,46 @@
     }
     .reg-schools span { color: rgba(48,205,215,.7); }
 
+    /* ── CONFERENCE PHOTO STRIP ── */
+    .reg-photo-strip {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 10px;
+      height: 170px;
+      border-radius: 14px;
+      overflow: hidden;
+    }
+    .reg-photo-item {
+      border-radius: 12px;
+      overflow: hidden;
+      position: relative;
+      background: rgba(255,255,255,.025);
+      border: 1.5px dashed rgba(48,205,215,.16);
+    }
+    .reg-photo-item img {
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: center;
+      display: block;
+    }
+    .reg-photo-ph {
+      width: 100%; height: 100%;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 8px;
+    }
+    .reg-photo-ph svg { opacity: .22; }
+    .reg-photo-ph-label {
+      font-size: .6rem; font-weight: 700;
+      letter-spacing: .12em; text-transform: uppercase;
+      color: rgba(250,245,237,.3);
+      text-align: center;
+    }
+    .reg-photo-ph-hint {
+      font-size: .52rem;
+      color: rgba(48,205,215,.28);
+      letter-spacing: .04em; font-family: monospace;
+    }
+
     /* ── STATS STRIP ── */
     .stats-strip {
       display: flex;
@@ -1061,6 +1101,34 @@
             <span>XVI editions of MUN excellence — our biggest yet</span>
           </li>
         </ul>
+
+        <!-- Conference photo strip — replace placeholders with real photos -->
+        <div class="reg-photo-strip">
+          <!-- Photo 1: replace div below with <img src="conf_photos/reg_photo_1.jpg" alt="Conference moment" /> -->
+          <div class="reg-photo-item">
+            <div class="reg-photo-ph">
+              <svg width="32" height="32" viewBox="0 0 48 48" fill="none">
+                <rect x="4" y="14" width="40" height="28" rx="5" stroke="#30CDD7" stroke-width="1.8"/>
+                <circle cx="24" cy="28" r="8" stroke="#30CDD7" stroke-width="1.8"/>
+                <path d="M17 14l2.5-5h9l2.5 5" stroke="#30CDD7" stroke-width="1.8" stroke-linejoin="round"/>
+              </svg>
+              <span class="reg-photo-ph-label">Delegates in Session</span>
+              <span class="reg-photo-ph-hint">conf_photos/reg_photo_1.jpg</span>
+            </div>
+          </div>
+          <!-- Photo 2: replace div below with <img src="conf_photos/reg_photo_2.jpg" alt="Conference moment" /> -->
+          <div class="reg-photo-item">
+            <div class="reg-photo-ph">
+              <svg width="32" height="32" viewBox="0 0 48 48" fill="none">
+                <rect x="4" y="14" width="40" height="28" rx="5" stroke="#30CDD7" stroke-width="1.8"/>
+                <circle cx="24" cy="28" r="8" stroke="#30CDD7" stroke-width="1.8"/>
+                <path d="M17 14l2.5-5h9l2.5 5" stroke="#30CDD7" stroke-width="1.8" stroke-linejoin="round"/>
+              </svg>
+              <span class="reg-photo-ph-label">Social Night</span>
+              <span class="reg-photo-ph-hint">conf_photos/reg_photo_2.jpg</span>
+            </div>
+          </div>
+        </div>
 
         <div class="reg-dates-row">
           <span class="date-chip">24 July</span>
