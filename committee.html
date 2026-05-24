@@ -187,15 +187,50 @@
     .menu-btn.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
     .hero {
-      padding: 108px 56px 48px;
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) 320px;
-      align-items: center;
-      gap: 48px;
+      position: relative;
+      min-height: 80vh;
+      overflow: hidden;
       background: var(--navy);
+      display: flex;
+      flex-direction: column;
+      border-radius: 24px;
+      margin: 0 12px 12px;
     }
-
-    .hero-copy { animation: fadeUp .7s cubic-bezier(0.4,0,0.2,1) .12s both; }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: center 40%;
+      z-index: 0;
+    }
+    .hero-bg-overlay {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(to top, rgba(0,5,18,.95) 0%, rgba(0,12,36,.6) 45%, rgba(0,5,18,.22) 100%),
+        linear-gradient(100deg, rgba(0,20,50,.65) 0%, transparent 55%);
+      z-index: 1;
+      pointer-events: none;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 108px 64px 72px;
+      animation: fadeUp .7s cubic-bezier(0.4,0,0.2,1) .12s both;
+    }
+    .hero-bottom { max-width: 900px; }
+    .hero-rule {
+      width: 48px; height: 2px;
+      background: linear-gradient(to right, var(--teal), transparent);
+      border-radius: 2px;
+      margin-bottom: 16px;
+    }
+    .hero-panel { display: none; }
     .back-link {
       display: inline-flex;
       align-items: center;
@@ -985,17 +1020,21 @@
     </div>
   </nav>
 
-  <section class="hero">
-    <div class="hero-copy">
-      <a class="back-link" href="committees.html">Back to Committees</a>
-      <p class="committee-kicker" id="committeeType">Committee</p>
-      <h1 class="committee-title" id="committeeTitle">DISEC</h1>
-      <p class="committee-subtitle" id="committeeSubtitle"></p>
+  <section class="hero" id="heroSection">
+    <div class="hero-bg-overlay"></div>
+    <div class="hero-content">
+      <div class="hero-top">
+        <a class="back-link" href="committees.html">Back to Committees</a>
+      </div>
+      <div class="hero-bottom">
+        <div class="hero-rule"></div>
+        <p class="committee-kicker" id="committeeType">Committee</p>
+        <h1 class="committee-title" id="committeeTitle">DISEC</h1>
+        <p class="committee-subtitle" id="committeeSubtitle"></p>
+      </div>
     </div>
-    <div class="hero-panel" id="heroPanel">
-      <img class="panel-logo" src="logo.png" alt="" />
-      <span class="panel-label" id="panelLabel">Committee</span>
-      <strong class="panel-code" id="panelCode">DI</strong>
+    <div class="hero-panel" id="heroPanel" style="display:none">
+      <span id="panelLabel"></span><strong id="panelCode"></strong>
     </div>
   </section>
 
@@ -1175,15 +1214,12 @@
       'sc-unc':    'un_charter.jpg',
     };
     if (photos[key]) {
-      const panel = document.getElementById('heroPanel');
+      const hero = document.getElementById('heroSection');
       const img = document.createElement('img');
-      img.className = 'panel-photo';
+      img.className = 'hero-bg';
       img.src = `committee_photos/${photos[key]}`;
       img.alt = '';
-      const overlay = document.createElement('div');
-      overlay.className = 'panel-photo-overlay';
-      panel.prepend(overlay);
-      panel.prepend(img);
+      hero.prepend(img);
     }
 
     // overview
