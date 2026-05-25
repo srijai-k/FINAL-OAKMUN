@@ -571,7 +571,7 @@
     .eb-row { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
     .card-eb { padding: 0; overflow: hidden; }
     .eb-card-top {
-      height: 200px;
+      height: 360px;
       display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px;
       background: linear-gradient(145deg,
         rgba(48,205,215,.14) 0%,
@@ -632,11 +632,14 @@
     .eb-card-photo {
       position: absolute; inset: 0;
       width: 100%; height: 100%;
-      object-fit: cover; object-position: center top;
-      z-index: 0; opacity: .88;
+      object-fit: contain; object-position: center bottom;
+      z-index: 0; opacity: .95;
       transition: opacity .3s;
     }
     .card-eb:hover .eb-card-photo { opacity: 1; }
+    .eb-card-top.has-photo {
+      background: linear-gradient(180deg, rgba(0,10,22,.85) 0%, rgba(0,30,55,.6) 100%) !important;
+    }
     .eb-card-top.has-photo .eb-card-initials,
     .eb-card-top.has-photo .eb-card-tba-label { display: none; }
     .eb-card-top.has-photo::before,
