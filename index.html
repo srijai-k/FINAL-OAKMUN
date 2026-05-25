@@ -75,56 +75,6 @@
       overflow-x: clip;
     }
 
-    /* ── CUSTOM CURSOR (desktop only) ── */
-    @media (pointer: fine) {
-      *, *::before, *::after { cursor: none !important; }
-
-      .cur-dot {
-        position: fixed;
-        width: 6px; height: 6px;
-        background: var(--teal);
-        border-radius: 50%;
-        pointer-events: none;
-        z-index: 999999;
-        transform: translate(-50%, -50%);
-        transition: width .12s, height .12s, background .12s, opacity .2s;
-        mix-blend-mode: normal;
-      }
-      .cur-ring {
-        position: fixed;
-        width: 34px; height: 34px;
-        border: 1.5px solid rgba(48,205,215,.65);
-        border-radius: 50%;
-        pointer-events: none;
-        z-index: 999998;
-        transform: translate(-50%, -50%) rotate(0deg);
-        transition: width .22s cubic-bezier(.2,.8,.2,1),
-                    height .22s cubic-bezier(.2,.8,.2,1),
-                    border-color .22s,
-                    border-radius .22s,
-                    opacity .2s;
-      }
-      /* gavel icon inside ring shown on hover */
-      .cur-ring::after {
-        content: '⚖';
-        position: absolute;
-        top: 50%; left: 50%;
-        transform: translate(-50%, -50%);
-        font-size: 13px;
-        opacity: 0;
-        transition: opacity .18s;
-        color: var(--teal);
-      }
-      .cur-dot.hover { width: 4px; height: 4px; opacity: .5; }
-      .cur-ring.hover {
-        width: 46px; height: 46px;
-        border-color: var(--teal);
-        border-radius: 10px;
-      }
-      .cur-ring.hover::after { opacity: 1; }
-      .cur-dot.click { width: 10px; height: 10px; background: var(--teal-light); }
-      .cur-ring.click { width: 56px; height: 56px; opacity: 0; }
-    }
 
     /* ═══════════════════════════════════════
        NAV — floating pill
@@ -2944,53 +2894,6 @@
       wakeLoop();
     })();
 
-    // ── CUSTOM CURSOR ──
-    ;(function() {
-      if (!window.matchMedia('(pointer: fine)').matches) return; // touch devices skip
-
-      const dot  = Object.assign(document.createElement('div'), { className: 'cur-dot'  });
-      const ring = Object.assign(document.createElement('div'), { className: 'cur-ring' });
-      document.body.append(dot, ring);
-
-      let mx = -200, my = -200;
-      let rx = -200, ry = -200, rvx = 0, rvy = 0;
-
-      document.addEventListener('mousemove', e => {
-        mx = e.clientX; my = e.clientY;
-        dot.style.left = mx + 'px';
-        dot.style.top  = my + 'px';
-      });
-
-      // hover state — interactive elements
-      const INTERACTIVE = 'a, button, [role="button"], .morph-card, label, input, select, textarea';
-      document.addEventListener('mouseover', e => {
-        if (e.target.closest(INTERACTIVE)) { dot.classList.add('hover'); ring.classList.add('hover'); }
-      });
-      document.addEventListener('mouseout', e => {
-        if (e.target.closest(INTERACTIVE)) { dot.classList.remove('hover'); ring.classList.remove('hover'); }
-      });
-
-      // click pulse
-      document.addEventListener('mousedown', () => { dot.classList.add('click'); ring.classList.add('click'); });
-      document.addEventListener('mouseup',   () => {
-        dot.classList.remove('click'); ring.classList.remove('click');
-      });
-
-      // hide when leaving window
-      document.addEventListener('mouseleave', () => { dot.style.opacity = '0'; ring.style.opacity = '0'; });
-      document.addEventListener('mouseenter', () => { dot.style.opacity = ''; ring.style.opacity = ''; });
-
-      // ring follows with smooth spring lag
-      function cursorLoop() {
-        rvx += (mx - rx) * 0.14 - rvx * 0.28;
-        rvy += (my - ry) * 0.14 - rvy * 0.28;
-        rx += rvx; ry += rvy;
-        ring.style.left = rx + 'px';
-        ring.style.top  = ry + 'px';
-        requestAnimationFrame(cursorLoop);
-      }
-      cursorLoop();
-    })();
 
     // ── NAV SCROLL BLUR ──
     const navbar = document.getElementById('navbar');
