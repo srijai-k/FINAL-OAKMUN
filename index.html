@@ -2896,7 +2896,7 @@
           ? Math.max(0, 1 - sm_morph * 2) : 0;
         introText.style.opacity = introOp;
 
-        const arcOp = Math.max(0, (sm_morph - 0.8) / 0.2);
+        const arcOp = Math.min(1, Math.max(0, (sm_morph - 0.65) / 0.2));
         arcContent.style.opacity = arcOp;
         arcContent.style.transform = `translateY(${lerp(20, 0, sm_morph)}px)`;
         arcContent.style.pointerEvents = arcOp > 0.5 ? 'auto' : 'none';
