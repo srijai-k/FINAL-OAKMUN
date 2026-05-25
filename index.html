@@ -2079,6 +2079,43 @@
       50%       { opacity: 1;   }
     }
 
+    /* ── THEME SECTION ORBS (light bg — uses muted tones) ── */
+    .theme-orb-a {
+      width: 70%; height: 65%;
+      top: -25%; left: -15%;
+      background: rgba(30,150,165,.10);
+      filter: blur(120px);
+      animation: orb-a 20s ease-in-out infinite alternate;
+    }
+    .theme-orb-b {
+      width: 60%; height: 60%;
+      bottom: -20%; right: -12%;
+      background: rgba(0,48,87,.09);
+      filter: blur(110px);
+      animation: orb-b 25s ease-in-out infinite alternate;
+    }
+    .theme-orb-c {
+      width: 45%; height: 50%;
+      top: 10%; right: 5%;
+      background: rgba(188,154,110,.11);
+      filter: blur(100px);
+      animation: orb-c 18s ease-in-out infinite alternate;
+    }
+    .theme-orb-d {
+      width: 50%; height: 45%;
+      bottom: 5%; left: 15%;
+      background: rgba(48,205,215,.08);
+      filter: blur(130px);
+      animation: orb-b 30s ease-in-out infinite alternate;
+    }
+    .theme-orb-e {
+      width: 35%; height: 40%;
+      top: 40%; left: 35%;
+      background: rgba(0,48,87,.06);
+      filter: blur(90px);
+      animation: orb-a 22s ease-in-out infinite alternate;
+    }
+
     /* ── SECTION ORBS (shared) ── */
     .s-orb {
       position: absolute;
@@ -2573,6 +2610,11 @@
 
   <!-- ═══ THEME ═══ -->
   <div class="theme-section">
+    <div class="s-orb theme-orb-a"></div>
+    <div class="s-orb theme-orb-b"></div>
+    <div class="s-orb theme-orb-c"></div>
+    <div class="s-orb theme-orb-d"></div>
+    <div class="s-orb theme-orb-e"></div>
     <div class="theme-bg-word">RESOLVE</div>
     <div class="theme-inner">
       <div class="theme-label">Conference Theme &nbsp;·&nbsp; Chapter XVI</div>
