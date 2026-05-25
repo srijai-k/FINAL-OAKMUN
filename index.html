@@ -687,7 +687,7 @@
       position: relative;
       padding: 140px 64px;
       overflow: clip;
-      background: var(--white);
+      background: #020c1a;
     }
     .theme-section::after {
       content: '';
@@ -698,7 +698,7 @@
       width: 700px;
       height: 700px;
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(0,48,87,.12) 0%, transparent 65%);
+      background: radial-gradient(circle, rgba(48,205,215,.06) 0%, transparent 65%);
       pointer-events: none;
     }
     .theme-bg-word {
@@ -710,7 +710,7 @@
       font-weight: 900;
       letter-spacing: -.04em;
       color: transparent;
-      -webkit-text-stroke: 1px rgba(0,48,87,.1);
+      -webkit-text-stroke: 1px rgba(48,205,215,.08);
       pointer-events: none;
       user-select: none;
       line-height: 1;
@@ -730,7 +730,8 @@
       font-weight: 700;
       letter-spacing: .28em;
       text-transform: uppercase;
-      color: rgba(0,48,87,.6);
+      color: var(--teal);
+      opacity: .7;
       margin-bottom: 32px;
     }
     .theme-title {
@@ -738,14 +739,14 @@
       font-weight: 900;
       letter-spacing: -.035em;
       line-height: 1;
-      color: var(--navy);
+      color: var(--white);
       margin-bottom: 0;
     }
-    .theme-title .teal { color: rgba(0,48,87,.7); }
+    .theme-title .teal { color: var(--teal); }
     .theme-divider {
       width: 100%;
       height: 1px;
-      background: linear-gradient(to right, rgba(0,48,87,.35) 0%, rgba(0,48,87,.06) 60%, transparent 100%);
+      background: linear-gradient(to right, rgba(48,205,215,.3) 0%, rgba(48,205,215,.06) 60%, transparent 100%);
       margin: 36px 0;
     }
     .theme-bottom {
@@ -759,7 +760,7 @@
       font-weight: 700;
       letter-spacing: .22em;
       text-transform: uppercase;
-      color: rgba(0,48,87,.4);
+      color: rgba(250,245,237,.3);
       white-space: nowrap;
       padding-top: 4px;
       flex-shrink: 0;
@@ -769,7 +770,7 @@
       font-weight: 400;
       font-style: italic;
       line-height: 1.8;
-      color: rgba(0,48,87,.75);
+      color: rgba(250,245,237,.55);
       max-width: 680px;
     }
 
@@ -2079,43 +2080,42 @@
       50%       { opacity: 1;   }
     }
 
-    /* ── THEME SECTION ORBS (light bg — high opacity needed to show on white) ── */
+    /* ── THEME SECTION ORBS (dark bg — balanced glow on #020c1a) ── */
     .theme-orb-a {
       width: 75%; height: 70%;
       top: -20%; left: -10%;
-      background: rgba(30,150,165,.38);
-      filter: blur(90px);
+      background: rgba(30,150,165,.22);
+      filter: blur(100px);
       animation: orb-a 20s ease-in-out infinite alternate;
     }
     .theme-orb-b {
       width: 65%; height: 65%;
       bottom: -15%; right: -8%;
-      background: rgba(0,48,87,.30);
-      filter: blur(80px);
+      background: rgba(48,205,215,.14);
+      filter: blur(90px);
       animation: orb-b 25s ease-in-out infinite alternate;
     }
     .theme-orb-c {
       width: 55%; height: 60%;
       top: 0%; right: -5%;
-      background: rgba(188,154,110,.32);
-      filter: blur(80px);
+      background: rgba(188,154,110,.18);
+      filter: blur(90px);
       animation: orb-c 18s ease-in-out infinite alternate;
     }
     .theme-orb-d {
       width: 55%; height: 55%;
       bottom: -5%; left: 5%;
-      background: rgba(48,205,215,.25);
-      filter: blur(100px);
+      background: rgba(48,205,215,.10);
+      filter: blur(110px);
       animation: orb-b 30s ease-in-out infinite alternate;
     }
     .theme-orb-e {
       width: 45%; height: 50%;
       top: 30%; left: 28%;
-      background: rgba(0,48,87,.20);
-      filter: blur(70px);
+      background: rgba(30,150,165,.12);
+      filter: blur(80px);
       animation: orb-a 22s ease-in-out infinite alternate;
     }
-    /* Theme orbs keep full blur on mobile — white bg needs it */
     @media (max-width: 768px) {
       .theme-orb-a, .theme-orb-b, .theme-orb-c,
       .theme-orb-d, .theme-orb-e { filter: blur(70px) !important; }
