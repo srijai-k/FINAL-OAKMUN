@@ -1218,7 +1218,7 @@
         </div>
         </div>
 
-        <div class="guide-card" data-category="special">
+        <div class="guide-card" data-category="special un-body">
           <img class="guide-bg" src="/committee_photos/un_charter.webp" alt="" loading="lazy">
           <div class="guide-type">Special Committee</div>
           <div class="guide-card-body">
@@ -1506,7 +1506,8 @@
         chip.classList.add('active');
         const filter = chip.dataset.filter;
         document.querySelectorAll('.guide-card').forEach(card => {
-          const show = filter === 'all' || card.dataset.category === filter;
+          const cats = (card.dataset.category || '').split(' ');
+          const show = filter === 'all' || cats.includes(filter);
           card.style.display = show ? '' : 'none';
         });
       });
