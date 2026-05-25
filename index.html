@@ -325,8 +325,7 @@
     .morph-card {
       position: absolute;
       left: 0; top: 0;
-      width: 76px; height: 108px;
-      will-change: transform;
+      width: 90px; height: 128px;
       cursor: pointer;
       text-decoration: none;
       perspective: 1000px;
@@ -556,7 +555,7 @@
 
     @media (max-width: 768px) {
       .hero { height: 100svh; height: 100vh; }
-      .morph-card { width: 50px; height: 70px; }
+      .morph-card { width: 56px; height: 80px; }
 
       /* intro text */
       .morph-big-title  { font-size: clamp(2.4rem, 13vw, 3.8rem); }
@@ -2562,8 +2561,8 @@
       const STIFFNESS  = 40, DAMPING = 15;
       const IS_MOBILE  = window.innerWidth < 768;
       const MAX_SCROLL = IS_MOBILE ? 1000 : 2000;
-      const IMG_W      = IS_MOBILE ? 50 : 76;
-      const IMG_H      = IS_MOBILE ? 70 : 108;
+      const IMG_W      = IS_MOBILE ? 56 : 90;
+      const IMG_H      = IS_MOBILE ? 80 : 128;
 
       const COMMITTEES = [
         { src: 'committee_photos/unsc.jpg',        label: 'UNSC',         href: 'committee.html?committee=unsc'       },
