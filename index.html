@@ -326,6 +326,7 @@
       position: absolute;
       left: 0; top: 0;
       width: 90px; height: 128px;
+      will-change: transform;
       cursor: pointer;
       text-decoration: none;
       perspective: 1000px;
@@ -549,6 +550,9 @@
       content: ''; position: absolute; inset: 0; border-radius: inherit;
       backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
       background: rgba(255,255,255,.06); z-index: -1;
+    }
+    @media (max-width: 768px) {
+      .cd-value::before { backdrop-filter: none; -webkit-backdrop-filter: none; background: rgba(255,255,255,.1); }
     }
     .cd-label { font-size: .42rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: rgba(48,205,215,.6); }
     .cd-sep { font-size: 1.4rem; font-weight: 300; color: rgba(250,245,237,.15); margin-bottom: 14px; }
@@ -2730,7 +2734,7 @@
         card.className = 'morph-card';
         card.innerHTML = `
           <div class="morph-card-inner">
-            <div class="morph-card-front"><img src="${c.src}" alt="${c.label}" /></div>
+            <div class="morph-card-front"><img src="${c.src}" alt="${c.label}" decoding="async" loading="eager" /></div>
             <div class="morph-card-back"><span class="morph-card-back-label">${c.label}</span></div>
           </div>`;
         canvas.appendChild(card);
@@ -2812,13 +2816,16 @@
       }
 
       // ── main rAF loop ──
+      const SETTLE = 0.08; // velocity threshold — below this a spring is considered settled
       function loop() {
         // advance morph springs
         const morphTarget  = Math.min(Math.max(virtualScroll / 600, 0), 1);
         [sm_morph, sm_morph_vel]   = springStep(sm_morph,  morphTarget,  sm_morph_vel,  40, 20);
-        const rotateTarget = Math.min(Math.max((virtualScroll - 600) / 2400 * 360, 0), 360);
+        const rotateTarget = Math.min(Math.max((virtualScroll - 600) / 1400 * 360, 0), 360);
         [sm_rotate, sm_rotate_vel] = springStep(sm_rotate, rotateTarget, sm_rotate_vel, 40, 20);
         [sm_mouse, sm_mouse_vel]   = springStep(sm_mouse,  targetMouse,  sm_mouse_vel,  30, 20);
+
+        const globalMoving = Math.abs(sm_morph_vel) > SETTLE || Math.abs(sm_rotate_vel) > SETTLE || Math.abs(sm_mouse_vel) > SETTLE;
 
         // move each card toward its target
         cards.forEach((c, i) => {
@@ -2828,6 +2835,10 @@
           [c.rot,     c.vr] = springStep(c.rot,     t.rot,     c.vr);
           [c.scale,   c.vs] = springStep(c.scale,   t.scale,   c.vs);
           [c.opacity, c.vo] = springStep(c.opacity, t.opacity, c.vo);
+
+          // skip DOM write if card is settled and nothing global is moving
+          const cardMoving = Math.abs(c.vx) > SETTLE || Math.abs(c.vy) > SETTLE || Math.abs(c.vr) > SETTLE || Math.abs(c.vs) > SETTLE;
+          if (!cardMoving && !globalMoving) return;
 
           const px = cW / 2 + c.x - IMG_W / 2;
           const py = cH / 2 + c.y - IMG_H / 2;
