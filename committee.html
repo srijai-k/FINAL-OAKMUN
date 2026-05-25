@@ -638,7 +638,7 @@
     }
     .card-eb:hover .eb-card-photo { opacity: 1; }
     .eb-card-top.has-photo {
-      height: auto !important;
+      height: 260px !important;
       background: #010d1a !important;
     }
     .eb-card-top.has-photo .eb-card-initials,
@@ -1362,7 +1362,7 @@
       const el = document.createElement('div');
       el.className = `card card-eb ${ebClasses[Math.min(i, ebClasses.length - 1)]}${member ? ' has-member' : ''}`;
       el.innerHTML = `
-        <div class="eb-card-top${member?.photo ? ' has-photo' : ''}"${member?.aspect ? ` style="aspect-ratio:${member.aspect};"` : ''}>
+        <div class="eb-card-top${member?.photo ? ' has-photo' : ''}">
           ${member?.photo ? `<img class="eb-card-photo" src="${member.photo}" alt="${member.name}" loading="lazy">` : ''}
           <div class="eb-card-initials">${initials}</div>
           <span class="eb-card-tba-label">To be announced</span>
