@@ -396,7 +396,7 @@
       overflow: hidden;
       backface-visibility: hidden;
       -webkit-backface-visibility: hidden;
-      box-shadow: 0 12px 32px rgba(0,0,0,.55), 0 0 0 1px rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.08);
     }
     .morph-card-front img {
       width: 100%; height: 100%;
@@ -777,6 +777,8 @@
     .stats-section {
       background: #001223;
       padding: 48px 56px;
+      content-visibility: auto;
+      contain-intrinsic-size: 0 400px;
     }
     .stats-strip {
       max-width: 1100px;
@@ -854,6 +856,8 @@
       padding: 100px 56px 120px;
       position: relative;
       overflow: clip;
+      content-visibility: auto;
+      contain-intrinsic-size: 0 600px;
     }
     /* subtle bg text */
     .sg-section::before {
@@ -999,6 +1003,8 @@
       background: linear-gradient(180deg, #001e3c 0%, #002548 100%);
       min-height: 100vh;
       display: flex;
+      content-visibility: auto;
+      contain-intrinsic-size: 0 100vh;
       flex-direction: column;
       padding: 80px 56px 100px;
       position: relative;
@@ -1255,6 +1261,8 @@
       background: var(--navy);
       color: var(--white);
       position: relative;
+      content-visibility: auto;
+      contain-intrinsic-size: 0 100vh;
       z-index: 4;
     }
     .ctrl-chains-sticky {
@@ -1388,6 +1396,8 @@
       padding: 100px 56px 120px;
       position: relative;
       overflow: hidden;
+      content-visibility: auto;
+      contain-intrinsic-size: 0 600px;
     }
     .faq-section::before {
       content: '';
@@ -1950,6 +1960,8 @@
       max-width: 1100px;
       margin: 0 auto;
       position: relative;
+      content-visibility: auto;
+      contain-intrinsic-size: 0 500px;
       z-index: 1;
     }
     .btd-eyebrow {
@@ -2706,6 +2718,7 @@
 
       // Shared delta handler — drives virtualScroll forward and backward
       function applyDelta(rawDelta) {
+        wakeLoop();
         const delta = Math.sign(rawDelta) * Math.min(Math.abs(rawDelta), 80);
         virtualScroll = Math.min(Math.max(virtualScroll + delta, 0), MAX_SCROLL);
         // phase transitions
@@ -2776,6 +2789,7 @@
       hero.addEventListener('mousemove', e => {
         const r = hero.getBoundingClientRect();
         targetMouse = ((e.clientX - r.left) / r.width * 2 - 1) * 100;
+        wakeLoop();
       });
 
       // ── build flip-cards ──
@@ -2868,6 +2882,9 @@
 
       // ── main rAF loop ──
       const SETTLE = 0.08; // velocity threshold — below this a spring is considered settled
+      let rafId = null;
+      let loopRunning = false;
+
       function loop() {
         // advance morph springs
         const morphTarget  = Math.min(Math.max(virtualScroll / 600, 0), 1);
@@ -2878,6 +2895,7 @@
 
         const globalMoving = Math.abs(sm_morph_vel) > SETTLE || Math.abs(sm_rotate_vel) > SETTLE || Math.abs(sm_mouse_vel) > SETTLE;
 
+        let anyCardMoving = false;
         // move each card toward its target
         cards.forEach((c, i) => {
           const t = getTarget(i);
@@ -2887,9 +2905,9 @@
           [c.scale,   c.vs] = springStep(c.scale,   t.scale,   c.vs);
           [c.opacity, c.vo] = springStep(c.opacity, t.opacity, c.vo);
 
-          // skip DOM write if card is settled and nothing global is moving
           const cardMoving = Math.abs(c.vx) > SETTLE || Math.abs(c.vy) > SETTLE || Math.abs(c.vr) > SETTLE || Math.abs(c.vs) > SETTLE;
-          if (!cardMoving && !globalMoving) return;
+          if (cardMoving) anyCardMoving = true;
+          if (!cardMoving && !globalMoving) return; // skip DOM write
 
           const px = cW / 2 + c.x - IMG_W / 2;
           const py = cH / 2 + c.y - IMG_H / 2;
@@ -2898,9 +2916,32 @@
         });
 
         updateText();
-        requestAnimationFrame(loop);
+
+        // if everything is settled, stop the loop entirely — wake on next interaction
+        if (!anyCardMoving && !globalMoving) {
+          loopRunning = false;
+          rafId = null;
+          return;
+        }
+        rafId = requestAnimationFrame(loop);
       }
-      loop();
+
+      function wakeLoop() {
+        if (loopRunning) return;
+        loopRunning = true;
+        rafId = requestAnimationFrame(loop);
+      }
+
+      // pause loop when tab is hidden, resume when visible
+      document.addEventListener('visibilitychange', () => {
+        if (document.hidden) {
+          if (rafId) { cancelAnimationFrame(rafId); rafId = null; loopRunning = false; }
+        } else {
+          wakeLoop();
+        }
+      });
+
+      wakeLoop();
     })();
 
     // ── CUSTOM CURSOR ──
