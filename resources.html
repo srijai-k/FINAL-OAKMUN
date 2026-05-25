@@ -363,101 +363,119 @@
     }
 
     .guide-card {
-      background: linear-gradient(135deg, rgba(30,150,165,.07) 0%, rgba(0,20,50,.22) 60%, rgba(0,8,22,.18) 100%);
+      background: #020c14;
       border: 1px solid rgba(48,205,215,.18);
       border-radius: 20px;
-      padding: 28px 24px;
+      padding: 0;
       display: flex;
       flex-direction: column;
-      gap: 14px;
+      justify-content: flex-end;
+      gap: 0;
       opacity: 0;
       transform: translateY(16px);
-      transition: border-color .25s, background .25s, transform .22s cubic-bezier(.2,.9,.3,1), opacity .22s, box-shadow .25s;
+      transition: border-color .3s, transform .25s cubic-bezier(.2,.9,.3,1), opacity .22s, box-shadow .3s;
       cursor: default;
       position: relative;
       overflow: hidden;
-      min-height: 210px;
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,.08), 0 6px 32px rgba(0,0,0,.4);
+      min-height: 250px;
+      box-shadow: 0 6px 32px rgba(0,0,0,.5);
     }
     .guide-card.revealed { opacity: 1; transform: translateY(0); }
-    /* top accent bar */
+
+    /* top fade for type label readability */
     .guide-card::before {
       content: '';
       position: absolute;
-      top: 0; left: 0; right: 0; height: 2px;
-      background: linear-gradient(90deg, transparent, var(--teal), transparent);
-      opacity: 0;
-      transition: opacity .3s;
+      top: 0; left: 0; right: 0; height: 80px;
+      background: linear-gradient(to bottom, rgba(0,5,15,.7) 0%, transparent 100%);
+      z-index: 1; pointer-events: none;
+      border-radius: 20px 20px 0 0;
     }
-    /* corner spotlight */
+    /* bottom gradient for text area */
     .guide-card::after {
       content: '';
       position: absolute;
-      top: -40px; right: -40px;
-      width: 140px; height: 140px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(48,205,215,.14) 0%, transparent 70%);
-      pointer-events: none;
-      transition: opacity .3s;
+      inset: 0;
+      background: linear-gradient(to top,
+        rgba(0,5,15,.95) 0%,
+        rgba(0,5,15,.75) 28%,
+        rgba(0,5,15,.3)  55%,
+        transparent      100%);
+      z-index: 1; pointer-events: none;
     }
+
     .guide-card:hover {
       border-color: rgba(48,205,215,.45);
-      background: linear-gradient(135deg, rgba(30,150,165,.1) 0%, rgba(0,20,50,.28) 60%, rgba(0,8,22,.2) 100%);
-      transform: translateY(-5px);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,.1), 0 16px 48px rgba(0,0,0,.5), 0 0 0 1px rgba(48,205,215,.15), 0 0 60px rgba(48,205,215,.1);
+      transform: translateY(-6px);
+      box-shadow: 0 20px 55px rgba(0,0,0,.6), 0 0 0 1px rgba(48,205,215,.18), 0 0 60px rgba(48,205,215,.1);
     }
-    .guide-card:hover::before { opacity: 1; }
-    .guide-card:hover::after { opacity: 1.5; }
 
-    /* committee photo bg */
-    .guide-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; border-radius: 20px; opacity: 0.35; z-index: 0; pointer-events: none; transition: opacity .3s; }
-    .guide-card:hover .guide-bg { opacity: 0.55; }
-    .guide-card > *:not(.guide-bg) { position: relative; z-index: 1; }
+    /* committee photo — full bleed, zooms on hover */
+    .guide-bg {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover; border-radius: 20px;
+      opacity: 1; z-index: 0; pointer-events: none;
+      transform-origin: center;
+      transition: transform .55s cubic-bezier(.2,.9,.3,1);
+    }
+    .guide-card:hover .guide-bg { transform: scale(1.07); }
+    .guide-card > *:not(.guide-bg) { position: relative; z-index: 2; }
 
+    /* type label — pinned top-left as pill */
     .guide-type {
-      font-size: .52rem; font-weight: 800;
-      letter-spacing: .22em; text-transform: uppercase;
-      color: rgba(48,205,215,.5);
+      position: absolute;
+      top: 15px; left: 16px;
+      font-size: .48rem; font-weight: 800;
+      letter-spacing: .18em; text-transform: uppercase;
+      color: rgba(250,245,237,.82);
+      background: rgba(0,10,25,.55);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 100px;
+      padding: 5px 12px;
+    }
+
+    /* text body sits at bottom */
+    .guide-card-body {
+      padding: 18px 20px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
     }
     .guide-name {
-      font-size: 1.15rem; font-weight: 900;
-      letter-spacing: -.02em;
+      font-size: 1.25rem; font-weight: 900;
+      letter-spacing: -.03em;
       color: var(--white);
-      line-height: 1.15;
+      line-height: 1.1;
     }
-    .guide-agenda-label {
-      font-size: .5rem; font-weight: 800;
-      letter-spacing: .2em; text-transform: uppercase;
-      color: rgba(48,205,215,.4);
-      margin-bottom: 2px;
-    }
+    .guide-agenda-label { display: none; }
     .guide-topic {
-      font-size: .8rem; font-weight: 500;
-      color: rgba(250,245,237,.5);
-      line-height: 1.55;
+      font-size: .7rem; font-weight: 500;
+      color: rgba(250,245,237,.45);
+      line-height: 1.5;
     }
     .guide-footer {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-top: auto;
-      padding-top: 14px;
-      border-top: 1px solid rgba(48,205,215,.08);
+      margin-top: 8px;
+      padding-top: 0;
+      border-top: none;
     }
     .guide-status {
-      font-size: .56rem; font-weight: 800;
+      font-size: .52rem; font-weight: 800;
       letter-spacing: .16em; text-transform: uppercase;
     }
-    .guide-status.soon { color: rgba(250,245,237,.22); }
+    .guide-status.soon { color: rgba(250,245,237,.32); }
     .guide-status.ready { color: var(--teal); }
 
     .guide-dl {
-      display: flex; align-items: center; gap: 6px;
-      font-size: .6rem; font-weight: 700;
+      display: flex; align-items: center; gap: 5px;
+      font-size: .55rem; font-weight: 700;
       letter-spacing: .1em; text-transform: uppercase;
-      color: rgba(250,245,237,.2);
+      color: rgba(250,245,237,.22);
       cursor: not-allowed;
       text-decoration: none;
       transition: color .2s;
@@ -1007,6 +1025,7 @@
         <div class="guide-card" data-category="un-body">
           <img class="guide-bg" src="/committee_photos/disec.webp" alt="" loading="lazy">
           <div class="guide-type">UN General Assembly</div>
+          <div class="guide-card-body">
           <div class="guide-name">DISEC</div>
           <div class="guide-agenda-label">Agenda</div>
           <div class="guide-topic">Disarmament &amp; International Security Committee — To Be Announced</div>
@@ -1015,10 +1034,12 @@
             <a class="guide-dl"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M6.5 1v8M3 6l3.5 3.5L10 6M2 11h9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Download</a>
           </div>
         </div>
+        </div>
 
         <div class="guide-card" data-category="un-body">
           <img class="guide-bg" src="/committee_photos/unsc.webp" alt="" loading="lazy">
           <div class="guide-type">UN Security Council</div>
+          <div class="guide-card-body">
           <div class="guide-name">UNSC</div>
           <div class="guide-agenda-label">Agenda</div>
           <div class="guide-topic">United Nations Security Council — To Be Announced</div>
@@ -1027,10 +1048,12 @@
             <a class="guide-dl"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M6.5 1v8M3 6l3.5 3.5L10 6M2 11h9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Download</a>
           </div>
         </div>
+        </div>
 
         <div class="guide-card" data-category="un-body">
           <img class="guide-bg" src="/committee_photos/unhrc.webp" alt="" loading="lazy">
           <div class="guide-type">UN Human Rights</div>
+          <div class="guide-card-body">
           <div class="guide-name">UNHRC</div>
           <div class="guide-agenda-label">Agenda</div>
           <div class="guide-topic">United Nations Human Rights Council — To Be Announced</div>
@@ -1039,10 +1062,12 @@
             <a class="guide-dl"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M6.5 1v8M3 6l3.5 3.5L10 6M2 11h9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Download</a>
           </div>
         </div>
+        </div>
 
         <div class="guide-card" data-category="crisis">
           <img class="guide-bg" src="/committee_photos/jcc-1.webp" alt="" loading="lazy">
           <div class="guide-type">Joint Crisis Committee</div>
+          <div class="guide-card-body">
           <div class="guide-name">JCC-1</div>
           <div class="guide-agenda-label">Agenda</div>
           <div class="guide-topic">Joint Crisis Committee 1 — To Be Announced</div>
@@ -1051,10 +1076,12 @@
             <a class="guide-dl"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M6.5 1v8M3 6l3.5 3.5L10 6M2 11h9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Download</a>
           </div>
         </div>
+        </div>
 
         <div class="guide-card" data-category="crisis">
           <img class="guide-bg" src="/committee_photos/jcc-2.webp" alt="" loading="lazy">
           <div class="guide-type">Joint Crisis Committee</div>
+          <div class="guide-card-body">
           <div class="guide-name">JCC-2</div>
           <div class="guide-agenda-label">Agenda</div>
           <div class="guide-topic">Joint Crisis Committee 2 — To Be Announced</div>
@@ -1063,10 +1090,12 @@
             <a class="guide-dl"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M6.5 1v8M3 6l3.5 3.5L10 6M2 11h9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Download</a>
           </div>
         </div>
+        </div>
 
         <div class="guide-card" data-category="crisis">
           <img class="guide-bg" src="/committee_photos/hcc.webp" alt="" loading="lazy">
           <div class="guide-type">Historical Crisis</div>
+          <div class="guide-card-body">
           <div class="guide-name">HCC</div>
           <div class="guide-agenda-label">Agenda</div>
           <div class="guide-topic">Historical Crisis Committee — To Be Announced</div>
@@ -1075,10 +1104,12 @@
             <a class="guide-dl"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M6.5 1v8M3 6l3.5 3.5L10 6M2 11h9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Download</a>
           </div>
         </div>
+        </div>
 
         <div class="guide-card" data-category="special">
           <img class="guide-bg" src="/committee_photos/lok_sabha.webp" alt="" loading="lazy">
           <div class="guide-type">Indian Parliament</div>
+          <div class="guide-card-body">
           <div class="guide-name">Lok Sabha</div>
           <div class="guide-agenda-label">Agenda</div>
           <div class="guide-topic">Lok Sabha — To Be Announced</div>
@@ -1087,10 +1118,12 @@
             <a class="guide-dl"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M6.5 1v8M3 6l3.5 3.5L10 6M2 11h9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Download</a>
           </div>
         </div>
+        </div>
 
         <div class="guide-card" data-category="crisis">
           <img class="guide-bg" src="/committee_photos/armageddon.webp" alt="" loading="lazy">
           <div class="guide-type">Special Crisis</div>
+          <div class="guide-card-body">
           <div class="guide-name">Armageddon</div>
           <div class="guide-agenda-label">Agenda</div>
           <div class="guide-topic">Special Crisis Committee — To Be Announced</div>
@@ -1099,10 +1132,12 @@
             <a class="guide-dl"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M6.5 1v8M3 6l3.5 3.5L10 6M2 11h9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Download</a>
           </div>
         </div>
+        </div>
 
         <div class="guide-card" data-category="special">
           <img class="guide-bg" src="/committee_photos/oic.webp" alt="" loading="lazy">
           <div class="guide-type">Intergovernmental Org</div>
+          <div class="guide-card-body">
           <div class="guide-name">OIC</div>
           <div class="guide-agenda-label">Agenda</div>
           <div class="guide-topic">Organisation of Islamic Cooperation — To Be Announced</div>
@@ -1111,10 +1146,12 @@
             <a class="guide-dl"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M6.5 1v8M3 6l3.5 3.5L10 6M2 11h9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Download</a>
           </div>
         </div>
+        </div>
 
         <div class="guide-card" data-category="un-body">
           <img class="guide-bg" src="/committee_photos/un_woman.webp" alt="" loading="lazy">
           <div class="guide-type">UN Entity</div>
+          <div class="guide-card-body">
           <div class="guide-name">UN Women</div>
           <div class="guide-agenda-label">Agenda</div>
           <div class="guide-topic">UN Women — To Be Announced</div>
@@ -1123,10 +1160,12 @@
             <a class="guide-dl"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M6.5 1v8M3 6l3.5 3.5L10 6M2 11h9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Download</a>
           </div>
         </div>
+        </div>
 
         <div class="guide-card" data-category="un-body">
           <img class="guide-bg" src="/committee_photos/copous.webp" alt="" loading="lazy">
           <div class="guide-type">UN Committee</div>
+          <div class="guide-card-body">
           <div class="guide-name">COPUOS</div>
           <div class="guide-agenda-label">Agenda</div>
           <div class="guide-topic">Committee on the Peaceful Uses of Outer Space — To Be Announced</div>
@@ -1135,10 +1174,12 @@
             <a class="guide-dl"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M6.5 1v8M3 6l3.5 3.5L10 6M2 11h9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Download</a>
           </div>
         </div>
+        </div>
 
         <div class="guide-card" data-category="special">
           <img class="guide-bg" src="/committee_photos/us_senate.webp" alt="" loading="lazy">
           <div class="guide-type">National Legislature</div>
+          <div class="guide-card-body">
           <div class="guide-name">US Senate</div>
           <div class="guide-agenda-label">Agenda</div>
           <div class="guide-topic">United States Senate — To Be Announced</div>
@@ -1147,10 +1188,12 @@
             <a class="guide-dl"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M6.5 1v8M3 6l3.5 3.5L10 6M2 11h9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Download</a>
           </div>
         </div>
+        </div>
 
         <div class="guide-card" data-category="un-body">
           <img class="guide-bg" src="/committee_photos/unodc.webp" alt="" loading="lazy">
           <div class="guide-type">UN Office</div>
+          <div class="guide-card-body">
           <div class="guide-name">UNODC</div>
           <div class="guide-agenda-label">Agenda</div>
           <div class="guide-topic">UN Office on Drugs and Crime — To Be Announced</div>
@@ -1159,10 +1202,12 @@
             <a class="guide-dl"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M6.5 1v8M3 6l3.5 3.5L10 6M2 11h9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Download</a>
           </div>
         </div>
+        </div>
 
         <div class="guide-card" data-category="un-body">
           <img class="guide-bg" src="/committee_photos/ecofin.webp" alt="" loading="lazy">
           <div class="guide-type">UN General Assembly</div>
+          <div class="guide-card-body">
           <div class="guide-name">ECOFIN</div>
           <div class="guide-agenda-label">Agenda</div>
           <div class="guide-topic">Economic &amp; Financial Committee — To Be Announced</div>
@@ -1171,10 +1216,12 @@
             <a class="guide-dl"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M6.5 1v8M3 6l3.5 3.5L10 6M2 11h9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Download</a>
           </div>
         </div>
+        </div>
 
         <div class="guide-card" data-category="special">
           <img class="guide-bg" src="/committee_photos/un_charter.webp" alt="" loading="lazy">
           <div class="guide-type">Special Committee</div>
+          <div class="guide-card-body">
           <div class="guide-name">SC-UNC</div>
           <div class="guide-agenda-label">Agenda</div>
           <div class="guide-topic">Special Committee — To Be Announced</div>
@@ -1183,10 +1230,12 @@
             <a class="guide-dl"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M6.5 1v8M3 6l3.5 3.5L10 6M2 11h9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Download</a>
           </div>
         </div>
+        </div>
 
         <div class="guide-card" data-category="special">
           <img class="guide-bg" src="/committee_photos/fifa.webp" alt="" loading="lazy">
           <div class="guide-type">International Federation</div>
+          <div class="guide-card-body">
           <div class="guide-name">FIFA</div>
           <div class="guide-agenda-label">Agenda</div>
           <div class="guide-topic">Fédération Internationale de Football Association — To Be Announced</div>
@@ -1195,10 +1244,12 @@
             <a class="guide-dl"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M6.5 1v8M3 6l3.5 3.5L10 6M2 11h9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Download</a>
           </div>
         </div>
+        </div>
 
         <div class="guide-card" data-category="un-body">
           <img class="guide-bg" src="/committee_photos/who.webp" alt="" loading="lazy">
           <div class="guide-type">UN Agency</div>
+          <div class="guide-card-body">
           <div class="guide-name">WHO</div>
           <div class="guide-agenda-label">Agenda</div>
           <div class="guide-topic">World Health Organization — To Be Announced</div>
@@ -1207,9 +1258,11 @@
             <a class="guide-dl"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M6.5 1v8M3 6l3.5 3.5L10 6M2 11h9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Download</a>
           </div>
         </div>
+        </div>
 
         <div class="guide-card" data-category="un-body" style="opacity:.6;border-color:rgba(188,154,110,.22);">
           <div class="guide-type">UN General Assembly</div>
+          <div class="guide-card-body">
           <div class="guide-name">UNGA – SOCHUM</div>
           <div class="guide-agenda-label">Agenda</div>
           <div class="guide-topic">Social, Cultural &amp; Humanitarian Committee — To Be Announced</div>
@@ -1217,12 +1270,14 @@
             <span class="guide-status soon">Coming soon</span>
             <a class="guide-dl"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M6.5 1v8M3 6l3.5 3.5L10 6M2 11h9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Download</a>
           </div>
+        </div>
           <div style="position:absolute;bottom:12px;right:12px;font-size:.44rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#BC9A6E;background:rgba(188,154,110,.1);border:1px solid rgba(188,154,110,.28);border-radius:100px;padding:3px 9px;pointer-events:none;z-index:2;">Reg. not open</div>
         </div>
 
         <div class="guide-card" data-category="press">
           <img class="guide-bg" src="/committee_photos/IP.webp" alt="" loading="lazy">
           <div class="guide-type">Press Corps</div>
+          <div class="guide-card-body">
           <div class="guide-name">IP</div>
           <div class="guide-agenda-label">Agenda</div>
           <div class="guide-topic">International Press — To Be Announced</div>
@@ -1230,6 +1285,7 @@
             <span class="guide-status soon">Coming soon</span>
             <a class="guide-dl"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M6.5 1v8M3 6l3.5 3.5L10 6M2 11h9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Download</a>
           </div>
+        </div>
         </div>
 
       </div>
