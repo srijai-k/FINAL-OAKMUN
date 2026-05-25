@@ -257,21 +257,21 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      background: rgba(255,55,80,.1);
-      border: 1px solid rgba(255,55,80,.22);
+      background: rgba(48,205,215,.12);
+      border: 1px solid rgba(48,205,215,.25);
       border-radius: 100px;
       padding: 7px 16px;
     }
     .status-dot {
       width: 6px; height: 6px;
       border-radius: 50%;
-      background: var(--red);
+      background: var(--teal);
       animation: pulse-dot 1.5s ease-in-out infinite;
     }
     .status-text {
       font-size: .6rem; font-weight: 800;
       letter-spacing: .18em; text-transform: uppercase;
-      color: var(--red);
+      color: var(--teal);
     }
 
     .page-title {
@@ -541,6 +541,107 @@
       text-align: center;
       letter-spacing: .05em;
     }
+
+    /* ── OPEN REGISTRATION CARD ── */
+    .reg-card-glow {
+      position: absolute;
+      top: -60px; right: -60px;
+      width: 220px; height: 220px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(48,205,215,.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .reg-card-sub {
+      font-size: .88rem;
+      font-weight: 400;
+      line-height: 1.75;
+      color: rgba(250,245,237,.45);
+    }
+    .reg-includes {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .reg-inc-label {
+      font-size: .55rem;
+      font-weight: 700;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: rgba(250,245,237,.28);
+    }
+    .reg-inc-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    .reg-inc-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: .78rem;
+      font-weight: 500;
+      color: rgba(250,245,237,.65);
+    }
+    .reg-steps {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .reg-step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      flex: 1;
+    }
+    .reg-step-num {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      background: rgba(48,205,215,.1);
+      border: 1px solid rgba(48,205,215,.25);
+      display: flex; align-items: center; justify-content: center;
+      font-size: .72rem;
+      font-weight: 800;
+      color: var(--teal);
+    }
+    .reg-step-text {
+      font-size: .6rem;
+      font-weight: 600;
+      letter-spacing: .04em;
+      color: rgba(250,245,237,.38);
+      text-align: center;
+    }
+    .reg-step-arrow {
+      color: rgba(48,205,215,.3);
+      font-size: .8rem;
+      flex-shrink: 0;
+      margin-bottom: 16px;
+    }
+    .reg-cta-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      padding: 18px 32px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, var(--teal) 0%, var(--teal-dark) 100%);
+      color: var(--navy);
+      font-family: 'Montserrat';
+      font-size: .82rem;
+      font-weight: 900;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: transform .18s, box-shadow .18s, filter .18s;
+      box-shadow: 0 8px 32px rgba(48,205,215,.3), 0 2px 8px rgba(0,0,0,.2);
+    }
+    .reg-cta-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 48px rgba(48,205,215,.45), 0 4px 16px rgba(0,0,0,.25);
+      filter: brightness(1.06);
+    }
+    .reg-cta-btn:active { transform: translateY(0); }
 
     /* ── REGISTER SPLIT LAYOUT ── */
     .reg-split {
@@ -1064,12 +1165,12 @@
       <div class="reg-left">
         <div class="status-pill">
           <span class="status-dot"></span>
-          <span class="status-text">Registration Opening Soon</span>
+          <span class="status-text">Registration Now Open</span>
         </div>
 
         <h1 class="reg-headline">Debate<br>what <em>matters.</em></h1>
 
-        <p class="reg-sub">Oakridge MUN Chapter XVI brings together 700+ of India's sharpest minds for three days of high-stakes diplomacy, elite debate, and real leadership at scale.</p>
+        <p class="reg-sub">Registrations for Oakridge MUN Chapter XVI are now open. Secure your seat among 700+ of India's sharpest delegates for three days of elite debate, diplomacy, and leadership.</p>
 
         <ul class="reg-bullets">
           <li>
@@ -1118,51 +1219,65 @@
         </div>
       </div>
 
-      <!-- RIGHT: form -->
+      <!-- RIGHT: open registration card -->
       <div class="reg-right">
         <div class="form-card">
-          <div class="form-card-title">Get notified first — <span>Chapter XVI</span></div>
+          <!-- Glow accent top -->
+          <div class="reg-card-glow"></div>
 
-          <div class="form-grid">
-            <div class="field">
-              <label>First Name</label>
-              <input id="inp-first" type="text" placeholder="First" />
-            </div>
-            <div class="field">
-              <label>Last Name</label>
-              <input id="inp-last" type="text" placeholder="Last" />
-            </div>
-            <div class="field full">
-              <label>Email Address</label>
-              <input id="inp-email" type="email" placeholder="you@school.edu" />
-            </div>
-            <div class="field full">
-              <label>School / Institution</label>
-              <div class="school-wrap">
-                <input id="inp-school" type="text" placeholder="Type your school name…" autocomplete="off" />
-                <div class="school-dropdown" id="schoolDropdown"></div>
+          <div class="form-card-title">Secure your <span>seat.</span></div>
+          <p class="reg-card-sub">Complete your registration through the official Oakridge payment portal. Seats are limited — early registration is encouraged.</p>
+
+          <!-- What's included -->
+          <div class="reg-includes">
+            <div class="reg-inc-label">What's included</div>
+            <div class="reg-inc-grid">
+              <div class="reg-inc-item">
+                <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8l3.5 3.5L13 4" stroke="#30CDD7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                3 days of committee debate
+              </div>
+              <div class="reg-inc-item">
+                <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8l3.5 3.5L13 4" stroke="#30CDD7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                Networking Hour &amp; Social Night
+              </div>
+              <div class="reg-inc-item">
+                <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8l3.5 3.5L13 4" stroke="#30CDD7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                Official awards &amp; certificates
+              </div>
+              <div class="reg-inc-item">
+                <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8l3.5 3.5L13 4" stroke="#30CDD7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                Community Outreach initiative
               </div>
             </div>
           </div>
 
           <div class="divider-line"></div>
 
-          <!-- slide-to-send -->
-          <div class="slide-hint" id="slideHint">
-            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><path d="M2 8h10M8 4l4 4-4 4"/></svg>
-            Slide to get notified
-          </div>
-          <div class="slide-btn-wrap" id="submitBtn" role="button" aria-label="Slide to notify me">
-            <div class="slide-fill" id="regFill"></div>
-            <div class="slide-label" id="regLabel">Notify Me When Open</div>
-            <div class="slide-thumb" id="regThumb">
-              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M2 8h10M8 4l4 4-4 4"/>
-              </svg>
+          <!-- Steps -->
+          <div class="reg-steps">
+            <div class="reg-step">
+              <div class="reg-step-num">1</div>
+              <div class="reg-step-text">Click Register Now</div>
+            </div>
+            <div class="reg-step-arrow">→</div>
+            <div class="reg-step">
+              <div class="reg-step-num">2</div>
+              <div class="reg-step-text">Complete payment</div>
+            </div>
+            <div class="reg-step-arrow">→</div>
+            <div class="reg-step">
+              <div class="reg-step-num">3</div>
+              <div class="reg-step-text">Receive confirmation</div>
             </div>
           </div>
 
-          <p class="form-note" id="formNote">One email only. No spam, ever.</p>
+          <!-- CTA -->
+          <a href="https://www.oakridge.in/gachibowli/events/oakridge-mun-xvi-2026/" target="_blank" rel="noopener" class="reg-cta-btn">
+            Register Now
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M3 9h12M10 4l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+
+          <p class="form-note">You will be redirected to the official Oakridge International School payment portal.</p>
         </div>
       </div>
 
