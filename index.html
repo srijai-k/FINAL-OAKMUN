@@ -2724,14 +2724,16 @@
 
       // animation phase state machine
       let phase = 'scatter';
-      setTimeout(() => { phase = 'line'; }, 500);
+      setTimeout(() => { phase = 'line'; wakeLoop(); }, 500);
       setTimeout(() => {
         phase = 'circle';
         bigTitle.classList.add('visible');
         xviBg.classList.add('visible');
+        wakeLoop();
         setTimeout(() => {
           scrollHint.classList.add('visible');
           animationReady = true;
+          wakeLoop();
         }, 800);
       }, 2500);
 
@@ -2867,8 +2869,9 @@
 
         updateText();
 
-        // if everything is settled, stop the loop entirely — wake on next interaction
-        if (!anyCardMoving && !globalMoving) {
+        // if everything is settled AND the intro animation is done, stop the loop entirely
+        // (wakeLoop() restarts it on any interaction)
+        if (!anyCardMoving && !globalMoving && animationReady) {
           loopRunning = false;
           rafId = null;
           return;
