@@ -967,9 +967,47 @@
       background: rgba(48,205,215,.1); color: var(--teal) !important;
       border-left-color: var(--teal); padding-left: 18px;
     }
+
+    /* ── ORBS ── */
+    @keyframes orb-a { from{transform:translate(0,0) scale(1)} to{transform:translate(7%,11%) scale(1.14)} }
+    @keyframes orb-b { from{transform:translate(0,0) scale(1)} to{transform:translate(-9%,-7%) scale(0.87)} }
+    @keyframes orb-c { from{transform:translate(0,0) scale(1)} to{transform:translate(15%,6%) scale(1.09)} }
+    .pg-orb {
+      position: fixed; border-radius: 50%;
+      pointer-events: none; z-index: 0;
+    }
+    .pg-orb-a {
+      width: 65vw; height: 60vh; top: -10vh; left: -10vw;
+      background: rgba(30,150,165,.20); filter: blur(100px);
+      animation: orb-a 20s ease-in-out infinite alternate;
+    }
+    .pg-orb-b {
+      width: 55vw; height: 55vh; bottom: 0vh; right: -8vw;
+      background: rgba(0,60,110,.38); filter: blur(90px);
+      animation: orb-b 25s ease-in-out infinite alternate;
+    }
+    .pg-orb-c {
+      width: 45vw; height: 45vh; top: 35vh; left: 25vw;
+      background: rgba(48,205,215,.10); filter: blur(110px);
+      animation: orb-c 30s ease-in-out infinite alternate;
+    }
+    /* Keep content above fixed orbs */
+    body > nav, .page-content, .bento,
+    section, footer { position: relative; z-index: 1; }
+    @media (max-width: 768px) {
+      .pg-orb { filter: blur(60px) !important; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .pg-orb { animation: none !important; }
+    }
   </style>
 </head>
 <body>
+  <!-- Page ambient orbs -->
+  <div class="pg-orb pg-orb-a"></div>
+  <div class="pg-orb pg-orb-b"></div>
+  <div class="pg-orb pg-orb-c"></div>
+
     <!-- Mobile nav drawer -->
   <div class="mobile-nav" id="mobileNav">
     <a href="/">Home</a>
