@@ -992,8 +992,10 @@
       animation: orb-c 30s ease-in-out infinite alternate;
     }
     /* Keep content above fixed orbs */
-    body > nav, .page-content, .bento,
+    .page-content, .bento,
     section, footer { position: relative; z-index: 1; }
+    /* Nav is already position:fixed — just bump z-index above orbs */
+    nav { z-index: 200; }
     @media (max-width: 768px) {
       .pg-orb { filter: blur(60px) !important; }
     }
