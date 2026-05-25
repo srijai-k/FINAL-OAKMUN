@@ -569,14 +569,16 @@
 
     /* ── EB cards ── */
     .eb-row { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
-    .card-eb { padding: 0; overflow: hidden; }
+    .card-eb { padding: 0; overflow: hidden; display: flex; flex-direction: row; align-items: stretch; }
     .eb-card-top {
-      height: 280px;
+      width: 150px;
+      flex-shrink: 0;
+      height: auto;
       display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px;
       background: linear-gradient(145deg,
         rgba(48,205,215,.14) 0%,
         rgba(0,48,87,.6) 100%);
-      border-bottom: 1px solid rgba(48,205,215,.12);
+      border-right: 1px solid rgba(48,205,215,.12);
       position: relative;
       overflow: hidden;
     }
@@ -638,9 +640,8 @@
     }
     .card-eb:hover .eb-card-photo { opacity: 1; }
     .eb-card-top.has-photo {
-      height: auto !important;
-      aspect-ratio: 5 / 6;
       background: #010d1a !important;
+      border-right-color: rgba(48,205,215,.2);
     }
     .eb-card-top.has-photo .eb-card-initials,
     .eb-card-top.has-photo .eb-card-tba-label { display: none; }
@@ -658,21 +659,26 @@
       color: rgba(250,245,237,.52);
     }
 
-    .eb-card-body { padding: 20px 22px; }
-    .eb-card-role {
-      font-size: .58rem; font-weight: 800;
-      letter-spacing: .2em; text-transform: uppercase;
-      color: var(--teal); margin-bottom: 7px;
-    }
+    .eb-card-body { padding: 20px 22px; display: flex; flex-direction: column; justify-content: center; gap: 5px; }
     .eb-card-name {
-      font-size: .9rem; font-weight: 700;
-      color: rgba(250,245,237,.3);
-      font-style: italic; margin-bottom: 10px;
+      font-size: .95rem; font-weight: 800;
+      color: rgba(250,245,237,.28);
+      font-style: italic; letter-spacing: -.01em;
+    }
+    .card-eb.has-member .eb-card-name {
+      color: var(--white);
+      font-style: normal;
+    }
+    .eb-card-role {
+      font-size: .56rem; font-weight: 800;
+      letter-spacing: .18em; text-transform: uppercase;
+      color: var(--teal); margin-bottom: 8px;
     }
     .eb-card-desc {
       font-size: .7rem; line-height: 1.65;
       color: rgba(250,245,237,.25);
     }
+    .card-eb.has-member .eb-card-desc { color: rgba(250,245,237,.52); }
 
     footer { background: #001223; padding: 72px 56px 0; position: relative; overflow: hidden; }
     footer::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(to right, transparent, rgba(48,205,215,.3), transparent); }
@@ -1354,8 +1360,8 @@
 
     const ebWrapper = document.createElement('div');
     ebWrapper.className = 'eb-row';
-    // Grid: 2-col for 2 members or 4 members (2×2), 3-col for 3 members
-    ebWrapper.style.gridTemplateColumns = roles.length === 3 ? 'repeat(3, 1fr)' : roles.length === 4 ? 'repeat(2, 1fr)' : 'repeat(2, 1fr)';
+    // Horizontal cards: max 2 per row looks best
+    ebWrapper.style.gridTemplateColumns = roles.length === 1 ? '1fr' : 'repeat(2, 1fr)';
     const ebClasses = ['eb-chair', 'eb-vice', 'eb-rap', 'eb-rap'];
     roles.forEach((role, i) => {
       const member = (ebMembers[key] || [])[i] || null;
@@ -1369,8 +1375,8 @@
           <span class="eb-card-tba-label">To be announced</span>
         </div>
         <div class="eb-card-body">
-          <div class="eb-card-role">${role}</div>
           <div class="eb-card-name">${member ? member.name : 'Announcing soon'}</div>
+          <div class="eb-card-role">${role}</div>
           <div class="eb-card-desc">${member ? member.desc : 'This executive board member will guide debate, evaluate delegate performance, and maintain a focused committee experience.'}</div>
         </div>`;
       ebWrapper.appendChild(el);
