@@ -2763,6 +2763,14 @@
         };
       });
 
+      // Write initial DOM state immediately so cards don't flash at (0,0) with full opacity
+      cards.forEach(c => {
+        const px = cW / 2 + c.x - IMG_W / 2;
+        const py = cH / 2 + c.y - IMG_H / 2;
+        c.el.style.transform = `translate3d(${px}px,${py}px,0) rotate(${c.rot}deg) scale(${c.scale})`;
+        c.el.style.opacity = '0';
+      });
+
       // ── spring + lerp helpers ──
       const lerp = (a, b, t) => a * (1 - t) + b * t;
       function springStep(cur, target, vel, stiff, damp) {
