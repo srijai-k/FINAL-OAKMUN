@@ -352,7 +352,8 @@
       object-fit: cover;
       object-position: center 30%;
       display: block;
-      filter: brightness(.85);
+      transform: translateZ(0);
+      image-rendering: high-quality;
     }
     .morph-card-back {
       background: #0c1e30;
@@ -2565,22 +2566,23 @@
       const MAX_SCROLL = IS_MOBILE ? 1000 : 2000;
 
       const COMMITTEES = [
-        { src: 'committee_photos/disec.jpg',      label: 'DISEC',       href: 'committee.html?committee=disec'      },
-        { src: 'committee_photos/unsc.jpg',        label: 'UNSC',        href: 'committee.html?committee=unsc'       },
-        { src: 'committee_photos/unhrc.jpg',       label: 'UNHRC',       href: 'committee.html?committee=unhrc'      },
-        { src: 'committee_photos/jcc-1.jpg',       label: 'JCC-1',       href: 'committee.html?committee=jcc-1'      },
-        { src: 'committee_photos/jcc-2.jpg',       label: 'JCC-2',       href: 'committee.html?committee=jcc-2'      },
-        { src: 'committee_photos/hcc.jpg',         label: 'HCC',         href: 'committee.html?committee=hcc'        },
-        { src: 'committee_photos/lok_sabha.jpg',   label: 'LOK SABHA',   href: 'committee.html?committee=lok-sabha'  },
-        { src: 'committee_photos/armageddon.jpg',  label: 'ARMAGEDDON',  href: 'committee.html?committee=armageddon' },
-        { src: 'committee_photos/oic.jpg',         label: 'OIC',         href: 'committee.html?committee=oic'        },
-        { src: 'committee_photos/un_woman.jpg',    label: 'UN WOMEN',    href: 'committee.html?committee=un-women'   },
-        { src: 'committee_photos/copous.jpg',      label: 'COPUOS',      href: 'committee.html?committee=copuos'     },
-        { src: 'committee_photos/us_senate.jpg',   label: 'US SENATE',   href: 'committee.html?committee=us-senate'  },
-        { src: 'committee_photos/ecofin.jpg',      label: 'ECOFIN',      href: 'committee.html?committee=ecofin'     },
-        { src: 'committee_photos/fifa.jpg',        label: 'FIFA',        href: 'committee.html?committee=fifa'       },
-        { src: 'committee_photos/who.jpg',         label: 'WHO',         href: 'committee.html?committee=who'        },
-        { src: 'committee_photos/IP.jpg',          label: 'INTL PRESS',  href: 'committee.html?committee=ip'         },
+        { src: 'committee_photos/unsc.jpg',        label: 'UNSC',         href: 'committee.html?committee=unsc'       },
+        { src: 'committee_photos/unhrc.jpg',       label: 'UNHRC',        href: 'committee.html?committee=unhrc'      },
+        { src: 'conference_photos/2.JPG',          label: 'OAKRIDGE MUN', href: 'committees.html'                    },
+        { src: 'committee_photos/hcc.jpg',         label: 'HCC',          href: 'committee.html?committee=hcc'        },
+        { src: 'conference_photos/3.JPG',          label: 'OAKRIDGE MUN', href: 'committees.html'                    },
+        { src: 'committee_photos/lok_sabha.jpg',   label: 'LOK SABHA',    href: 'committee.html?committee=lok-sabha'  },
+        { src: 'conference_photos/4.JPG',          label: 'OAKRIDGE MUN', href: 'committees.html'                    },
+        { src: 'committee_photos/armageddon.jpg',  label: 'ARMAGEDDON',   href: 'committee.html?committee=armageddon' },
+        { src: 'conference_photos/5.JPG',          label: 'OAKRIDGE MUN', href: 'committees.html'                    },
+        { src: 'committee_photos/us_senate.jpg',   label: 'US SENATE',    href: 'committee.html?committee=us-senate'  },
+        { src: 'conference_photos/6.JPG',          label: 'OAKRIDGE MUN', href: 'committees.html'                    },
+        { src: 'committee_photos/fifa.jpg',        label: 'FIFA',         href: 'committee.html?committee=fifa'       },
+        { src: 'committee_photos/disec.jpg',       label: 'DISEC',        href: 'committee.html?committee=disec'      },
+        { src: 'conference_photos/7.JPG',          label: 'OAKRIDGE MUN', href: 'committees.html'                    },
+        { src: 'committee_photos/who.jpg',         label: 'WHO',          href: 'committee.html?committee=who'        },
+        { src: 'conference_photos/8.JPG',          label: 'OAKRIDGE MUN', href: 'committees.html'                    },
+        { src: 'conference_photos/1.JPG',          label: 'OAKRIDGE MUN', href: 'committees.html'                    },
       ];
       const TOTAL = COMMITTEES.length; // 16
 
