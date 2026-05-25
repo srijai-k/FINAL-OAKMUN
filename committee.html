@@ -628,6 +628,31 @@
     }
     .card-eb.eb-rap .eb-card-initials { color: rgba(180,235,245,.3); }
     .card-eb.eb-rap .eb-card-role { color: var(--teal-light); }
+    /* ── EB card with real photo/member ── */
+    .eb-card-photo {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: center top;
+      z-index: 0; opacity: .88;
+      transition: opacity .3s;
+    }
+    .card-eb:hover .eb-card-photo { opacity: 1; }
+    .eb-card-top.has-photo .eb-card-initials,
+    .eb-card-top.has-photo .eb-card-tba-label { display: none; }
+    .eb-card-top.has-photo::before,
+    .eb-card-top.has-photo::after { display: none; }
+    .eb-card-top.has-photo {
+      background: none;
+      border-bottom-color: rgba(48,205,215,.25);
+    }
+    .card-eb.has-member .eb-card-name {
+      color: var(--white);
+      font-style: normal;
+    }
+    .card-eb.has-member .eb-card-desc {
+      color: rgba(250,245,237,.52);
+    }
+
     .eb-card-body { padding: 20px 22px; }
     .eb-card-role {
       font-size: .58rem; font-weight: 800;
@@ -1314,24 +1339,34 @@
     };
     const roles = ebRoles[key] || ['Chairperson', 'Vice-Chairperson', 'Rapporteur'];
 
+    // Known EB members — indexed by committee key, then by role position
+    const ebMembers = {
+      'sc-unc': [
+        { name: 'Aprameya', photo: '/EB/chair_sc_un_charter.webp', desc: 'Aprameya is a freelancer primarily working in the field of academic and creative writing. He has participated in over 100 MUNs over the past 8 years across the three major circuits in South India — Hyderabad, Bengaluru, and Chennai. He is so staunch an advocate for libre software that many assume he is a lost son of Richard Stallman. On the question of whether he is currently employed by RAW, ISI, Mossad, CIA, GCHQ, or FSB, his response is of neither confirmation nor denial.' },
+        null,
+      ],
+    };
+
     const ebWrapper = document.createElement('div');
     ebWrapper.className = 'eb-row';
     // Grid: 2-col for 2 members or 4 members (2×2), 3-col for 3 members
     ebWrapper.style.gridTemplateColumns = roles.length === 3 ? 'repeat(3, 1fr)' : roles.length === 4 ? 'repeat(2, 1fr)' : 'repeat(2, 1fr)';
     const ebClasses = ['eb-chair', 'eb-vice', 'eb-rap', 'eb-rap'];
     roles.forEach((role, i) => {
+      const member = (ebMembers[key] || [])[i] || null;
       const initials = role.split(' ').map(w => w[0]).join('');
       const el = document.createElement('div');
-      el.className = `card card-eb ${ebClasses[Math.min(i, ebClasses.length - 1)]}`;
+      el.className = `card card-eb ${ebClasses[Math.min(i, ebClasses.length - 1)]}${member ? ' has-member' : ''}`;
       el.innerHTML = `
-        <div class="eb-card-top">
+        <div class="eb-card-top${member?.photo ? ' has-photo' : ''}">
+          ${member?.photo ? `<img class="eb-card-photo" src="${member.photo}" alt="${member.name}" loading="lazy">` : ''}
           <div class="eb-card-initials">${initials}</div>
           <span class="eb-card-tba-label">To be announced</span>
         </div>
         <div class="eb-card-body">
           <div class="eb-card-role">${role}</div>
-          <div class="eb-card-name">Announcing soon</div>
-          <div class="eb-card-desc">This executive board member will guide debate, evaluate delegate performance, and maintain a focused committee experience.</div>
+          <div class="eb-card-name">${member ? member.name : 'Announcing soon'}</div>
+          <div class="eb-card-desc">${member ? member.desc : 'This executive board member will guide debate, evaluate delegate performance, and maintain a focused committee experience.'}</div>
         </div>`;
       ebWrapper.appendChild(el);
     });
