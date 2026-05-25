@@ -326,6 +326,7 @@
       position: absolute;
       left: 0; top: 0;
       width: 76px; height: 108px;
+      will-change: transform;
       cursor: pointer;
       text-decoration: none;
       perspective: 1000px;
@@ -2576,23 +2577,28 @@
         { src: 'conference_photos/5.JPG',          label: 'OAKRIDGE MUN', href: 'committees.html'                    },
         { src: 'committee_photos/us_senate.jpg',   label: 'US SENATE',    href: 'committee.html?committee=us-senate'  },
         { src: 'conference_photos/6.JPG',          label: 'OAKRIDGE MUN', href: 'committees.html'                    },
-        { src: 'committee_photos/fifa.jpg',        label: 'FIFA',         href: 'committee.html?committee=fifa'       },
         { src: 'conference_photos/1.JPG',          label: 'OAKRIDGE MUN', href: 'committees.html'                    },
+        { src: 'committee_photos/fifa.jpg',        label: 'FIFA',         href: 'committee.html?committee=fifa'       },
         { src: 'committee_photos/disec.jpg',       label: 'DISEC',        href: 'committee.html?committee=disec'      },
         { src: 'conference_photos/7.JPG',          label: 'OAKRIDGE MUN', href: 'committees.html'                    },
         { src: 'committee_photos/who.jpg',         label: 'WHO',          href: 'committee.html?committee=who'        },
         { src: 'conference_photos/8.JPG',          label: 'OAKRIDGE MUN', href: 'committees.html'                    },
       ];
-      const TOTAL = COMMITTEES.length; // 16
+      // on mobile use every other card to halve the animation workload
+      const DISPLAY = IS_MOBILE
+        ? COMMITTEES.filter((_, i) => i % 2 === 0)
+        : COMMITTEES;
+      const TOTAL = DISPLAY.length;
 
       // hero dimensions, updated on resize
       let cW = hero.offsetWidth, cH = hero.offsetHeight;
       new ResizeObserver(([e]) => { cW = e.contentRect.width; cH = e.contentRect.height; }).observe(hero);
 
-      // random scatter positions (generated once)
-      const scatter = COMMITTEES.map(() => ({
-        x:   (Math.random() - 0.5) * 1500,
-        y:   (Math.random() - 0.5) * 1000,
+      // random scatter positions — smaller range on mobile so springs settle faster
+      const scatterRange = IS_MOBILE ? 600 : 1500;
+      const scatter = DISPLAY.map(() => ({
+        x:   (Math.random() - 0.5) * scatterRange,
+        y:   (Math.random() - 0.5) * (IS_MOBILE ? 400 : 1000),
         rot: (Math.random() - 0.5) * 180,
       }));
 
@@ -2711,7 +2717,7 @@
       });
 
       // ── build flip-cards ──
-      const cards = COMMITTEES.map((c, i) => {
+      const cards = DISPLAY.map((c, i) => {
         const card = document.createElement('a');
         card.href = c.href;
         card.className = 'morph-card';
