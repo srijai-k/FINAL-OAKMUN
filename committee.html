@@ -1291,13 +1291,38 @@
       </div>`;
     bento.insertBefore(el, prepPlaceholder);
 
+    const ebRoles = {
+      'disec':       ['Chairperson', 'Vice-Chairperson', 'Rapporteur'],
+      'unsc':        ['President', 'Vice-President'],
+      'unhrc':       ['President', 'Vice-President', 'Rapporteur'],
+      'jcc-1':       ['Crises Director', 'Crises Moderator'],
+      'jcc-2':       ['Crises Director', 'Crises Moderator'],
+      'hcc':         ['Crises Director', 'Crises Moderator'],
+      'lok-sabha':   ['Speaker', 'Deputy Speaker', 'Scribe'],
+      'armageddon':  ['Chief Crises Moderator', 'Deputy Crises Moderator'],
+      'oic':         ['Chairperson', 'Vice-Chairperson'],
+      'un-women':    ['Chairperson', 'Vice-Chairperson', 'Rapporteur'],
+      'copuos':      ['Chairperson', 'Vice-Chairperson'],
+      'us-senate':   ['President', 'Co-President Pro Tempore', 'Co-President Pro Tempore'],
+      'unodc':       ['Chairperson', 'Vice-Chairperson'],
+      'ecofin':      ['Chairperson', 'Vice-Chairperson'],
+      'sc-unc':      ['Chairperson', 'Vice-Chairperson'],
+      'fifa':        ['FIFA President', 'FIFA Vice-President', 'Director'],
+      'who':         ['Chairperson', 'Vice-Chairperson'],
+      'unga-sochum': ['Chairperson', 'Co-Vice Chairperson', 'Co-Vice Chairperson'],
+      'ip':          ['Editor-in-Chief', 'Deputy Editor-in-Chief', 'Director of Photography', 'Director of Photography'],
+    };
+    const roles = ebRoles[key] || ['Chairperson', 'Vice-Chairperson', 'Rapporteur'];
+
     const ebWrapper = document.createElement('div');
     ebWrapper.className = 'eb-row';
-    const ebClasses = ['eb-chair', 'eb-vice', 'eb-rap'];
-    ['Chairperson', 'Vice Chairperson', 'Rapporteur'].forEach((role, i) => {
+    // Grid: 2-col for 2 members or 4 members (2×2), 3-col for 3 members
+    ebWrapper.style.gridTemplateColumns = roles.length === 3 ? 'repeat(3, 1fr)' : roles.length === 4 ? 'repeat(2, 1fr)' : 'repeat(2, 1fr)';
+    const ebClasses = ['eb-chair', 'eb-vice', 'eb-rap', 'eb-rap'];
+    roles.forEach((role, i) => {
       const initials = role.split(' ').map(w => w[0]).join('');
       const el = document.createElement('div');
-      el.className = `card card-eb ${ebClasses[i]}`;
+      el.className = `card card-eb ${ebClasses[Math.min(i, ebClasses.length - 1)]}`;
       el.innerHTML = `
         <div class="eb-card-top">
           <div class="eb-card-initials">${initials}</div>
