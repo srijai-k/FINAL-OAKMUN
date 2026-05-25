@@ -294,204 +294,216 @@
     }
 
     /* ═══════════════════════════════════════
-       HERO
+       HERO — scroll morph animation
     ═══════════════════════════════════════ */
     .hero {
       position: relative;
       width: 100%;
       height: calc(100vh / 1.1);
-      overflow: clip;
-      background: var(--navy);
+      overflow: hidden;
+      background: #03080f;
     }
 
-    .hero video {
+    .hero-bg {
       position: absolute;
       inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-
-    .hero-overlay {
-      position: absolute;
-      inset: 0;
+      z-index: 0;
+      pointer-events: none;
       background:
-        linear-gradient(to bottom, rgba(0,5,18,.55) 0%, rgba(0,10,25,.2) 35%, rgba(0,5,18,.85) 100%),
-        linear-gradient(100deg, rgba(0,20,50,.7) 0%, transparent 60%);
+        radial-gradient(ellipse 72% 68% at 50% 52%, rgba(30,150,165,.28) 0%, rgba(0,15,38,.6) 48%, transparent 72%),
+        #03080f;
     }
 
-    .hero-glow {
-      position: absolute;
-      top: 48%;
-      left: 28%;
-      transform: translate(-50%, -50%);
-      width: 800px;
-      height: 800px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(48,205,215,.13) 0%, transparent 65%);
-      pointer-events: none;
-      animation: fadeIn 2s ease both;
-    }
-
-    .hero-roman {
-      position: absolute;
-      right: -0.06em;
-      top: 50%;
-      transform: translateY(-50%);
-      display: flex;
-      align-items: center;
-      gap: clamp(1.2rem, 2.2vw, 2.8rem);
-      font-size: clamp(14rem, 32vw, 30rem);
-      font-weight: 900;
-      line-height: .84;
-      pointer-events: none;
-      user-select: none;
-      z-index: 2;
-      -webkit-mask-image: linear-gradient(to top, transparent 2%, black 14%), linear-gradient(to left, rgba(0,0,0,.98) 12%, transparent 82%);
-      -webkit-mask-composite: destination-in;
-      mask-image: linear-gradient(to top, transparent 2%, black 14%), linear-gradient(to left, rgba(0,0,0,.98) 12%, transparent 82%);
-      mask-composite: intersect;
-      animation: fadeIn 1.8s ease .4s both;
-    }
-    .hero-roman span {
-      display: block;
-      color: transparent;
-      -webkit-text-stroke: 2.5px rgba(48,205,215,.9);
-      text-stroke: 2.5px rgba(48,205,215,.9);
-    }
-
-    .hero-inner {
+    /* ── morph card canvas ── */
+    #morphCanvas {
       position: absolute;
       inset: 0;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      padding: 0 64px 28px;
-      z-index: 10;
+      z-index: 2;
     }
 
-    .hero-headline {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding: 0;
-      gap: 0;
-      max-width: 100%;
+    /* each animated card */
+    .morph-card {
+      position: absolute;
+      left: 0; top: 0;
+      width: 60px; height: 85px;
+      will-change: transform;
+      cursor: pointer;
+      text-decoration: none;
+      perspective: 1000px;
     }
-
-    /* Eyebrow */
-    .hero-eyebrow-line {
+    .morph-card-inner {
+      position: relative;
+      width: 100%; height: 100%;
+      transform-style: preserve-3d;
+      transition: transform .55s cubic-bezier(.2,.8,.2,1);
+    }
+    .morph-card:hover .morph-card-inner { transform: rotateY(180deg); }
+    .morph-card-front, .morph-card-back {
+      position: absolute;
+      inset: 0;
+      border-radius: 10px;
+      overflow: hidden;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      box-shadow: 0 12px 32px rgba(0,0,0,.55), 0 0 0 1px rgba(255,255,255,.06);
+    }
+    .morph-card-front img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: center 30%;
+      display: block;
+      filter: saturate(.2) brightness(.72);
+    }
+    .morph-card-back {
+      background: #0c1e30;
+      transform: rotateY(180deg);
       display: flex;
       align-items: center;
-      gap: 14px;
-      margin-bottom: 10px;
-      animation: fadeUp .6s cubic-bezier(0.4,0,0.2,1) .3s both;
+      justify-content: center;
+      border: 1px solid rgba(48,205,215,.2);
     }
-    .hero-eyebrow-line span {
-      font-size: .52rem;
-      font-weight: 700;
-      letter-spacing: .32em;
-      text-transform: uppercase;
-      color: rgba(250,245,237,.38);
-    }
-    .hero-eyebrow-line::before {
-      content: '';
-      display: block;
-      width: 28px; height: 2px;
-      background: var(--teal);
-      border-radius: 2px;
-      flex-shrink: 0;
-    }
-
-    /* Main title "OAKRIDGE" */
-    .hero-word-main {
-      font-size: clamp(3.5rem, 10vw, 10rem);
-      font-weight: 900;
-      line-height: .84;
-      letter-spacing: -.05em;
-      color: var(--white);
-      text-transform: uppercase;
-      animation: fadeUp .85s cubic-bezier(0.4,0,0.2,1) .42s both;
-    }
-
-    /* Teal gradient rule */
-    .hero-title-rule {
-      width: min(700px, 95%);
-      height: 2px;
-      margin: 16px 0 14px;
-      background: linear-gradient(to right, var(--teal), rgba(48,205,215,.18), transparent);
-      border-radius: 2px;
-      animation: fadeIn .7s ease .56s both;
-    }
-
-    /* "MODEL UNITED NATIONS" row */
-    .hero-word-sub {
-      display: flex;
-      align-items: baseline;
-      gap: 0;
-      animation: fadeUp .85s cubic-bezier(0.4,0,0.2,1) .58s both;
-    }
-    .hero-word-accent {
-      font-size: clamp(1.2rem, 2.6vw, 2.6rem);
-      font-weight: 700;
-      letter-spacing: .22em;
-      text-transform: uppercase;
-      color: rgba(250,245,237,.55);
-      line-height: 1;
-    }
-    .hero-word-dot {
-      font-size: clamp(1.1rem, 2.8vw, 2.6rem);
-      font-weight: 900;
-      color: var(--teal);
-      margin: 0 clamp(8px, 1.2vw, 16px);
-      line-height: 1;
-      opacity: .7;
-    }
-    .hero-word-light {
-      font-size: clamp(1.2rem, 2.6vw, 2.6rem);
-      font-weight: 900;
+    .morph-card-back-label {
+      font-family: 'Montserrat';
+      font-size: .44rem;
+      font-weight: 800;
       letter-spacing: .18em;
       text-transform: uppercase;
       color: var(--teal);
-      line-height: 1;
+      text-align: center;
+      padding: 4px;
     }
 
-    .hero-bottom {
-      display: flex;
-      align-items: flex-end;
-      justify-content: space-between;
-      gap: 32px;
-    }
-    .hero-bottom-left {
+    /* ── intro text (circle phase) ── */
+    #heroIntroText {
+      position: absolute;
+      inset: 0;
+      z-index: 10;
       display: flex;
       flex-direction: column;
-      gap: 8px;
-      animation: fadeUp .7s cubic-bezier(0.4,0,0.2,1) .78s both;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      pointer-events: none;
+      transition: opacity .4s;
     }
-    .hero-tagline {
-      font-size: clamp(.8rem, 1.2vw, .98rem);
-      font-weight: 500;
-      font-style: italic;
-      color: rgba(250,245,237,.48);
-      letter-spacing: .05em;
+    .morph-big-title {
+      font-size: clamp(3rem, 6.5vw, 6.5rem);
+      font-weight: 900;
+      line-height: .88;
+      letter-spacing: -.04em;
+      color: var(--white);
+      text-transform: uppercase;
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity .8s .2s, transform .8s .2s;
     }
-    .hero-dates {
+    .morph-big-title.visible { opacity: 1; transform: translateY(0); }
+    .morph-big-title .teal { color: var(--teal); }
+
+    /* ghost XVI watermark behind everything */
+    .hero-xvi-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+      user-select: none;
+      font-size: clamp(12rem, 40vw, 32rem);
+      font-weight: 900;
+      letter-spacing: -.04em;
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(48,205,215,.07);
+      opacity: 0;
+      transition: opacity 1s .5s;
+    }
+    .hero-xvi-bg.visible { opacity: 1; }
+
+    .morph-chapter-tag {
+      font-size: .48rem;
+      font-weight: 700;
+      letter-spacing: .28em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-top: 12px;
+      opacity: 0;
+      transition: opacity .7s .5s;
+    }
+    .morph-chapter-tag.visible { opacity: 1; }
+    .morph-scroll-hint {
+      font-size: .5rem;
+      font-weight: 700;
+      letter-spacing: .32em;
+      text-transform: uppercase;
+      color: rgba(250,245,237,.28);
+      margin-top: 22px;
+      opacity: 0;
+      transition: opacity .6s .8s;
+    }
+    .morph-scroll-hint.visible { opacity: 1; }
+
+    /* ── arc content (fades in after morph) ── */
+    #heroArcContent {
+      position: absolute;
+      inset: 0;
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      gap: 18px;
+      opacity: 0;
+      transform: translateY(20px);
+      pointer-events: none;
+      transition: opacity .5s, transform .5s;
+    }
+    #heroArcContent.visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
+
+    .arc-eyebrow {
+      font-size: .68rem;
+      font-weight: 700;
+      letter-spacing: .28em;
+      text-transform: uppercase;
+      color: rgba(250,245,237,.72);
       display: flex;
       align-items: center;
       gap: 14px;
-      font-size: .7rem;
-      font-weight: 700;
-      letter-spacing: .22em;
+    }
+    .arc-eyebrow::before, .arc-eyebrow::after {
+      content: '';
+      display: inline-block;
+      width: 28px; height: 1.5px;
+      background: var(--teal);
+      border-radius: 2px;
+      opacity: .8;
+    }
+    .arc-title {
+      font-size: clamp(2.6rem, 5.5vw, 5.5rem);
+      font-weight: 900;
+      line-height: .88;
+      letter-spacing: -.04em;
+      color: var(--white);
       text-transform: uppercase;
-      color: rgba(250,245,237,.88);
+    }
+    .arc-title .teal { color: var(--teal); }
+
+    .hero-dates {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: .66rem;
+      font-weight: 700;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: rgba(250,245,237,.75);
     }
     .hero-dates .dot {
       width: 3px; height: 3px;
       border-radius: 50%;
       background: var(--teal);
-      opacity: .7;
+      opacity: .6;
     }
     .hero-ctas {
       display: flex;
@@ -500,158 +512,74 @@
     }
     .hero-btn-primary {
       font-family: 'Montserrat';
-      font-size: .8rem;
-      font-weight: 800;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-      color: var(--navy);
-      background: #FAF5ED;
-      border: 1px solid rgba(2,20,26,0.06);
-      border-radius: 10px;
-      padding: 12px 22px;
-      cursor: pointer;
-      box-shadow: 0 6px 18px rgba(2,20,26,0.04);
-      transition: transform .18s cubic-bezier(.2,.9,.3,1), box-shadow .18s;
+      font-size: .78rem; font-weight: 800;
+      letter-spacing: .08em; text-transform: uppercase;
+      color: var(--navy); background: var(--teal);
+      border: none; border-radius: 100px;
+      padding: 13px 26px; cursor: pointer;
+      box-shadow: 0 8px 24px rgba(48,205,215,.25);
+      transition: transform .18s, box-shadow .18s, background .18s;
     }
-    .hero-btn-primary:hover { transform: translateY(-3px); box-shadow: 0 12px 30px rgba(2,20,26,0.06); }
-    .hero-btn-primary:active { transform: translateY(0) scale(.998); }
+    .hero-btn-primary:hover { background: var(--teal-dark); transform: translateY(-2px); box-shadow: 0 14px 32px rgba(48,205,215,.3); }
     .hero-btn-ghost {
       font-family: 'Montserrat';
-      font-size: .8rem;
-      font-weight: 700;
-      letter-spacing: .1em;
-      text-transform: uppercase;
-      color: rgba(250,245,237,.9);
-      border: none;
-      border-radius: 14px;
-      padding: 15px 30px;
-      cursor: pointer;
-      transition: transform .2s, box-shadow .2s;
-      text-decoration: none;
-      display: inline-block;
-      position: relative;
-      isolation: isolate;
-      overflow: hidden;
-      box-shadow:
-        0 6px 6px rgba(0,0,0,.25),
-        0 0 20px rgba(0,0,0,.12),
-        inset 2px 2px 1px 0 rgba(255,255,255,.45),
-        inset -1px -1px 1px 1px rgba(255,255,255,.3);
+      font-size: .78rem; font-weight: 700;
+      letter-spacing: .1em; text-transform: uppercase;
+      color: rgba(250,245,237,.75);
+      border: 1px solid rgba(250,245,237,.14);
+      border-radius: 100px; padding: 12px 26px;
+      cursor: pointer; background: transparent;
+      transition: border-color .2s, color .2s, transform .2s;
+      text-decoration: none; display: inline-block;
     }
-    .hero-btn-ghost::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      border-radius: inherit;
-      backdrop-filter: blur(8px) saturate(1.6);
-      -webkit-backdrop-filter: blur(8px) saturate(1.6);
-      filter: url(#glass-distortion);
-      z-index: -2;
-    }
-    .hero-btn-ghost::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      border-radius: inherit;
-      background: rgba(255,255,255,.18);
-      z-index: -1;
-    }
-    .hero-btn-ghost:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(0,0,0,.3), inset 2px 2px 1px 0 rgba(255,255,255,.5), inset -1px -1px 1px 1px rgba(255,255,255,.35); }
+    .hero-btn-ghost:hover { border-color: rgba(48,205,215,.4); color: var(--teal); transform: translateY(-2px); }
 
-    .hero-bottom-right {
-      flex-shrink: 0;
-      animation: fadeUp .7s cubic-bezier(0.4,0,0.2,1) .92s both;
-    }
     .countdown {
-      display: flex;
-      gap: 8px;
-      align-items: flex-end;
+      display: flex; gap: 8px; align-items: center;
     }
-    .cd-unit {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 8px;
-    }
+    .cd-unit { display: flex; flex-direction: column; align-items: center; gap: 5px; }
     .cd-value {
-      font-size: clamp(1.8rem, 3vw, 2.8rem);
-      font-weight: 800;
-      line-height: 1;
-      color: var(--white);
-      min-width: 72px;
-      text-align: center;
-      border-radius: 14px;
-      padding: 8px 10px 6px;
+      font-size: clamp(1.2rem, 2.2vw, 1.9rem); font-weight: 800;
+      line-height: 1; color: var(--white);
+      min-width: 52px; text-align: center;
+      border-radius: 9px; padding: 7px 7px 5px;
       letter-spacing: -.02em;
-      animation: countFlip .2s ease;
-      position: relative;
-      isolation: isolate;
-      overflow: hidden;
-      /* glass depth shadow */
-      box-shadow:
-        0 6px 6px rgba(0,0,0,.25),
-        0 0 20px rgba(0,0,0,.12),
-        inset 2px 2px 1px 0 rgba(255,255,255,.45),
-        inset -1px -1px 1px 1px rgba(255,255,255,.3);
+      position: relative; isolation: isolate; overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,.3), inset 0 1px 0 rgba(255,255,255,.1), inset 0 0 0 1px rgba(255,255,255,.05);
     }
-    /* distorted backdrop layer */
     .cd-value::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      border-radius: inherit;
-      backdrop-filter: blur(8px) saturate(1.6);
-      -webkit-backdrop-filter: blur(8px) saturate(1.6);
-      filter: url(#glass-distortion);
-      z-index: -2;
+      content: ''; position: absolute; inset: 0; border-radius: inherit;
+      backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+      background: rgba(255,255,255,.06); z-index: -1;
     }
-    /* frosted tint layer */
-    .cd-value::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      border-radius: inherit;
-      background: rgba(255,255,255,.18);
-      z-index: -1;
-    }
-    .cd-label {
-      font-size: .5rem;
-      font-weight: 700;
-      letter-spacing: .2em;
-      text-transform: uppercase;
-      color: var(--teal);
-    }
-    .cd-sep {
-      font-size: 2rem;
-      font-weight: 300;
-      color: rgba(250,245,237,.2);
-      padding-bottom: 26px;
-      align-self: flex-end;
-    }
+    .cd-label { font-size: .42rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: rgba(48,205,215,.6); }
+    .cd-sep { font-size: 1.4rem; font-weight: 300; color: rgba(250,245,237,.15); margin-bottom: 14px; }
 
-    .scroll-indicator {
-      position: absolute;
-      bottom: 36px;
-      left: 56px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 8px;
-      opacity: 0;
-      animation: fadeIn 1s ease 1.8s forwards;
-    }
-    .scroll-indicator span {
-      font-size: .5rem;
-      font-weight: 700;
-      letter-spacing: .28em;
-      text-transform: uppercase;
-      color: rgba(250,245,237,.25);
-    }
-    .scroll-indicator-line {
-      width: 1px;
-      height: 40px;
-      background: linear-gradient(to bottom, rgba(48,205,215,.5), transparent);
-      animation: scrollBounce 1.6s ease-in-out infinite;
+    @media (max-width: 768px) {
+      .hero { height: 100svh; height: 100vh; }
+
+      /* intro text */
+      .morph-big-title  { font-size: clamp(2.4rem, 13vw, 3.8rem); }
+      .morph-chapter-tag { font-size: .42rem; margin-top: 8px; }
+      .morph-scroll-hint { font-size: .42rem; margin-top: 14px; }
+
+      /* arc content */
+      #heroArcContent { gap: 12px; }
+      .arc-eyebrow  { font-size: .42rem; }
+      .arc-title    { font-size: clamp(2rem, 11vw, 3.2rem); }
+
+      /* dates */
+      .hero-dates { font-size: .52rem; gap: 8px; }
+
+      /* buttons */
+      .hero-ctas { flex-direction: column; gap: 8px; width: 100%; padding: 0 24px; box-sizing: border-box; }
+      .hero-btn-primary,
+      .hero-btn-ghost { width: 100%; text-align: center; padding: 12px 20px; font-size: .7rem; }
+
+      /* countdown */
+      .countdown { gap: 4px; }
+      .cd-value   { min-width: 44px; font-size: 1.3rem; padding: 6px 6px 4px; }
+      .cd-sep     { font-size: 1.1rem; }
     }
 
     /* ═══════════════════════════════════════
@@ -1661,26 +1589,10 @@
       nav.scrolled .nav-right { opacity: 1; max-width: 52px; margin-left: 10px; }
       nav.scrolled .nav-pill  { padding: 8px 8px 8px 18px; border-radius: 100px; }
 
-      .hero-roman { right: -0.05em; top: auto; bottom: -0.1em; transform: none; gap: clamp(.6rem, 2vw, 1.4rem); opacity: .22; }
-      .hero-inner { padding: 0 22px 36px; }
-      .hero-headline { max-width: 100%; gap: 0; }
-      .hero-eyebrow-line { margin-bottom: 10px; gap: 10px; }
-      .hero-eyebrow-line span { font-size: .55rem; letter-spacing: .22em; }
-      .hero-eyebrow-line::before { width: 22px; }
-      .hero-word-main { font-size: clamp(3.6rem, 16vw, 6rem); letter-spacing: -.04em; }
-      .hero-title-rule { width: 100%; margin: 10px 0 9px; }
-      .hero-word-sub { flex-wrap: nowrap; align-items: baseline; gap: 0; }
-      .hero-word-accent { font-size: clamp(1.1rem, 5vw, 2.4rem); letter-spacing: .08em; }
-      .hero-word-dot { font-size: clamp(1rem, 4.5vw, 2.1rem); margin: 0 5px; }
-      .hero-word-light { font-size: clamp(1.1rem, 5vw, 2.4rem); letter-spacing: .06em; }
-      .hero-word-rule { height: clamp(1.4rem, 7.5vw, 2.8rem); }
-      .hero-bottom { flex-direction: column; align-items: flex-start; gap: 24px; }
-      .hero-bottom-right { order: -1; }
       .countdown { gap: 6px; }
-      .cd-value { font-size: 1.45rem; min-width: 60px; padding: 12px 8px 10px; border-radius: 8px; }
-      .cd-label { font-size: .44rem; }
-      .cd-sep { font-size: 1.3rem; padding-bottom: 20px; }
-      .hero-ctas { flex-direction: column; gap: 10px; width: 100%; }
+      .cd-value { font-size: 1.2rem; min-width: 50px; padding: 8px 6px 6px; border-radius: 8px; }
+      .cd-label { font-size: .4rem; }
+      .cd-sep { font-size: 1.1rem; margin-bottom: 14px; }
       .hero-btn-primary, .hero-btn-ghost { width: 100%; text-align: center; padding: 14px 24px; }
       .scroll-indicator { left: 20px; }
 
@@ -2135,72 +2047,57 @@
   </nav>
 
   <!-- ═══ HERO ═══ -->
-  <section class="hero">
-    <video id="heroVideo" autoplay muted loop playsinline>
-      <source src="hero.mp4" type="video/mp4" />
-    </video>
-    <div class="hero-overlay"></div>
-    <div class="hero-glow"></div>
+  <section class="hero" id="heroSection">
 
-    <div class="hero-roman" aria-hidden="true"><span>X</span><span>V</span><span>I</span></div>
+    <!-- gradient glow bg -->
+    <div class="hero-bg"></div>
 
-    <div class="hero-inner">
+    <!-- giant XVI watermark (behind cards, above bg) -->
+    <div class="hero-xvi-bg" id="heroXviBg">XVI</div>
 
-      <div class="hero-headline">
-        <div class="hero-eyebrow-line"><span>Chapter XVI &nbsp;·&nbsp; Hyderabad &nbsp;·&nbsp; 2026</span></div>
-        <h1 class="hero-word-main">OAKRIDGE</h1>
-        <div class="hero-title-rule"></div>
-        <div class="hero-word-sub">
-          <span class="hero-word-accent">MODEL</span>
-          <span class="hero-word-dot">·</span>
-          <span class="hero-word-light">UNITED NATIONS</span>
-        </div>
-      </div>
+    <!-- morph canvas — cards injected by JS -->
+    <div id="morphCanvas"></div>
 
-      <div class="hero-bottom">
-        <div class="hero-bottom-left">
-          <p class="hero-tagline">"Create. Debate. Innovate."</p>
-          <div class="hero-dates">
-            <span>24th July</span><span class="dot"></span>
-            <span>25th July</span><span class="dot"></span>
-            <span>26th July 2026</span>
-          </div>
-          <div class="hero-ctas">
-            <button class="hero-btn-primary" onclick="window.location.href='register.html'">Register Now &nbsp;→</button>
-            <a href="committees.html" class="hero-btn-ghost">Explore Committees</a>
-          </div>
-        </div>
-
-        <div class="hero-bottom-right">
-          <div class="countdown">
-            <div class="cd-unit">
-              <div class="cd-value" id="cd-days">00</div>
-              <div class="cd-label">Days</div>
-            </div>
-            <div class="cd-sep">:</div>
-            <div class="cd-unit">
-              <div class="cd-value" id="cd-hours">00</div>
-              <div class="cd-label">Hours</div>
-            </div>
-            <div class="cd-sep">:</div>
-            <div class="cd-unit">
-              <div class="cd-value" id="cd-mins">00</div>
-              <div class="cd-label">Mins</div>
-            </div>
-            <div class="cd-sep">:</div>
-            <div class="cd-unit">
-              <div class="cd-value" id="cd-secs">00</div>
-              <div class="cd-label">Secs</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
+    <!-- intro text (visible during scatter/line/circle phases) -->
+    <div id="heroIntroText">
+      <h1 class="morph-big-title">OAKRIDGE<br><span class="teal">MUN</span></h1>
+      <p class="morph-scroll-hint">SCROLL TO EXPLORE</p>
     </div>
 
-    <div class="scroll-indicator">
-      <span>Scroll</span>
-      <div class="scroll-indicator-line"></div>
+    <!-- arc content (fades in once morph completes) -->
+    <div id="heroArcContent">
+      <p class="arc-eyebrow">Chapter XVI &nbsp;·&nbsp; Hyderabad &nbsp;·&nbsp; 2026</p>
+      <h2 class="arc-title">OAKRIDGE<br><span class="teal">MUN</span></h2>
+      <div class="hero-dates">
+        <span>24th July</span><span class="dot"></span>
+        <span>25th July</span><span class="dot"></span>
+        <span>26th July 2026</span>
+      </div>
+      <div class="hero-ctas">
+        <button class="hero-btn-primary" onclick="window.location.href='register.html'">Register Now &nbsp;→</button>
+        <a href="committees.html" class="hero-btn-ghost">Explore Committees</a>
+      </div>
+      <div class="countdown">
+        <div class="cd-unit">
+          <div class="cd-value" id="cd-days">00</div>
+          <div class="cd-label">Days</div>
+        </div>
+        <div class="cd-sep">:</div>
+        <div class="cd-unit">
+          <div class="cd-value" id="cd-hours">00</div>
+          <div class="cd-label">Hours</div>
+        </div>
+        <div class="cd-sep">:</div>
+        <div class="cd-unit">
+          <div class="cd-value" id="cd-mins">00</div>
+          <div class="cd-label">Mins</div>
+        </div>
+        <div class="cd-sep">:</div>
+        <div class="cd-unit">
+          <div class="cd-value" id="cd-secs">00</div>
+          <div class="cd-label">Secs</div>
+        </div>
+      </div>
     </div>
 
   </section>
@@ -2651,6 +2548,285 @@
   </footer>
 
   <script>
+    // ── SCROLL-MORPH HERO ──
+    // Ported from danielpetho/scroll-morph-hero (React/framer-motion → vanilla JS)
+    ;(function() {
+      const hero       = document.getElementById('heroSection');
+      const canvas     = document.getElementById('morphCanvas');
+      const introText  = document.getElementById('heroIntroText');
+      const arcContent = document.getElementById('heroArcContent');
+      const bigTitle    = introText.querySelector('.morph-big-title');
+      const scrollHint  = introText.querySelector('.morph-scroll-hint');
+      const xviBg       = document.getElementById('heroXviBg');
+
+      const IMG_W     = 60, IMG_H = 85;
+      const STIFFNESS = 40, DAMPING = 15;
+      const IS_MOBILE  = window.innerWidth < 768;
+      const MAX_SCROLL = IS_MOBILE ? 1000 : 2000;
+
+      const COMMITTEES = [
+        { src: 'committee_photos/disec.jpg',      label: 'DISEC',       href: 'committee.html?committee=disec'      },
+        { src: 'committee_photos/unsc.jpg',        label: 'UNSC',        href: 'committee.html?committee=unsc'       },
+        { src: 'committee_photos/unhrc.jpg',       label: 'UNHRC',       href: 'committee.html?committee=unhrc'      },
+        { src: 'committee_photos/jcc-1.jpg',       label: 'JCC-1',       href: 'committee.html?committee=jcc-1'      },
+        { src: 'committee_photos/jcc-2.jpg',       label: 'JCC-2',       href: 'committee.html?committee=jcc-2'      },
+        { src: 'committee_photos/hcc.jpg',         label: 'HCC',         href: 'committee.html?committee=hcc'        },
+        { src: 'committee_photos/lok_sabha.jpg',   label: 'LOK SABHA',   href: 'committee.html?committee=lok-sabha'  },
+        { src: 'committee_photos/armageddon.jpg',  label: 'ARMAGEDDON',  href: 'committee.html?committee=armageddon' },
+        { src: 'committee_photos/oic.jpg',         label: 'OIC',         href: 'committee.html?committee=oic'        },
+        { src: 'committee_photos/un_woman.jpg',    label: 'UN WOMEN',    href: 'committee.html?committee=un-women'   },
+        { src: 'committee_photos/copous.jpg',      label: 'COPUOS',      href: 'committee.html?committee=copuos'     },
+        { src: 'committee_photos/us_senate.jpg',   label: 'US SENATE',   href: 'committee.html?committee=us-senate'  },
+        { src: 'committee_photos/ecofin.jpg',      label: 'ECOFIN',      href: 'committee.html?committee=ecofin'     },
+        { src: 'committee_photos/fifa.jpg',        label: 'FIFA',        href: 'committee.html?committee=fifa'       },
+        { src: 'committee_photos/who.jpg',         label: 'WHO',         href: 'committee.html?committee=who'        },
+        { src: 'committee_photos/IP.jpg',          label: 'INTL PRESS',  href: 'committee.html?committee=ip'         },
+      ];
+      const TOTAL = COMMITTEES.length; // 16
+
+      // hero dimensions, updated on resize
+      let cW = hero.offsetWidth, cH = hero.offsetHeight;
+      new ResizeObserver(([e]) => { cW = e.contentRect.width; cH = e.contentRect.height; }).observe(hero);
+
+      // random scatter positions (generated once)
+      const scatter = COMMITTEES.map(() => ({
+        x:   (Math.random() - 0.5) * 1500,
+        y:   (Math.random() - 0.5) * 1000,
+        rot: (Math.random() - 0.5) * 180,
+      }));
+
+      // ── scroll system ──
+      let animationReady = false;
+      let morphComplete  = false;
+
+      // spring accumulators (declared early — referenced in handlers below)
+      let sm_morph = 0, sm_morph_vel = 0;
+      let sm_rotate = 0, sm_rotate_vel = 0;
+      let sm_mouse = 0, sm_mouse_vel = 0;
+      let targetMouse = 0;
+      let virtualScroll = 0;
+
+      function applyLock() {
+        document.documentElement.style.overflow = 'hidden';
+        document.body.style.overflow            = 'hidden';
+        document.body.style.position            = 'fixed';
+        document.body.style.width               = '100%';
+        document.body.style.top                 = '0';
+      }
+      function removeLock() {
+        document.documentElement.style.overflow = '';
+        document.body.style.overflow            = '';
+        document.body.style.position            = '';
+        document.body.style.width               = '';
+        document.body.style.top                 = '';
+      }
+
+      applyLock(); // start locked
+      window.addEventListener('scroll', () => { if (!morphComplete) window.scrollTo(0, 0); });
+
+      function unlockScroll() {
+        if (morphComplete) return;
+        morphComplete = true;
+        removeLock();
+      }
+      function relockScroll() {
+        if (!morphComplete) return;
+        morphComplete = false;
+        applyLock();
+      }
+
+      // Shared delta handler — drives virtualScroll forward and backward
+      function applyDelta(rawDelta) {
+        const delta = Math.sign(rawDelta) * Math.min(Math.abs(rawDelta), 80);
+        virtualScroll = Math.min(Math.max(virtualScroll + delta, 0), MAX_SCROLL);
+        // phase transitions
+        if (virtualScroll > 0 && phase === 'circle') phase = 'morph';
+        if (virtualScroll <= 0)                      phase = 'circle';
+        // lock / unlock
+        if (virtualScroll >= MAX_SCROLL) unlockScroll();
+      }
+
+      // Wheel — forward scroll + reverse when scrolled back to top
+      document.addEventListener('wheel', e => {
+        if (!animationReady) return;
+        if (!morphComplete) {
+          applyDelta(e.deltaY);
+          return;
+        }
+        // page is freely scrollable; re-engage if user scrolls up at the very top
+        if (window.scrollY <= 2 && e.deltaY < 0) {
+          relockScroll();
+          applyDelta(e.deltaY);
+        }
+      }, { passive: true });
+
+      // Touch — same logic for mobile swipe
+      let touchStartY = 0;
+      document.addEventListener('touchstart', e => {
+        touchStartY = e.touches[0].clientY;
+      }, { passive: true });
+      document.addEventListener('touchmove', e => {
+        if (!animationReady) return;
+        const dy    = touchStartY - e.touches[0].clientY; // positive = swipe up
+        touchStartY = e.touches[0].clientY;
+        if (!morphComplete) {
+          applyDelta(dy * 2);
+          return;
+        }
+        if (window.scrollY <= 2 && dy < 0) {
+          relockScroll();
+          applyDelta(dy * 2);
+        }
+      }, { passive: true });
+
+      // Keyboard — forward and backward
+      document.addEventListener('keydown', e => {
+        const fwdKeys = [' ', 'PageDown', 'ArrowDown'];
+        const bwdKeys = ['PageUp', 'ArrowUp'];
+        if (!morphComplete) {
+          if ([...fwdKeys, ...bwdKeys, 'End', 'Home'].includes(e.key)) e.preventDefault();
+          if (animationReady && fwdKeys.includes(e.key)) applyDelta(120);
+          if (animationReady && bwdKeys.includes(e.key)) applyDelta(-120);
+        }
+      });
+
+      // animation phase state machine
+      let phase = 'scatter';
+      setTimeout(() => { phase = 'line'; }, 500);
+      setTimeout(() => {
+        phase = 'circle';
+        bigTitle.classList.add('visible');
+        xviBg.classList.add('visible');
+        setTimeout(() => {
+          scrollHint.classList.add('visible');
+          animationReady = true;
+        }, 800);
+      }, 2500);
+
+      // mouse position → parallax offset (normalised to ±100 px)
+      hero.addEventListener('mousemove', e => {
+        const r = hero.getBoundingClientRect();
+        targetMouse = ((e.clientX - r.left) / r.width * 2 - 1) * 100;
+      });
+
+      // ── build flip-cards ──
+      const cards = COMMITTEES.map((c, i) => {
+        const card = document.createElement('a');
+        card.href = c.href;
+        card.className = 'morph-card';
+        card.innerHTML = `
+          <div class="morph-card-inner">
+            <div class="morph-card-front"><img src="${c.src}" alt="${c.label}" /></div>
+            <div class="morph-card-back"><span class="morph-card-back-label">${c.label}</span></div>
+          </div>`;
+        canvas.appendChild(card);
+        return {
+          el: card,
+          x: scatter[i].x, y: scatter[i].y,
+          rot: scatter[i].rot, scale: 0.6, opacity: 0,
+          vx: 0, vy: 0, vr: 0, vs: 0, vo: 0,
+        };
+      });
+
+      // ── spring + lerp helpers ──
+      const lerp = (a, b, t) => a * (1 - t) + b * t;
+      function springStep(cur, target, vel, stiff, damp) {
+        stiff = stiff || STIFFNESS; damp = damp || DAMPING;
+        const dt = 1 / 60;
+        const f = (target - cur) * stiff - vel * damp;
+        const newVel = vel + f * dt;
+        return [cur + newVel * dt, newVel];
+      }
+
+      // ── compute per-card target based on current phase ──
+      function getTarget(i) {
+        if (phase === 'scatter') {
+          return { x: scatter[i].x, y: scatter[i].y, rot: scatter[i].rot, scale: 0.6, opacity: 0 };
+        }
+        if (phase === 'line') {
+          const spacing = 70;
+          return { x: i * spacing - (TOTAL * spacing) / 2, y: 0, rot: 0, scale: 1, opacity: 1 };
+        }
+
+        // circle target
+        const minDim = Math.min(cW, cH);
+        const cr   = Math.min(minDim * 0.35, 320);
+        const ca   = (i / TOTAL) * 360;
+        const cRad = ca * Math.PI / 180;
+        const cx   = Math.cos(cRad) * cr;
+        const cy   = Math.sin(cRad) * cr;
+        const crot = ca + 90;
+
+        const mv = sm_morph;
+        if (mv <= 0) return { x: cx, y: cy, rot: crot, scale: 1, opacity: 1 };
+
+        // arc target — convex-up rainbow, center far below viewport
+        const isMobile = cW < 768;
+        const base  = Math.min(cW, cH * 1.5);
+        const arcR  = base * (isMobile ? 1.4 : 1.1);
+        const arcCY = (cH * 0.25) + arcR - cH / 2;
+        const spread  = isMobile ? 100 : 130;
+        const startA  = -90 - spread / 2;
+        const step    = spread / (TOTAL - 1);
+        const sp      = Math.min(Math.max(sm_rotate / 360, 0), 1);
+        const bounded = -sp * spread * 0.8;
+        const aa      = startA + i * step + bounded;
+        const aRad    = aa * Math.PI / 180;
+        const ax      = Math.cos(aRad) * arcR + sm_mouse;
+        const ay      = Math.sin(aRad) * arcR + arcCY;
+        const aScale  = isMobile ? 1.4 : 1.8;
+
+        return {
+          x:       lerp(cx, ax, mv),
+          y:       lerp(cy, ay, mv),
+          rot:     lerp(crot, aa + 90, mv),
+          scale:   lerp(1, aScale, mv),
+          opacity: 1,
+        };
+      }
+
+      // ── update overlay text opacity ──
+      function updateText() {
+        const introOp = (phase === 'circle' || phase === 'morph')
+          ? Math.max(0, 1 - sm_morph * 2) : 0;
+        introText.style.opacity = introOp;
+
+        const arcOp = Math.max(0, (sm_morph - 0.8) / 0.2);
+        arcContent.style.opacity = arcOp;
+        arcContent.style.transform = `translateY(${lerp(20, 0, sm_morph)}px)`;
+        arcContent.style.pointerEvents = arcOp > 0.5 ? 'auto' : 'none';
+      }
+
+      // ── main rAF loop ──
+      function loop() {
+        // advance morph springs
+        const morphTarget  = Math.min(Math.max(virtualScroll / 600, 0), 1);
+        [sm_morph, sm_morph_vel]   = springStep(sm_morph,  morphTarget,  sm_morph_vel,  40, 20);
+        const rotateTarget = Math.min(Math.max((virtualScroll - 600) / 2400 * 360, 0), 360);
+        [sm_rotate, sm_rotate_vel] = springStep(sm_rotate, rotateTarget, sm_rotate_vel, 40, 20);
+        [sm_mouse, sm_mouse_vel]   = springStep(sm_mouse,  targetMouse,  sm_mouse_vel,  30, 20);
+
+        // move each card toward its target
+        cards.forEach((c, i) => {
+          const t = getTarget(i);
+          [c.x,       c.vx] = springStep(c.x,       t.x,       c.vx);
+          [c.y,       c.vy] = springStep(c.y,       t.y,       c.vy);
+          [c.rot,     c.vr] = springStep(c.rot,     t.rot,     c.vr);
+          [c.scale,   c.vs] = springStep(c.scale,   t.scale,   c.vs);
+          [c.opacity, c.vo] = springStep(c.opacity, t.opacity, c.vo);
+
+          const px = cW / 2 + c.x - IMG_W / 2;
+          const py = cH / 2 + c.y - IMG_H / 2;
+          c.el.style.transform = `translate3d(${px}px,${py}px,0) rotate(${c.rot}deg) scale(${c.scale})`;
+          c.el.style.opacity   = Math.max(0, Math.min(1, c.opacity));
+        });
+
+        updateText();
+        requestAnimationFrame(loop);
+      }
+      loop();
+    })();
+
     // ── NAV SCROLL BLUR ──
     const navbar = document.getElementById('navbar');
 
