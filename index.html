@@ -2050,6 +2050,34 @@
       .btd-section { padding: 60px 20px 70px; }
       .btd-grid { grid-template-columns: 1fr; gap: 14px; }
     }
+
+    /* ═══════════════════════════════════════
+       MOBILE / LOW-END PERFORMANCE
+       Kill all expensive GPU ops on mobile
+    ═══════════════════════════════════════ */
+    @media (max-width: 768px) {
+      /* Aurora orbs: remove blur (most expensive op) + stop animation */
+      .hero-orb { filter: none !important; animation: none !important; opacity: .5; }
+
+      /* Nav: solid bg instead of backdrop-filter blur */
+      .nav-pill { backdrop-filter: none !important; -webkit-backdrop-filter: none !important; background: rgba(3,12,26,.97) !important; }
+      .nav-drop { backdrop-filter: none !important; -webkit-backdrop-filter: none !important; background: rgba(3,12,26,.98) !important; }
+
+      /* Stop box-shadow animation on SG photo — paint on every frame */
+      .sg-photo-wrap { animation: none !important; }
+
+      /* Stop text-shadow animation on FAQ heading */
+      .faq-heading.revealed { animation: none !important; }
+
+      /* Stop pulse-ring on buttons */
+      .hero-btn-primary::after { animation: none !important; }
+    }
+
+    /* Replace photo-glow (animates box-shadow = paint) with opacity pulse */
+    @keyframes photo-glow {
+      0%, 100% { opacity: .92; }
+      50%       { opacity: 1;   }
+    }
   </style>
 </head>
 <body>
@@ -2304,7 +2332,7 @@
 
       <div class="sg-photo-col">
         <div class="sg-photo-wrap">
-          <img src="Secretariat_Photos/SG_Shrey.jpeg" alt="Shrey Vajpayee — Secretary-General, Oakridge MUN XVI" />
+          <img src="Secretariat_Photos/SG_Shrey.jpeg" alt="Shrey Vajpayee — Secretary-General, Oakridge MUN XVI" loading="lazy" decoding="async" />
         </div>
       </div>
 
@@ -3201,26 +3229,18 @@
     const isTouchDevice = window.matchMedia('(pointer: coarse)').matches;
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    const lenis = new Lenis(prefersReducedMotion ? {
-      smoothWheel: false,
-      syncTouch: true,
-    } : {
-      lerp: isTouchDevice ? 0.16 : 0.11,
-      smoothWheel: true,
-      wheelMultiplier: 0.95,
-      touchMultiplier: 1,
-      syncTouch: true,
-      syncTouchLerp: 0.18,
-      normalizeWheel: true,
-      infinite: false,
-    });
-
-    function raf(time) {
-      lenis.raf(time);
+    // Skip Lenis on touch devices — native scroll is GPU-accelerated and smoother
+    if (!isTouchDevice && !prefersReducedMotion) {
+      const lenis = new Lenis({
+        lerp: 0.11,
+        smoothWheel: true,
+        wheelMultiplier: 0.95,
+        normalizeWheel: true,
+        infinite: false,
+      });
+      function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
       requestAnimationFrame(raf);
     }
-
-    requestAnimationFrame(raf);
   </script>
 
 
