@@ -1995,10 +1995,19 @@
       grid-template-columns: repeat(3, 1fr);
       gap: 20px;
     }
+    .btd-bg {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover; border-radius: 16px;
+      opacity: 0.13; z-index: 0; pointer-events: none;
+      transition: opacity .3s;
+    }
+    .btd-card:hover .btd-bg { opacity: 0.2; }
+    .btd-card > *:not(.btd-bg) { position: relative; z-index: 1; }
     .btd-card {
       display: block;
       text-decoration: none;
-      background: rgba(0,48,87,.5);
+      background: rgba(0,30,60,.65);
       border: 1px solid rgba(48,205,215,.12);
       border-radius: 16px;
       padding: 32px 28px;
@@ -2452,6 +2461,7 @@
 
   <!-- ═══ STATS ═══ -->
   <section class="stats-section">
+    <img style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.05;z-index:0;pointer-events:none;" src="/conference_photos/11.webp" alt="" loading="lazy">
     <div class="s-orb stats-orb-a"></div>
     <div class="s-orb stats-orb-b"></div>
     <div class="stats-strip">
@@ -2649,6 +2659,7 @@
     <p class="btd-sub">Oakridge MUN XVI is more than resolutions and gavels — experience the moments that happen outside the committee room.</p>
     <div class="btd-grid">
       <a href="/networking-hour" class="btd-card">
+        <img class="btd-bg" src="/networking_hour/1.webp" alt="" loading="lazy">
         <div class="btd-card-accent"></div>
         <div class="btd-card-tag">Day 1 · Evening</div>
         <div class="btd-card-title">Networking Hour</div>
@@ -2656,6 +2667,7 @@
         <span class="btd-card-link">Learn more →</span>
       </a>
       <a href="/social-night" class="btd-card">
+        <img class="btd-bg" src="/conference_photos/14.webp" alt="" loading="lazy">
         <div class="btd-card-accent"></div>
         <div class="btd-card-tag">Day 2 · Night</div>
         <div class="btd-card-title">Social Night</div>
@@ -2663,6 +2675,7 @@
         <span class="btd-card-link">Learn more →</span>
       </a>
       <a href="/orphanage-initiative" class="btd-card">
+        <img class="btd-bg" src="/conference_photos/9.webp" alt="" loading="lazy">
         <div class="btd-card-accent"></div>
         <div class="btd-card-tag">Community · Outreach</div>
         <div class="btd-card-title">Community Outreach</div>
