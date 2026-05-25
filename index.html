@@ -2079,41 +2079,46 @@
       50%       { opacity: 1;   }
     }
 
-    /* ── THEME SECTION ORBS (light bg — uses muted tones) ── */
+    /* ── THEME SECTION ORBS (light bg — high opacity needed to show on white) ── */
     .theme-orb-a {
-      width: 70%; height: 65%;
-      top: -25%; left: -15%;
-      background: rgba(30,150,165,.10);
-      filter: blur(120px);
+      width: 75%; height: 70%;
+      top: -20%; left: -10%;
+      background: rgba(30,150,165,.38);
+      filter: blur(90px);
       animation: orb-a 20s ease-in-out infinite alternate;
     }
     .theme-orb-b {
-      width: 60%; height: 60%;
-      bottom: -20%; right: -12%;
-      background: rgba(0,48,87,.09);
-      filter: blur(110px);
+      width: 65%; height: 65%;
+      bottom: -15%; right: -8%;
+      background: rgba(0,48,87,.30);
+      filter: blur(80px);
       animation: orb-b 25s ease-in-out infinite alternate;
     }
     .theme-orb-c {
-      width: 45%; height: 50%;
-      top: 10%; right: 5%;
-      background: rgba(188,154,110,.11);
-      filter: blur(100px);
+      width: 55%; height: 60%;
+      top: 0%; right: -5%;
+      background: rgba(188,154,110,.32);
+      filter: blur(80px);
       animation: orb-c 18s ease-in-out infinite alternate;
     }
     .theme-orb-d {
-      width: 50%; height: 45%;
-      bottom: 5%; left: 15%;
-      background: rgba(48,205,215,.08);
-      filter: blur(130px);
+      width: 55%; height: 55%;
+      bottom: -5%; left: 5%;
+      background: rgba(48,205,215,.25);
+      filter: blur(100px);
       animation: orb-b 30s ease-in-out infinite alternate;
     }
     .theme-orb-e {
-      width: 35%; height: 40%;
-      top: 40%; left: 35%;
-      background: rgba(0,48,87,.06);
-      filter: blur(90px);
+      width: 45%; height: 50%;
+      top: 30%; left: 28%;
+      background: rgba(0,48,87,.20);
+      filter: blur(70px);
       animation: orb-a 22s ease-in-out infinite alternate;
+    }
+    /* Theme orbs keep full blur on mobile — white bg needs it */
+    @media (max-width: 768px) {
+      .theme-orb-a, .theme-orb-b, .theme-orb-c,
+      .theme-orb-d, .theme-orb-e { filter: blur(70px) !important; }
     }
 
     /* ── SECTION ORBS (shared) ── */
