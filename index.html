@@ -311,47 +311,51 @@
       z-index: 0;
       pointer-events: none;
       overflow: hidden;
-      /* dot grid + base */
-      background:
-        radial-gradient(circle, rgba(48,205,215,.048) 1px, transparent 1px),
-        #020810;
-      background-size: 36px 36px, 100% 100%;
+      background: #020810;
     }
-    /* layered glow + vignette on top of dot grid */
-    .hero-bg::after {
+    /* dot grid — behind everything */
+    .hero-bg::before {
       content: '';
       position: absolute;
       inset: 0;
       background:
-        radial-gradient(ellipse 60% 55% at 50% 50%, rgba(30,150,165,.22) 0%, rgba(0,12,30,.58) 48%, rgba(2,8,16,.93) 74%),
-        radial-gradient(ellipse 120% 35% at 50% 105%, rgba(0,48,87,.55) 0%, transparent 55%),
-        radial-gradient(ellipse 40% 25% at 15% 20%, rgba(48,205,215,.07) 0%, transparent 60%),
-        radial-gradient(ellipse 35% 20% at 85% 80%, rgba(30,150,165,.07) 0%, transparent 60%);
+        radial-gradient(circle, rgba(48,205,215,.055) 1px, transparent 1px);
+      background-size: 36px 36px;
     }
-    /* animated aurora orbs */
+    /* vignette + depth gradients — renders BEHIND orb children via z-index */
+    .hero-bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      background:
+        radial-gradient(ellipse 60% 55% at 50% 50%, rgba(30,150,165,.18) 0%, rgba(0,12,30,.55) 48%, rgba(2,8,16,.92) 74%),
+        radial-gradient(ellipse 120% 35% at 50% 105%, rgba(0,48,87,.5) 0%, transparent 55%);
+    }
+    /* animated aurora orbs — sit above ::after via z-index */
     .hero-orb {
       position: absolute;
       border-radius: 50%;
-      filter: blur(90px);
-      will-change: transform;
+      filter: blur(70px);
       pointer-events: none;
+      z-index: 1;
     }
     .hero-orb--a {
-      width: 62%; height: 58%;
-      top: -22%; left: 19%;
-      background: radial-gradient(circle, rgba(30,150,165,.28) 0%, transparent 68%);
+      width: 65%; height: 60%;
+      top: -15%; left: 17%;
+      background: rgba(30,150,165,.35);
       animation: orb-a 18s ease-in-out infinite alternate;
     }
     .hero-orb--b {
-      width: 52%; height: 52%;
-      bottom: -18%; right: -8%;
-      background: radial-gradient(circle, rgba(0,60,110,.45) 0%, transparent 68%);
+      width: 55%; height: 55%;
+      bottom: -15%; right: -5%;
+      background: rgba(0,60,110,.55);
       animation: orb-b 22s ease-in-out infinite alternate;
     }
     .hero-orb--c {
-      width: 42%; height: 48%;
-      top: 28%; left: -12%;
-      background: radial-gradient(circle, rgba(48,205,215,.11) 0%, transparent 68%);
+      width: 45%; height: 50%;
+      top: 25%; left: -10%;
+      background: rgba(48,205,215,.18);
       animation: orb-c 26s ease-in-out infinite alternate;
     }
     @keyframes orb-a {
