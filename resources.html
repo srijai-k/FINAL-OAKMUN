@@ -54,28 +54,35 @@
       z-index: 0;
     }
     .pg-orb-a {
-      width: 60vw; height: 55vh;
-      top: -10vh; left: -10vw;
-      background: rgba(30,150,165,.22);
-      filter: blur(100px);
-      animation: orb-a 20s ease-in-out infinite alternate;
+      width: 72vw; height: 65vh;
+      top: -18vh; left: -14vw;
+      background: rgba(30,200,215,.32);
+      filter: blur(88px);
+      animation: orb-a 22s ease-in-out infinite alternate;
     }
     .pg-orb-b {
-      width: 55vw; height: 50vh;
-      bottom: 5vh; right: -10vw;
-      background: rgba(0,60,110,.40);
-      filter: blur(90px);
-      animation: orb-b 24s ease-in-out infinite alternate;
+      width: 62vw; height: 58vh;
+      bottom: 0; right: -12vw;
+      background: rgba(0,80,150,.55);
+      filter: blur(80px);
+      animation: orb-b 26s ease-in-out infinite alternate;
     }
     .pg-orb-c {
-      width: 45vw; height: 45vh;
-      top: 40vh; left: 30vw;
-      background: rgba(48,205,215,.12);
+      width: 52vw; height: 52vh;
+      top: 35vh; left: 24vw;
+      background: rgba(48,205,215,.2);
+      filter: blur(100px);
+      animation: orb-c 30s ease-in-out infinite alternate;
+    }
+    .pg-orb-d {
+      width: 44vw; height: 44vh;
+      top: 65vh; left: -6vw;
+      background: rgba(10,60,130,.38);
       filter: blur(110px);
-      animation: orb-c 28s ease-in-out infinite alternate;
+      animation: orb-a 36s ease-in-out infinite alternate-reverse;
     }
     @media (max-width: 768px) {
-      .pg-orb { filter: blur(60px) !important; }
+      .pg-orb { filter: blur(55px) !important; }
     }
     @media (prefers-reduced-motion: reduce) {
       .pg-orb { animation: none !important; }
@@ -93,7 +100,9 @@
 
     html, body {
       font-family: 'Montserrat';
-      background: var(--navy);
+      background: #020C16;
+      background-image: radial-gradient(rgba(48,205,215,.045) 1px, transparent 1px);
+      background-size: 28px 28px;
       color: var(--white);
       overflow-x: hidden;
       min-height: 100%;
@@ -246,8 +255,16 @@
       align-items: flex-end;
       justify-content: space-between;
       gap: 40px;
-      border-bottom: 1px solid rgba(250,245,237,.07);
+      border-bottom: 1px solid rgba(48,205,215,.12);
       animation: fadeUp .6s .05s cubic-bezier(0.4,0,0.2,1) both;
+      position: relative;
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -1px; left: 0; right: 0; height: 1px;
+      background: linear-gradient(to right, transparent, rgba(48,205,215,.4), transparent);
+      pointer-events: none;
     }
     .hero-left { display: flex; flex-direction: column; gap: 16px; }
     .hero-kicker {
@@ -306,9 +323,18 @@
       max-width: 1200px;
       margin: 0 auto;
       padding: 64px 48px;
-      border-bottom: 1px solid rgba(250,245,237,.07);
+      border-bottom: 1px solid rgba(48,205,215,.08);
+      position: relative;
+    }
+    .section::after {
+      content: '';
+      position: absolute;
+      bottom: -1px; left: 48px; right: 48px; height: 1px;
+      background: linear-gradient(to right, transparent, rgba(48,205,215,.25), transparent);
+      pointer-events: none;
     }
     .section:last-child { border-bottom: none; }
+    .section:last-child::after { display: none; }
 
     .section-header {
       display: flex;
@@ -336,8 +362,8 @@
     }
 
     .guide-card {
-      background: linear-gradient(135deg, rgba(30,150,165,.09) 0%, rgba(0,20,50,.28) 60%, rgba(0,10,30,.18) 100%);
-      border: 1px solid rgba(48,205,215,.13);
+      background: linear-gradient(135deg, rgba(30,150,165,.13) 0%, rgba(0,20,50,.45) 60%, rgba(0,8,22,.35) 100%);
+      border: 1px solid rgba(48,205,215,.18);
       border-radius: 20px;
       padding: 28px 24px;
       display: flex;
@@ -349,9 +375,9 @@
       cursor: default;
       position: relative;
       overflow: hidden;
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,.06), 0 6px 28px rgba(0,0,0,.22);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.08), 0 6px 32px rgba(0,0,0,.4);
     }
     .guide-card.revealed { opacity: 1; transform: translateY(0); }
     /* top accent bar */
@@ -375,17 +401,17 @@
       transition: opacity .3s;
     }
     .guide-card:hover {
-      border-color: rgba(48,205,215,.32);
-      background: linear-gradient(135deg, rgba(30,150,165,.16) 0%, rgba(0,20,50,.32) 60%, rgba(0,10,30,.2) 100%);
+      border-color: rgba(48,205,215,.45);
+      background: linear-gradient(135deg, rgba(30,150,165,.22) 0%, rgba(0,20,50,.5) 60%, rgba(0,8,22,.38) 100%);
       transform: translateY(-5px);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,.09), 0 12px 40px rgba(0,0,0,.3), 0 0 0 1px rgba(48,205,215,.1), 0 0 40px rgba(48,205,215,.07);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.1), 0 16px 48px rgba(0,0,0,.5), 0 0 0 1px rgba(48,205,215,.15), 0 0 60px rgba(48,205,215,.1);
     }
     .guide-card:hover::before { opacity: 1; }
     .guide-card:hover::after { opacity: 1.5; }
 
     /* committee photo bg */
-    .guide-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; border-radius: 20px; opacity: 0.12; z-index: 0; pointer-events: none; transition: opacity .3s; }
-    .guide-card:hover .guide-bg { opacity: 0.22; }
+    .guide-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; border-radius: 20px; opacity: 0.15; z-index: 0; pointer-events: none; transition: opacity .3s; }
+    .guide-card:hover .guide-bg { opacity: 0.28; }
     .guide-card > *:not(.guide-bg) { position: relative; z-index: 1; }
 
     .guide-type {
@@ -703,6 +729,7 @@
   <div class="pg-orb pg-orb-a"></div>
   <div class="pg-orb pg-orb-b"></div>
   <div class="pg-orb pg-orb-c"></div>
+  <div class="pg-orb pg-orb-d"></div>
 
   <!-- Mobile nav -->
     <!-- Mobile nav drawer -->
