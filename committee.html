@@ -571,7 +571,7 @@
     .eb-row { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
     .card-eb { padding: 0; overflow: hidden; }
     .eb-card-top {
-      height: 360px;
+      height: 280px;
       display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px;
       background: linear-gradient(145deg,
         rgba(48,205,215,.14) 0%,
@@ -632,13 +632,14 @@
     .eb-card-photo {
       position: absolute; inset: 0;
       width: 100%; height: 100%;
-      object-fit: contain; object-position: center bottom;
+      object-fit: cover; object-position: center top;
       z-index: 0; opacity: .95;
       transition: opacity .3s;
     }
     .card-eb:hover .eb-card-photo { opacity: 1; }
     .eb-card-top.has-photo {
-      background: linear-gradient(180deg, rgba(0,10,22,.85) 0%, rgba(0,30,55,.6) 100%) !important;
+      height: auto !important;
+      background: #010d1a !important;
     }
     .eb-card-top.has-photo .eb-card-initials,
     .eb-card-top.has-photo .eb-card-tba-label { display: none; }
@@ -1345,7 +1346,7 @@
     // Known EB members — indexed by committee key, then by role position
     const ebMembers = {
       'sc-unc': [
-        { name: 'Aprameya', photo: '/EB/chair_sc_un_charter.webp', desc: 'Aprameya is a freelancer primarily working in the field of academic and creative writing. He has participated in over 100 MUNs over the past 8 years across the three major circuits in South India — Hyderabad, Bengaluru, and Chennai. He is so staunch an advocate for libre software that many assume he is a lost son of Richard Stallman. On the question of whether he is currently employed by RAW, ISI, Mossad, CIA, GCHQ, or FSB, his response is of neither confirmation nor denial.' },
+        { name: 'Aprameya', photo: '/EB/chair_sc_un_charter.webp', aspect: '2286/2896', desc: 'Aprameya is a freelancer primarily working in the field of academic and creative writing. He has participated in over 100 MUNs over the past 8 years across the three major circuits in South India — Hyderabad, Bengaluru, and Chennai. He is so staunch an advocate for libre software that many assume he is a lost son of Richard Stallman. On the question of whether he is currently employed by RAW, ISI, Mossad, CIA, GCHQ, or FSB, his response is of neither confirmation nor denial.' },
         null,
       ],
     };
@@ -1361,7 +1362,7 @@
       const el = document.createElement('div');
       el.className = `card card-eb ${ebClasses[Math.min(i, ebClasses.length - 1)]}${member ? ' has-member' : ''}`;
       el.innerHTML = `
-        <div class="eb-card-top${member?.photo ? ' has-photo' : ''}">
+        <div class="eb-card-top${member?.photo ? ' has-photo' : ''}"${member?.aspect ? ` style="aspect-ratio:${member.aspect};"` : ''}>
           ${member?.photo ? `<img class="eb-card-photo" src="${member.photo}" alt="${member.name}" loading="lazy">` : ''}
           <div class="eb-card-initials">${initials}</div>
           <span class="eb-card-tba-label">To be announced</span>
