@@ -2584,10 +2584,18 @@
         { src: 'committee_photos/who.jpg',         label: 'WHO',          href: 'committee.html?committee=who'        },
         { src: 'conference_photos/8.JPG',          label: 'OAKRIDGE MUN', href: 'committees.html'                    },
       ];
-      // on mobile use every other card to halve the animation workload
-      const DISPLAY = IS_MOBILE
-        ? COMMITTEES.filter((_, i) => i % 2 === 0)
-        : COMMITTEES;
+      // on mobile show only the 8 conference photos (1–8, no 9)
+      const MOBILE_PHOTOS = [
+        { src: 'conference_photos/1.JPG', label: 'OAKRIDGE MUN', href: 'committees.html' },
+        { src: 'conference_photos/2.JPG', label: 'OAKRIDGE MUN', href: 'committees.html' },
+        { src: 'conference_photos/3.JPG', label: 'OAKRIDGE MUN', href: 'committees.html' },
+        { src: 'conference_photos/4.JPG', label: 'OAKRIDGE MUN', href: 'committees.html' },
+        { src: 'conference_photos/5.JPG', label: 'OAKRIDGE MUN', href: 'committees.html' },
+        { src: 'conference_photos/6.JPG', label: 'OAKRIDGE MUN', href: 'committees.html' },
+        { src: 'conference_photos/7.JPG', label: 'OAKRIDGE MUN', href: 'committees.html' },
+        { src: 'conference_photos/8.JPG', label: 'OAKRIDGE MUN', href: 'committees.html' },
+      ];
+      const DISPLAY = IS_MOBILE ? MOBILE_PHOTOS : COMMITTEES;
       const TOTAL = DISPLAY.length;
 
       // hero dimensions, updated on resize
