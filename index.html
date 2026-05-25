@@ -310,9 +310,64 @@
       inset: 0;
       z-index: 0;
       pointer-events: none;
+      overflow: hidden;
+      /* dot grid + base */
       background:
-        radial-gradient(ellipse 72% 68% at 50% 52%, rgba(30,150,165,.28) 0%, rgba(0,15,38,.6) 48%, transparent 72%),
-        #03080f;
+        radial-gradient(circle, rgba(48,205,215,.048) 1px, transparent 1px),
+        #020810;
+      background-size: 36px 36px, 100% 100%;
+    }
+    /* layered glow + vignette on top of dot grid */
+    .hero-bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 55% at 50% 50%, rgba(30,150,165,.22) 0%, rgba(0,12,30,.58) 48%, rgba(2,8,16,.93) 74%),
+        radial-gradient(ellipse 120% 35% at 50% 105%, rgba(0,48,87,.55) 0%, transparent 55%),
+        radial-gradient(ellipse 40% 25% at 15% 20%, rgba(48,205,215,.07) 0%, transparent 60%),
+        radial-gradient(ellipse 35% 20% at 85% 80%, rgba(30,150,165,.07) 0%, transparent 60%);
+    }
+    /* animated aurora orbs */
+    .hero-orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(90px);
+      will-change: transform;
+      pointer-events: none;
+    }
+    .hero-orb--a {
+      width: 62%; height: 58%;
+      top: -22%; left: 19%;
+      background: radial-gradient(circle, rgba(30,150,165,.28) 0%, transparent 68%);
+      animation: orb-a 18s ease-in-out infinite alternate;
+    }
+    .hero-orb--b {
+      width: 52%; height: 52%;
+      bottom: -18%; right: -8%;
+      background: radial-gradient(circle, rgba(0,60,110,.45) 0%, transparent 68%);
+      animation: orb-b 22s ease-in-out infinite alternate;
+    }
+    .hero-orb--c {
+      width: 42%; height: 48%;
+      top: 28%; left: -12%;
+      background: radial-gradient(circle, rgba(48,205,215,.11) 0%, transparent 68%);
+      animation: orb-c 26s ease-in-out infinite alternate;
+    }
+    @keyframes orb-a {
+      from { transform: translate(0,    0   ) scale(1);    }
+      to   { transform: translate(7%,  11%) scale(1.14);  }
+    }
+    @keyframes orb-b {
+      from { transform: translate(0,    0   ) scale(1);    }
+      to   { transform: translate(-9%,  -7%) scale(0.87);  }
+    }
+    @keyframes orb-c {
+      from { transform: translate(0,    0   ) scale(1);    }
+      to   { transform: translate(15%,   6%) scale(1.09);  }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .hero-orb { animation: none; }
     }
 
     /* ── morph card canvas ── */
@@ -413,7 +468,7 @@
       font-weight: 900;
       letter-spacing: -.04em;
       color: transparent;
-      -webkit-text-stroke: 1px rgba(48,205,215,.07);
+      -webkit-text-stroke: 1px rgba(48,205,215,.10);
       opacity: 0;
       transition: opacity 1s .5s;
     }
@@ -2064,8 +2119,12 @@
   <!-- ═══ HERO ═══ -->
   <section class="hero" id="heroSection">
 
-    <!-- gradient glow bg -->
-    <div class="hero-bg"></div>
+    <!-- gradient glow bg + aurora orbs -->
+    <div class="hero-bg">
+      <div class="hero-orb hero-orb--a"></div>
+      <div class="hero-orb hero-orb--b"></div>
+      <div class="hero-orb hero-orb--c"></div>
+    </div>
 
     <!-- giant XVI watermark (behind cards, above bg) -->
     <div class="hero-xvi-bg" id="heroXviBg">XVI</div>
