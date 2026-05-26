@@ -117,61 +117,15 @@
     .mobile-nav a:hover { color: var(--teal); }
 
     /* ── PAGE ── */
-    .page {
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-      padding-top: 80px;
-      animation: fadeUp .5s .1s cubic-bezier(0.4,0,0.2,1) both;
-    }
+    html, body { height: 100%; overflow: hidden; }
 
-    /* ── TOP BAR ── */
-    .form-topbar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 18px 40px 14px;
-      border-bottom: 1px solid rgba(48,205,215,.1);
-      flex-shrink: 0;
-    }
-    .form-topbar-left {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
-    .back-btn {
-      display: flex; align-items: center; gap: 6px;
-      font-size: .58rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase;
-      color: rgba(250,245,237,.45); text-decoration: none;
-      transition: color .2s;
-    }
-    .back-btn:hover { color: var(--teal); }
-    .form-topbar-divider {
-      width: 1px; height: 16px;
-      background: rgba(250,245,237,.1);
-    }
-    .form-topbar-title {
-      font-size: .72rem; font-weight: 800;
-      letter-spacing: .08em; text-transform: uppercase;
-      color: var(--white);
-    }
-    .form-topbar-badge {
-      font-size: .48rem; font-weight: 800; letter-spacing: .18em; text-transform: uppercase;
-      color: var(--gold);
-      background: rgba(188,154,110,.1); border: 1px solid rgba(188,154,110,.22);
-      border-radius: 100px; padding: 4px 10px;
-    }
-
-    /* ── IFRAME WRAPPER ── */
     .form-iframe-wrap {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
+      position: fixed;
+      top: 80px; left: 0; right: 0; bottom: 0;
     }
     .form-iframe-wrap iframe {
-      flex: 1;
       width: 100%;
-      height: calc(100vh - 155px);
+      height: 100%;
       border: none;
       display: block;
     }
@@ -182,9 +136,7 @@
       .nav-center { display: none; }
       .nav-right .nav-cta { display: none; }
       .menu-btn { display: flex; }
-      .form-topbar { padding: 14px 18px 12px; }
-      .form-topbar-title { display: none; }
-      .form-iframe-wrap iframe { height: calc(100vh - 140px); }
+      .form-iframe-wrap { top: 70px; }
     }
   </style>
 </head>
@@ -226,30 +178,13 @@
     </div>
   </nav>
 
-  <div class="page">
-
-    <!-- TOP BAR -->
-    <div class="form-topbar">
-      <div class="form-topbar-left">
-        <a class="back-btn" href="/register">
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M10 7H2M6 3L2 7l4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          Back to Register
-        </a>
-        <div class="form-topbar-divider"></div>
-        <div class="form-topbar-title">Registration Form</div>
-      </div>
-      <div class="form-topbar-badge">Step 2 of 2</div>
-    </div>
-
-    <!-- FORM EMBED -->
-    <div class="form-iframe-wrap">
-      <iframe
-        src="https://forms.office.com/r/kuJmtCrcSx?embed=true"
-        title="Oakridge MUN XVI Registration Form"
-        allowfullscreen webkitallowfullscreen mozallowfullscreen msallowfullscreen>
-      </iframe>
-    </div>
-
+  <!-- FORM EMBED — fills everything below nav -->
+  <div class="form-iframe-wrap">
+    <iframe
+      src="https://forms.office.com/r/kuJmtCrcSx?embed=true"
+      title="Oakridge MUN XVI Registration Form"
+      allowfullscreen webkitallowfullscreen mozallowfullscreen msallowfullscreen>
+    </iframe>
   </div>
 
   <script>
