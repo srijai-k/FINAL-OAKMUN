@@ -117,17 +117,19 @@
     .mobile-nav a:hover { color: var(--teal); }
 
     /* ── PAGE ── */
-    html, body { height: 100%; overflow: hidden; }
+    html, body { height: auto; overflow-x: hidden; }
 
     .form-iframe-wrap {
-      position: fixed;
-      top: 80px; left: 0; right: 0; bottom: 0;
+      position: relative;
+      top: 0; left: 0; right: 0;
+      width: 100%;
     }
     .form-iframe-wrap iframe {
       width: 100%;
-      height: 100%;
+      height: 2200px;
       border: none;
       display: block;
+      overflow: hidden;
     }
 
     /* ── MOBILE ── */
@@ -136,7 +138,7 @@
       .nav-center { display: none; }
       .nav-right .nav-cta { display: none; }
       .menu-btn { display: flex; }
-      .form-iframe-wrap { top: 70px; }
+      .form-iframe-wrap iframe { height: 2800px; }
     }
   </style>
 </head>
@@ -178,11 +180,12 @@
     </div>
   </nav>
 
-  <!-- FORM EMBED — fills everything below nav -->
+  <!-- FORM EMBED — nav floats over top, page scrolls -->
   <div class="form-iframe-wrap">
     <iframe
       src="https://forms.office.com/r/kuJmtCrcSx?embed=true"
       title="Oakridge MUN XVI Registration Form"
+      scrolling="no"
       allowfullscreen webkitallowfullscreen mozallowfullscreen msallowfullscreen>
     </iframe>
   </div>
