@@ -667,20 +667,6 @@
       background: rgba(255,255,255,.025);
       border: 1px solid rgba(250,245,237,.07);
     }
-    .form-embed-wrap {
-      width: 100%;
-      border-radius: 14px;
-      overflow: hidden;
-      border: 1px solid rgba(48,205,215,.15);
-      background: rgba(255,255,255,.03);
-      margin-top: 4px;
-    }
-    .form-embed-wrap iframe {
-      display: block;
-      width: 100%;
-      height: 620px;
-      border: none;
-    }
     .reg-action-header {
       display: flex;
       align-items: center;
@@ -1323,20 +1309,18 @@
             </a>
           </div>
 
-          <!-- Step 2: Form (embedded) -->
+          <!-- Step 2: Form -->
           <div class="reg-action-block">
             <div class="reg-action-header">
               <div class="reg-step-badge">Step 2</div>
               <div class="reg-action-title">Registration Form</div>
             </div>
-            <p class="reg-action-desc">Fill in your details, school, and committee preferences below.</p>
-            <div class="form-embed-wrap">
-              <iframe src="https://forms.office.com/r/kuJmtCrcSx?embed=true"
-                title="Oakridge MUN XVI Registration Form"
-                allowfullscreen webkitallowfullscreen mozallowfullscreen msallowfullscreen
-                loading="lazy">
-              </iframe>
-            </div>
+            <p class="reg-action-desc">Fill in your details, school, and committee preferences via our registration form.</p>
+            <a href="/registration-form" class="reg-cta-btn reg-cta-secondary">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="2" y="2" width="12" height="12" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M5 6h6M5 8.5h6M5 11h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+              Fill Registration Form
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h8M6 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
           </div>
 
           <p class="form-note">Complete both steps to confirm your registration. Payment without the form — or vice versa — will not be processed.</p>
