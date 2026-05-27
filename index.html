@@ -2056,6 +2056,24 @@
     }
     .btd-card:hover .btd-card-link { gap: 10px; }
 
+    /* ── Social Night card — warm amber theme ── */
+    .btd-card.social-night-card {
+      background: linear-gradient(135deg, rgba(45,18,0,.85) 0%, rgba(30,10,0,.8) 100%);
+      border-color: rgba(255,180,0,.18);
+    }
+    .btd-card.social-night-card::before {
+      background: radial-gradient(ellipse at 0% 0%, rgba(255,180,0,.12) 0%, transparent 60%);
+    }
+    .btd-card.social-night-card:hover {
+      border-color: rgba(255,200,0,.45);
+      box-shadow: 0 16px 48px rgba(120,60,0,.35);
+    }
+    .btd-card.social-night-card .btd-card-accent {
+      background: linear-gradient(to right, #FFD700, rgba(255,180,0,.2));
+    }
+    .btd-card.social-night-card .btd-card-tag  { color: #E8A020; }
+    .btd-card.social-night-card .btd-card-link { color: #FFD700; }
+
     @media (max-width: 768px) {
       .btd-section { padding: 60px 20px 70px; }
       .btd-grid { grid-template-columns: 1fr; gap: 14px; }
@@ -2666,7 +2684,7 @@
         <p class="btd-card-desc">An interactive session where delegates connect with NGOs, student-led initiatives, and fundraisers, explore social impact projects, and sign up to volunteer and contribute toward meaningful change.</p>
         <span class="btd-card-link">Learn more →</span>
       </a>
-      <a href="/social-night" class="btd-card">
+      <a href="/social-night" class="btd-card social-night-card">
         <img class="btd-bg" src="/conference_photos/14.webp" alt="" loading="lazy">
         <div class="btd-card-accent"></div>
         <div class="btd-card-tag">Day 2 · Night</div>
