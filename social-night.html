@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -332,13 +332,13 @@
 
   <div class="mobile-nav" id="mobileNav">
     <a href="/">Home</a>
-    <a href="/committees">Committees</a>
-    <a href="/secretariat">Secretariat</a>
+    <a href="/committees.html">Committees</a>
+    <a href="/secretariat.html">Secretariat</a>
     <a href="/#schedule">Schedule</a>
-    <a href="/resources">Resources</a>
-    <a href="/social-night">Social Night</a>
-    <a href="/networking-hour">Networking Hour</a>
-    <a href="/orphanage-initiative">Community Outreach</a>
+    <a href="/resources.html">Resources</a>
+    <a href="/social-night.html">Social Night</a>
+    <a href="/networking-hour.html">Networking Hour</a>
+    <a href="/orphanage-initiative.html">Community Outreach</a>
   </div>
 
   <nav id="navbar">
@@ -347,20 +347,20 @@
       <div class="nav-center">
         <ul class="nav-links-group left">
           <li><a href="/">Home</a></li>
-          <li><a href="/committees">Committees</a></li>
-          <li><a href="/secretariat">Secretariat</a></li>
+          <li><a href="/committees.html">Committees</a></li>
+          <li><a href="/secretariat.html">Secretariat</a></li>
         </ul>
         <div class="nav-mark"><img src="logo.png" alt="Oakridge MUN" /></div>
         <ul class="nav-links-group right">
           <li><a href="/#schedule">Schedule</a></li>
-          <li><a href="/resources">Resources</a></li>
+          <li><a href="/resources.html">Resources</a></li>
           <li class="nav-has-drop">
             <a href="#">Other</a>
             <div class="nav-drop nav-drop--events">
               <div class="nav-drop-grid">
-                <a href="/social-night" class="nav-drop-item">Social Night</a>
-                <a href="/networking-hour" class="nav-drop-item">Networking Hour</a>
-                <a href="/orphanage-initiative" class="nav-drop-item">Community Outreach</a>
+                <a href="/social-night.html" class="nav-drop-item">Social Night</a>
+                <a href="/networking-hour.html" class="nav-drop-item">Networking Hour</a>
+                <a href="/orphanage-initiative.html" class="nav-drop-item">Community Outreach</a>
               </div>
             </div>
           </li>
@@ -473,7 +473,7 @@
           <li><a href="/committees/ip">International Press</a></li>
           <li><a href="#">Allocations</a></li>
           <li><a href="/#faq">FAQs</a></li>
-          <li><a href="/committees">Explore Committees</a></li>
+          <li><a href="/committees.html">Explore Committees</a></li>
         </ul>
       </div>
 
@@ -597,11 +597,14 @@
       mobileNav.classList.remove('open'); menuBtn.classList.remove('open'); document.body.style.overflow = '';
     }));
     let scrolled = false;
+    let lastScrollY = window.scrollY;
     window.addEventListener('scroll', () => {
       if (window.innerWidth <= 768) return;
       const y = window.scrollY;
-      if (!scrolled && y > 80) { scrolled = true; navbar.classList.add('scrolled'); }
-      else if (scrolled && y < 55) { scrolled = false; navbar.classList.remove('scrolled'); }
+      const goingDown = y > lastScrollY;
+      lastScrollY = y;
+      if (goingDown && y > 80 && !scrolled) { scrolled = true; navbar.classList.add('scrolled'); }
+      else if (!goingDown && scrolled) { scrolled = false; navbar.classList.remove('scrolled'); }
     }, {passive:true});
     window.addEventListener('resize', () => { if (window.innerWidth <= 768 && scrolled) { scrolled = false; navbar.classList.remove('scrolled'); } });
     const nm = navbar.querySelector('.nav-mark');
