@@ -2056,23 +2056,43 @@
     }
     .btd-card:hover .btd-card-link { gap: 10px; }
 
-    /* ── Social Night card — warm amber theme ── */
+    /* ── Social Night card — warm amber/gold theme ── */
     .btd-card.social-night-card {
-      background: linear-gradient(135deg, rgba(45,18,0,.85) 0%, rgba(30,10,0,.8) 100%);
-      border-color: rgba(255,180,0,.18);
+      background: linear-gradient(150deg, #2E1400 0%, #1C0A00 50%, #0F0500 100%);
+      border-color: rgba(255,200,0,.22);
+      overflow: hidden;
     }
     .btd-card.social-night-card::before {
-      background: radial-gradient(ellipse at 0% 0%, rgba(255,180,0,.12) 0%, transparent 60%);
+      background: radial-gradient(ellipse at 65% 35%, rgba(255,180,0,.18) 0%, transparent 55%);
+      opacity: 1;
     }
     .btd-card.social-night-card:hover {
-      border-color: rgba(255,200,0,.45);
-      box-shadow: 0 16px 48px rgba(120,60,0,.35);
+      border-color: rgba(255,215,0,.5);
+      box-shadow: 0 16px 48px rgba(160,80,0,.4), 0 0 60px rgba(255,180,0,.08);
     }
     .btd-card.social-night-card .btd-card-accent {
-      background: linear-gradient(to right, #FFD700, rgba(255,180,0,.2));
+      background: linear-gradient(to right, #FFD700, rgba(255,180,0,.15));
     }
     .btd-card.social-night-card .btd-card-tag  { color: #E8A020; }
     .btd-card.social-night-card .btd-card-link { color: #FFD700; }
+    .btd-card.social-night-card .btd-card-title { color: #FFF0A0; }
+
+    /* inner glow orbs */
+    .sn-glow-a, .sn-glow-b {
+      position: absolute; border-radius: 50%; pointer-events: none;
+    }
+    .sn-glow-a {
+      width: 220px; height: 220px;
+      top: -60px; right: -40px;
+      background: radial-gradient(circle, rgba(255,200,0,.28) 0%, transparent 70%);
+      filter: blur(18px);
+    }
+    .sn-glow-b {
+      width: 160px; height: 160px;
+      bottom: -40px; left: 10px;
+      background: radial-gradient(circle, rgba(232,120,10,.22) 0%, transparent 70%);
+      filter: blur(22px);
+    }
 
     @media (max-width: 768px) {
       .btd-section { padding: 60px 20px 70px; }
@@ -2685,7 +2705,8 @@
         <span class="btd-card-link">Learn more →</span>
       </a>
       <a href="/social-night" class="btd-card social-night-card">
-        <img class="btd-bg" src="/conference_photos/14.webp" alt="" loading="lazy">
+        <div class="sn-glow-a"></div>
+        <div class="sn-glow-b"></div>
         <div class="btd-card-accent"></div>
         <div class="btd-card-tag">Day 2 · Night</div>
         <div class="btd-card-title">Social Night</div>
