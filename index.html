@@ -548,6 +548,7 @@
       text-transform: uppercase;
     }
     .arc-title .teal { color: var(--teal); }
+    .arc-thin { font-weight: 300; letter-spacing: .08em; }
 
     .hero-dates {
       display: flex;
@@ -1577,10 +1578,18 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+      position: relative; z-index: 1;
     }
     .footer-bottom p { font-size: .7rem; font-weight: 500; color: rgba(250,245,237,.25); letter-spacing: .04em; }
     .footer-bottom a { color: var(--teal); text-decoration: none; }
 
+    .footer-watermark {
+      position: absolute; bottom: -10px; left: 50%; transform: translateX(-50%);
+      font-size: clamp(3.5rem, 9vw, 8rem); font-weight: 900; letter-spacing: -.04em;
+      color: transparent; -webkit-text-stroke: 1px rgba(250,245,237,.035);
+      white-space: nowrap; pointer-events: none; user-select: none; z-index: 0;
+      font-family: 'Montserrat'; text-transform: uppercase;
+    }
 
     /* ═══════════════════════════════════════
        HAMBURGER / MOBILE NAV
@@ -2288,6 +2297,13 @@
     @media (prefers-reduced-motion: reduce) {
       .s-orb { animation: none !important; }
     }
+
+    /* ── SCROLL REVEAL ── */
+    .sr { opacity: 0; transform: translateY(26px); transition: opacity .7s cubic-bezier(0.4,0,0.2,1), transform .7s cubic-bezier(0.4,0,0.2,1); }
+    .sr.sr-visible { opacity: 1; transform: translateY(0); }
+    .sr-d1 { transition-delay: .1s; }
+    .sr-d2 { transition-delay: .2s; }
+    .sr-d3 { transition-delay: .3s; }
   </style>
 </head>
 <body>
@@ -2376,14 +2392,14 @@
 
     <!-- intro text (visible during scatter/line/circle phases) -->
     <div id="heroIntroText">
-      <h1 class="morph-big-title">OAKRIDGE<br><span class="teal">MUN</span></h1>
+      <h1 class="morph-big-title"><span style="font-weight:300;letter-spacing:.06em;">OAKRIDGE</span><br><span class="teal">MUN</span></h1>
       <p class="morph-scroll-hint">SCROLL TO EXPLORE</p>
     </div>
 
     <!-- arc content (fades in once morph completes) -->
     <div id="heroArcContent">
       <p class="arc-eyebrow">Chapter XVI &nbsp;·&nbsp; Hyderabad &nbsp;·&nbsp; 2026</p>
-      <h2 class="arc-title">OAKRIDGE<br><span class="teal">MUN</span></h2>
+      <h2 class="arc-title"><span class="arc-thin">OAKRIDGE</span><br><span class="teal">MUN</span></h2>
       <div class="hero-dates">
         <span>24th July</span><span class="dot"></span>
         <span>25th July</span><span class="dot"></span>
@@ -2582,8 +2598,8 @@
     <div class="s-orb sch-orb-b"></div>
     <div class="schedule-header">
       <div>
-        <p class="schedule-kicker">Oakridge MUN · Chapter XVI</p>
-        <h2 class="schedule-title">Conference<br>Schedule</h2>
+        <p class="schedule-kicker sr">Oakridge MUN · Chapter XVI</p>
+        <h2 class="schedule-title sr sr-d1">Conference<br>Schedule</h2>
       </div>
       <div class="day-tabs">
         <button class="day-tab active" data-day="1">24 July · Day 1</button>
@@ -2743,8 +2759,8 @@
     <div class="s-orb faq-orb-a"></div>
     <div class="s-orb faq-orb-b"></div>
     <div class="faq-inner">
-      <h2 class="faq-heading" id="faqHeading">FAQ</h2>
-      <p class="faq-sub" id="faqSub">Everything you need to know about Chapter XVI</p>
+      <h2 class="faq-heading sr sr-d1" id="faqHeading">FAQ</h2>
+      <p class="faq-sub sr" id="faqSub">Everything you need to know about Chapter XVI</p>
 
       <div class="faq-list">
 
@@ -2886,6 +2902,7 @@
       <p>© 2026 Oakridge International School. All rights reserved.</p>
       <p>Website designed and developed by <a href="#">Srijai Kodali</a></p>
     </div>
+    <div class="footer-watermark">OAKRIDGE MUN XVI</div>
   </footer>
 
   <script>
@@ -3466,6 +3483,16 @@
     navbar.addEventListener('mouseleave', () => {
       navbar.classList.remove('hover-expanded');
     });
+
+    // ── SCROLL REVEAL ──
+    (function() {
+      const srEls = document.querySelectorAll('.sr');
+      if (!srEls.length) return;
+      const srObs = new IntersectionObserver((entries) => {
+        entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('sr-visible'); srObs.unobserve(e.target); } });
+      }, { threshold: 0.08 });
+      srEls.forEach(el => srObs.observe(el));
+    })();
   </script>
 
   <!-- Smooth Scrolling (Lenis) -->

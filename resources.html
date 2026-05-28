@@ -664,9 +664,26 @@
     .footer-social a { width: 36px; height: 36px; border-radius: 50%; border: 1px solid rgba(250,245,237,.12); display: flex; align-items: center; justify-content: center; color: rgba(250,245,237,.4); text-decoration: none; transition: border-color .2s, color .2s, background .2s; }
     .footer-social a:hover { border-color: var(--teal); color: var(--teal); background: rgba(48,205,215,.08); }
     .footer-social svg { width: 15px; height: 15px; fill: currentColor; }
-    .footer-bottom { border-top: 1px solid rgba(250,245,237,.06); padding: 24px 0; display: flex; align-items: center; justify-content: space-between; }
+    .footer-bottom { border-top: 1px solid rgba(250,245,237,.06); padding: 24px 0; display: flex; align-items: center; justify-content: space-between; position: relative; z-index: 1; }
     .footer-bottom p { font-size: .7rem; font-weight: 500; color: rgba(250,245,237,.25); letter-spacing: .04em; }
     .footer-bottom a { color: var(--teal); text-decoration: none; }
+    .footer-watermark {
+      position: absolute; bottom: -10px; left: 50%; transform: translateX(-50%);
+      font-size: clamp(3.5rem, 9vw, 8rem); font-weight: 900; letter-spacing: -.04em;
+      color: transparent; -webkit-text-stroke: 1px rgba(250,245,237,.035);
+      white-space: nowrap; pointer-events: none; user-select: none; z-index: 0;
+      font-family: 'Montserrat'; text-transform: uppercase;
+    }
+
+    /* ── SCROLL REVEAL ── */
+    .sr { opacity: 0; transform: translateY(26px); transition: opacity .7s cubic-bezier(0.4,0,0.2,1), transform .7s cubic-bezier(0.4,0,0.2,1); }
+    .sr.sr-visible { opacity: 1; transform: translateY(0); }
+    .sr-d1 { transition-delay: .1s; }
+    .sr-d2 { transition-delay: .2s; }
+    .sr-d3 { transition-delay: .3s; }
+
+    /* ── FOCUS VISIBLE ── */
+    :focus-visible { outline: 2px solid var(--teal); outline-offset: 3px; border-radius: 4px; }
 
     /* ── MOBILE ── */
     @media (max-width: 900px) {
@@ -1005,9 +1022,9 @@
     <!-- BACKGROUND GUIDES -->
     <div class="section" style="animation: fadeUp .6s .12s cubic-bezier(0.4,0,0.2,1) both;">
       <div class="section-header">
-        <span class="section-num">01</span>
+        <span class="section-num sr">01</span>
         <div class="section-header-text">
-          <div class="section-title">Background Guides</div>
+          <div class="section-title sr sr-d1">Background Guides</div>
           <div class="section-count">19 committees · uploading July 2026</div>
         </div>
       </div>
@@ -1296,9 +1313,9 @@
     <!-- DOCUMENTS -->
     <div class="section" style="animation: fadeUp .6s .2s cubic-bezier(0.4,0,0.2,1) both;">
       <div class="section-header">
-        <span class="section-num">02</span>
+        <span class="section-num sr">02</span>
         <div class="section-header-text">
-          <div class="section-title">Essential Documents</div>
+          <div class="section-title sr sr-d1">Essential Documents</div>
           <div class="section-count">Procedure · Handbook</div>
         </div>
       </div>
@@ -1345,9 +1362,9 @@
     <!-- RESEARCH LINKS -->
     <div class="section" style="animation: fadeUp .6s .28s cubic-bezier(0.4,0,0.2,1) both;">
       <div class="section-header">
-        <span class="section-num">03</span>
+        <span class="section-num sr">03</span>
         <div class="section-header-text">
-          <div class="section-title">Research Links</div>
+          <div class="section-title sr sr-d1">Research Links</div>
           <div class="section-count">External sources · UN databases · News</div>
         </div>
       </div>
@@ -1470,6 +1487,7 @@
       <p>© 2026 Oakridge International School. All rights reserved.</p>
       <p>Website designed and developed by <a href="#">Srijai Kodali</a></p>
     </div>
+    <div class="footer-watermark">OAKRIDGE MUN XVI</div>
   </footer>
 
   <script>
@@ -1557,6 +1575,16 @@
     navbar.addEventListener('mouseleave', () => {
       navbar.classList.remove('hover-expanded');
     });
+
+    // ── SCROLL REVEAL ──
+    (function() {
+      const srEls = document.querySelectorAll('.sr');
+      if (!srEls.length) return;
+      const srObs = new IntersectionObserver((entries) => {
+        entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('sr-visible'); srObs.unobserve(e.target); } });
+      }, { threshold: 0.08 });
+      srEls.forEach(el => srObs.observe(el));
+    })();
   </script>
 
   <!-- Smooth Scrolling (Lenis) -->

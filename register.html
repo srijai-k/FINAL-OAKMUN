@@ -1021,9 +1021,16 @@
     .footer-social a { width: 36px; height: 36px; border-radius: 50%; border: 1px solid rgba(250,245,237,.12); display: flex; align-items: center; justify-content: center; color: rgba(250,245,237,.4); text-decoration: none; transition: border-color .2s, color .2s, background .2s; }
     .footer-social a:hover { border-color: var(--teal); color: var(--teal); background: rgba(48,205,215,.08); }
     .footer-social svg { width: 15px; height: 15px; fill: currentColor; }
-    .footer-bottom { border-top: 1px solid rgba(250,245,237,.06); padding: 24px 0; display: flex; align-items: center; justify-content: space-between; }
+    .footer-bottom { border-top: 1px solid rgba(250,245,237,.06); padding: 24px 0; display: flex; align-items: center; justify-content: space-between; position: relative; z-index: 1; }
     .footer-bottom p { font-size: .7rem; font-weight: 500; color: rgba(250,245,237,.25); letter-spacing: .04em; }
     .footer-bottom a { color: var(--teal); text-decoration: none; }
+    .footer-watermark {
+      position: absolute; bottom: -10px; left: 50%; transform: translateX(-50%);
+      font-size: clamp(3.5rem, 9vw, 8rem); font-weight: 900; letter-spacing: -.04em;
+      color: transparent; -webkit-text-stroke: 1px rgba(250,245,237,.035);
+      white-space: nowrap; pointer-events: none; user-select: none; z-index: 0;
+      font-family: 'Montserrat'; text-transform: uppercase;
+    }
 
     /* ── MOBILE ── */
     @media (max-width: 768px) {
@@ -1132,6 +1139,15 @@
     }
     @media (max-width: 768px) { .pg-orb { filter: blur(60px) !important; } }
     @media (prefers-reduced-motion: reduce) { .pg-orb { animation: none !important; } }
+
+    /* ── SCROLL REVEAL ── */
+    .sr { opacity: 0; transform: translateY(26px); transition: opacity .7s cubic-bezier(0.4,0,0.2,1), transform .7s cubic-bezier(0.4,0,0.2,1); }
+    .sr.sr-visible { opacity: 1; transform: translateY(0); }
+    .sr-d1 { transition-delay: .1s; }
+    .sr-d2 { transition-delay: .2s; }
+
+    /* ── FOCUS VISIBLE ── */
+    :focus-visible { outline: 2px solid var(--teal); outline-offset: 3px; border-radius: 4px; }
   </style>
 
 </head>
@@ -1237,7 +1253,12 @@
 
         <h1 class="reg-headline">Debate<br>what <em>matters.</em></h1>
 
-        <p class="reg-sub">Registrations for Oakridge MUN Chapter XVI will be opening soon. Stay tuned — 700+ delegates, 19 committees, and three days of elite debate, diplomacy, and leadership await.</p>
+        <p class="reg-sub">Seats are limited. When registrations open, they go fast — 700+ delegates compete for spots across 19 committees. Don't be the one who missed it.</p>
+
+        <div class="reg-urgency">
+          <span class="reg-urgency-dot"></span>
+          Seats limited · Opens soon
+        </div>
 
         <ul class="reg-bullets">
           <li>
@@ -1785,6 +1806,16 @@
     navbar.addEventListener('mouseleave', () => {
       navbar.classList.remove('hover-expanded');
     });
+
+    // ── SCROLL REVEAL ──
+    (function() {
+      const srEls = document.querySelectorAll('.sr');
+      if (!srEls.length) return;
+      const srObs = new IntersectionObserver((entries) => {
+        entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('sr-visible'); srObs.unobserve(e.target); } });
+      }, { threshold: 0.08 });
+      srEls.forEach(el => srObs.observe(el));
+    })();
   </script>
 
   <footer>
@@ -1852,6 +1883,7 @@
       <p>© 2026 Oakridge International School. All rights reserved.</p>
       <p>Website designed and developed by <a href="#">Srijai Kodali</a></p>
     </div>
+    <div class="footer-watermark">OAKRIDGE MUN XVI</div>
   </footer>
 
   <!-- Smooth Scrolling (Lenis) -->

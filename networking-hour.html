@@ -264,9 +264,26 @@
     .footer-social a { width: 36px; height: 36px; border-radius: 50%; border: 1px solid rgba(250,245,237,.12); display: flex; align-items: center; justify-content: center; color: rgba(250,245,237,.4); text-decoration: none; transition: border-color .2s, color .2s, background .2s; }
     .footer-social a:hover { border-color: var(--teal); color: var(--teal); background: rgba(48,205,215,.08); }
     .footer-social svg { width: 15px; height: 15px; fill: currentColor; }
-    .footer-bottom { border-top: 1px solid rgba(250,245,237,.06); padding: 24px 0; display: flex; align-items: center; justify-content: space-between; }
+    .footer-bottom { border-top: 1px solid rgba(250,245,237,.06); padding: 24px 0; display: flex; align-items: center; justify-content: space-between; position: relative; z-index: 1; }
     .footer-bottom p { font-size: .7rem; font-weight: 500; color: rgba(250,245,237,.25); letter-spacing: .04em; }
     .footer-bottom a { color: var(--teal); text-decoration: none; }
+    .footer-watermark {
+      position: absolute; bottom: -10px; left: 50%; transform: translateX(-50%);
+      font-size: clamp(3.5rem, 9vw, 8rem); font-weight: 900; letter-spacing: -.04em;
+      color: transparent; -webkit-text-stroke: 1px rgba(250,245,237,.035);
+      white-space: nowrap; pointer-events: none; user-select: none; z-index: 0;
+      font-family: 'Montserrat'; text-transform: uppercase;
+    }
+
+    /* ── SCROLL REVEAL ── */
+    .sr { opacity: 0; transform: translateY(26px); transition: opacity .7s cubic-bezier(0.4,0,0.2,1), transform .7s cubic-bezier(0.4,0,0.2,1); }
+    .sr.sr-visible { opacity: 1; transform: translateY(0); }
+    .sr-d1 { transition-delay: .1s; }
+    .sr-d2 { transition-delay: .2s; }
+    .sr-d3 { transition-delay: .3s; }
+
+    /* ── FOCUS VISIBLE ── */
+    :focus-visible { outline: 2px solid var(--teal); outline-offset: 3px; border-radius: 4px; }
 
     /* ── MOBILE ── */
     @media (max-width: 768px) {
@@ -361,8 +378,8 @@
   <!-- PHOTO GALLERY -->
   <section class="gallery-section">
     <div class="gallery-inner">
-      <div class="gallery-eyebrow">Moments · Connections · Community</div>
-      <h2 class="gallery-title">From Last Year.</h2>
+      <div class="gallery-eyebrow sr">Moments · Connections · Community</div>
+      <h2 class="gallery-title sr sr-d1">From Last Year.</h2>
       <p class="gallery-desc">A glimpse into the conversations, laughs, and connections that made Oakridge MUN XV's Networking Hour unforgettable.</p>
       <div class="photo-grid">
         <div class="photo-slot wide">
@@ -387,8 +404,8 @@
   <!-- NGO LOGOS -->
   <section class="ngo-section">
     <div class="ngo-inner">
-      <div class="gallery-eyebrow">Partners · Causes · Impact</div>
-      <h2 class="gallery-title">Our NGO Partners.</h2>
+      <div class="gallery-eyebrow sr">Partners · Causes · Impact</div>
+      <h2 class="gallery-title sr sr-d1">Our NGO Partners.</h2>
       <p class="gallery-desc" style="margin-bottom: 48px;">The organisations we proudly spotlight at Oakridge MUN XVI — whose missions inspire meaningful conversations in every committee room.</p>
       <div class="ngo-logos-grid">
         <div class="ngo-logo-slot">
@@ -480,6 +497,7 @@
       <p>© 2026 Oakridge International School. All rights reserved.</p>
       <p>Website designed and developed by <a href="#">Srijai Kodali</a></p>
     </div>
+    <div class="footer-watermark">OAKRIDGE MUN XVI</div>
   </footer>
 
   <script>
@@ -526,6 +544,16 @@
       });
     }
     navbar.addEventListener('mouseleave', () => navbar.classList.remove('hover-expanded'));
+
+    // ── SCROLL REVEAL ──
+    (function() {
+      const srEls = document.querySelectorAll('.sr');
+      if (!srEls.length) return;
+      const srObs = new IntersectionObserver((entries) => {
+        entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('sr-visible'); srObs.unobserve(e.target); } });
+      }, { threshold: 0.08 });
+      srEls.forEach(el => srObs.observe(el));
+    })();
   </script>
 </body>
 </html>
