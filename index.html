@@ -1081,6 +1081,14 @@
       line-height: 1.05;
       letter-spacing: -.03em;
     }
+    .schedule-title::after {
+      content: '';
+      display: block;
+      width: 44px; height: 3px;
+      background: linear-gradient(90deg, var(--teal), transparent);
+      border-radius: 2px;
+      margin-top: 14px;
+    }
 
     /* Color legend */
     .schedule-legend {
@@ -1237,12 +1245,71 @@
       box-shadow: 0 0 0 1px var(--dot-color, rgba(48,205,215,.4)), 0 0 8px var(--dot-color, transparent);
     }
 
-    .tl-event.type-committee { background: rgba(48,205,215,.08);  border-color: rgba(48,205,215,.1); --dot-color: var(--teal); }
-    .tl-event.type-ceremony  { background: rgba(188,154,110,.1);  border-color: rgba(188,154,110,.12); --dot-color: var(--gold); }
-    .tl-event.type-break     { background: rgba(180,235,245,.08); border-color: rgba(180,235,245,.15); --dot-color: var(--teal-light); }
-    .tl-event.type-social    { background: rgba(30,150,165,.12);  border-color: rgba(30,150,165,.15); --dot-color: var(--teal-dark); }
-    .tl-event.type-meal      { background: rgba(188,154,110,.07); border-color: rgba(188,154,110,.1); --dot-color: rgba(188,154,110,.6); }
-    .tl-event.type-dispersal { background: rgba(188,154,110,.07);  border-color: rgba(188,154,110,.18); --dot-color: #BC9A6E; }
+    .tl-event.type-committee { background: rgba(48,205,215,.09);  border-color: rgba(48,205,215,.14); --dot-color: var(--teal); }
+    .tl-event.type-ceremony  { background: rgba(188,154,110,.11); border-color: rgba(188,154,110,.16); --dot-color: var(--gold); }
+    .tl-event.type-break     { background: rgba(180,235,245,.07); border-color: rgba(180,235,245,.13); --dot-color: var(--teal-light); }
+    .tl-event.type-social    { background: rgba(30,150,165,.13);  border-color: rgba(30,150,165,.18); --dot-color: var(--teal-dark); }
+    .tl-event.type-meal      { background: rgba(188,154,110,.08); border-color: rgba(188,154,110,.13); --dot-color: rgba(188,154,110,.6); }
+    .tl-event.type-dispersal { background: rgba(188,154,110,.07); border-color: rgba(188,154,110,.18); --dot-color: #BC9A6E; }
+
+    /* stronger hover for committee events */
+    .tl-event.type-committee:hover {
+      background: rgba(48,205,215,.14);
+      border-color: rgba(48,205,215,.28);
+      box-shadow: 0 4px 22px rgba(48,205,215,.1);
+      transform: translateX(7px);
+    }
+
+    /* ── day watermark ── */
+    .timeline-panel { position: relative; overflow: hidden; }
+    .timeline       { position: relative; z-index: 1; }
+    #day-1::before { content: '01'; }
+    #day-2::before { content: '02'; }
+    #day-3::before { content: '03'; }
+    .timeline-panel::before {
+      position: absolute;
+      right: -8px; bottom: -24px;
+      font-size: clamp(140px, 20vw, 260px);
+      font-weight: 900;
+      letter-spacing: -.06em;
+      color: rgba(48,205,215,.045);
+      pointer-events: none;
+      line-height: 1;
+      user-select: none;
+      z-index: 0;
+    }
+
+    /* ── day header ── */
+    .tl-day-header {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      margin-bottom: 28px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid rgba(48,205,215,.1);
+    }
+    .tl-day-num {
+      font-size: clamp(2.4rem, 4vw, 3.2rem);
+      font-weight: 900;
+      letter-spacing: -.06em;
+      line-height: 1;
+      color: var(--teal);
+      opacity: .6;
+    }
+    .tl-day-info { display: flex; flex-direction: column; gap: 3px; }
+    .tl-day-label {
+      font-size: .55rem;
+      font-weight: 700;
+      letter-spacing: .28em;
+      text-transform: uppercase;
+      color: rgba(250,245,237,.3);
+    }
+    .tl-day-date {
+      font-size: 1rem;
+      font-weight: 800;
+      letter-spacing: -.02em;
+      color: var(--white);
+    }
 
     .tl-event::after {
       content: '';
@@ -2636,6 +2703,13 @@
     <div class="timeline-panels">
 
       <div class="timeline-panel active" id="day-1">
+        <div class="tl-day-header">
+          <span class="tl-day-num">01</span>
+          <div class="tl-day-info">
+            <span class="tl-day-label">Day One</span>
+            <span class="tl-day-date">24 July 2026</span>
+          </div>
+        </div>
         <div class="timeline">
           <div class="tl-item"><div class="tl-time"><span class="tl-time-range">8:00 – 9:00</span><span class="tl-dur">1 hr</span></div><div class="tl-event type-ceremony"><div class="tl-event-body"><span class="tl-name">Registration</span><span class="tl-tag">Arrival</span></div></div></div>
           <div class="tl-item"><div class="tl-time"><span class="tl-time-range">9:00 – 10:30</span><span class="tl-dur">1.5 hrs</span></div><div class="tl-event type-ceremony"><div class="tl-event-body"><span class="tl-name">Opening Ceremony</span><span class="tl-tag">Ceremony</span></div></div></div>
@@ -2649,6 +2723,13 @@
       </div>
 
       <div class="timeline-panel" id="day-2">
+        <div class="tl-day-header">
+          <span class="tl-day-num">02</span>
+          <div class="tl-day-info">
+            <span class="tl-day-label">Day Two</span>
+            <span class="tl-day-date">25 July 2026</span>
+          </div>
+        </div>
         <div class="timeline">
           <div class="tl-item"><div class="tl-time"><span class="tl-time-range">8:30 – 10:30</span><span class="tl-dur">2 hrs</span></div><div class="tl-event type-committee"><div class="tl-event-body"><span class="tl-name">Committee Session 3</span><span class="tl-tag">Committee</span></div></div></div>
           <div class="tl-item"><div class="tl-time"><span class="tl-time-range">10:30 – 10:45</span><span class="tl-dur">15 min</span></div><div class="tl-event type-break"><div class="tl-event-body"><span class="tl-name">Break</span><span class="tl-tag">Rest</span></div></div></div>
@@ -2662,6 +2743,13 @@
       </div>
 
       <div class="timeline-panel" id="day-3">
+        <div class="tl-day-header">
+          <span class="tl-day-num">03</span>
+          <div class="tl-day-info">
+            <span class="tl-day-label">Day Three</span>
+            <span class="tl-day-date">26 July 2026</span>
+          </div>
+        </div>
         <div class="timeline">
           <div class="tl-item"><div class="tl-time"><span class="tl-time-range">8:30 – 10:30</span><span class="tl-dur">2 hrs</span></div><div class="tl-event type-committee"><div class="tl-event-body"><span class="tl-name">Committee Session 6</span><span class="tl-tag">Committee</span></div></div></div>
           <div class="tl-item"><div class="tl-time"><span class="tl-time-range">10:30 – 1:30</span><span class="tl-dur">3 hrs</span></div><div class="tl-event type-committee"><div class="tl-event-body"><span class="tl-name">Committee Session 7</span><span class="tl-tag">Committee</span></div></div></div>
@@ -3036,6 +3124,22 @@
         applyLock(); // start locked
       }
       window.addEventListener('scroll', () => { if (!morphComplete) window.scrollTo(0, 0); });
+
+      // Intercept in-page hash nav clicks while morph is still running
+      document.querySelectorAll('a[href^="#"]').forEach(link => {
+        link.addEventListener('click', e => {
+          const targetId = link.getAttribute('href');
+          const target   = document.querySelector(targetId);
+          if (!target) return;
+          e.preventDefault();
+          if (!morphComplete) {
+            // fast-forward the animation then scroll
+            virtualScroll = MAX_SCROLL;
+            unlockScroll();
+          }
+          setTimeout(() => target.scrollIntoView({ behavior: 'smooth' }), 60);
+        });
+      });
 
       function unlockScroll() {
         if (morphComplete) return;
