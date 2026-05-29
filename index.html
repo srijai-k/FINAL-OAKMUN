@@ -503,11 +503,48 @@
       align-items: center;
       justify-content: center;
       text-align: center;
-      gap: 18px;
+      gap: 16px;
+      padding: 0 24px;
       opacity: 0;
       transform: translateY(20px);
       pointer-events: none;
       transition: opacity .5s, transform .5s;
+    }
+
+    /* ── compact theme teaser inside hero ── */
+    .hero-theme-teaser {
+      border-top: 1px solid rgba(48,205,215,.13);
+      padding-top: 16px;
+      max-width: 500px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 7px;
+    }
+    .hero-theme-label {
+      font-size: .52rem;
+      font-weight: 700;
+      letter-spacing: .24em;
+      text-transform: uppercase;
+      color: var(--teal);
+      opacity: .8;
+    }
+    .hero-theme-heading {
+      font-size: clamp(1rem, 2.4vw, 1.45rem);
+      font-weight: 800;
+      line-height: 1.18;
+      letter-spacing: -.02em;
+      color: var(--white);
+    }
+    .hero-theme-heading .teal { color: var(--teal); }
+    .hero-theme-caption {
+      font-size: clamp(.58rem, 1.4vw, .68rem);
+      font-weight: 400;
+      font-style: italic;
+      line-height: 1.7;
+      color: rgba(250,245,237,.5);
+      max-width: 400px;
     }
     #heroArcContent.visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
 
@@ -624,9 +661,12 @@
       .morph-scroll-hint { font-size: .42rem; margin-top: 14px; }
 
       /* arc content */
-      #heroArcContent { gap: 12px; }
+      #heroArcContent { gap: 9px; padding: 0 20px; }
       .arc-eyebrow  { font-size: .42rem; }
       .arc-title    { font-size: clamp(2rem, 11vw, 3.2rem); }
+      .hero-theme-teaser { padding-top: 10px; gap: 5px; max-width: 100%; }
+      .hero-theme-heading { font-size: clamp(.88rem, 5vw, 1.1rem); }
+      .hero-theme-caption { font-size: .58rem; max-width: 100%; }
 
       /* dates */
       .hero-dates { font-size: .52rem; gap: 8px; }
@@ -2480,6 +2520,13 @@
           <div class="cd-value" id="cd-secs">00</div>
           <div class="cd-label">Secs</div>
         </div>
+      </div>
+
+      <!-- theme teaser — visible in first viewport -->
+      <div class="hero-theme-teaser">
+        <div class="hero-theme-label">Conference Theme</div>
+        <div class="hero-theme-heading">Reclaiming Dialogue, <span class="teal">Resurrecting</span> Resolve.</div>
+        <p class="hero-theme-caption">In a world fractured by greed, power, and indifference — the right questions, the right choices, and the courage to stand by what is truly just, can still restore the world.</p>
       </div>
     </div>
 
