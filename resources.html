@@ -1624,5 +1624,97 @@
 
     requestAnimationFrame(raf);
   </script>
+
+  <!-- ── PDF VIEWER MODAL ── -->
+  <div id="pdfModal" style="
+    display:none; position:fixed; inset:0; z-index:9000;
+    background:rgba(0,8,20,.92); backdrop-filter:blur(18px);
+    flex-direction:column; align-items:stretch;
+  ">
+    <!-- top bar -->
+    <div style="
+      display:flex; align-items:center; justify-content:space-between;
+      padding:14px 20px; flex-shrink:0;
+      border-bottom:1px solid rgba(48,205,215,.12);
+      background:rgba(0,16,40,.7);
+    ">
+      <div style="display:flex;align-items:center;gap:12px;">
+        <img src="logo.png" style="width:28px;height:28px;object-fit:contain;opacity:.85;" />
+        <span id="pdfTitle" style="
+          font-family:'Montserrat';font-size:.78rem;font-weight:700;
+          letter-spacing:.06em;color:#FAF5ED;
+        "></span>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;">
+        <a id="pdfDownload" href="#" download style="
+          font-family:'Montserrat';font-size:.65rem;font-weight:700;
+          letter-spacing:.1em;text-transform:uppercase;
+          color:rgba(250,245,237,.45);text-decoration:none;
+          padding:7px 14px;border:1px solid rgba(250,245,237,.12);
+          border-radius:8px;transition:color .2s,border-color .2s;
+        " onmouseover="this.style.color='#30CDD7';this.style.borderColor='rgba(48,205,215,.35)'"
+           onmouseout="this.style.color='rgba(250,245,237,.45)';this.style.borderColor='rgba(250,245,237,.12)'">
+          Download
+        </a>
+        <button onclick="closePdfModal()" style="
+          font-family:'Montserrat';background:none;
+          border:1px solid rgba(250,245,237,.12);border-radius:8px;
+          color:rgba(250,245,237,.55);cursor:pointer;
+          width:34px;height:34px;font-size:1.1rem;line-height:1;
+          transition:color .2s,border-color .2s;
+        " onmouseover="this.style.color='#FAF5ED';this.style.borderColor='rgba(250,245,237,.35)'"
+           onmouseout="this.style.color='rgba(250,245,237,.55)';this.style.borderColor='rgba(250,245,237,.12)'"
+        >✕</button>
+      </div>
+    </div>
+    <!-- iframe -->
+    <iframe id="pdfFrame" src="" style="
+      flex:1; border:none; width:100%; background:#1a1a2e;
+    "></iframe>
+  </div>
+
+  <script>
+    // Intercept doc-card clicks for PDF viewing
+    document.querySelectorAll('.doc-card[href$=".pdf"]').forEach(card => {
+      card.addEventListener('click', e => {
+        e.preventDefault();
+        const src   = card.getAttribute('href');
+        const title = card.querySelector('.doc-name').textContent;
+        openPdfModal(src, title);
+      });
+    });
+
+    function openPdfModal(src, title) {
+      const modal    = document.getElementById('pdfModal');
+      const frame    = document.getElementById('pdfFrame');
+      const titleEl  = document.getElementById('pdfTitle');
+      const dlBtn    = document.getElementById('pdfDownload');
+      titleEl.textContent = title;
+      frame.src           = src;
+      dlBtn.href          = src;
+      modal.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closePdfModal() {
+      const modal = document.getElementById('pdfModal');
+      const frame = document.getElementById('pdfFrame');
+      modal.style.display = 'hidden';
+      document.body.style.overflow = '';
+      // slight delay before clearing src so iframe doesn't flash
+      setTimeout(() => { frame.src = ''; modal.style.display = 'none'; }, 80);
+    }
+
+    // Close on backdrop click
+    document.getElementById('pdfModal').addEventListener('click', e => {
+      if (e.target === document.getElementById('pdfModal')) closePdfModal();
+    });
+
+    // Close on Escape
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') closePdfModal();
+    });
+  </script>
+
 </body>
 </html>
