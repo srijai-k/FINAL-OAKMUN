@@ -322,16 +322,6 @@
         radial-gradient(circle, rgba(48,205,215,.055) 1px, transparent 1px);
       background-size: 36px 36px;
     }
-    /* vignette + depth gradients — renders BEHIND orb children via z-index */
-    .hero-bg::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      z-index: 0;
-      background:
-        radial-gradient(ellipse 60% 55% at 50% 50%, rgba(30,150,165,.18) 0%, rgba(0,12,30,.55) 48%, rgba(2,8,16,.92) 74%),
-        radial-gradient(ellipse 120% 35% at 50% 105%, rgba(0,48,87,.5) 0%, transparent 55%);
-    }
     /* animated aurora orbs — sit above ::after via z-index */
     .hero-orb {
       position: absolute;
