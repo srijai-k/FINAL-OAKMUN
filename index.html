@@ -458,7 +458,7 @@
     .morph-big-title.visible { opacity: 1; transform: translateY(0); }
     .morph-big-title .teal { color: var(--teal); }
 
-    /* phoenix watermark behind everything (replaces XVI svg) */
+    /* ghost XVI watermark behind everything */
     .hero-xvi-bg {
       position: absolute;
       inset: 0;
@@ -466,19 +466,17 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      transform: translate(0px, 97px);
       pointer-events: none;
       user-select: none;
       opacity: 0;
-      transition: opacity 1.2s .5s;
-      -webkit-mask-image: radial-gradient(ellipse 58% 80% at 50% 52%, black 22%, transparent 70%);
-      mask-image: radial-gradient(ellipse 58% 80% at 50% 52%, black 22%, transparent 70%);
+      transition: opacity 1s .5s;
     }
     .hero-xvi-bg img {
-      height: 120vh;
-      width: auto;
+      width: clamp(320px, 78vw, 840px);
+      height: auto;
       object-fit: contain;
-      opacity: 0.85;
+      opacity: 0.18;
+      filter: drop-shadow(0 0 10px rgba(48,205,215,0.08));
     }
     .hero-xvi-bg.visible { opacity: 1; }
 
@@ -505,20 +503,6 @@
     }
     .morph-scroll-hint.visible { opacity: 1; }
 
-    /* ── dark scrim between phoenix and text ── */
-    #heroTextScrim {
-      position: absolute;
-      inset: 0;
-      z-index: 8;
-      background: radial-gradient(ellipse 60% 70% at 50% 46%,
-        rgba(0,20,50,.78) 0%,
-        rgba(0,20,50,.45) 38%,
-        transparent 70%
-      );
-      pointer-events: none;
-      opacity: 0;
-    }
-
     /* ── arc content (fades in after morph) ── */
     #heroArcContent {
       position: absolute;
@@ -543,7 +527,6 @@
       letter-spacing: .28em;
       text-transform: uppercase;
       color: rgba(250,245,237,.72);
-      text-shadow: 0 1px 12px rgba(0,10,30,.9), 0 0 30px rgba(0,10,30,.7);
       display: flex;
       align-items: center;
       gap: 14px;
@@ -563,9 +546,8 @@
       letter-spacing: -.04em;
       color: var(--white);
       text-transform: uppercase;
-      text-shadow: 0 2px 20px rgba(0,10,30,.95), 0 0 50px rgba(0,10,30,.8);
     }
-    .arc-title .teal { color: var(--teal); text-shadow: 0 2px 20px rgba(0,10,30,.95), 0 0 40px rgba(0,20,50,.8); }
+    .arc-title .teal { color: var(--teal); }
 
     .hero-dates {
       display: flex;
@@ -574,7 +556,6 @@
       font-size: .66rem;
       font-weight: 700;
       letter-spacing: .2em;
-      text-shadow: 0 1px 12px rgba(0,10,30,.9);
       text-transform: uppercase;
       color: rgba(250,245,237,.75);
     }
@@ -2461,11 +2442,8 @@
       <div class="hero-orb hero-orb--c"></div>
     </div>
 
-    <!-- phoenix watermark (behind cards, above bg) -->
-    <div class="hero-xvi-bg" id="heroXviBg"><img src="phoenix_1.webp" alt="" /></div>
-
-    <!-- dark scrim so text stays legible over the phoenix -->
-    <div id="heroTextScrim"></div>
+    <!-- giant XVI watermark (behind cards, above bg) -->
+    <div class="hero-xvi-bg" id="heroXviBg"><img src="xvi.svg" alt="XVI" /></div>
 
     <!-- morph canvas — cards injected by JS -->
     <div id="morphCanvas"></div>
@@ -3016,7 +2994,6 @@
       const canvas     = document.getElementById('morphCanvas');
       const introText  = document.getElementById('heroIntroText');
       const arcContent = document.getElementById('heroArcContent');
-      const textScrim  = document.getElementById('heroTextScrim');
       const bigTitle    = introText.querySelector('.morph-big-title');
       const scrollHint  = introText.querySelector('.morph-scroll-hint');
       const xviBg       = document.getElementById('heroXviBg');
@@ -3324,7 +3301,6 @@
         arcContent.style.opacity = arcOp;
         arcContent.style.transform = `translateY(${lerp(20, 0, sm_morph)}px)`;
         arcContent.style.pointerEvents = arcOp > 0.5 ? 'auto' : 'none';
-        if (textScrim) textScrim.style.opacity = arcOp;
       }
 
       // ── main rAF loop ──
