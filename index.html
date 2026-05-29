@@ -3105,23 +3105,6 @@
         document.body.style.top                 = '';
       }
 
-      // On mobile: skip the morph entirely — position:fixed locking kills
-      // native momentum scroll and the animation isn't scroll-driven on touch.
-      // Just fade the arc content in and leave native scroll untouched.
-      if (IS_MOBILE) {
-        morphComplete  = true;
-        animationReady = true;
-        document.getElementById('morphCanvas').style.display      = 'none';
-        document.getElementById('heroIntroText').style.display    = 'none';
-        document.getElementById('heroTextScrim').style.opacity    = '1';
-        document.getElementById('heroXviBg').classList.add('visible');
-        const arc = document.getElementById('heroArcContent');
-        arc.style.transition = 'opacity .6s ease, transform .6s ease';
-        arc.style.opacity    = '1';
-        arc.style.transform  = 'translateY(0)';
-        arc.style.pointerEvents = 'auto';
-      }
-
       // If user navigated directly to a section (e.g. /#schedule, /#faq),
       // skip the hero animation entirely and let the browser scroll to the hash.
       const _hash = window.location.hash;
@@ -3137,11 +3120,10 @@
           const target = document.querySelector(_hash);
           if (target) target.scrollIntoView({ behavior: 'instant' });
         }, 50);
-      } else if (!IS_MOBILE) {
-        applyLock(); // start locked — desktop only
+      } else {
+        applyLock(); // start locked
       }
-      // Only reset scroll on desktop; on mobile let native scroll run free
-      window.addEventListener('scroll', () => { if (!morphComplete && !IS_MOBILE) window.scrollTo(0, 0); });
+      window.addEventListener('scroll', () => { if (!morphComplete) window.scrollTo(0, 0); });
 
       // Intercept in-page hash nav clicks while morph is still running
       document.querySelectorAll('a[href^="#"]').forEach(link => {
@@ -3202,7 +3184,6 @@
         touchStartY = e.touches[0].clientY;
       }, { passive: true });
       document.addEventListener('touchmove', e => {
-        if (IS_MOBILE) return; // mobile: native scroll handles everything
         if (!animationReady) return;
         const dy    = touchStartY - e.touches[0].clientY; // positive = swipe up
         touchStartY = e.touches[0].clientY;
