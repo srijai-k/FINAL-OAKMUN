@@ -503,23 +503,6 @@
     }
     .morph-scroll-hint.visible { opacity: 1; }
 
-    /* ── Phoenix background art ── */
-    #heroPhoenix {
-      position: absolute;
-      z-index: 5;
-      height: clamp(460px, 68vh, 700px);
-      width: auto;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -46%);
-      mix-blend-mode: screen;
-      opacity: 0;
-      pointer-events: none;
-      will-change: opacity;
-      -webkit-mask-image: radial-gradient(ellipse 62% 84% at 50% 54%, black 20%, transparent 70%);
-      mask-image: radial-gradient(ellipse 62% 84% at 50% 54%, black 20%, transparent 70%);
-    }
-
     /* ── arc content (fades in after morph) ── */
     #heroArcContent {
       position: absolute;
@@ -649,9 +632,6 @@
       .morph-big-title  { font-size: clamp(2.4rem, 13vw, 3.8rem); }
       .morph-chapter-tag { font-size: .42rem; margin-top: 8px; }
       .morph-scroll-hint { font-size: .42rem; margin-top: 14px; }
-
-      /* phoenix */
-      #heroPhoenix { height: clamp(340px, 58vh, 500px); }
 
       /* arc content */
       #heroArcContent { gap: 12px; }
@@ -2401,9 +2381,6 @@
     <!-- morph canvas — cards injected by JS -->
     <div id="morphCanvas"></div>
 
-    <!-- Phoenix art — screen-blended, radial-masked, synced to arc content fade -->
-    <img id="heroPhoenix" src="phoenix_1.webp" alt="" />
-
     <!-- intro text (visible during scatter/line/circle phases) -->
     <div id="heroIntroText">
       <h1 class="morph-big-title">OAKRIDGE<br><span class="teal">MUN</span></h1>
@@ -2930,7 +2907,6 @@
       const canvas     = document.getElementById('morphCanvas');
       const introText  = document.getElementById('heroIntroText');
       const arcContent = document.getElementById('heroArcContent');
-      const phoenixEl  = document.getElementById('heroPhoenix');
       const bigTitle    = introText.querySelector('.morph-big-title');
       const scrollHint  = introText.querySelector('.morph-scroll-hint');
       const xviBg       = document.getElementById('heroXviBg');
@@ -3222,8 +3198,6 @@
         arcContent.style.opacity = arcOp;
         arcContent.style.transform = `translateY(${lerp(20, 0, sm_morph)}px)`;
         arcContent.style.pointerEvents = arcOp > 0.5 ? 'auto' : 'none';
-        // phoenix fades in a beat earlier than text for a depth-reveal effect
-        if (phoenixEl) phoenixEl.style.opacity = Math.min(1, Math.max(0, (sm_morph - 0.58) / 0.22));
       }
 
       // ── main rAF loop ──
